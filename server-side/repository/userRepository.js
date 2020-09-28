@@ -4,11 +4,11 @@ export default function makeUserRepository({User}) {
     });
 
     async function save({...userInfo}) {
-    return User.create({userInfo});
+        return User.create(userInfo);
     }
 
     async function findAll() {
-
+        return User.findAll();
     }
 
 }

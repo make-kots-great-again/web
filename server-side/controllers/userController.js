@@ -1,8 +1,7 @@
 import {userService} from "../services";
-import env from "../config/environment";
 export default function userControllerFactory() {
     return Object.freeze({
-        registerUser,
+        registerUser, getAllUsers
     });
 
     async function registerUser(httpRequest) {
@@ -10,17 +9,13 @@ export default function userControllerFactory() {
         try {
             const {...userInfo} = httpRequest.body;
 
-            const posted = await userService.addUser({...userInfo});
-
-            console.log(httpRequest.body) ;
-            console.log("********************") ;
-            console.log(posted)
-
+            const createdUser = await userService.addUser({...userInfo});
             return {
                 statusCode: 201,
                 body: {
                     success: true,
                     message: "User has been created successfully",
+                    user : createdUser
                 }
             }
         } catch (e) {
@@ -29,5 +24,20 @@ export default function userControllerFactory() {
             return {statusCode: 400, body: {error: e.message}}
         }
 
+    }
+
+    async function getAllUsers() {
+
+        try {
+            const users = await userService.listUsers();
+            return {
+                statusCode: 200,
+                body: [...users]
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
     }
 };

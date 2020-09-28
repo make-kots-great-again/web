@@ -1,19 +1,40 @@
 import Sequelize from 'sequelize';
 import startDatabase from "../config/database";
 
-const User = startDatabase.define('users', {
-    name: {
-        type: Sequelize.STRING
+const User = startDatabase.define('user', {
+
+    user_id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    allowNull: false,
+    primaryKey: true
+},
+    username: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+    },
+    firstName: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    lastName: {
+        type: Sequelize.STRING,
+        allowNull: false
     },
     email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
     },
     password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
     }
 });
 
 User.sync().then(() => {
-    console.log('table created');
+    console.log('User Table created');
 });
+
 export {User};

@@ -1,26 +1,10 @@
 import path from "path";
 import consola from "consola";
-import startDatabase from "./config/database";
 import {authenticateUser} from './security';
 
 export default function express_server(express) {
 
     this.app = express();
-
-    /** @databaseInitiation
-     * Function to initiate the database connection
-     * @returns {this} reference to the function it selt
-     */
-    this.initDatabase = () => {
-        startDatabase.authenticate()
-            .then(() => consola.success(
-                {
-                    message: `Database connected successfully to ${env.DATABASE} database`,
-                    badge: true
-                }))
-            .catch(err => console.log('Error: ' + err))
-        return this;
-    };
 
     /** @middlewareHandler
      * Function to add middleware

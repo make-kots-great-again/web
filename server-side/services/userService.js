@@ -9,16 +9,13 @@ export default function userServiceFactory({userRepository}) {
 
         const user = makeUser({...userInfo});
 
-      const createdUser = await userRepository.save({
-            name: user.getName(),
+        return await userRepository.save({
+            username: user.getUsername(),
+            firstName: user.getFirstName(),
+            lastName: user.getLastName(),
             email: user.getEmail(),
             password: user.getPassword(),
         });
-
-      console.log("mmmmmmmmmmmmmmmmmmmm")
-      console.log(createdUser)
-        console.log("mmmmmmmmmmmmmmmmmmmm")
-        return createdUser;
 
     }
 

@@ -7,7 +7,7 @@ import env from "./environment";
         env.DATABASE_PASSWORD, {
             host: 'localhost',
             dialect: 'postgres',
-
+            logging: true,
             pool: {
                 max: 5,
                 min: 0,
