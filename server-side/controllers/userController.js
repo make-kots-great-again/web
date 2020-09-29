@@ -1,7 +1,7 @@
 import {userService} from "../services";
 export default function userControllerFactory() {
     return Object.freeze({
-        registerUser, getAllUsers
+        registerUser, getAllUsers, logInUser
     });
 
     async function registerUser(httpRequest) {
@@ -10,6 +10,12 @@ export default function userControllerFactory() {
             const {...userInfo} = httpRequest.body;
 
             const createdUser = await userService.addUser({...userInfo});
+
+            if (createdUser.message) {
+
+                return {statusCode: 409, body: {success: false, ...createdUser,}}
+            }
+
             return {
                 statusCode: 201,
                 body: {
@@ -24,6 +30,38 @@ export default function userControllerFactory() {
             return {statusCode: 400, body: {error: e.message}}
         }
 
+    }
+
+    async function logInUser(httpRequest) {
+
+        try {
+            const {pseudo, password} = httpRequest.body;
+
+            const user = await userService.logInUser({pseudo, password});
+
+            if (user.message) {
+                return {statusCode: 401, body: {success: false, ...user}};
+            }
+
+            const {username, email, userId: id} = user.data;
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true, token: user.token,
+                    user: {
+                        userId: id, username: username,
+                        userEmail: email
+                    }
+                }
+            }
+
+        } catch (e) {
+
+            console.log(e);
+
+            return {statusCode: 400, body: {error: e.message}}
+        }
     }
 
     async function getAllUsers() {

@@ -1,6 +1,6 @@
-export default function makeUserRepository({User}) {
+export default function makeUserRepository({User, Op}) {
     return Object.freeze({
-        save, findAll,
+        save, findAll, findPseudo, findByEmailOrUsername
     });
 
     async function save({...userInfo}) {
@@ -8,8 +8,26 @@ export default function makeUserRepository({User}) {
     }
 
     async function findAll() {
-        return User.findAll();
+        return User.findAll({attributes: ['username', 'email', 'firstName', 'lastName']});
     }
 
+    async function findPseudo({pseudo}) {
+        return User.findAll({where: {
+                [Op.or]: [
+                    {username: pseudo}, {email: pseudo}
+                ]
+            }
+        });
+    }
+
+    async function findByEmailOrUsername({email: email, username: username}) {
+        return User.findAll({where: {
+                [Op.or]: [
+                    {email: email}, {username: username}
+                ]
+            }
+        });
+
+    }
 }
 
