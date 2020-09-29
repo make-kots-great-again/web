@@ -7,9 +7,10 @@ import {userRepository} from '../repository';
 const authenticateUser = passport => {
 
     // At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
-    const opts = {};
-    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("JWT");
-    opts.secretOrKey = env.JWT_KEY;
+    const opts = {
+        jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("JWT"),
+        secretOrKey: env.JWT_KEY
+    };
 
     // The JWT payload is passed into the verify callback
     passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {

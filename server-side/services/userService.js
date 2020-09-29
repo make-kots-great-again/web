@@ -6,13 +6,13 @@ export default function userServiceFactory({userRepository}) {
         addUser, listUsers, logInUser
     });
 
-    async function addUser(userInfo) {
+    async function addUser({...userInfo}) {
+
+        const user = makeUser({...userInfo});
 
         const existing = await userRepository.findByEmailOrUsername({...userInfo});
 
         if (existing.length !== 0) return {message: "A user with the same username or email already exists !"};
-
-        const user = makeUser({...userInfo});
 
         return await userRepository.save({
             username: user.getUsername(),
@@ -46,13 +46,6 @@ export default function userServiceFactory({userRepository}) {
     }
 
     async function listUsers() {
-
-        const existing = await userRepository.findById("6975f29b-1fd1-4a31-8815-5a1d7ab55960");
-        if(!existing) console.log('data is null')
-
-        const {dataValues} = existing;
-
-        if(dataValues) console.log(dataValues.email)
         return userRepository.findAll();
     }
 
