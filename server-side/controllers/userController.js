@@ -1,7 +1,7 @@
 import {userService} from "../services";
 export default function userControllerFactory() {
     return Object.freeze({
-        registerUser, getAllUsers, logInUser
+        registerUser, getAllUsers, logInUser, deleteUser
     });
 
     async function registerUser(httpRequest) {
@@ -77,5 +77,40 @@ export default function userControllerFactory() {
             console.log(e);
             return {statusCode: 400, body: {error: e.message}}
         }
+    }
+
+    async function deleteUser(httpRequest) {
+
+        try {
+            const deletedUser =
+                await userService.removeUser({id: httpRequest.params.userId});
+
+            if (!deletedUser) {
+                return {
+                    statusCode: 404,
+                    body: {message: "No valid entry found with provided id"}
+                }
+            }
+
+            if (deletedUser.message) {
+                return {
+                    statusCode: 404,
+                    body: {message: deletedUser.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    message: "User deleted successfully !",
+                    removedUser: deletedUser
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+
     }
 };

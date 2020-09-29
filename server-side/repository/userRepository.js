@@ -1,6 +1,7 @@
 export default function makeUserRepository({User, Op}) {
     return Object.freeze({
-        save, findAll, findPseudo, findByEmailOrUsername, findById
+        save, findAll, findPseudo, findByEmailOrUsername,
+        findById, remove
     });
 
     async function save({...userInfo}) {
@@ -8,7 +9,7 @@ export default function makeUserRepository({User, Op}) {
     }
 
     async function findAll() {
-        return User.findAll({attributes: ['username', 'email', 'firstName', 'lastName']});
+        return User.findAll({attributes: ['userId', 'username', 'email', 'firstName', 'lastName']});
     }
 
     async function findById({id: userId}) {
@@ -34,7 +35,10 @@ export default function makeUserRepository({User, Op}) {
                 ]
             }
         });
+    }
 
+    async function remove({id: userId}) {
+        return User.destroy({where: {userId: userId}});
     }
 }
 
