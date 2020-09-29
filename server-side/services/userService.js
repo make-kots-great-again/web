@@ -46,6 +46,13 @@ export default function userServiceFactory({userRepository}) {
     }
 
     async function listUsers() {
+
+        const existing = await userRepository.findById("6975f29b-1fd1-4a31-8815-5a1d7ab55960");
+        if(!existing) console.log('data is null')
+
+        const {dataValues} = existing;
+
+        if(dataValues) console.log(dataValues.email)
         return userRepository.findAll();
     }
 

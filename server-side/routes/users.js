@@ -13,8 +13,7 @@ import {userController}  from '../controllers'
 
 router.post("/signup", makeCallback(userController.registerUser));
 router.post("/login", makeCallback(userController.logInUser));
-router.get("/users/profiles",
-    makeCallback(userController.getAllUsers));
+router.get("/users/profiles", makeCallback(userController.getAllUsers));
 
 export {router as usersRoutes};
 
