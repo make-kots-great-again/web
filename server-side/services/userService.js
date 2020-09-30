@@ -49,10 +49,7 @@ export default function userServiceFactory({userRepository}) {
         return userRepository.findAll();
     }
 
-
     async function removeUser({id} = {}) {
-
-        
 
         if (!id) return {message: 'You must supply an id.'};
 

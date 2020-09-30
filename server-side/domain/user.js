@@ -10,7 +10,7 @@ export default function buildMakeUser(isValidEmail, hashedPassword, requiredPara
         if (typeof username !== 'string') throw new TypeError('A username must be a string.');
 
         if (username.length < 4 || username.length >= 32)
-            throw new RangeError('A name length must be between 4 and 12 .');
+            throw new RangeError('A username length must be between 4 and 32.');
 
         if (typeof email !== 'string') throw new SyntaxError('An email must be of type string.');
 
