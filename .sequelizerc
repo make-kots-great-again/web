@@ -1,0 +1,8 @@
+const path = require('path');
+
+module.exports = {
+  'url': 'postgres://postgres:danny@localhost:5432/kots',
+  'seeders-path': path.resolve('server-side', 'seeders'),
+  'migrations-path': path.resolve('server-side', 'migrations')
+
+}

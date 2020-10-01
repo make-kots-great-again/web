@@ -40,9 +40,4 @@ const User = startDatabase.define('user', {
     }
 });
 
-User.sync().then(() => {
-    consola.success(
-        {message: `User Table created !`, badge: true})
-});
-
 export {User, Op};
