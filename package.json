@@ -9,8 +9,8 @@
   "scripts": {
     "heroku-postbuild": "npm run install",
     "start": "babel-node app.js",
-    "db": "babel-node ./db/index.js",
-    "dev": "nodemon -r dotenv/config --exec \"npm start\"",
+    "dev": "npm run db:migrate && npm run db:seed",
+    "start:dev": "npm run dev && nodemon -r dotenv/config --exec \"npm start\"",
     "test:unit": "mocha --require @babel/register 'server-side/tests/unit-tests/**/*.js' --timeout 10000 --exit",
     "test:unit:watch": "nodemon --exec \"npm run test:unit\"",
     "cover:unit:nyc": "nyc --reporter=html --reporter=text-summary --report-dir=test-coverage/unit-tests npm run test:unit",

@@ -1,7 +1,8 @@
+require('dotenv').config();
 const path = require('path');
 
 module.exports = {
-  'url': 'postgres://postgres:danny@localhost:5432/kots',
+  'config': path.resolve('server-side', 'config', 'config.js'),
   'seeders-path': path.resolve('server-side', 'seeders'),
   'migrations-path': path.resolve('server-side', 'migrations')
 

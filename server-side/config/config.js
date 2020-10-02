@@ -1,11 +1,12 @@
-require('dotenv/config');
+
+const env = Object.freeze({...process.env});
 
 module.exports = {
-    development: {
+    dev: {
         dialect: 'postgres',
-        username: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASSWORD,
-        database: process.env.DATABASE,
+        username: env.DATABASE_USER,
+        password: env.DATABASE_PASSWORD,
+        database: env.DATABASE,
         host: 'localhost',
         port: 5432,
         dialectOptions: {
@@ -17,7 +18,7 @@ module.exports = {
         database: '', host: '',
         port: '', dialect: '',
     },
-    production: {
+    prod: {
         username: '', password: '',
         database: '', host: '',
         port: '', dialect: '',

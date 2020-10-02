@@ -5,7 +5,7 @@ const startDatabase = new Sequelize(
     env.DATABASE,
     env.DATABASE_USER,
     env.DATABASE_PASSWORD, {
-        host: 'localhost',
+        host: env.DATABASE_HOST,
         dialect: 'postgres',
         logging: false,
         pool: {
