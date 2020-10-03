@@ -1,0 +1,36 @@
+{
+    "userId": {
+        "type": "UUIDV4",
+        "defaultValue": "Sequelize.UUIDV4",
+        "allowNull": false,
+        "primaryKey": true,
+        "isUUID": 4
+    },
+    "username": {
+        "type": "string",
+        "unique": true,
+        "allowNull": false,
+        "validate": {"len": [4, 32]}
+    },
+    "firstName": {
+        "type": "string",
+        "allowNull": false,
+        "validate": {"len": [4, 32]}
+    },
+    "lastName": {
+        "type": "string",
+        "allowNull": false,
+        "validate": {"len": [4, 32]}
+    },
+    "email": {
+        "type": "string",
+        "unique": true,
+        "allowNull": false,
+        "isEmail": true
+    },
+    "password": {
+        "type": "string",
+        "allowNull": false,
+        "notEmpty": true
+    }
+}

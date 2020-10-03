@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "message": "User has been created successfully",
+  "user": {
+    "userId": "8e77f302-dc34-4dd0-8ebf-4e1f7dd1e9b6",
+    "username": "math",
+    "firstName": "bio",
+    "lastName": "chem",
+    "email": "math@gmail.com",
+    "password": "$2b$10$yG8.JOITQJZo2aJIVVrn0eSm8yZutqXXqDR1NbHnDqkQKy8J7g/Aq",
+    "updatedAt": "2020-10-03T20:02:52.482Z",
+    "createdAt": "2020-10-03T20:02:52.482Z"
+  }
+}

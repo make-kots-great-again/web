@@ -19,6 +19,7 @@
     "db:migrate:undo": "npx sequelize-cli db:migrate:undo",
     "db:seed": "npx sequelize db:seed:all",
     "db:seed:undo": "npx sequelize db:seed:undo",
+    "api:doc": "cd docs && aglio -i ./blueprint/input.apib --theme-template default --theme-variables cyborg -o index.html",
     "build": "npm run clean && babel server-side -d dist",
     "now-build": "npm run build",
     "clean": "rimraf dist",

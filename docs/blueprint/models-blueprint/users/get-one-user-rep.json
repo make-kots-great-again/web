@@ -1,0 +1,13 @@
+{
+  "user": {
+    "userId": "0e54574c-0dd6-4bb6-a47e-479e1125cc0e",
+    "username": "james",
+    "email": "james@gmail.com",
+    "firstName": "semaj",
+    "lastName": "aesjm"
+  },
+  "request": {
+    "type": "GET",
+    "url": "http://localhost:8000/api/user/0e54574c-0dd6-4bb6-a47e-479e1125cc0e"
+  }
+}

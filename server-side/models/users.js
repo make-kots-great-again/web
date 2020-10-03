@@ -1,12 +1,11 @@
 import {Sequelize, Op} from 'sequelize';
 import startDatabase from "../config/database";
-import consola from "consola";
 
 const User = startDatabase.define('user', {
 
     userId: {
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
+        defaultValue: Sequelize.UUID,
         allowNull: false,
         primaryKey: true,
         isUUID: 4,

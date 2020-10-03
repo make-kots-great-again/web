@@ -1,0 +1,388 @@
+# Group Users
+This the user entity.
+
+## Users List [/users/profiles]
+A list of users
+
+```no-highlight
+A JWT needs to be send in the request header
+```
+
+### Get users [GET]
+Get a list of users.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in `the request header` and if the token is invalid or
+has `expired`, a 401 status is sent back from the server.
+:::
+
+Example:
+
+```http
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+```
+
++ Request (application/json)
+
+  + Headers
+
+            Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
++ Response 200 (application/json)
+
+   + Body
+
+            <!-- include(get-all-users.json) -->
+
++ Response 401 (application/json)
+
+    + Body
+
+              "Unauthorized"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                message: "You don't have enough permission to perform this action"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                message: "No Users found in the database"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+## Authenticate user [/login]
+Authenticate one user to access protected routes
+
+### Login User [POST]
+Get one user logged in.
+
+::: note
+#### <i class="fa fa-info"></i> Info
+Once the user has been authenticated successfully, a JWT is to be sent in
+`the response body`.
+:::
+
+Example:
+
+```http
+res: "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg"
+```
+
+> The request's body is required and can't be null.
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "pseudo": "james@gmail.com",
+                "password": "toto"
+            }
+
++ Response 200 (application/json)
+
+   + Body
+
+            {
+                "success": "true",
+                "message": "Auth successful",
+                "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg",
+                "user": {
+                    "userId": "0e54574c-0dd6-4bb6-a47e-479e1125cc0e",
+                    "username": "james",
+                    "userEmail": "james@gmail.com"
+                }
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+               "success": false,
+               "message": "You must supply a pseudo."
+            }
+
++ Response 401 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "Authentication failed"
+              }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+
+## Authenticate user [/signup]
+Authenticate one user to access protected routes.
+
+### Create New User [POST]
+
+::: note
+#### <i class="fa fa-info"></i> Info
+Once the user has been authenticated successfully, the user must login with correct credentials
+to obtain a JWT token sent in the `the response body`. This token will be used to
+access protected routes.
+:::
+
+> The request's body is required and can't be null.
+
++ Request (application/json)
+
+    + Body
+
+            {
+            	"username": "math",
+                "firstName": "bio",
+                "lastName": "chem",
+            	"email":"math@gmail.com",
+            	"password":"phy"
+            }
+
++ Response 201 (application/json)
+
+   + Body
+
+            <!-- include(signup-user-rep.json) -->
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "error": "A username is a required."
+            }
+
++ Response 409 (application/json)
+
+    + Body
+
+            {
+                success: "false",
+                message: "A user with the same username or email already exists !"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+## User [/user/{userId}]
+
+User description
+
++ Parameters
+
+    + userId: `b340ce80-8d49-4659-a953-3f4dc35167bc` (required, string) - The user ID
+
+### Get User [GET]
+
+Get one user.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in `the request header` and if the token is invalid or
+has `expired`, a 401 http status is sent back from the server.
+:::
+
++ Parameters
+
+    + userId: `b340ce80-8d49-4659-a953-3f4dc35167bc` (string)
+
++ Request
+
+    + Headers
+
+                Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
++ Response 200 (application/json)
+
+   + Body
+
+            <!-- include(get-one-user-rep.json) -->
+
++ Response 401 (application/json)
+
+    + Body
+
+              "Unauthorized"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                message: "You don't have enough permission to perform this action"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                message: "No valid entry found for provided ID"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                message : "Server error"
+            }
+
+### Update a user [PATCH]
+Update a user.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in `the request header` and if the token is invalid or
+has `expired`, a 401 status is sent back from the server.
+:::
+
+A basic user can only update his own profile. Only the Admin can update his own
+and everyone's else profile.
+
++ Request with a body (application/json)
+
+    + Headers
+
+                Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
+    + Body
+
+            {
+            	"username":"tete",
+            	"firstName":"tata",
+            	"lastName":"tutu",
+            	"email":"titi@gmail.com",
+            	"password":"toto"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                message: "User info updated successfully"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                message: "password field is required"
+            }
+
++ Response 401 (application/json)
+
+    + Body
+
+              "Unauthorized"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                message: "Can NOT update admin's info !!!"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                message: "No valid entry found for provided ID"
+            }
+
++ Response 405 (application/json)
+
+    + Body
+
+            {
+                "message": "Some fields are NOT allowed"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+
+### Delete a user [DELETE]
+Delete a user.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in `the request header` and if the token is invalid or
+has `expired`, a 401 status is sent back from the server.
+:::
+
++ Request
+
+    + Headers
+
+                Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                message: "User deleted successfully"
+            }
+
++ Response 401 (application/json)
+
+    + Body
+
+              "Unauthorized"
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                message: "No valid entry found for provided ID"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+

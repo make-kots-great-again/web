@@ -923,6 +923,7 @@ false Zulu
     </table>
     <table id="29" parent="15" name="users">
       <ObjectId>17090</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>1136</StateNumber>
     </table>
