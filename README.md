@@ -1,3 +1,9 @@
-# web
+## Running Locally
 
-The front-end and backend and database files will be here.
+#### Prerequisites
+* Docker 
+
+### Usage
+
+* Clone the GitHub repo
+* Run `docker-compose up -d` in the root directory
