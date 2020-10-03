@@ -1,8 +1,10 @@
 'use strict';
+const consola = require("consola");
 const {dummyUsers, usernames} = require('../helpers/dummyUsers');
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
+        consola.info({message: 'Seeding users into the database...', badge: true})
         return queryInterface.bulkInsert('users', dummyUsers, {});
     },
 

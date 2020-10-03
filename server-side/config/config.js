@@ -4,10 +4,10 @@ const env = Object.freeze({...process.env});
 module.exports = {
     dev: {
         dialect: 'postgres',
-        username: env.DATABASE_USER,
-        password: env.DATABASE_PASSWORD,
-        database: env.DATABASE,
-        host: 'localhost',
+        username: env.POSTGRES_USER,
+        password: env.POSTGRES_PASSWORD,
+        database: env.POSTGRES_DB,
+        host: env.POSTGRES_HOST,
         port: 5432,
         dialectOptions: {
             bigNumberStrings: true

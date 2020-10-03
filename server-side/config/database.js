@@ -2,10 +2,10 @@ import Sequelize from 'sequelize';
 import env from "./environment";
 
 const startDatabase = new Sequelize(
-    env.DATABASE,
-    env.DATABASE_USER,
-    env.DATABASE_PASSWORD, {
-        host: env.DATABASE_HOST,
+    env.POSTGRES_DB,
+    env.POSTGRES_USER,
+    env.POSTGRES_PASSWORD, {
+        host: env.POSTGRES_HOST,
         dialect: 'postgres',
         logging: false,
         pool: {

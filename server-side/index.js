@@ -16,7 +16,7 @@ export default function express_server(express) {
         startDatabase.authenticate()
             .then(() => consola.success(
                 {
-                    message: `Database connected successfully to ${env.DATABASE} database`,
+                    message: `Database connected successfully to ${env.POSTGRES_DB} database`,
                     badge: true
                 }))
             .catch(err => console.log('Error: ' + err));

@@ -49,6 +49,7 @@
     "consola": "^2.11.3",
     "content-security-policy": "^0.3.3",
     "cors": "^2.8.5",
+    "custom-env": "^2.0.1",
     "dotenv": "^8.2.0",
     "email-validator": "^2.0.4",
     "expect-puppeteer": "^4.4.0",
