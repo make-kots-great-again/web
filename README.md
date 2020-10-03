@@ -1,3 +1,7 @@
+# API
+
+Documentation available [here](https://make-kots-great-again.github.io/web/ "api doc")
+
 ## Run locally
 
 #### Prerequisites
