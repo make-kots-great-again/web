@@ -1,7 +1,6 @@
 const {v4: uuidv4} = require('uuid');
 const bcrypt = require('bcryptjs');
 
-
 let dummyUsers = [];
 
 const usernames = ['james', 'john', 'william', 'paul', 'thomas', 'kevin', 'gary', 'larry', 'dennis', 'roger']

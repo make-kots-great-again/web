@@ -5,7 +5,7 @@ This the user entity.
 A list of users
 
 ```no-highlight
-A JWT needs to be send in the request header
+A JWT needs to be sent in the request header
 ```
 
 ### Get users [GET]
@@ -13,8 +13,8 @@ Get a list of users.
 
 ::: note
 #### <i class="fa fa-info-circle"></i> Info
-To acces this route a JWT needs to be sent in `the request header` and if the token is invalid or
-has `expired`, a 401 status is sent back from the server.
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
 :::
 
 Example:
@@ -74,7 +74,7 @@ Get one user logged in.
 ::: note
 #### <i class="fa fa-info"></i> Info
 Once the user has been authenticated successfully, a JWT is to be sent in
-`the response body`.
+**`the response body`**.
 :::
 
 Example:
@@ -136,8 +136,8 @@ res: "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdt
             }
 
 
-## Authenticate user [/signup]
-Authenticate one user to access protected routes.
+## Create a user [/signup]
+Signup a user to have access to offered services.
 
 ### Create New User [POST]
 
@@ -195,7 +195,7 @@ access protected routes.
 
 ## User [/user/{userId}]
 
-User description
+CRUD operations on one user using their id.
 
 + Parameters
 
@@ -207,8 +207,8 @@ Get one user.
 
 ::: note
 #### <i class="fa fa-info-circle"></i> Info
-To acces this route a JWT needs to be sent in `the request header` and if the token is invalid or
-has `expired`, a 401 http status is sent back from the server.
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 http status is sent back from the server.
 :::
 
 + Parameters
@@ -262,8 +262,8 @@ Update a user.
 
 ::: note
 #### <i class="fa fa-info-circle"></i> Info
-To acces this route a JWT needs to be sent in `the request header` and if the token is invalid or
-has `expired`, a 401 status is sent back from the server.
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 status is sent back from the server.
 :::
 
 A basic user can only update his own profile. Only the Admin can update his own
@@ -341,12 +341,17 @@ and everyone's else profile.
 
 
 ### Delete a user [DELETE]
-Delete a user.
+**<i class="fa fa-trash"></i> Delete a user.**
 
 ::: note
 #### <i class="fa fa-info-circle"></i> Info
 To acces this route a JWT needs to be sent in `the request header` and if the token is invalid or
 has `expired`, a 401 status is sent back from the server.
+:::
+
+::: warning
+#### <i class="fa fa-warning"></i> Caution
+This is action is **irreversible !**.
 :::
 
 + Request

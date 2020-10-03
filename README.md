@@ -5,6 +5,7 @@ Documentation available [here](https://make-kots-great-again.github.io/web/ "api
 ## Run locally
 
 #### Prerequisites
+
 * Docker 
 
 ### Usage
@@ -32,3 +33,6 @@ your browser.
 
 * Exec into the node.js container with the following command :
 `docker exec -it kots-server sh`
+
+* If you want to run in the container any npm scripts inside the package.json, 
+change the server port cause 8000 is already in use. 
