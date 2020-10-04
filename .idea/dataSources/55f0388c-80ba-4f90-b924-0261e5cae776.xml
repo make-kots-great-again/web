@@ -789,7 +789,7 @@ false Zulu
     <database id="2" parent="1" name="kots">
       <ObjectId>16394</ObjectId>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>750</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1143</IntrospectionStateNumber>
       <Current>1</Current>
     </database>
     <database id="3" parent="1" name="postgres">
@@ -846,7 +846,7 @@ false Zulu
       <Comment>standard public schema</Comment>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>751</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1144</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <access-method id="16" parent="2" name="heap">
@@ -916,102 +916,131 @@ false Zulu
     <language id="25" parent="2" name="internal"/>
     <language id="26" parent="2" name="plpgsql"/>
     <language id="27" parent="2" name="sql"/>
-    <table id="28" parent="15" name="users">
-      <ObjectId>16730</ObjectId>
+    <table id="28" parent="15" name="SequelizeMeta">
+      <ObjectId>16774</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>683</StateNumber>
+      <StateNumber>970</StateNumber>
     </table>
-    <column id="29" parent="28" name="userId">
+    <table id="29" parent="15" name="users">
+      <ObjectId>17090</ObjectId>
+      <Outdated>1</Outdated>
+      <Owner>postgres</Owner>
+      <StateNumber>1136</StateNumber>
+    </table>
+    <column id="30" parent="28" name="name">
+      <Position>1</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>970</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="31" parent="28" name="SequelizeMeta_pkey">
+      <ObjectId>16777</ObjectId>
+      <StateNumber>970</StateNumber>
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="32" parent="28" name="SequelizeMeta_pkey">
+      <ObjectId>16778</ObjectId>
+      <StateNumber>970</StateNumber>
+      <ColNames>name</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>SequelizeMeta_pkey</UnderlyingIndexName>
+    </key>
+    <column id="33" parent="29" name="userId">
       <Position>1</Position>
       <DataType>uuid|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>683</StateNumber>
+      <StateNumber>1136</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="30" parent="28" name="username">
+    <column id="34" parent="29" name="username">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>683</StateNumber>
+      <StateNumber>1136</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="31" parent="28" name="firstName">
+    <column id="35" parent="29" name="firstName">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>683</StateNumber>
+      <StateNumber>1136</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="32" parent="28" name="lastName">
+    <column id="36" parent="29" name="lastName">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>683</StateNumber>
+      <StateNumber>1136</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="33" parent="28" name="email">
+    <column id="37" parent="29" name="email">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>683</StateNumber>
+      <StateNumber>1136</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="34" parent="28" name="password">
+    <column id="38" parent="29" name="password">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>683</StateNumber>
+      <StateNumber>1136</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="35" parent="28" name="createdAt">
+    <column id="39" parent="29" name="createdAt">
       <Position>7</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>683</StateNumber>
+      <StateNumber>1136</StateNumber>
+      <DefaultExpression>&apos;2020-10-02 13:50:08.515+00&apos;::timestamp with time zone</DefaultExpression>
       <TypeId>1184</TypeId>
     </column>
-    <column id="36" parent="28" name="updatedAt">
+    <column id="40" parent="29" name="updatedAt">
       <Position>8</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>683</StateNumber>
+      <StateNumber>1136</StateNumber>
+      <DefaultExpression>&apos;2020-10-02 13:50:08.515+00&apos;::timestamp with time zone</DefaultExpression>
       <TypeId>1184</TypeId>
     </column>
-    <index id="37" parent="28" name="users_pkey">
-      <ObjectId>16736</ObjectId>
-      <StateNumber>683</StateNumber>
+    <index id="41" parent="29" name="users_pkey">
+      <ObjectId>17098</ObjectId>
+      <StateNumber>1136</StateNumber>
       <ColNames>userId</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="38" parent="28" name="users_username_key">
-      <ObjectId>16738</ObjectId>
-      <StateNumber>683</StateNumber>
+    <index id="42" parent="29" name="users_username_key">
+      <ObjectId>17100</ObjectId>
+      <StateNumber>1136</StateNumber>
       <ColNames>username</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="39" parent="28" name="users_email_key">
-      <ObjectId>16740</ObjectId>
-      <StateNumber>683</StateNumber>
+    <index id="43" parent="29" name="users_email_key">
+      <ObjectId>17102</ObjectId>
+      <StateNumber>1136</StateNumber>
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="40" parent="28" name="users_pkey">
-      <ObjectId>16737</ObjectId>
-      <StateNumber>683</StateNumber>
+    <key id="44" parent="29" name="users_pkey">
+      <ObjectId>17099</ObjectId>
+      <StateNumber>1136</StateNumber>
       <ColNames>userId</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>users_pkey</UnderlyingIndexName>
     </key>
-    <key id="41" parent="28" name="users_username_key">
-      <ObjectId>16739</ObjectId>
-      <StateNumber>683</StateNumber>
+    <key id="45" parent="29" name="users_username_key">
+      <ObjectId>17101</ObjectId>
+      <StateNumber>1136</StateNumber>
       <ColNames>username</ColNames>
       <UnderlyingIndexName>users_username_key</UnderlyingIndexName>
     </key>
-    <key id="42" parent="28" name="users_email_key">
-      <ObjectId>16741</ObjectId>
-      <StateNumber>683</StateNumber>
+    <key id="46" parent="29" name="users_email_key">
+      <ObjectId>17103</ObjectId>
+      <StateNumber>1136</StateNumber>
       <ColNames>email</ColNames>
       <UnderlyingIndexName>users_email_key</UnderlyingIndexName>
     </key>

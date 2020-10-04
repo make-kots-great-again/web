@@ -1,8 +1,7 @@
 import {Sequelize, Op} from 'sequelize';
-import startDatabase from "../config/database";
-import consola from "consola";
+import dbConnection from "../config/database";
 
-const User = startDatabase.define('user', {
+const User = dbConnection.define('user', {
 
     userId: {
         type: Sequelize.UUID,
@@ -38,11 +37,6 @@ const User = startDatabase.define('user', {
         allowNull: false,
         notEmpty: true,
     }
-});
-
-User.sync().then(() => {
-    consola.success(
-        {message: `User Table created !`, badge: true})
 });
 
 export {User, Op};

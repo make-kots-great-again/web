@@ -1,11 +1,11 @@
 import Sequelize from 'sequelize';
 import env from "./environment";
 
-const startDatabase = new Sequelize(
-    env.DATABASE,
-    env.DATABASE_USER,
-    env.DATABASE_PASSWORD, {
-        host: 'localhost',
+const dbConnection = new Sequelize(
+    env.POSTGRES_DB,
+    env.POSTGRES_USER,
+    env.POSTGRES_PASSWORD, {
+        host: env.POSTGRES_HOST,
         dialect: 'postgres',
         logging: false,
         pool: {
@@ -16,4 +16,4 @@ const startDatabase = new Sequelize(
         },
     });
 
-export default startDatabase;
+export default dbConnection;

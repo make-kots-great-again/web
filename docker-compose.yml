@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+
+  kots-server:
+    container_name: kots-server
+    image: 20152011/kots-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.dev
+    networks:
+      - kotsapp-network
+    depends_on:
+      - database
+
+  database:
+    container_name: postgres-container
+    image: postgres
+    env_file:
+      - .env.dev
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - kotsapp-network
+
+networks:
+  kotsapp-network:
+    driver: bridge
