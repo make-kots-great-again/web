@@ -1,7 +1,7 @@
 import path from "path";
 import consola from "consola";
 import {authenticateUser} from './security';
-import startDatabase from "./config/database";
+import dbConnection from "./config/database";
 import env from "./config/environment";
 
 export default function express_server(express) {
@@ -13,7 +13,7 @@ export default function express_server(express) {
      * @returns {this} reference to the function it selt
      */
     this.initDatabase = () => {
-        startDatabase.authenticate()
+        dbConnection.authenticate()
             .then(() => consola.success(
                 {
                     message: `Database connected successfully to ${env.POSTGRES_DB} database`,

@@ -1,7 +1,7 @@
 import {Sequelize, Op} from 'sequelize';
-import startDatabase from "../config/database";
+import dbConnection from "../config/database";
 
-const User = startDatabase.define('user', {
+const User = dbConnection.define('user', {
 
     userId: {
         type: Sequelize.UUID,

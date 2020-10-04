@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import env from "./environment";
 
-const startDatabase = new Sequelize(
+const dbConnection = new Sequelize(
     env.POSTGRES_DB,
     env.POSTGRES_USER,
     env.POSTGRES_PASSWORD, {
@@ -16,4 +16,4 @@ const startDatabase = new Sequelize(
         },
     });
 
-export default startDatabase;
+export default dbConnection;
