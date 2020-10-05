@@ -1,0 +1,211 @@
+<app-min-nav-bar></app-min-nav-bar>
+
+<!-- Filter Input -->
+<div class="d-flex">
+  <div class="ml-auto mr-5">
+
+    <div *ngIf="searchValue.length !== 0" class="custom-control custom-switch">
+      <input (click)="filterDisable($event.target)" type="checkbox"
+             class="custom-control-input" id="customSwitch1">
+      <label class="custom-control-label text-monospace" for="customSwitch1">
+        Disable filter </label>
+    </div>
+
+    <!-- Filter by date, method, status -->
+    <div class="form-group">
+      <label for="select1"></label>
+      <select (change)="logsFilter($event.target)"
+              class="custom-select" id="select1" name="select1">
+        <option  disabled selected>Filter by</option>
+        <option value="date">Date</option>
+        <option id="method" value="method">Method</option>
+        <option value="status" >Status</option>
+      </select>
+    </div>
+
+    <!-- Filter by date -->
+    <div *ngIf="selectedValue === 'date'" class="form-group">
+      <label for="select2"></label>
+      <select class="custom-select" id="select2">
+        <option disabled selected>Filter by</option>
+        <option value="today">Today</option>
+        <option value="24">Last 24hours</option>
+        <option value="week">Last week</option>
+        <option value="month">Last month</option>
+        <option value="year">Last year</option>
+      </select>
+    </div>
+
+    <!-- Filter by HTTP method -->
+    <div *ngIf="selectedValue === 'method'" class="form-group">
+      <label for="select3"></label>
+      <select (change)="filterMethod($event.target)"
+              class="custom-select" id="select3" name="select3">
+        <option disabled selected>Filter by</option>
+        <option value="get">GET</option>
+        <option value="post">POST</option>
+        <option value="patch">PATCH</option>
+        <option value="delete">DELETE</option>
+      </select>
+    </div>
+
+    <!-- Filter HTTP status -->
+    <div *ngIf="selectedValue === 'status'" class="form-group">
+      <label for="select4"></label>
+      <select (change)="filterStatus($event.target)"
+              class="custom-select" id="select4" name="select4">
+        <option disabled selected>Filter by</option>
+        <option value="200">200</option>
+        <option value="201">201</option>
+        <option value="400">400</option>
+        <option value="401">401</option>
+        <option value="404">404</option>
+        <option value="500">500</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- User Table -->
+<div class="container text-center my-3">
+
+  <p class="font-weight-bold">The data in the table comes from the first {{numberOflogs}} API logs</p>
+
+  <!-- Table  -->
+  <table
+    class="table table-bordered table-responsive-md table-responsive-lg
+    table-responsive-sm table-striped " id="testTable">
+    <!-- Table head -->
+    <thead class="thead-dark">
+    <tr>
+      <!-- username -->
+      <th scope="col"># <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i></th>
+      <th id="username" style="cursor: pointer">Host</th>
+      <!-- Email -->
+      <th id="email" style="cursor: pointer">Method</th>
+
+      <!-- Score -->
+      <th id="score" style="cursor: pointer">URL</th>
+
+      <!-- Level -->
+      <th id="level" style="cursor: pointer">Status</th>
+
+      <!-- Level -->
+      <th id="date" style="cursor: pointer">Date</th>
+    </tr>
+    </thead>
+    <!-- Table head -->
+
+    <!-- Table body -->
+    <tbody *ngIf="users" id="demo">
+    <ng-container *ngFor="let user of users | filterLogs : searchValue | paginate:
+                                                    {
+                                                    id: 'allQuestionsPagination',
+                                                        itemsPerPage: 10,
+                                                        currentPage: page,
+                                                        totalItems: numberOflogs};
+                                                        index as i" >
+
+      <tr #idRef id="{{user['requestId']}}" (click)="logDetails(idRef)" data-toggle="modal"
+          data-target=".bd-example-modal-lg" style="cursor: pointer"
+          onmousemove="this.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
+                      this.style.color='green'"
+          onmouseout="this.style.backgroundColor = ''; this.style.color=''">
+
+        <th class="text-monospace font-italic"
+            scope="row">  {{user['logId']}} </th>
+        <td class="text-monospace font-italic">{{user["host"] | truncate:[9]}}</td>
+
+        <td *ngIf="user['method'] == 'DELETE'" style="color: red"
+            class="text-monospace font-italic">{{user["method"]}}</td>
+
+        <td *ngIf="user['method'] == 'PATCH'" style="color: blue"
+            class="text-monospace font-italic">{{user["method"]}}</td>
+
+        <td *ngIf="user['method'] == 'POST' || user['method'] == 'GET'" style="color: green"
+            class="text-monospace font-italic">{{user["method"]}}</td>
+
+        <td class="text-monospace font-italic">{{user["url"] | truncate:[20]}}</td>
+
+        <td *ngIf="user['status'] == 200 || user['status'] == 201" style="color: green"
+            class="text-monospace font-italic">{{user["status"]}}</td>
+
+        <td *ngIf="user['status'] != 200 && user['status'] != 201"
+            class="text-monospace font-italic" style="color: red">{{user["status"]}}</td>
+
+        <td class="text-monospace font-italic">
+          {{(user["date"]).toLocaleString('fr-BE').split(' à')[0]}}
+          at {{(user["date"]).toLocaleString('fr-BE').split(' à')[1]}}
+        </td>
+
+      </tr>
+    </ng-container>
+    </tbody>
+    <!-- Table body -->
+  </table>
+  <!-- Table  -->
+  <!-- all questions pagination controls -->
+  <div *ngIf="users" class="pagination justify-content-center pagination-lg">
+    <pagination-controls id="allQuestionsPagination"
+                         (pageChange)="page = ($event)"
+                         maxSize="6"
+                         directionLinks="true"
+                         autoHide="true"
+                         responsive="true"
+                         previousLabel="Previous"
+                         nextLabel="Next">
+    </pagination-controls>
+    <button (click)="getMoreLogs()" [disabled]="(numberOflogs >= totalItems)"
+            class="btn-outline-secondary btn-sm ml-auto mr-5 font-weight-bold
+            text-monospace font-italic" style="color: black">
+      Get more...</button>
+  </div>
+
+</div>
+
+<!-- log details modal -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div *ngIf="logInfo" class="modal-content">
+      <div class="modal-header font-weight-bold">
+        <h3 class="text-monospace font-italic"><strong>Log details</strong><p></p>
+          <p style="font-size: small" class="blockquote-footer my-0">
+            {{(logInfo["date"]).toLocaleString('fr-BE').split(' à')[0]}}
+            at {{(logInfo["date"]).toLocaleString('fr-BE').split(' à')[1]}}</p>
+        </h3>
+
+        <!-- log details close modal button -->
+        <button type="button" class="close"
+                data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container mt-2 mb-2">
+        <div class="modal-body card border-light">
+          <p class="text-monospace font-italic">
+            <strong>Host</strong> : {{logInfo["host"]}} |
+            <small><strong>IP Address</strong></small>: {{logInfo["ip"]}}</p>
+          <hr>
+          <p class="text-monospace font-italic">
+            <strong>URL</strong> : {{logInfo["url"]}} |
+            <small><strong>Method</strong></small> : {{logInfo["method"]}}
+          </p>
+          <hr>
+          <p class="text-monospace font-italic">
+            <strong>Level</strong> : {{logInfo["level"]}}</p>
+          <hr>
+          <p class="text-monospace font-italic">
+            <strong>Message</strong> : {{logInfo["message"]}}</p>
+          <hr>
+          <p class="text-monospace font-italic">
+            <strong>Request</strong> : {{logInfo["response"]}}</p>
+          <hr>
+          <p class="text-monospace font-italic">
+            <strong>Status</strong> : {{logInfo["status"]}}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

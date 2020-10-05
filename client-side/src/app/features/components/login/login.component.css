@@ -1,0 +1,20 @@
+.note
+{
+  text-align: center;
+  height: 80px;
+  background: #343A40;
+  color: #fff;
+  font-weight: bold;
+}
+.form-content
+{
+  padding: 5%;
+  border: 1px solid #ced4da;
+  margin-bottom: 2%;
+  border-radius:  4px;
+  box-shadow:  15px 15px 16px -1px rgba(0,0,0,.12);
+}
+.form-control{
+  border-radius:1.5rem;
+}
+

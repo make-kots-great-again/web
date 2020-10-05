@@ -1,0 +1,126 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+    <ul class="navbar-nav mr-auto">
+
+      <!-- Home -->
+      <li class="nav-item " [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" [routerLink]="['/home']">
+          <i class="fa fa-home "></i> Home</a>
+      </li>
+
+      <!-- Register -->
+      <li *ngIf="authService.checkToken()" class="nav-item" [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" [routerLink]="['/register']">
+          <i class="fa fa-user-plus"></i> Register</a>
+      </li>
+
+      <!-- Contact -->
+      <li class="nav-item">
+        <a class="nav-link" style="cursor:pointer;" [routerLink]="['/home']">
+          <i class="fa fa-envelope"></i>
+          Contact
+        </a>
+      </li>
+
+      <!-- About -->
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/home']">
+          <i class="fa fa-address-card"></i> About</a>
+      </li>
+
+      <!-- Reviews -->
+      <li class="nav-item">
+        <a id="reviewsBtn" class="nav-link" [routerLink]="['/reviews']">
+          <i class="fa fa-commenting"></i> Reviews</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Teacher app logo -->
+  <div class="mx-auto order-0">
+    <a class="navbar-brand mx-auto font-weight-bolder"
+       [routerLink]="['/home']">Teacher App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target=".dual-collapse2">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+
+  <!-- Left side of nav bar -->
+  <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+    <ul class="navbar-nav ml-auto">
+
+      <!-- Admin -->
+      <li *ngIf="!authService.checkToken() && authService.role === 'admin'"
+          class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="adminBtn"
+           data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          Admin
+        </a>
+
+        <!-- Admin dropdown -->
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <h6 class="dropdown-header">
+            <i class="fa fa-cogs"> </i> Settings</h6>
+          <a class="dropdown-item" [routerLink]="['/dashboard']">Dashboard</a>
+          <a id="allUsersBtn" class="dropdown-item" [routerLink]="['/users/all']">All Users</a>
+          <a class="dropdown-item" [routerLink]="['/questions/all']">All questions</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" [routerLink]="['/users/info']">Users info</a>
+        </div>
+      </li>
+
+      <!-- Teacher -->
+      <li *ngIf="!authService.checkToken() && (authService.role === 'teacher' ||
+        authService.role === 'admin')" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">Teacher
+        </a>
+
+        <!-- Teacher dropdown -->
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <h6 class="dropdown-header">
+            <i class="fa fa-cogs"> </i> Settings</h6>
+          <a class="dropdown-item" [routerLink]="['/users/all']">All students</a>
+          <a class="dropdown-item" [routerLink]="['/users/info']">Student's scores</a>
+          <a class="dropdown-item" [routerLink]="['/questions/all']">All questions</a>
+        </div>
+      </li>
+
+      <!-- Dashboard -->
+      <li *ngIf="!authService.checkToken()" class="nav-item" [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" [routerLink]="['/dashboard']">Dashboard</a>
+      </li>
+
+      <!-- QCM -->
+      <li *ngIf="!authService.checkToken()" class="nav-item" [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" [routerLink]="['/questions']">
+          <i class="fa fa-list-ol"></i> QCM</a>
+      </li>
+
+      <!-- Profile -->
+      <li *ngIf="!authService.checkToken()" class="nav-item ">
+        <a id="profileBtn" class="nav-link " style="cursor:pointer;" (click)="onSelect()">
+          <i class="fa fa-user"></i> {{authService.username}}</a>
+      </li>
+
+      <!-- Login -->
+      <li *ngIf="authService.checkToken()" class="nav-item" [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }">
+        <a id="loginBtn" class="nav-link" [routerLink]="['/login']">
+          <i class="fa fa-sign-in"></i> Login</a>
+      </li>
+
+      <!-- Logout -->
+      <li *ngIf="!authService.checkToken()" class="nav-item">
+        <a id="logoutBtn" class="nav-link" (click)="onLogOutClick()" href="#">
+          <i class="fa fa-sign-out"></i>Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>

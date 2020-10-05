@@ -1,0 +1,187 @@
+<!-- Valid key alert -->
+
+<div *ngIf="isVerified">
+  <div class="row justify-content-center">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Success!</strong> {{message}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- resend key alert -->
+<div *ngIf="resendmessage.length !== 0 && resendmessage.includes('resent')">
+  <div class="row justify-content-center">
+    <div class="alert alert-dismissible alert-primary">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Sent!</strong> {{resendmessage}}
+    </div>
+  </div>
+</div>
+
+
+<!-- Account already verified alert -->
+<div *ngIf="resendmessage.length !== 0 && resendmessage.includes('log')">
+  <div class="row justify-content-center">
+    <div class="alert alert-dismissible alert-secondary">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Oh snap!</strong> This account has already been verified.
+    </div>
+  </div>
+</div>
+
+<!-- resend key failed alert -->
+<div *ngIf="resendmessage.length !== 0 && resendmessage.includes('No')">
+  <div class="row justify-content-center">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Oh snap!</strong> {{resendmessage}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- expired key alert -->
+
+<div *ngIf="isVerified === false && resendmessage.length === 0" class="container">
+  <div class="row justify-content-center">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Oh snap!</strong> {{message}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Card header -->
+
+<div *ngIf="key.length === 64" class="container">
+  <div class="row justify-content-center">
+    <div class="card">
+      <div class="card-header">
+        <div class="avatar mx-auto white row justify-content-center">
+          <img *ngIf="message.length === 0"
+               src="../../../../../assets/img/email1.png"
+               class="img-fluid h-25" alt="">
+
+          <img *ngIf="isVerified === false && resendmessage.length === 0"
+               src="../../../../../assets/img/exipired.png"
+               class="img-fluid h-25" alt="">
+
+          <img *ngIf="resendmessage.length !== 0"
+               src="../../../../../assets/img/resend-email.png"
+               class="img-fluid h-25" alt="">
+
+          <img *ngIf="isVerified"
+               src="../../../../../assets/img/verified.png"
+               class="img-fluid h-25" alt="">
+        </div>
+        <h4 *ngIf="message.length === 0"
+            class="text-monospace font-italic font-weight-bolder row justify-content-center">
+          Please confirm your email address
+        </h4>
+      </div>
+
+      <!-- normal card body  -->
+      <div *ngIf="message.length === 0" class="card-body">
+        <p class="card-text text-monospace font-italic font-weight-bold">
+          Thanks for signing up to TeacherApp, We’re happy to have you.
+        </p>
+        <p class=" text-monospace font-italic">
+          Please take a second to make sure we have your correct email address.</p>
+
+        <div class="row justify-content-center">
+          <button [disabled]="message.length !== 0" (click)="verifyEmail()"
+                  type="button" class="btn btn-md btn-success
+                  text-monospace font-italic font-weight-bolder text-center">
+            Confirm your email address
+          </button>
+        </div>
+      </div>
+
+      <!-- resend email card body -->
+      <div *ngIf="(isVerified === false || resendmessage.length !== 0)
+            && !resendmessage.includes('log')"
+           class="card-body">
+        <p class="card-text text-monospace font-italic font-weight-bold">
+          To resend the key, enter your email address below.
+        </p>
+
+        <!-- resend email input -->
+        <label for="inputEmail">
+        </label>
+        <input #emailInput="ngModel"
+               pattern="^[aA-zZ0-9._%+-]+@[a-z0-9.-]+\.[aA-zZ]{2,4}$"
+               [class.is-invalid]="emailInput.invalid && emailInput.touched"
+               [class.is-valid]="!(emailInput.invalid && emailInput.untouched)"
+               class="form-control"
+               type="email" id="inputEmail"
+               [(ngModel)]="resendEmail" name="email"
+               placeholder="Email address" required>
+        <div *ngIf="emailInput.errors && (emailInput.invalid ||
+                        emailInput.touched)">
+          <small id="emailInvalid" class="text-danger"
+                 *ngIf="emailInput.errors.pattern">
+            {{emailInput.value}} is not a valid email
+          </small>
+          <small id="emailRequired" class="text-danger"
+                 *ngIf="emailInput.errors.required
+                      && emailInput.touched">An Email is required</small>
+        </div>
+
+        <!-- end resend email input -->
+
+        <br>
+
+        <div class="row justify-content-center">
+          <button [disabled]="emailInput.invalid || resendmessage.length !== 0"
+                  (click)="resend()" type="button" class="btn btn-md btn-success
+                  text-monospace font-italic font-weight-bolder text-center">
+            Resend the key
+          </button>
+        </div>
+      </div>
+
+      <!-- valid key card body -->
+      <div *ngIf="isVerified || resendmessage.includes('log')" class="card-body">
+        <p *ngIf="!resendmessage.includes('log')"
+          class="card-text text-monospace font-italic font-weight-bold">
+          Your email has been verified, you may now login...
+        </p>
+
+        <p class="card-text text-monospace font-italic font-weight-bold">
+         {{resendmessage}}
+        </p>
+
+        <div class="row justify-content-center">
+          <button [routerLink]="['/login']"
+                  type="button" class="btn btn-md btn-success
+                  text-monospace font-italic font-weight-bolder text-center">
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Invalid key -->
+
+<div *ngIf="key.length !== 64" class="container">
+  <div class="row justify-content-center">
+    <img src="../../../../../assets/img/invalid-key.jpg"
+         class="img-fluid" alt="">
+    <h5 class="text-monospace font-italic">
+      <ngb-alert [type]="'danger'" [dismissible]="false">
+        <strong>Invalid key!</strong> Better check yourself, you're not looking too good.
+      </ngb-alert>
+    </h5>
+  </div>
+</div>
+

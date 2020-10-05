@@ -1,0 +1,143 @@
+<div *ngIf="question.qns">
+  <div class="col s6">
+
+    <!-- Time elapsed -->
+    <div class="container" style="width: 16rem;">
+      <div class="row justify-content-center">
+        <div class="card ">
+          <div class="card-body">
+              <span class="text-monospace font-italic font-weight-bolder"
+                style="color: green; text-align: center">
+                <i class="fa fa-clock-o" aria-hidden="true" style="color: #0c1722"></i>
+                  Time Elapsed : {{question.displayTimeElapsed()}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions progress bar title -->
+    <div class="col-9 mx-auto">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h5 class="text-monospace font-italic font-weight-bolder">Question Progress</h5>
+        </div>
+        <div>
+          <h5 class="text-monospace font-italic font-weight-bolder">
+            {{question.qnProgress + 1}}/{{(question.qns).length}}
+          </h5>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions progress bar -->
+    <div class="progress col-9 mx-auto">
+      <div class="progress-bar progress-bar-success progress-bar-striped active"
+           [ngStyle]="{'width.%':(question.qnProgress)*10}" >
+        {{(question.qnProgress) * 10}}%
+      </div>
+    </div>
+    <br>
+
+    <!-- Question card -->
+    <div class="col-10 justify-content-center mx-auto">
+      <div class="card" style="background-color: #31373e">
+
+        <!-- Question title -->
+        <div class="card-content">
+          <p class="card-title ml-3 mt-4 text-monospace font-italic font-weight-bolder"
+             style="color: white">Question
+            {{(question.qnProgress + 1)}} :</p>
+          <h5>
+            <p class="ml-3" style="color: white">
+              <strong>{{question.qns[question.qnProgress].question}}</strong>
+            </p>
+          </h5>
+        </div>
+
+        <!-- Questions of type fill in -->
+        <div *ngIf="question.qns[question.qnProgress].type === 'fill in'"
+             class="card ml-3 mb-3 mr-3" style="margin: 10px;"> {{onChangeTickets()}}
+          <p class="list-group list-group-flush">
+
+            <!-- Loop through all questions of type fill in -->
+            <ng-container *ngFor="let group of getInputs.controls; let i = index">
+
+              <!-- inputs groups for questions of type fill in -->
+              <div [formGroup]="group" class="list-group-item list-group-item-action">
+
+                <!-- inputs number for questions of type fill in -->
+                <label for="{{i}}">({{i + 1 }})</label>
+
+                <!-- inputs for questions of type fill in -->
+                <input type="text" id="{{i}}" formControlName="name"
+                       class="form-control"
+                       [class.is-invalid]="group['controls'].name.invalid &&
+                         group['controls'].name.touched"
+                       [class.is-valid]="!(group['controls'].name.invalid &&
+                         group['controls'].name['untouched'])">
+
+                <!-- input error message for questions of type fill in -->
+                <small class="text-danger" style="float: left"
+                       [class.d-none]="group['controls'].name.valid ||
+                     group['controls'].name['untouched']">
+                  <i style="color: red" class="fa fa-exclamation-circle"
+                     aria-hidden="true"></i>
+                    An answer required here
+                </small>
+              </div>
+            </ng-container>
+          </p>
+
+          <br>
+
+          <!-- Next button for questions of type fill in -->
+          <div class="btn-toolbar row mx-auto" role="toolbar"
+               aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+              <button (click)="test1()" type="button"
+                      class="btn btn-outline-success">prev
+              </button>
+            </div>
+            <div class="btn-group mr-2" role="group" aria-label="Second group">
+              <button (click)="test()" type="button" class="btn btn-outline-info"
+                      [disabled]="getInputs.invalid">next
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Questions of type multiple or boolean -->
+        <div *ngIf="question.qns[question.qnProgress].type !== 'fill in'"
+             class="card" style="margin: 10px;">
+          <a class="list-group list-group-flush">
+
+            <!-- Loop through all questions of multiple or boolean -->
+            <ng-container
+              *ngFor="let option of question.qns[question.qnProgress]['answers'];
+              let i = index">
+
+              <!-- Style of possible answers -->
+              <a *ngIf="option != null "
+                 class="list-group-item list-group-item-action"
+                 onmousemove="this.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
+                      this.style.color='green'; this.style.fontSize= '3.7vh';"
+                 onmouseout="this.style.backgroundColor = ''; this.style.color='';
+                  this.style.fontSize= '';"
+                 style="cursor:pointer; "
+                 (click)="answer(i,
+                option['isCorrect'])">
+                {{option.option}}
+              </a>
+            </ng-container>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+
+
+

@@ -1,0 +1,69 @@
+<br>
+<div class="container register-form col-lg-7 col-md-8 col-sm-8 rounded">
+
+  <div class="form rounded col-12">
+
+    <div class="note bg-dark">
+      <h3 id="formTitle"
+          class="font-weight-bolder mb-3">
+        Log in to your account</h3>
+      <p class="font-weight-bold">
+        To log in, please fill in these fields with your e-mail or username and password.
+      </p>
+    </div>
+
+    <form #signUpForm="ngForm"
+          class="form-content text-center col-md-12 rounded my-form"
+          (submit)="onLoginSubmit()">
+
+      <!-- Username -->
+      <div class="row justify-content-center col-12">
+        <label for="pseudo">
+        </label>
+        <input #pseudoInput="ngModel"
+               [class.is-invalid]="pseudoInput.invalid && pseudoInput.touched"
+               [class.is-valid]="!(pseudoInput.invalid && pseudoInput.untouched)"
+               class="form-control " type="text" id="pseudo"
+               [(ngModel)]="pseudo" name="pseudo"
+               placeholder="Email address or Username" required>
+        <small id="emailError" class="text-danger" [class.d-none]="pseudoInput.valid ||
+          pseudoInput.untouched">An Email or a username is required</small>
+      </div>
+      <br>
+
+      <!-- password -->
+      <div class="row justify-content-center col-12">
+        <label for="password"></label>
+        <label for="password"></label>
+        <input #passwordInput="ngModel"
+               [class.is-invalid]="passwordInput.invalid && passwordInput.touched"
+               [class.is-valid]="!(passwordInput.invalid && passwordInput.untouched)"
+               class="form-control" type="password" id="password"
+               [(ngModel)]="password" name="password"
+               placeholder="Password" required>
+        <small id="passwordError" class="text-danger" [class.d-none]="passwordInput.valid ||
+          passwordInput.untouched">A password is required</small>
+      </div>
+      <br>
+
+      <div class="d-flex">
+        <div>
+          <button [disabled]="signUpForm.form.invalid"
+                  class="btn btn-secondary btn-rounded
+                  text-monospace font-italic font-weight-bolder"
+                  id="submitBtn" type="submit">Sign In
+          </button>
+        </div>
+        <div class="ml-auto">
+          <small class="">
+            <a class="nav-link font-italic" id="signUpLink"
+               style="text-decoration: underline; color: #343A40"
+               [routerLink]="['/register']">Don't have an account ? Sign Up</a>
+          </small>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
