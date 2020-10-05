@@ -789,7 +789,7 @@ false Zulu
     <database id="2" parent="1" name="kots">
       <ObjectId>16394</ObjectId>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1440</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1484</IntrospectionStateNumber>
       <Current>1</Current>
     </database>
     <database id="3" parent="1" name="postgres">
@@ -846,7 +846,7 @@ false Zulu
       <Comment>standard public schema</Comment>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1441</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1486</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <access-method id="16" parent="2" name="heap">
@@ -933,14 +933,14 @@ deleted</Labels>
       <StateNumber>1433</StateNumber>
     </table>
     <table id="30" parent="15" name="groups">
-      <ObjectId>17676</ObjectId>
+      <ObjectId>17740</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>1434</StateNumber>
+      <StateNumber>1478</StateNumber>
     </table>
     <table id="31" parent="15" name="users">
-      <ObjectId>17683</ObjectId>
+      <ObjectId>17747</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>1436</StateNumber>
+      <StateNumber>1480</StateNumber>
     </table>
     <column id="32" parent="29" name="name">
       <Position>1</Position>
@@ -967,42 +967,42 @@ deleted</Labels>
       <Position>1</Position>
       <DataType>uuid|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1434</StateNumber>
+      <StateNumber>1478</StateNumber>
       <TypeId>2950</TypeId>
     </column>
     <column id="36" parent="30" name="groupName">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1434</StateNumber>
+      <StateNumber>1478</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="37" parent="30" name="createdAt">
       <Position>3</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1434</StateNumber>
-      <DefaultExpression>&apos;2020-10-04 16:10:55.124+00&apos;::timestamp with time zone</DefaultExpression>
+      <StateNumber>1478</StateNumber>
+      <DefaultExpression>&apos;2020-10-05 02:16:27.159+00&apos;::timestamp with time zone</DefaultExpression>
       <TypeId>1184</TypeId>
     </column>
     <column id="38" parent="30" name="updatedAt">
       <Position>4</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1434</StateNumber>
-      <DefaultExpression>&apos;2020-10-04 16:10:55.124+00&apos;::timestamp with time zone</DefaultExpression>
+      <StateNumber>1478</StateNumber>
+      <DefaultExpression>&apos;2020-10-05 02:16:27.159+00&apos;::timestamp with time zone</DefaultExpression>
       <TypeId>1184</TypeId>
     </column>
     <index id="39" parent="30" name="groups_pkey">
-      <ObjectId>17681</ObjectId>
-      <StateNumber>1434</StateNumber>
+      <ObjectId>17745</ObjectId>
+      <StateNumber>1478</StateNumber>
       <ColNames>groupId</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
     <key id="40" parent="30" name="groups_pkey">
-      <ObjectId>17682</ObjectId>
-      <StateNumber>1434</StateNumber>
+      <ObjectId>17746</ObjectId>
+      <StateNumber>1478</StateNumber>
       <ColNames>groupId</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>groups_pkey</UnderlyingIndexName>
@@ -1011,95 +1011,95 @@ deleted</Labels>
       <Position>1</Position>
       <DataType>uuid|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1436</StateNumber>
+      <StateNumber>1480</StateNumber>
       <TypeId>2950</TypeId>
     </column>
     <column id="42" parent="31" name="username">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1436</StateNumber>
+      <StateNumber>1480</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="43" parent="31" name="firstName">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1436</StateNumber>
+      <StateNumber>1480</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="44" parent="31" name="lastName">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1436</StateNumber>
+      <StateNumber>1480</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="45" parent="31" name="email">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1436</StateNumber>
+      <StateNumber>1480</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="46" parent="31" name="password">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1436</StateNumber>
+      <StateNumber>1480</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="47" parent="31" name="createdAt">
       <Position>7</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1436</StateNumber>
-      <DefaultExpression>&apos;2020-10-04 16:10:55.172+00&apos;::timestamp with time zone</DefaultExpression>
+      <StateNumber>1480</StateNumber>
+      <DefaultExpression>&apos;2020-10-05 02:16:27.217+00&apos;::timestamp with time zone</DefaultExpression>
       <TypeId>1184</TypeId>
     </column>
     <column id="48" parent="31" name="updatedAt">
       <Position>8</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1436</StateNumber>
-      <DefaultExpression>&apos;2020-10-04 16:10:55.172+00&apos;::timestamp with time zone</DefaultExpression>
+      <StateNumber>1480</StateNumber>
+      <DefaultExpression>&apos;2020-10-05 02:16:27.217+00&apos;::timestamp with time zone</DefaultExpression>
       <TypeId>1184</TypeId>
     </column>
     <index id="49" parent="31" name="users_pkey">
-      <ObjectId>17691</ObjectId>
-      <StateNumber>1436</StateNumber>
+      <ObjectId>17755</ObjectId>
+      <StateNumber>1480</StateNumber>
       <ColNames>userId</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
     <index id="50" parent="31" name="users_username_key">
-      <ObjectId>17693</ObjectId>
-      <StateNumber>1436</StateNumber>
+      <ObjectId>17757</ObjectId>
+      <StateNumber>1480</StateNumber>
       <ColNames>username</ColNames>
       <Unique>1</Unique>
     </index>
     <index id="51" parent="31" name="users_email_key">
-      <ObjectId>17695</ObjectId>
-      <StateNumber>1436</StateNumber>
+      <ObjectId>17759</ObjectId>
+      <StateNumber>1480</StateNumber>
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="52" parent="31" name="users_pkey">
-      <ObjectId>17692</ObjectId>
-      <StateNumber>1436</StateNumber>
+      <ObjectId>17756</ObjectId>
+      <StateNumber>1480</StateNumber>
       <ColNames>userId</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>users_pkey</UnderlyingIndexName>
     </key>
     <key id="53" parent="31" name="users_username_key">
-      <ObjectId>17694</ObjectId>
-      <StateNumber>1436</StateNumber>
+      <ObjectId>17758</ObjectId>
+      <StateNumber>1480</StateNumber>
       <ColNames>username</ColNames>
       <UnderlyingIndexName>users_username_key</UnderlyingIndexName>
     </key>
     <key id="54" parent="31" name="users_email_key">
-      <ObjectId>17696</ObjectId>
-      <StateNumber>1436</StateNumber>
+      <ObjectId>17760</ObjectId>
+      <StateNumber>1480</StateNumber>
       <ColNames>email</ColNames>
       <UnderlyingIndexName>users_email_key</UnderlyingIndexName>
     </key>
