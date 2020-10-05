@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilComponent implements OnInit {
 
+  myPorfile = {
+    username: 'Toto',
+    nom: 'Foo',
+    prenom: 'Bar',
+    email: 'foo.bar@gmail.com'
+  };
+
   constructor() { }
 
   ngOnInit(): void {
