@@ -1,19 +1,11 @@
 {
   "/server": {
-    "target": "http://localhost:5000/server",
+    "target": "http://localhost:8000/server",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
       "^/server" : ""
-    },
-    "_comment": {
-      "target" : "This is where we need to define the backend URL.",
-      "secure" : "value is false if you're not using https",
-      "pathRewrite" : "We need to use this option to edit or rewrite the path",
-      "changeOrigin" : "If your backend API is not running on localhost, we need to make this flag true",
-      "logLevel" : "If you want to check whether proxy configuration working properly or not, this flag should be debug",
-      "bypass" : "Sometimes we have to bypass the proxy, we can define a function with this. But it should define in proxy.config.js instead of proxy.config.json"
     }
   }
 

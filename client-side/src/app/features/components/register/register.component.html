@@ -11,84 +11,128 @@
     <form #signUpForm="ngForm"
           class="form-content text-center col-md-12 rounded my-form" (submit)="onRegisterSubmit()">
 
-      <!-- Username -->
-      <div class="row justify-content-center col-12">
-        <label for="username">
-        </label>
-        <input #usernameInput="ngModel"
-               [class.is-invalid]="usernameInput.invalid && usernameInput.touched"
-               [class.is-valid]="!(usernameInput.invalid && usernameInput.untouched)"
-               class="form-control" type="text" id="username"
-               [(ngModel)]="username" name="username" minlength="4" maxlength="9"
-               placeholder="username" required>
-        <div *ngIf="usernameInput.errors && (usernameInput.invalid ||
-                        usernameInput.touched)">
-          <small id="usernameError1" class="text-danger" *ngIf="usernameInput.errors.minlength">
-            {{usernameInput.value}} username minimum length is 4
-          </small>
-          <small id="usernameError2" class="text-danger"
-                 *ngIf="usernameInput.errors.required
-                      && usernameInput.touched">A username is required</small>
+      <!-- fistName -->
+      <div class="row">
+        <div class="justify-content-center col-6">
+          <label for="fistNameInput">
+          </label>
+          <input #fistNameInput="ngModel"
+                 [class.is-invalid]="fistNameInput.invalid && fistNameInput.touched"
+                 [class.is-valid]="!(fistNameInput.invalid && fistNameInput.untouched)"
+                 class="form-control" type="text" id="fistNameInput"
+                 [(ngModel)]="firstName" name="firstName" minlength="4" maxlength="9"
+                 placeholder="First name" required>
+          <div *ngIf="usernameInput.errors && (fistNameInput.invalid ||
+                        fistNameInput.touched)">
+            <small id="fistNameError1" class="text-danger" *ngIf="fistNameInput.errors.minlength">
+              {{fistNameInput.value}} minimum length must 4
+            </small>
+            <small id="fistNameError2" class="text-danger"
+                   *ngIf="fistNameInput.errors.required
+                      && fistNameInput.touched">A username is required</small>
+          </div>
         </div>
-      </div>
-      <br>
 
-      <!-- email -->
-      <div class="row justify-content-center col-12">
-        <label for="inputEmail">
-        </label>
-        <input #emailInput="ngModel"
-               pattern="^[aA-zZ0-9._%+-]+@[a-z0-9.-]+\.[aA-zZ]{2,4}$"
-               [class.is-invalid]="emailInput.invalid && emailInput.touched"
-               [class.is-valid]="!(emailInput.invalid && emailInput.untouched)"
-               class="form-control" type="email" id="inputEmail"
-               [(ngModel)]="email" name="email"
-               placeholder="Email address" required>
-        <div *ngIf="emailInput.errors && (emailInput.invalid ||
-                        emailInput.touched)">
-          <small id="emailInvalid" class="text-danger" *ngIf="emailInput.errors.pattern">
-            {{emailInput.value}} is not a valid email
-          </small>
-          <small id="emailRequired" class="text-danger" *ngIf="emailInput.errors.required
-                      && emailInput.touched">An Email is required</small>
+        <!-- LastName -->
+        <div class="justify-content-center col-6">
+          <label for="lastNameInput">
+          </label>
+          <input #lastNameInput="ngModel"
+                 [class.is-invalid]="lastNameInput.invalid && lastNameInput.touched"
+                 [class.is-valid]="!(lastNameInput.invalid && lastNameInput.untouched)"
+                 class="form-control" type="text" id="lastNameInput"
+                 [(ngModel)]="lastName" name="lastName" minlength="4" maxlength="9"
+                 placeholder="Last name" required>
+          <div *ngIf="lastNameInput.errors && (lastNameInput.invalid ||
+                        lastNameInput.touched)">
+            <small id="lastNameError1" class="text-danger" *ngIf="lastNameInput.errors.minlength">
+              {{lastNameInput.value}} minimum length must be 4
+            </small>
+            <small id="lastNameError2" class="text-danger"
+                   *ngIf="lastNameInput.errors.required
+                      && lastNameInput.touched">A last name is required</small>
+          </div>
         </div>
       </div>
-      <br>
+
+      <!-- Username -->
+      <div class="row">
+        <div class="justify-content-center col-6">
+          <label for="username">
+          </label>
+          <input #usernameInput="ngModel"
+                 [class.is-invalid]="usernameInput.invalid && usernameInput.touched"
+                 [class.is-valid]="!(usernameInput.invalid && usernameInput.untouched)"
+                 class="form-control" type="text" id="username"
+                 [(ngModel)]="username" name="username" minlength="4" maxlength="9"
+                 placeholder="Username" required>
+          <div *ngIf="usernameInput.errors && (usernameInput.invalid ||
+                        usernameInput.touched)">
+            <small id="usernameError1" class="text-danger" *ngIf="usernameInput.errors.minlength">
+              {{usernameInput.value}} minimum length must 4
+            </small>
+            <small id="usernameError2" class="text-danger"
+                   *ngIf="usernameInput.errors.required
+                      && usernameInput.touched">A username is required</small>
+          </div>
+        </div>
+        <div class="justify-content-center col-6">
+          <label for="inputEmail">
+          </label>
+          <input #emailInput="ngModel"
+                 pattern="^[aA-zZ0-9._%+-]+@[a-z0-9.-]+\.[aA-zZ]{2,4}$"
+                 [class.is-invalid]="emailInput.invalid && emailInput.touched"
+                 [class.is-valid]="!(emailInput.invalid && emailInput.untouched)"
+                 class="form-control" type="email" id="inputEmail"
+                 [(ngModel)]="email" name="email"
+                 placeholder="First name" required>
+          <div *ngIf="emailInput.errors && (emailInput.invalid ||
+                        emailInput.touched)">
+            <small id="emailInvalid" class="text-danger" *ngIf="emailInput.errors.pattern">
+              {{emailInput.value}} is not a valid email
+            </small>
+            <small id="emailRequired" class="text-danger" *ngIf="emailInput.errors.required
+                      && emailInput.touched">A first name is required</small>
+          </div>
+        </div>
+      </div>
 
       <!-- password -->
-      <div class="row justify-content-center col-12">
-        <label for="inputPassword"></label>
-        <input #passwordInput="ngModel"
-               [class.is-invalid]="passwordInput.invalid && passwordInput.touched"
-               [class.is-valid]="!(passwordInput.invalid && passwordInput.untouched)"
-               class="form-control" type="password" id="inputPassword"
-               [(ngModel)]="password" name="password"
-               placeholder="Password" required>
-        <small id="passwordRequired" class="text-danger" [class.d-none]="passwordInput.valid ||
+      <div class="row">
+        <div class="justify-content-center col-6">
+          <label for="inputPassword"></label>
+          <input #passwordInput="ngModel"
+                 [class.is-invalid]="passwordInput.invalid && passwordInput.touched"
+                 [class.is-valid]="!(passwordInput.invalid && passwordInput.untouched)"
+                 class="form-control" type="password" id="inputPassword"
+                 [(ngModel)]="password" name="password"
+                 placeholder="Password" required>
+          <small id="passwordRequired" class="text-danger" [class.d-none]="passwordInput.valid ||
           passwordInput.untouched">A password is required</small>
+        </div>
+        <!-- confirm password -->
+        <div class="justify-content-center col-6">
+          <label for="PasswordConfirm" class="col-form-label"></label>
+          <input #inputConfirmPassword="ngModel" pattern="{{passwordInput.value}}"
+                 [class.is-invalid]="inputConfirmPassword.invalid &&
+                   inputConfirmPassword.touched"
+                 [class.is-valid]="!(inputConfirmPassword.invalid &&
+                   inputConfirmPassword.untouched)"
+                 class="form-control" type="password" id="PasswordConfirm"
+                 [(ngModel)]="confirmPassword" name="confirmPassword"
+                 placeholder="Confirm password" required>
+
+          <div *ngIf="inputConfirmPassword.errors && (inputConfirmPassword.invalid ||
+                        inputConfirmPassword.touched)">
+            <small id="passwordMatchError" class="text-danger"
+                   *ngIf="inputConfirmPassword.errors.pattern">Passwords do not match</small>
+            <small id="confirmPasswordError" class="text-danger" *ngIf="inputConfirmPassword.errors.required
+                      && inputConfirmPassword.touched">Please confirm your password</small>
+          </div>
+        </div>
       </div>
       <br>
 
-      <!-- confirm password -->
-      <div class="row justify-content-center col-12">
-        <label for="PasswordConfirm" class="col-form-label"></label>
-        <input #inputConfirmPassword="ngModel" pattern="{{passwordInput.value}}"
-               [class.is-invalid]="inputConfirmPassword.invalid &&
-                   inputConfirmPassword.touched"
-               [class.is-valid]="!(inputConfirmPassword.invalid &&
-                   inputConfirmPassword.untouched)"
-               class="form-control" type="password" id="PasswordConfirm"
-               [(ngModel)]="confirmPassword" name="confirmPassword"
-               placeholder="Confirm password" required>
-
-        <div *ngIf="inputConfirmPassword.errors && (inputConfirmPassword.invalid ||
-                        inputConfirmPassword.touched)">
-          <small id="passwordMatchError" class="text-danger"
-                 *ngIf="inputConfirmPassword.errors.pattern">Passwords do not match</small>
-          <small id="confirmPasswordError" class="text-danger" *ngIf="inputConfirmPassword.errors.required
-                      && inputConfirmPassword.touched">Please confirm your password</small>
-        </div>
-      </div>
       <small class="font-italic">
         <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
         An unverified account is deleted within a week.
@@ -112,16 +156,6 @@
         </div>
       </div>
     </form>
-
   </div>
 </div>
 
-
-<!-- Confirm Password
-
-
-<div class="row justify-content-center w-100 col-12 ">
-
-</div>
-
--->

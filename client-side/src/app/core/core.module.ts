@@ -1,41 +1,24 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {JwtHelperService} from "@auth0/angular-jwt";
-import {RouterModule, Routes} from '@angular/router';
-import {SharedModule} from "../shared/shared.module";
-
-import {ValidateService} from "./services/validate.service";
-import {AuthService} from "./services/auth.service";
-import {ReviewsService} from "./services/reviews.service";
-import {QuestionsService} from "./services/questions.service";
-import {HomeComponent} from "./components/home/home.component";
-import {FooterComponent} from "./components/footer/footer.component";
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Routes, RouterModule} from '@angular/router';
+import {HomePageComponent} from './components/home-page/home-page.component';
+import {AboutComponent} from './components/about/about.component';
+import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 
 
-const appRoutes : Routes = [
-  {path: '', redirectTo : '/home', pathMatch: 'full'},
-  { path: "home", component: HomeComponent },
+const routes: Routes = [
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: "home", component: HomePageComponent},
+  {path: "about", component: AboutComponent},
   {path: "**", component: PageNotFoundComponent}
 ];
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    FooterComponent,
-    PageNotFoundComponent
-  ],
+  declarations: [HomePageComponent, AboutComponent, PageNotFoundComponent],
   imports: [
     CommonModule,
-    SharedModule,
-    RouterModule.forChild(appRoutes),
-  ],
-  providers: [
-    ValidateService,
-    AuthService,
-    QuestionsService,
-    ReviewsService,
-    JwtHelperService
+    RouterModule.forChild(routes)
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+}

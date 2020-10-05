@@ -1,42 +1,41 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {JwtModule} from '@auth0/angular-jwt';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import {AgGridModule} from "ag-grid-angular";
-import {enableProdMode} from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import {AdminModule} from './admin/admin.module';
-import {FeaturesModule} from './features/features.module';
+import {CustomersModule} from './customers/customers.module';
 import {CoreModule} from './core/core.module';
-
+import {SharedModule} from './shared/shared.module';
+import {FeaturesModule} from './features/features.module'
 import {AppComponent} from './app.component';
-import {SharedModule} from "./shared/shared.module";
+import {Routes, RouterModule} from '@angular/router';
 
-const appRoutes: Routes = [
-  { path: 'admin', loadChildren: () => import(`./admin/admin.module`)
-      .then(module => module.AdminModule) },
-  {path: "features", loadChildren : './features/features.module#FeaturesModule'},
-  //{path: "**", redirectTo: '/home', pathMatch: 'full'}
+
+//{path: "features", loadChildren : './customers/customers.module#CustomersModule'}
+const routes: Routes = [
+  {
+    path: 'customers', loadChildren: () =>
+      import('./customers/customers.module').then(m => m.CustomersModule)
+  },
+  {
+    path: 'features', loadChildren: () =>
+      import('./features/features.module').then(m => m.FeaturesModule)
+  }
 ];
 
-//enableProdMode();
-
-// noinspection AngularInvalidImportedOrDeclaredSymbol
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    SharedModule,
-    AdminModule,
-    AdminModule,
+    CustomersModule,
     FeaturesModule,
+    SharedModule,
     CoreModule,
-    RouterModule.forRoot(appRoutes),
-    AgGridModule.withComponents([]),
+    NgbModule,
+    RouterModule.forRoot(routes)
   ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
