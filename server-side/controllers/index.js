@@ -1,9 +1,12 @@
 import userControllerFactory from './userController'
+import groupControllerFactory from './groupController'
 
 const userController = userControllerFactory();
+const groupController = groupControllerFactory();
 
 const controllers = Object.freeze({
-    userController});
+    userController, groupController
+});
 
 export default controllers
-export {userController}
+export {userController, groupController}

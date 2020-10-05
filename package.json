@@ -16,7 +16,7 @@
     "cover:unit:nyc": "nyc --reporter=html --reporter=text-summary --report-dir=test-coverage/unit-tests npm run test:unit",
     "cover:unit:mocha": "mocha --require @babel/register 'server-side/tests/unit-tests/**/*.js' --timeout 10000 --exit --reporter mochawesome --reporter-options reportDir=test-reports/unit --reporter-options reportFilename=index",
     "db:migrate": "npx sequelize-cli db:migrate",
-    "db:migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "db:migrate:undo": "npx sequelize-cli db:migrate:undo:all",
     "db:seed": "npx sequelize db:seed:all",
     "db:seed:undo": "npx sequelize db:seed:undo",
     "api:doc": "cd docs && aglio -i ./blueprint/input.apib --theme-template default --theme-variables cyborg -o index.html",

@@ -36,3 +36,5 @@ your browser.
 
 * If you want to run in the container any npm scripts inside the package.json, 
 change the server port cause 8000 is already in use. 
+
+* For more info check the API documetaion [here](https://make-kots-great-again.github.io/web/ "api doc")

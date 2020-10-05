@@ -104,7 +104,7 @@ false America/Argentina/San_Luis
 false America/Argentina/Tucuman
 false America/Argentina/Ushuaia
 false America/Aruba
-false America/Asuncion
+true America/Asuncion
 false America/Atikokan
 true America/Atka
 false America/Bahia
@@ -376,29 +376,29 @@ false Atlantic/Reykjavik
 false Atlantic/South_Georgia
 false Atlantic/St_Helena
 false Atlantic/Stanley
-false Australia/ACT
-false Australia/Adelaide
+true Australia/ACT
+true Australia/Adelaide
 false Australia/Brisbane
-false Australia/Broken_Hill
-false Australia/Canberra
-false Australia/Currie
+true Australia/Broken_Hill
+true Australia/Canberra
+true Australia/Currie
 false Australia/Darwin
 false Australia/Eucla
-false Australia/Hobart
-false Australia/LHI
+true Australia/Hobart
+true Australia/LHI
 false Australia/Lindeman
-false Australia/Lord_Howe
-false Australia/Melbourne
-false Australia/NSW
+true Australia/Lord_Howe
+true Australia/Melbourne
+true Australia/NSW
 false Australia/North
 false Australia/Perth
 false Australia/Queensland
-false Australia/South
-false Australia/Sydney
-false Australia/Tasmania
-false Australia/Victoria
+true Australia/South
+true Australia/Sydney
+true Australia/Tasmania
+true Australia/Victoria
 false Australia/West
-false Australia/Yancowinna
+true Australia/Yancowinna
 true BDST
 false BDT
 false BNT
@@ -612,7 +612,7 @@ false KRAST
 false KRAT
 false KST
 false Kwajalein
-false LHDT
+true LHDT
 false LHST
 false LIGT
 false LINT
@@ -674,7 +674,7 @@ false PST
 true PST8PDT
 false PWT
 true PYST
-false PYT
+true PYT
 true Pacific/Apia
 true Pacific/Auckland
 false Pacific/Bougainville
@@ -700,7 +700,7 @@ false Pacific/Marquesas
 false Pacific/Midway
 false Pacific/Nauru
 false Pacific/Niue
-false Pacific/Norfolk
+true Pacific/Norfolk
 false Pacific/Noumea
 false Pacific/Pago_Pago
 false Pacific/Palau
@@ -789,7 +789,7 @@ false Zulu
     <database id="2" parent="1" name="kots">
       <ObjectId>16394</ObjectId>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1143</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1440</IntrospectionStateNumber>
       <Current>1</Current>
     </database>
     <database id="3" parent="1" name="postgres">
@@ -846,7 +846,7 @@ false Zulu
       <Comment>standard public schema</Comment>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1144</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1441</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <access-method id="16" parent="2" name="heap">
@@ -916,131 +916,190 @@ false Zulu
     <language id="25" parent="2" name="internal"/>
     <language id="26" parent="2" name="plpgsql"/>
     <language id="27" parent="2" name="sql"/>
-    <table id="28" parent="15" name="SequelizeMeta">
-      <ObjectId>16774</ObjectId>
+    <object-type id="28" parent="15" name="enum_users_role">
+      <ObjectId>17290</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>970</StateNumber>
-    </table>
-    <table id="29" parent="15" name="users">
-      <ObjectId>17090</ObjectId>
-      <Outdated>1</Outdated>
+      <StateNumber>1229</StateNumber>
+      <SubKind>enum</SubKind>
+      <Labels>active
+pending
+deleted</Labels>
+      <BaseTypeId>0</BaseTypeId>
+      <SubCategory>enum</SubCategory>
+    </object-type>
+    <table id="29" parent="15" name="SequelizeMeta">
+      <ObjectId>17671</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>1136</StateNumber>
+      <StateNumber>1433</StateNumber>
     </table>
-    <column id="30" parent="28" name="name">
+    <table id="30" parent="15" name="groups">
+      <ObjectId>17676</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1434</StateNumber>
+    </table>
+    <table id="31" parent="15" name="users">
+      <ObjectId>17683</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1436</StateNumber>
+    </table>
+    <column id="32" parent="29" name="name">
       <Position>1</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>970</StateNumber>
+      <StateNumber>1433</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="31" parent="28" name="SequelizeMeta_pkey">
-      <ObjectId>16777</ObjectId>
-      <StateNumber>970</StateNumber>
+    <index id="33" parent="29" name="SequelizeMeta_pkey">
+      <ObjectId>17674</ObjectId>
+      <StateNumber>1433</StateNumber>
       <ColNames>name</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="32" parent="28" name="SequelizeMeta_pkey">
-      <ObjectId>16778</ObjectId>
-      <StateNumber>970</StateNumber>
+    <key id="34" parent="29" name="SequelizeMeta_pkey">
+      <ObjectId>17675</ObjectId>
+      <StateNumber>1433</StateNumber>
       <ColNames>name</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>SequelizeMeta_pkey</UnderlyingIndexName>
     </key>
-    <column id="33" parent="29" name="userId">
+    <column id="35" parent="30" name="groupId">
       <Position>1</Position>
       <DataType>uuid|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1136</StateNumber>
+      <StateNumber>1434</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="34" parent="29" name="username">
+    <column id="36" parent="30" name="groupName">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1136</StateNumber>
+      <StateNumber>1434</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="35" parent="29" name="firstName">
+    <column id="37" parent="30" name="createdAt">
+      <Position>3</Position>
+      <DataType>timestamp with time zone|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1434</StateNumber>
+      <DefaultExpression>&apos;2020-10-04 16:10:55.124+00&apos;::timestamp with time zone</DefaultExpression>
+      <TypeId>1184</TypeId>
+    </column>
+    <column id="38" parent="30" name="updatedAt">
+      <Position>4</Position>
+      <DataType>timestamp with time zone|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1434</StateNumber>
+      <DefaultExpression>&apos;2020-10-04 16:10:55.124+00&apos;::timestamp with time zone</DefaultExpression>
+      <TypeId>1184</TypeId>
+    </column>
+    <index id="39" parent="30" name="groups_pkey">
+      <ObjectId>17681</ObjectId>
+      <StateNumber>1434</StateNumber>
+      <ColNames>groupId</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="40" parent="30" name="groups_pkey">
+      <ObjectId>17682</ObjectId>
+      <StateNumber>1434</StateNumber>
+      <ColNames>groupId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>groups_pkey</UnderlyingIndexName>
+    </key>
+    <column id="41" parent="31" name="userId">
+      <Position>1</Position>
+      <DataType>uuid|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1436</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="42" parent="31" name="username">
+      <Position>2</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1436</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="43" parent="31" name="firstName">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1136</StateNumber>
+      <StateNumber>1436</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="36" parent="29" name="lastName">
+    <column id="44" parent="31" name="lastName">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1136</StateNumber>
+      <StateNumber>1436</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="37" parent="29" name="email">
+    <column id="45" parent="31" name="email">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1136</StateNumber>
+      <StateNumber>1436</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="38" parent="29" name="password">
+    <column id="46" parent="31" name="password">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1136</StateNumber>
+      <StateNumber>1436</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="39" parent="29" name="createdAt">
+    <column id="47" parent="31" name="createdAt">
       <Position>7</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1136</StateNumber>
-      <DefaultExpression>&apos;2020-10-02 13:50:08.515+00&apos;::timestamp with time zone</DefaultExpression>
+      <StateNumber>1436</StateNumber>
+      <DefaultExpression>&apos;2020-10-04 16:10:55.172+00&apos;::timestamp with time zone</DefaultExpression>
       <TypeId>1184</TypeId>
     </column>
-    <column id="40" parent="29" name="updatedAt">
+    <column id="48" parent="31" name="updatedAt">
       <Position>8</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1136</StateNumber>
-      <DefaultExpression>&apos;2020-10-02 13:50:08.515+00&apos;::timestamp with time zone</DefaultExpression>
+      <StateNumber>1436</StateNumber>
+      <DefaultExpression>&apos;2020-10-04 16:10:55.172+00&apos;::timestamp with time zone</DefaultExpression>
       <TypeId>1184</TypeId>
     </column>
-    <index id="41" parent="29" name="users_pkey">
-      <ObjectId>17098</ObjectId>
-      <StateNumber>1136</StateNumber>
+    <index id="49" parent="31" name="users_pkey">
+      <ObjectId>17691</ObjectId>
+      <StateNumber>1436</StateNumber>
       <ColNames>userId</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="42" parent="29" name="users_username_key">
-      <ObjectId>17100</ObjectId>
-      <StateNumber>1136</StateNumber>
+    <index id="50" parent="31" name="users_username_key">
+      <ObjectId>17693</ObjectId>
+      <StateNumber>1436</StateNumber>
       <ColNames>username</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="43" parent="29" name="users_email_key">
-      <ObjectId>17102</ObjectId>
-      <StateNumber>1136</StateNumber>
+    <index id="51" parent="31" name="users_email_key">
+      <ObjectId>17695</ObjectId>
+      <StateNumber>1436</StateNumber>
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="44" parent="29" name="users_pkey">
-      <ObjectId>17099</ObjectId>
-      <StateNumber>1136</StateNumber>
+    <key id="52" parent="31" name="users_pkey">
+      <ObjectId>17692</ObjectId>
+      <StateNumber>1436</StateNumber>
       <ColNames>userId</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>users_pkey</UnderlyingIndexName>
     </key>
-    <key id="45" parent="29" name="users_username_key">
-      <ObjectId>17101</ObjectId>
-      <StateNumber>1136</StateNumber>
+    <key id="53" parent="31" name="users_username_key">
+      <ObjectId>17694</ObjectId>
+      <StateNumber>1436</StateNumber>
       <ColNames>username</ColNames>
       <UnderlyingIndexName>users_username_key</UnderlyingIndexName>
     </key>
-    <key id="46" parent="29" name="users_email_key">
-      <ObjectId>17103</ObjectId>
-      <StateNumber>1136</StateNumber>
+    <key id="54" parent="31" name="users_email_key">
+      <ObjectId>17696</ObjectId>
+      <StateNumber>1436</StateNumber>
       <ColNames>email</ColNames>
       <UnderlyingIndexName>users_email_key</UnderlyingIndexName>
     </key>
