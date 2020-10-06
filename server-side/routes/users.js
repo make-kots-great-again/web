@@ -16,7 +16,9 @@ router.post("/login", makeCallback(userController.logInUser));
 router.get("/users/profiles",
     passport.authenticate("jwt", {session: false}),
     makeCallback(userController.getAllUsers));
-
+router
+    .route("/user/:userId")
+    .get(makeCallback(userController.getOneUser));
 router
     .route("/user/:userId")
     .delete(makeCallback(userController.deleteUser));

@@ -1,7 +1,7 @@
 import {userService} from "../services";
 export default function userControllerFactory() {
     return Object.freeze({
-        registerUser, getAllUsers, logInUser, deleteUser
+        registerUser, getAllUsers, getOneUser, logInUser, deleteUser
     });
 
     async function registerUser(httpRequest) {
@@ -71,6 +71,21 @@ export default function userControllerFactory() {
             return {
                 statusCode: 200,
                 body: [...users]
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+    }
+
+    async function getOneUser(httpRequest) {
+
+        try {
+            const user = await userService.listOneUser({id: httpRequest.params.userId});
+            return {
+                statusCode: 200,
+                body: [user]
             }
         } catch (e) {
 
