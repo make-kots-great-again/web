@@ -1,11 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './core/components/home/home.component';
+import { SharedModule } from './shared/shared.module';
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+    // otherwise redirect to home
+  { path: '**', redirectTo: '' }
 
-
-const routes: Routes = [];
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes),
+  ],
+  exports: [
+    RouterModule,
+  ]
 })
 export class AppRoutingModule { }
