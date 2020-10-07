@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import {Observable} from "rxjs";
-import {IUser} from '../../shared/models/user';
+import {IUser} from '../../shared/models/user.model';
 
 //const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 

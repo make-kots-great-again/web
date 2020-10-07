@@ -2,7 +2,9 @@ import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {UserService} from "../../../core/services/user.service";
-import {User} from "../../../shared/models/user";
+import {User} from "../../../shared/models/user.model";
+import {Router} from "@angular/router";
+import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagnostics";
 
 @Component({
   selector: 'app-register',
@@ -20,8 +22,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   lastName: string;
   confirmPassword: string;
 
+  alert: number = 0;
+
   constructor(
     private userService: UserService,
+    private router: Router
   ) {
   }
 
@@ -41,12 +46,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.userService.registerUser(user)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
-        response => console.log(response),
-        error => console.log(error));
+        async (response: any) => {
+          this.alert = response.status;
+          setTimeout(() => this.router.navigate(['/login']) ,4000);
+          console.log(response);
+        },
+        error => {
+          this.alert = error.status;
+          console.log(error)
+        });
   }
 
   @HostListener('window:beforeunload')
   async ngOnDestroy() {
+    this.alert = 0;
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
