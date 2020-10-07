@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { UserProfileComponent } from './components/userProfile/userProfile.component';
 
 @NgModule({
-  declarations: [UserProfileComponent],
+  declarations: [UserProfileComponent, ],
   imports: [
     CommonModule
   ],
