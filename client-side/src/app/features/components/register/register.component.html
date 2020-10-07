@@ -2,7 +2,11 @@
 <div class="container register-form col-lg-7 col-md-8 col-sm-8 rounded">
 
   <div class="form rounded col-12">
-
+    <div class="alert alert-dismissible alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Well done!</strong> You successfully read
+      <a class="alert-link">this important alert message</a>.
+    </div>
     <div class="note bg-dark">
       <h3 id="formTitle" class="font-weight-bolder mb-3">Create an Account</h3>
       <p class="font-weight-bold">It's free and anyone can join!</p>
@@ -22,14 +26,14 @@
                  class="form-control" type="text" id="fistNameInput"
                  [(ngModel)]="firstName" name="firstName" minlength="4" maxlength="9"
                  placeholder="First name" required>
-          <div *ngIf="usernameInput.errors && (fistNameInput.invalid ||
+          <div *ngIf="fistNameInput.errors && (fistNameInput.invalid ||
                         fistNameInput.touched)">
             <small id="fistNameError1" class="text-danger" *ngIf="fistNameInput.errors.minlength">
               {{fistNameInput.value}} minimum length must 4
             </small>
             <small id="fistNameError2" class="text-danger"
                    *ngIf="fistNameInput.errors.required
-                      && fistNameInput.touched">A username is required</small>
+                      && fistNameInput.touched">A first name is required</small>
           </div>
         </div>
 
@@ -76,6 +80,8 @@
                       && usernameInput.touched">A username is required</small>
           </div>
         </div>
+
+        <!-- Username -->
         <div class="justify-content-center col-6">
           <label for="inputEmail">
           </label>
@@ -85,14 +91,14 @@
                  [class.is-valid]="!(emailInput.invalid && emailInput.untouched)"
                  class="form-control" type="email" id="inputEmail"
                  [(ngModel)]="email" name="email"
-                 placeholder="First name" required>
+                 placeholder="Email address" required>
           <div *ngIf="emailInput.errors && (emailInput.invalid ||
                         emailInput.touched)">
             <small id="emailInvalid" class="text-danger" *ngIf="emailInput.errors.pattern">
               {{emailInput.value}} is not a valid email
             </small>
             <small id="emailRequired" class="text-danger" *ngIf="emailInput.errors.required
-                      && emailInput.touched">A first name is required</small>
+                      && emailInput.touched">An email is required</small>
           </div>
         </div>
       </div>
