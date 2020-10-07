@@ -35,35 +35,6 @@ export default function express_server(express) {
         return this;
     }
 
-
-    /** @helmetSecurityHandler
-     * Function to add security headers with Helmet
-     * @returns {this} reference to the express app
-     * @param helmet
-     */
-    this.helmetSecurity = (helmet) => {
-        this.app.use(helmet());
-        this.app.use(helmet.hsts({
-            maxAge: 5184000,
-            includeSubDomains: true
-        }));
-      /*
-        this.app.use(helmet.featurePolicy({
-            features: {
-                fullscreen: ["'self'"],
-                payment: ["'none'"],
-                syncXhr: ["'none'"],
-                camera: ["'none'"],
-                microphone: ["'none'"],
-            }
-        }));
-
-        this.app.use(helmet.permittedCrossDomainPolicies());
-        this.app.use(helmet.referrerPolicy({policy: 'strict-origin-when-cross-origin'}));
-         */
-        return this;
-    }
-
     /** @passportConfiguration
      * Function to configure the passport libary
      * @returns {this} reference to the express app
@@ -151,3 +122,33 @@ export default function express_server(express) {
 
 }
 
+/*
+/** @helmetSecurityHandler
+* Function to add security headers with Helmet
+* @returns {this} reference to the express app
+* @param helmet
+
+this.helmetSecurity = (helmet) => {
+    // this.app.use(helmet());
+
+   this.app.use(helmet.hsts({
+       maxAge: 5184000,
+       includeSubDomains: true
+   }));
+
+   this.app.use(helmet.featurePolicy({
+       features: {
+           fullscreen: ["'self'"],
+           payment: ["'none'"],
+           syncXhr: ["'none'"],
+           camera: ["'none'"],
+           microphone: ["'none'"],
+       }
+   }));
+
+   this.app.use(helmet.permittedCrossDomainPolicies());
+   this.app.use(helmet.referrerPolicy({policy: 'strict-origin-when-cross-origin'}));
+    return this;
+}
+
+ */

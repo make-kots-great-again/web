@@ -16,7 +16,6 @@ server
     .addMiddleware(cors())
     .addMiddleware(bodyParser.json())
     .addMiddleware(addRequestId)
-    .helmetSecurity(helmet)
     .passportConfig(passport)
     .serveStaticFiles()
     .addRouting(routes)
