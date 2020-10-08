@@ -1,7 +1,7 @@
-<nav id="toto" class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
     <ul class="navbar-nav mr-auto">
-
+      
       <!-- Home -->
       <li class="nav-item " [routerLinkActive]="['active']"
           [routerLinkActiveOptions]="{ exact: true }">
@@ -37,8 +37,7 @@
   <div class="mx-auto order-0">
     <a class="navbar-brand mx-auto font-weight-bolder"
        [routerLink]="['/home']">Kots App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target=".dual-collapse2">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   </div>
