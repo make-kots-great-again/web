@@ -5,12 +5,11 @@ import passport from 'passport'
 import routes from './server-side/routes'
 import helmet from 'helmet';
 import env from './server-side/config/environment'
-import express_server from "./server-side";
+import express_server from "./server-side/index";
 
 const addRequestId = require('express-request-id')();
 
 const server = new express_server(express);
-
 
 server
     .initDatabase()
