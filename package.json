@@ -7,8 +7,9 @@
   "description": "back end server with node.js",
   "main": "app.js",
   "scripts": {
-    "heroku-postbuild": "npm run install",
+    "heroku-postbuild": "npm run install && npm run angular:build",
     "start": "babel-node app.js",
+    "angular:build": "cd client-side && npm run build",
     "dev": "npm run db:migrate:undo && npm run db:migrate && npm run db:seed",
     "start:dev": "npm run dev && nodemon -r dotenv/config --exec \"npm start\"",
     "test:unit": "mocha --require @babel/register 'server-side/tests/unit-tests/**/*.js' --timeout 10000 --exit",
