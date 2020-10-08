@@ -11,8 +11,8 @@
       <strong>Authentication failed !</strong>
     </div>
     <div class="note bg-dark">
-      <h3 id="formTitle" class="font-weight-bolder mb-3">Create an Account</h3>
-      <p class="font-weight-bold">It's free and anyone can join!</p>
+      <h2 id="formTitle" class="font-weight-bolder mb-3">Créer un compte</h2>
+      <p class="font-weight-bold">C'est gratuit et ouvert à tous!</p>
     </div>
 
     <form #signUpForm="ngForm"
@@ -28,15 +28,15 @@
                  [class.is-valid]="!(fistNameInput.invalid && fistNameInput.untouched)"
                  class="form-control" type="text" id="fistNameInput"
                  [(ngModel)]="firstName" name="firstName" minlength="4" maxlength="9"
-                 placeholder="First name" required>
+                 placeholder="Prénom" required>
           <div *ngIf="fistNameInput.errors && (fistNameInput.invalid ||
                         fistNameInput.touched)">
             <small id="fistNameError1" class="text-danger" *ngIf="fistNameInput.errors.minlength">
-              {{fistNameInput.value}} minimum length must 4
+              {{fistNameInput.value}} la longueur minimale est 4
             </small>
             <small id="fistNameError2" class="text-danger"
                    *ngIf="fistNameInput.errors.required
-                      && fistNameInput.touched">A first name is required</small>
+                      && fistNameInput.touched">Un prénom est requis</small>
           </div>
         </div>
 
@@ -49,15 +49,15 @@
                  [class.is-valid]="!(lastNameInput.invalid && lastNameInput.untouched)"
                  class="form-control" type="text" id="lastNameInput"
                  [(ngModel)]="lastName" name="lastName" minlength="4" maxlength="9"
-                 placeholder="Last name" required>
+                 placeholder="Nom" required>
           <div *ngIf="lastNameInput.errors && (lastNameInput.invalid ||
                         lastNameInput.touched)">
             <small id="lastNameError1" class="text-danger" *ngIf="lastNameInput.errors.minlength">
-              {{lastNameInput.value}} minimum length must be 4
+              {{lastNameInput.value}} la longueur minimale est 4
             </small>
             <small id="lastNameError2" class="text-danger"
                    *ngIf="lastNameInput.errors.required
-                      && lastNameInput.touched">A last name is required</small>
+                      && lastNameInput.touched">Un prénom est requis</small>
           </div>
         </div>
       </div>
@@ -72,15 +72,15 @@
                  [class.is-valid]="!(usernameInput.invalid && usernameInput.untouched)"
                  class="form-control" type="text" id="username"
                  [(ngModel)]="username" name="username" minlength="4" maxlength="9"
-                 placeholder="Username" required>
+                 placeholder="Pseudonyme" required>
           <div *ngIf="usernameInput.errors && (usernameInput.invalid ||
                         usernameInput.touched)">
             <small id="usernameError1" class="text-danger" *ngIf="usernameInput.errors.minlength">
-              {{usernameInput.value}} minimum length must 4
+              {{usernameInput.value}} la longueur minimale est 4
             </small>
             <small id="usernameError2" class="text-danger"
                    *ngIf="usernameInput.errors.required
-                      && usernameInput.touched">A username is required</small>
+                      && usernameInput.touched">Un pseudonyme est requis</small>
           </div>
         </div>
 
@@ -94,14 +94,14 @@
                  [class.is-valid]="!(emailInput.invalid && emailInput.untouched)"
                  class="form-control" type="email" id="inputEmail"
                  [(ngModel)]="email" name="email"
-                 placeholder="Email address" required>
+                 placeholder="Adresse mail" required>
           <div *ngIf="emailInput.errors && (emailInput.invalid ||
                         emailInput.touched)">
             <small id="emailInvalid" class="text-danger" *ngIf="emailInput.errors.pattern">
-              {{emailInput.value}} is not a valid email
+              {{emailInput.value}} n'est pas un email valide
             </small>
             <small id="emailRequired" class="text-danger" *ngIf="emailInput.errors.required
-                      && emailInput.touched">An email is required</small>
+                      && emailInput.touched">Une adresse email est requise</small>
           </div>
         </div>
       </div>
@@ -115,9 +115,9 @@
                  [class.is-valid]="!(passwordInput.invalid && passwordInput.untouched)"
                  class="form-control" type="password" id="inputPassword"
                  [(ngModel)]="password" name="password"
-                 placeholder="Password" required>
+                 placeholder="Mot de passe" required>
           <small id="passwordRequired" class="text-danger" [class.d-none]="passwordInput.valid ||
-          passwordInput.untouched">A password is required</small>
+          passwordInput.untouched">Un mot de passe est requis</small>
         </div>
         <!-- confirm password -->
         <div class="justify-content-center col-6">
@@ -129,14 +129,14 @@
                    inputConfirmPassword.untouched)"
                  class="form-control" type="password" id="PasswordConfirm"
                  [(ngModel)]="confirmPassword" name="confirmPassword"
-                 placeholder="Confirm password" required>
+                 placeholder="Vérification du mot de passe" required>
 
           <div *ngIf="inputConfirmPassword.errors && (inputConfirmPassword.invalid ||
                         inputConfirmPassword.touched)">
             <small id="passwordMatchError" class="text-danger"
-                   *ngIf="inputConfirmPassword.errors.pattern">Passwords do not match</small>
+                   *ngIf="inputConfirmPassword.errors.pattern">Les mots de passe ne correspondent pas</small>
             <small id="confirmPasswordError" class="text-danger" *ngIf="inputConfirmPassword.errors.required
-                      && inputConfirmPassword.touched">Please confirm your password</small>
+                      && inputConfirmPassword.touched">Veuillez confirmer votre mot de passe</small>
           </div>
         </div>
       </div>
@@ -144,7 +144,7 @@
 
       <small class="font-italic">
         <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
-        An unverified account is deleted within a week.
+        Un compte non-vérifié est supprimé après une semaine.
       </small>
 
       <!-- sign up buttton -->
@@ -153,14 +153,14 @@
           <button [disabled]="signUpForm.form.invalid"
                   class="btn btn-secondary btn-rounded
                   text-monospace font-italic font-weight-bolder" id="submitBtn"
-                  type="submit">Sign Up
+                  type="submit">S'incrire
           </button>
         </div>
         <div class="ml-auto">
           <small class="">
             <a class="nav-link font-italic"
                style="text-decoration: underline; color: #343A40"
-               [routerLink]="['/login']">Already have an account ? Login</a>
+               [routerLink]="['/login']">Déjà un compte ? Connectez-vous</a>
           </small>
         </div>
       </div>
