@@ -11,6 +11,7 @@ const addRequestId = require('express-request-id')();
 
 const server = new express_server(express);
 
+
 server
     .initDatabase()
     .addMiddleware(cors())
