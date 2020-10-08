@@ -1,9 +1,11 @@
 import userServiceFactory from './userService'
+import groupServiceFactory from './groupService'
 
-import {userRepository} from '../repository'
+import {userRepository, groupRepository} from '../repository'
 
 const userService = userServiceFactory({userRepository});
-const services = Object.freeze({userService});
+const groupService = groupServiceFactory({groupRepository});
+const services = Object.freeze({userService, groupService});
 
 export default services
-export {userService}
+export {userService, groupService}

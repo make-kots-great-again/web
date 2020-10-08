@@ -1,4 +1,4 @@
-import {Sequelize, Op} from 'sequelize';
+import {Sequelize} from 'sequelize';
 import dbConnection from "../config/database";
 
 const User = dbConnection.define('user', {
@@ -39,4 +39,4 @@ const User = dbConnection.define('user', {
     }
 });
 
-export {User, Op};
+export {User};

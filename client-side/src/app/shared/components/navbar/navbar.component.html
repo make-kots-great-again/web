@@ -1,0 +1,71 @@
+<nav id="toto" class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+    <ul class="navbar-nav mr-auto">
+
+      <!-- Home -->
+      <li class="nav-item " [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" [routerLink]="['/home']">
+          <i class="fa fa-home "></i> Acceuil</a>
+      </li>
+
+      <!-- Register -->
+      <li  class="nav-item" [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" [routerLink]="['/register']">
+          <i class="fa fa-user-plus"></i> Inscription</a>
+      </li>
+
+      <!-- Contact -->
+      <li class="nav-item">
+        <a class="nav-link" style="cursor:pointer;" [routerLink]="['/home']">
+          <i class="fa fa-envelope"></i>
+          Contact
+        </a>
+      </li>
+
+      <!-- About -->
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/about']">
+          <i class="fa fa-address-card"></i> A propos</a>
+      </li>
+
+    </ul>
+  </div>
+
+  <!-- Teacher app logo -->
+  <div class="mx-auto order-0">
+    <a class="navbar-brand mx-auto font-weight-bolder"
+       [routerLink]="['/home']">Kots App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target=".dual-collapse2">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+
+  <!-- Left side of nav bar -->
+  <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+    <ul class="navbar-nav ml-auto">
+
+      <!-- Login -->
+      <li  class="nav-item" [routerLinkActive]="['active']"
+           [routerLinkActiveOptions]="{ exact: true }">
+        <a id="profileBtn" class="nav-link" [routerLink]="['/profile']">
+          <i class="fa fa-sign-in"></i> Profile</a>
+      </li>
+
+      <!-- Login -->
+      <li  class="nav-item" [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }">
+        <a id="loginBtn" class="nav-link" [routerLink]="['/login']">
+          <i class="fa fa-sign-in"></i> Connexion</a>
+      </li>
+
+      <!-- Logout -->
+      <li  class="nav-item">
+        <a id="logoutBtn" class="nav-link" href="#">
+          <i class="fa fa-sign-out"></i>Déconnexion</a>
+      </li>
+    </ul>
+  </div>
+</nav>
