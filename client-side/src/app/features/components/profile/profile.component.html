@@ -1,25 +1,76 @@
-<div class="d-flex flex-row flex-wrap justify-content-center page">
-  <div class="d-flex flex-column mx-3">
-    <img src="../../../../assets/0.jpg" style="width: 15em;" class="figure-img img-fluid rounded"
-         alt="A generic square placeholder image with for a profile picture.">
+<div *ngIf="viewMode === 'view'">
+  <div class="d-flex flex-row flex-wrap justify-content-center page">
+      <div class="d-flex flex-column mx-3">
+          <img src="../../../assets/img/profile_pic.jpg" style="width: 15em;" class="figure-img img-fluid rounded"
+              alt="A generic square placeholder image with for a profile picture.">
+      </div>
+      <div class="d-flex flex-column mx-3 align-self-center">
+          <h1 class="mt-2 mb-3">{{ userPorfile.username }}</h1>
+          <div class="mb-3">
+              <span class="font-weight-bold">Nom : </span> <span>{{ userPorfile['lastName'] }}</span>
+          </div>
+          <div class="mb-3">
+              <span class="font-weight-bold">Prénom : </span> <span>{{ userPorfile['firstName'] }}</span>
+          </div>
+          <div class="mb-3">
+              <span class="font-weight-bold">Email : </span> <span>{{ userPorfile['email'] }}</span>
+          </div>
+          <div class="mb-3">
+              <span class="font-weight-bold">Mot de passe : ••••••••</span>
+          </div>
+      </div>
   </div>
-  <div class="d-flex flex-column mx-3 align-self-center">
-    <h1 class="mt-2 mb-2">james007</h1>
-    <div class="mb-2">
-      <span class="font-weight-bold">Nom : </span> <span>James</span>
-    </div>
-    <div class="mb-2">
-      <span class="font-weight-bold">Prénom : </span> <span>Robert</span>
-    </div>
-    <div class="mb-2">
-      <span class="font-weight-bold">Email : </span> <span>james@gmail.com</span>
-    </div>
-    <div class="mb-2">
-      <span class="font-weight-bold">Mot de passe : ••••••••</span>
-    </div>
+
+  <div class="d-flex flex-row justify-content-center mt-2">
+      <button type="button" class="btn btn-primary" (click)="onEditUserProfile()">Modifier mon profil</button>
   </div>
 </div>
 
-<div class="d-flex flex-row justify-content-center mt-2" >
-  <button type="button" class="btn btn-primary">Modifier mon profil</button>
+<div *ngIf="viewMode === 'edition'">
+  <div class="d-flex flex-row flex-wrap justify-content-center page">
+      <div class="d-flex flex-column mx-3">
+          <img src="../../../assets/img/profile_pic.jpg" style="width: 15em;" class="figure-img img-fluid rounded"
+              alt="A generic square placeholder image with for a profile picture.">
+      </div>
+          <form class=" align-self-center mx-3">
+              <div class="form-group mb-2 row">
+                  <label for="username" class="font-weight-bold col-4">Pseudo : </label>
+                  <div class="col-8">
+                      <input type="text" name="" id="username" class="form-control ml-2" placeholder="{{ userPorfile.username }}">
+                  </div>
+              </div>
+              <div class="form-group mb-2 row">
+                  <label for="lastname" class="font-weight-bold col-4">Nom : </label>
+                  <div class="col-8">
+                      <input type="text" class="form-control ml-2" id="lastname" value="{{ userPorfile['lastName'] }}">
+                  </div>
+                  
+              </div>
+              <div class="form-group mb-2 row">
+                  <label for="firstname" class="font-weight-bold col-4">Prénom : </label>
+                  <div class="col-8">
+                      <input type="text" class="form-control ml-2" id="firstname" value="{{ userPorfile['firstName'] }}">    
+                  </div>
+              </div>
+              <div class="form-group mb-2 row">
+                  <label for="email" class="font-weight-bold col-4">Email : </label>
+                  <div class="col-8">
+                      <input type="text" class="form-control ml-2" id="email" value="{{ userPorfile['email'] }}">
+                  </div>
+              </div>
+              <div class="form-group mb-2 row">
+                  <label for="psw" class="font-weight-bold col-4">Mot de passe : </label>
+                  <div class="col-8">
+      
+                      <button type="button" class="btn btn-info mx-2 center-block" (click)="onSaveUserProfile()">Modifier mot de passe</button>
+                  </div>
+              </div>
+          </form>
+
+  </div>
+
+  <div class="d-flex flex-row justify-content-center mt-2">
+      <button type="button" class="btn btn-success mx-2" (click)="onSaveUserProfile()">Enregistrer</button>
+      <button type="button" class="btn btn-danger mx-2" (click)="onSaveUserProfile()">Annuler</button>
+  </div>
 </div>

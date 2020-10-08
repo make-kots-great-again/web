@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {UserService} from "../../../core/services/user.service";
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -9,14 +8,25 @@ import {UserService} from "../../../core/services/user.service";
 })
 export class ProfileComponent implements OnInit {
 
+  viewMode = 'view';
+
   userPorfile: any;
 
   constructor(
-    private userService: UserService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.userPorfile = this.route.snapshot.data.userprofile[0];
   }
+
+  onEditUserProfile(): void {
+    this.viewMode = 'edition';
+  }
+
+  onSaveUserProfile(): void {
+    this.viewMode = 'view';
+  }
+
 
 }
