@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import {Observable} from "rxjs";
 import {IUser} from '../../shared/models/user.model';
 
-//const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +17,7 @@ export class UserService {
   registerUser(user: IUser): Observable<HttpResponse<IUser>> {
     return this.http.post<IUser>('/server/api/signup', user, { observe: 'response' });
   }
-
+  loginUser(user: any) {
+    return this.http.post('/server/api/login', user, {headers});
+  }
 }
