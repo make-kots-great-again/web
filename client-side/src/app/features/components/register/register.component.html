@@ -18,7 +18,7 @@
     <form #signUpForm="ngForm"
           class="form-content text-center col-md-12 rounded my-form" (submit)="onRegisterSubmit()">
 
-      <!-- fistName -->
+      <!-- firstName -->
       <div class="row">
         <div class="justify-content-center col-6">
           <label for="fistNameInput">
@@ -28,7 +28,7 @@
                  [class.is-valid]="!(fistNameInput.invalid && fistNameInput.untouched)"
                  class="form-control" type="text" id="fistNameInput"
                  [(ngModel)]="firstName" name="firstName" minlength="4" maxlength="9"
-                 placeholder="Prénom" required>
+                 placeholder="Nom" required>
           <div *ngIf="fistNameInput.errors && (fistNameInput.invalid ||
                         fistNameInput.touched)">
             <small id="fistNameError1" class="text-danger" *ngIf="fistNameInput.errors.minlength">
@@ -49,7 +49,7 @@
                  [class.is-valid]="!(lastNameInput.invalid && lastNameInput.untouched)"
                  class="form-control" type="text" id="lastNameInput"
                  [(ngModel)]="lastName" name="lastName" minlength="4" maxlength="9"
-                 placeholder="Nom" required>
+                 placeholder="Prénom" required>
           <div *ngIf="lastNameInput.errors && (lastNameInput.invalid ||
                         lastNameInput.touched)">
             <small id="lastNameError1" class="text-danger" *ngIf="lastNameInput.errors.minlength">
@@ -129,7 +129,7 @@
                    inputConfirmPassword.untouched)"
                  class="form-control" type="password" id="PasswordConfirm"
                  [(ngModel)]="confirmPassword" name="confirmPassword"
-                 placeholder="Vérification du mot de passe" required>
+                 placeholder="Confirmez votre mot de passe" required>
 
           <div *ngIf="inputConfirmPassword.errors && (inputConfirmPassword.invalid ||
                         inputConfirmPassword.touched)">
