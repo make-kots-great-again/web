@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {IUser, User} from '../../shared/models/user.model';
 
 //const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
@@ -10,7 +10,7 @@ import {IUser, User} from '../../shared/models/user.model';
 })
 export class UserService {
 
-  constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
   }
 
   registerUser(user: IUser): Observable<HttpResponse<IUser>> {
@@ -19,6 +19,6 @@ export class UserService {
 
   getUserById(id: string): Observable<User> {
     return this.http.get<User>(`/server/api/user/${id}`);
-}
+  }
 
 }

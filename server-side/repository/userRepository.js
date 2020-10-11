@@ -1,11 +1,16 @@
 export default function makeUserRepository({User, Op}) {
     return Object.freeze({
         save, findAll, findPseudo, findByEmailOrUsername,
-        findById, remove
+        findByEmail, findByUsername, findById, remove, patch
     });
 
     async function save({...userInfo}) {
         return User.create(userInfo);
+    }
+
+    async function patch({...userInfo}) {
+        let user = await User.findByPk(userInfo.userId);
+        console.log(user);
     }
 
     async function findAll() {
@@ -33,6 +38,22 @@ export default function makeUserRepository({User, Op}) {
                 [Op.or]: [
                     {email: email}, {username: username}
                 ]
+            }
+        });
+    }
+
+    async function findByEmail({...userInfo}) {
+        return User.findAll({
+            where: {
+                email: userInfo.email,
+            }
+        });
+    }
+
+    async function findByUsername({username: username}) {
+        return User.findAll({
+            where: {
+                username: username
             }
         });
     }
