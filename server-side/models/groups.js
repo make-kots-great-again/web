@@ -1,4 +1,4 @@
-import {Sequelize, Op} from 'sequelize';
+import {Sequelize} from 'sequelize';
 import dbConnection from "../config/database";
 
 const Group = dbConnection.define('group', {
