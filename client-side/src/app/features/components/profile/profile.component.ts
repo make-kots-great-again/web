@@ -1,5 +1,5 @@
 import { UserService } from 'src/app/core/services/user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -12,12 +12,12 @@ export class ProfileComponent implements OnInit {
 
   viewMode = 'view';
   showPopup = false;
+  pwdError = false;
   editUserForm: FormGroup;
   editPwdForm: FormGroup;
   userProfile: User;
 
-
-  UserId = '79c32cb6-1f46-48bb-b914-6bab936f8cac'; //TODO récup après authentification
+  UserId = '4edb4ef7-2556-4807-9d2d-9eeadc4f563f';//'79c32cb6-1f46-48bb-b914-6bab936f8cac'; //TODO récup après authentification
 
   constructor(
     private userService: UserService,
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
 
   initEditPwdForm(): void {
     this.editPwdForm = this.formBuilder.group({
-      currentPwd: ['', [Validators.required, Validators.minLength(8)]],
+      currentPwd: ['', [Validators.required]],
       newPwd: ['', [Validators.required, Validators.minLength(8)]],
       confNewPwd: ['', [Validators.required, Validators.minLength(8)]],
     },
@@ -95,5 +95,30 @@ export class ProfileComponent implements OnInit {
     this.initEditPwdForm();
   }
 
+  onSaveUserPwd(): void {
+    const passwords = {
+      password: this.editPwdForm.get('currentPwd').value,
+      newPassword: this.editPwdForm.get('newPwd').value,
+    };
+    this.userService.patchUserPwd(this.UserId, passwords).subscribe(
+      async (response: any) => {
+        document.getElementById('closeModal').click();
+        this.onModalClose();
+      },
+      error => {
+        this.pwdError = true;
+        console.log(error);
+      });
+  }
+
+  onModalClose(): void {
+    this.pwdError = false;
+    this.showPopup = false;
+  }
+
+  onPwdField(): void{
+    this.pwdError = false;
+    this.editPwdForm.get('currentPwd').reset();
+  }
 }
 

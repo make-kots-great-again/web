@@ -14,9 +14,9 @@ export default function makeUserRepository({User, Op}) {
             {returning: true, plain: true, where: {userId: id}}
         )
     }
-    async function patchPwd({id},{...userInfo}) {
+    async function patchPwd({id},{newPassword}) {
         return User.update(
-            {password: userInfo.newPassword},
+            {password: newPassword},
             {returning: true, plain: true, where: {userId: id}}
         )
     }

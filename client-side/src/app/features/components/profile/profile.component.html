@@ -92,7 +92,7 @@
     <!-- Modal -->
     <div class="modal fade" id="changePwdModal" tabindex="-1" role="dialog" aria-labelledby="changePwdModal"
         aria-hidden="true" *ngIf="showPopup">
-        <div class="modal-dialog modal-md" role="document">
+        <div class="modal-dialog modal-md" [ngClass]="{'pwdError': pwdError}" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="changePwdModal">Modifier mot de passe</h5>
@@ -107,7 +107,9 @@
                         </div>
                         <div class="row mb-3">
                             <input type="password" name="currentPwd" id="currentPwd" class="form-control ml-2 pwd-input"
-                                formControlName="currentPwd">
+                                formControlName="currentPwd" [ngClass]="{'invalidField': pwdError}" (click)="onPwdField()">
+                            <small id="pwdError" class="form-text text-muted invalidField ml-2"
+                                *ngIf="pwdError">Mot de passe incorrect !</small>
                         </div>
                         <div class="row">
                             <label for="newPwd" class="font-weight-bold ml-2">Nouveau mot de passe : </label>
@@ -134,8 +136,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" [disabled]="editPwdForm.invalid">Enregistrer</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-success" (click)="onSaveUserPwd()" [disabled]="editPwdForm.invalid">Enregistrer</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeModal" (click)="onModalClose()">Annuler</button>
                 </div>
             </div>
         </div>

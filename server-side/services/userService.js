@@ -87,10 +87,10 @@ export default function userServiceFactory({userRepository}) {
             return {message: `${id} is not a valid v4 UUID`};
         
         const user = await userRepository.findById({id});
+        const newPassword = passwordFactory.hashPassword(userInfo.newPassword);
+        if ( !await passwordFactory.verifyPassword(userInfo.password,user.password)) return {message: `wrong password`};
 
-        if (userInfo.password !== user.password) return {message: `wrong password`};
-
-        return await userRepository.patchPwd({id},{...userInfo});
+        return await userRepository.patchPwd({id},{newPassword});
     }
 
     async function removeUser({id} = {}) {

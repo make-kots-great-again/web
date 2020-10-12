@@ -24,4 +24,9 @@ export class UserService {
   putUser(id: string, user: any): Observable<HttpResponse<IUser>> {
     return this.http.put<IUser>(`/server/api/user/${id}`, user, { observe: 'response' });
   }
+
+  patchUserPwd(id: string, passwords: any): Observable<HttpResponse<IUser>> {
+    return this.http.patch<IUser>(`/server/api/user/password/${id}`, passwords, { observe: 'response' });
+  }
+
 }
