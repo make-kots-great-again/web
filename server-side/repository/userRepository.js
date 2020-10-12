@@ -28,8 +28,7 @@ export default function makeUserRepository({User, Op}) {
     }
 
     async function findByUsername({username}) {
-        return User.findAll(
-            {attributes: ['userId', 'username']},
+        return User.findOne(
             {where: {username: username}});
     }
 

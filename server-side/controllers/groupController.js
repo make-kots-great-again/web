@@ -14,6 +14,13 @@ export default function groupControllerFactory() {
             const createdGroup = await groupService.addGroup(
                 {username, ...groupInfo});
 
+            if (createdGroup.message) {
+                return {
+                    statusCode: 404,
+                    body: {message: createdGroup.message}
+                }
+            }
+
             return {
                 statusCode: 201,
                 body: {

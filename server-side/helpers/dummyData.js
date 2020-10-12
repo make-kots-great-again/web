@@ -28,6 +28,7 @@ groups.forEach(x => {
 
 Array(5).fill(0).forEach((x, i) => {
     dummyUserGroups.push({
+        id: uuidv4(),
         userId: dummyUsers[i].userId,
         groupId: dummyGroups[i].groupId,
         role: (i === 2) ? 'admin' : 'member'

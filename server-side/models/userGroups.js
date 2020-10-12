@@ -4,6 +4,13 @@ import {User} from "./users";
 import {Group} from "./groups";
 
 const userGroup = dbConnection.define('userGroup', {
+
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true
+    },
+
     userId: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,

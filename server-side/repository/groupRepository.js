@@ -12,3 +12,4 @@ export default function makeGroupRepository({Group, userGroup}) {
     }
 }
 
+// { fields: ['userId', 'groupId','role'] }

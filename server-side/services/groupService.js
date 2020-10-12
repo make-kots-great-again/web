@@ -7,6 +7,13 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
     async function addGroup({username, ...groupInfo}) {
 
+        if (!username) return {message: 'You must supply a username.'};
+
+        const groupAdmin = await userRepository.findByUsername({username});
+
+        if (!groupAdmin)
+            return {message: "No valid entry found with provided username"}
+
         const group = makeGroup({...groupInfo});
 
         const createGroup = await groupRepository.save({
@@ -14,10 +21,8 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
             groupDescription: group.getGroupDescription()
         });
 
-       const groupAdmin = await userRepository.findByUsername({username});
-
-       const {userId} = groupAdmin[0].dataValues
-       const {groupId} = createGroup.dataValues
+        const {userId} = groupAdmin.dataValues
+        const {groupId} = createGroup.dataValues
 
         await groupRepository.addUserToGroup({
             userId: userId,
@@ -25,12 +30,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
             role: 'admin'
         });
 
-        //const {dataValues: data} = t["0"];
-        //console.log(t.dataValues)
-        //console.log(groupAdmin[0].dataValues)
-
         return createGroup;
     }
-
 
 }
