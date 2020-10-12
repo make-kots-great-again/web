@@ -1,7 +1,7 @@
 import {userService} from "../services";
 export default function userControllerFactory() {
     return Object.freeze({
-        registerUser, getAllUsers, getOneUser, logInUser, deleteUser, putOneUser
+        registerUser, getAllUsers, getOneUser, logInUser, deleteUser, putOneUser, patchUserPwd
     });
 
     async function registerUser(httpRequest) {
@@ -110,6 +110,33 @@ export default function userControllerFactory() {
                     success: true,
                     message: "User has been patched successfully",
                     user : modifiedUser[1].dataValues,
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+        
+    }
+
+    async function patchUserPwd(httpRequest) {
+        
+        try {
+            const {...userInfo} = httpRequest.body; 
+            
+            const modifiedPwd = await userService.patchUserPwd({id: httpRequest.params.userId},{...userInfo});
+            if (modifiedPwd.message) {
+
+                return {statusCode: 409, body: {success: false, ...modifiedPwd,}}
+            }
+            
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    message: "Password has successfully been updated",
+                    user : modifiedPwd[1].dataValues,
                 }
             }
         } catch (e) {

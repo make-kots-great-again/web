@@ -23,6 +23,9 @@ router
     .route("/user/:userId")
     .put(makeCallback(userController.putOneUser));
 router
+    .route("/user/password/:userId")
+    .patch(makeCallback(userController.patchUserPwd));
+router
     .route("/user/:userId")
     .delete(makeCallback(userController.deleteUser));
 

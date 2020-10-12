@@ -3,7 +3,7 @@ import {jwtFactory, passwordFactory} from "../security";
 
 export default function userServiceFactory({userRepository}) {
     return Object.freeze({
-        addUser, listUsers, listOneUser, logInUser, removeUser, putUser
+        addUser, listUsers, listOneUser, logInUser, removeUser, putUser, patchUserPwd
     });
 
     async function addUser({...userInfo}) {
@@ -61,6 +61,11 @@ export default function userServiceFactory({userRepository}) {
 
     async function putUser({id},{...userInfo}) {
 
+        if (!id) return {message: 'You must supply an id.'};
+
+        if (!(id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${id} is not a valid v4 UUID`};
+
         const existing_email = await userRepository.findByEmail({...userInfo});
         const existing_username = await userRepository.findByUsername({...userInfo});
 
@@ -72,6 +77,20 @@ export default function userServiceFactory({userRepository}) {
         };
         
         return await userRepository.put({id},{...userInfo});
+    }
+
+    async function patchUserPwd({id},{...userInfo}) {
+
+        if (!id) return {message: 'You must supply an id.'};
+
+        if (!(id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${id} is not a valid v4 UUID`};
+        
+        const user = await userRepository.findById({id});
+
+        if (userInfo.password !== user.password) return {message: `wrong password`};
+
+        return await userRepository.patchPwd({id},{...userInfo});
     }
 
     async function removeUser({id} = {}) {

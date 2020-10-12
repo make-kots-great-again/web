@@ -1,7 +1,7 @@
 export default function makeUserRepository({User, Op}) {
     return Object.freeze({
         save, findAll, findPseudo, findByEmailOrUsername,
-        findByEmail, findByUsername, findById, remove, put
+        findByEmail, findByUsername, findById, remove, put, patchPwd
     });
 
     async function save({...userInfo}) {
@@ -11,6 +11,12 @@ export default function makeUserRepository({User, Op}) {
     async function put({id},{...userInfo}) {
         return User.update(
             {...userInfo},
+            {returning: true, plain: true, where: {userId: id}}
+        )
+    }
+    async function patchPwd({id},{...userInfo}) {
+        return User.update(
+            {password: userInfo.newPassword},
             {returning: true, plain: true, where: {userId: id}}
         )
     }
