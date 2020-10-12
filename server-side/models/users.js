@@ -1,5 +1,7 @@
 import {Sequelize} from 'sequelize';
 import dbConnection from "../config/database";
+import {userGroup} from "./userGroups";
+import {Group} from "./groups";
 
 const User = dbConnection.define('user', {
 
@@ -38,5 +40,9 @@ const User = dbConnection.define('user', {
         notEmpty: true,
     }
 });
+
+User.belongsToMany(Group, {through: userGroup});
+
+// User.associate = (models) => {User.belongsTo(models.Group, {through: userGroup})};
 
 export {User};

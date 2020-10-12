@@ -1,4 +1,5 @@
 import {groupService} from "../services";
+
 export default function groupControllerFactory() {
     return Object.freeze({
         createGroup
@@ -8,15 +9,17 @@ export default function groupControllerFactory() {
 
         try {
             const {...groupInfo} = httpRequest.body;
+            const {username} = httpRequest.params;
 
-            const createdGroup = await groupService.addGroup({...groupInfo});
+            const createdGroup = await groupService.addGroup(
+                {username, ...groupInfo});
 
             return {
                 statusCode: 201,
                 body: {
                     success: true,
                     message: "A group has been created successfully",
-                    group : createdGroup
+                    group: createdGroup
                 }
             }
         } catch (e) {

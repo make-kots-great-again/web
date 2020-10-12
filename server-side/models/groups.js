@@ -1,5 +1,6 @@
 import {Sequelize} from 'sequelize';
 import dbConnection from "../config/database";
+import {userGroup} from './userGroups'
 
 const Group = dbConnection.define('group', {
     groupId: {
@@ -13,6 +14,11 @@ const Group = dbConnection.define('group', {
         type: Sequelize.STRING,
         allowNull: false,
     },
+    groupDescription: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {len: [4, 280]}
+    },
     createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -24,5 +30,11 @@ const Group = dbConnection.define('group', {
         defaultValue: new Date(),
     }
 });
+
+// Group.belongsToMany(User, {through: userGroup});
+
+Group.associate = (models) => {
+    Group.belongsTo(models.User, {through: userGroup})
+};
 
 export {Group};

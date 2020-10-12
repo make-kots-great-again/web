@@ -14,6 +14,11 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
+            groupDescription: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {len: [4, 280]}
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,

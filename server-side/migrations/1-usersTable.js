@@ -46,7 +46,7 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE,
                 defaultValue: new Date(),
-            },
+            }
         });
     },
     down: queryInterface => queryInterface.dropTable('users')
