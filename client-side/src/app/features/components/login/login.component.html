@@ -1,30 +1,25 @@
-<br>
+<div class="row connexion ">
 <div class="container register-form col-lg-7 col-md-8 col-sm-8 rounded">
 
   <div class="form rounded col-12">
 
     <div class="note bg-dark">
-      <h3 id="formTitle"
-          class="font-weight-bolder mb-3">
-        Se connecter à KotsApp</h3>
-      <p class="font-weight-bold" style="font-size: 0.9rem">
+      <h3 id="formTitle"class="font-weight-bolder mb-3" style="padding-top: 10px"> Se connecter à KotsApp</h3>
+      <p class="font-weight-bold " style="font-size: 0.9rem">
         Pour se connecter, veillez remplir ces champs par votre une adresse email et mot de passe.
       </p>
     </div>
-
-    <form #signUpForm="ngForm"
-          class="form-content text-center col-md-12 rounded">
+    <form #signUpForm="ngForm" class="form-content text-center col-md-12 rounded">
 
       <!-- Username -->
       <div class="row justify-content-center col-12 form-label-group input">
-        <label for="pseudo">
-        </label>
         <input #pseudoInput="ngModel"
                [class.is-invalid]="pseudoInput.invalid && pseudoInput.touched"
                [class.is-valid]="!(pseudoInput.invalid && pseudoInput.untouched)"
-               class="form-control customInput" type="text" id="pseudo"
+               class="form-control" type="text" id="pseudo"
                [(ngModel)]="pseudo" name="pseudo"
-               placeholder="Adresse mail ou Pseudonyme" required>
+               placeholder="Email address"  required autofocus>
+               <label for="pseudo">Adresse Email</label>
         <small id="emailError" class="text-danger" [class.d-none]="pseudoInput.valid ||
           pseudoInput.untouched">Ce champ est obligatoire</small>
       </div>
@@ -37,9 +32,10 @@
         <input #passwordInput="ngModel"
                [class.is-invalid]="passwordInput.invalid && passwordInput.touched"
                [class.is-valid]="!(passwordInput.invalid && passwordInput.untouched)"
-               class="form-control customInput" type="password" id="password"
+               class="form-control" type="password" id="password"
                [(ngModel)]="password" name="password"
-               placeholder="Mot de passe" required>
+               placeholder="Email address"  required autofocus>
+               <label for="password">Mot de passe</label>
         <small id="passwordError" class="text-danger" [class.d-none]="passwordInput.valid ||
           passwordInput.untouched">Un mot de passe est requis</small>
       </div>
@@ -64,4 +60,5 @@
     </form>
 
   </div>
+</div>
 </div>
