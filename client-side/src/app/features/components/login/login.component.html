@@ -11,15 +11,15 @@
     </div>
     <form #signUpForm="ngForm" class="form-content text-center col-md-12 rounded">
 
-      <!-- Username -->
+      <!-- Username or email-->
       <div class="row justify-content-center col-12 form-label-group input">
         <input #pseudoInput="ngModel"
                [class.is-invalid]="pseudoInput.invalid && pseudoInput.touched"
                [class.is-valid]="!(pseudoInput.invalid && pseudoInput.untouched)"
                class="form-control" type="text" id="pseudo"
                [(ngModel)]="pseudo" name="pseudo"
-               placeholder="Email address"  required autofocus>
-               <label for="pseudo">Adresse Email</label>
+               placeholder="Email address ou Pseudonyme"  required autofocus>
+               <label for="pseudo">Email address ou Pseudonyme</label>
         <small id="emailError" class="text-danger" [class.d-none]="pseudoInput.valid ||
           pseudoInput.untouched">Ce champ est obligatoire</small>
       </div>
@@ -34,7 +34,7 @@
                [class.is-valid]="!(passwordInput.invalid && passwordInput.untouched)"
                class="form-control" type="password" id="password"
                [(ngModel)]="password" name="password"
-               placeholder="Email address"  required autofocus>
+               placeholder="Mot de passe"  required autofocus>
                <label for="password">Mot de passe</label>
         <small id="passwordError" class="text-danger" [class.d-none]="passwordInput.valid ||
           passwordInput.untouched">Un mot de passe est requis</small>
