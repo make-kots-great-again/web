@@ -20,8 +20,8 @@ router
     .route("/user/:userId")
     .get(makeCallback(userController.getOneUser));
 router
-    .route("/user")
-    .patch(makeCallback(userController.patchOneUser));
+    .route("/user/:userId")
+    .put(makeCallback(userController.putOneUser));
 router
     .route("/user/:userId")
     .delete(makeCallback(userController.deleteUser));

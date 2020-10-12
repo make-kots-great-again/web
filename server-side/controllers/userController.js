@@ -1,7 +1,7 @@
 import {userService} from "../services";
 export default function userControllerFactory() {
     return Object.freeze({
-        registerUser, getAllUsers, getOneUser, logInUser, deleteUser, patchOneUser
+        registerUser, getAllUsers, getOneUser, logInUser, deleteUser, putOneUser
     });
 
     async function registerUser(httpRequest) {
@@ -94,16 +94,16 @@ export default function userControllerFactory() {
         }
     }
 
-    async function patchOneUser(httpRequest) {
+    async function putOneUser(httpRequest) {
         
         try {
             const {...userInfo} = httpRequest.body; 
             
-            const patchedUser = await userService.patchUser({...userInfo});
+            const modifiedUser = await userService.putUser({id: httpRequest.params.userId},{...userInfo});
 
-            if (patchedUser.message) {
+            if (modifiedUser.message) {
 
-                return {statusCode: 409, body: {success: false, ...patchedUser,}}
+                return {statusCode: 409, body: {success: false, ...modifiedUser,}}
             }
 
             return {
@@ -111,7 +111,7 @@ export default function userControllerFactory() {
                 body: {
                     success: true,
                     message: "User has been patched successfully",
-                    user : patchedUser
+                    user : modifiedUser
                 }
             }
         } catch (e) {

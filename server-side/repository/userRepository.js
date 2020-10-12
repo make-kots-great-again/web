@@ -1,16 +1,18 @@
 export default function makeUserRepository({User, Op}) {
     return Object.freeze({
         save, findAll, findPseudo, findByEmailOrUsername,
-        findByEmail, findByUsername, findById, remove, patch
+        findByEmail, findByUsername, findById, remove, put
     });
 
     async function save({...userInfo}) {
         return User.create(userInfo);
     }
 
-    async function patch({...userInfo}) {
-        let user = await User.findByPk(userInfo.userId);
-        console.log(user);
+    async function put({id},{...userInfo}) {
+        return User.update(
+            {...userInfo},
+            {where: {userId: id}}
+        )
     }
 
     async function findAll() {

@@ -3,7 +3,7 @@ import {jwtFactory, passwordFactory} from "../security";
 
 export default function userServiceFactory({userRepository}) {
     return Object.freeze({
-        addUser, listUsers, listOneUser, logInUser, removeUser, patchUser
+        addUser, listUsers, listOneUser, logInUser, removeUser, putUser
     });
 
     async function addUser({...userInfo}) {
@@ -59,19 +59,19 @@ export default function userServiceFactory({userRepository}) {
         return userRepository.findById({id});
     }
 
-    async function patchUser({...userInfo}) {
+    async function putUser({id},{...userInfo}) {
 
         const existing_email = await userRepository.findByEmail({...userInfo});
         const existing_username = await userRepository.findByUsername({...userInfo});
 
         if (existing_email.length != 0){
-            if(existing_email[0].userId != userInfo.id) return {message: "A user with the same email address already exists !"}
+            if(existing_email[0].userId != id) return {message: "A user with the same email address already exists !"}
         };
         if (existing_username.length != 0){
-            if(existing_username[0].userId != userInfo.id) return {message: "A user with the same username already exists !"}
+            if(existing_username[0].userId != id) return {message: "A user with the same username already exists !"}
         };
         
-        return await userRepository.patch({...userInfo});
+        return await userRepository.put({id},{...userInfo});
     }
 
     async function removeUser({id} = {}) {
