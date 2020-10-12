@@ -21,4 +21,7 @@ export class UserService {
     return this.http.get<User>(`/server/api/user/${id}`);
   }
 
+  putUser(id: string, user: any): Observable<HttpResponse<IUser>> {
+    return this.http.put<IUser>(`/server/api/user/${id}`, user, { observe: 'response' });
+  }
 }

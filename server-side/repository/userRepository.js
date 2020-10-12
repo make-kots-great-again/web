@@ -11,7 +11,7 @@ export default function makeUserRepository({User, Op}) {
     async function put({id},{...userInfo}) {
         return User.update(
             {...userInfo},
-            {where: {userId: id}}
+            {returning: true, plain: true, where: {userId: id}}
         )
     }
 

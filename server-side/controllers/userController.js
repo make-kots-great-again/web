@@ -12,7 +12,6 @@ export default function userControllerFactory() {
             const createdUser = await userService.addUser({...userInfo});
 
             if (createdUser.message) {
-
                 return {statusCode: 409, body: {success: false, ...createdUser,}}
             }
 
@@ -100,18 +99,17 @@ export default function userControllerFactory() {
             const {...userInfo} = httpRequest.body; 
             
             const modifiedUser = await userService.putUser({id: httpRequest.params.userId},{...userInfo});
-
             if (modifiedUser.message) {
 
                 return {statusCode: 409, body: {success: false, ...modifiedUser,}}
             }
-
+            
             return {
-                statusCode: 204,
+                statusCode: 200,
                 body: {
                     success: true,
                     message: "User has been patched successfully",
-                    user : modifiedUser
+                    user : modifiedUser[1].dataValues,
                 }
             }
         } catch (e) {

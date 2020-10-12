@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
   userProfile: User;
 
 
-  tempUserId = '79c32cb6-1f46-48bb-b914-6bab936f8cac'; //TODO récup après authentification
+  UserId = '79c32cb6-1f46-48bb-b914-6bab936f8cac'; //TODO récup après authentification
 
   constructor(
     private userService: UserService,
@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userService.getUserById(this.tempUserId).subscribe((user: User) => {
+    this.userService.getUserById(this.UserId).subscribe((user: User) => {
       this.userProfile = user[0];
       this.initEditUserForm();
       this.initEditPwdForm();
@@ -70,7 +70,20 @@ export class ProfileComponent implements OnInit {
   }
 
   onSaveUserProfile(): void {
-    this.viewMode = 'view'; //TODO send form + id
+    const user = {
+      username: this.editUserForm.get('username').value,
+      lastName: this.editUserForm.get('lastName').value,
+      firstName: this.editUserForm.get('firstName').value,
+      email: this.editUserForm.get('email').value,
+    };
+    this.userService.putUser(this.UserId, user).subscribe(
+      async (response: any) => {
+        this.userProfile = response.body.user;
+        this.viewMode = 'view';
+      },
+      error => {
+        console.log(error); //TODO gérer si erreur
+      });
   }
 
   onAbort(): void {
