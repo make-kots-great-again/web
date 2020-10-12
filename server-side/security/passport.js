@@ -15,6 +15,7 @@ const authenticateUser = passport => {
     // The JWT payload is passed into the verify callback
     passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
 
+        
         const user = await userRepository.findById({id: jwt_payload.userId});
 
         if (!user) return done(user, false);

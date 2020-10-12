@@ -45,6 +45,8 @@ export default function userControllerFactory() {
 
             const {username, email, userId: id} = user.data;
 
+            console.log(user.token);
+
             return {
                 statusCode: 200,
                 body: {

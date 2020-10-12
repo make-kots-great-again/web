@@ -9,6 +9,11 @@ export interface IUser {
   updatedAt?: Date;
 }
 
+export interface LoginData {
+  pseudo: string;
+  password: string;
+}
+
 export class User implements IUser {
   constructor(
     public firstName: string,
@@ -28,5 +33,16 @@ export class User implements IUser {
     this.password = password ? password : null;
     this.createdAt = createdAt ? createdAt : null;
     this.updatedAt = updatedAt ? updatedAt : null;
+  }
+}
+
+export class Login implements LoginData{
+
+  constructor(
+    public pseudo: string, 
+    public password: string
+  ) {
+    this.pseudo = pseudo ? pseudo : null;
+    this.password = password ? password : null;
   }
 }
