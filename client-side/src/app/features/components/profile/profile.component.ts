@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
   editPwdForm: FormGroup;
   userProfile: User;
 
-  UserId = '4edb4ef7-2556-4807-9d2d-9eeadc4f563f';//'79c32cb6-1f46-48bb-b914-6bab936f8cac'; //TODO récup après authentification
+  UserId = '4edb4ef7-2556-4807-9d2d-9eeadc4f563f'; // '79c32cb6-1f46-48bb-b914-6bab936f8cac'; //TODO récup après authentification
 
   constructor(
     private userService: UserService,
@@ -82,7 +82,7 @@ export class ProfileComponent implements OnInit {
         this.viewMode = 'view';
       },
       error => {
-        console.log(error); //TODO gérer si erreur
+        console.log(error); // TODO gérer si erreur
       });
   }
 
