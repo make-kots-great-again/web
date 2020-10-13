@@ -13,12 +13,26 @@ export class NavbarComponent implements OnInit {
   }
 
   isLogIn(){
-    
+
     if(localStorage.getItem("id_token")){
-      return true;
+      return 'bloc';
     }
     else{
-      return false;
+      return 'none';
+    }
+
+  }
+
+  reverse(param : string){
+
+    if(param == 'bloc'){
+      return 'none';
+    }
+    else if(param == 'none'){
+      return 'bloc';
+    }
+    else{
+      return '';
     }
     
   }
