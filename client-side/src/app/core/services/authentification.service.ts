@@ -40,5 +40,11 @@ export class AuthService {
         localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
         router.navigate(["home"]);
     }
+    
+    logout() {
+      localStorage.removeItem("id_token");
+      localStorage.removeItem("expires_at");
+  }
+
 
 }

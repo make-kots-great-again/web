@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../../core/services/authentification.service";
+
 
 @Component({
   selector: 'app-navbar',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService : AuthService) { }
 
   ngOnInit(): void {
   }
@@ -15,25 +17,18 @@ export class NavbarComponent implements OnInit {
   isLogIn(){
 
     if(localStorage.getItem("id_token")){
-      return 'bloc';
+      return true;
     }
     else{
-      return 'none';
+      return false;
     }
 
   }
 
-  reverse(param : string){
-
-    if(param == 'bloc'){
-      return 'none';
+  logOut(){
+    if(confirm("Voulez-vous vraiment vous déconnecter ?")){
+      this.authService.logout();
     }
-    else if(param == 'none'){
-      return 'bloc';
-    }
-    else{
-      return '';
-    }
-    
   }
+
 }
