@@ -23,11 +23,11 @@ export class AuthService {
           },
           error => {
             if(error.status == 401){
-              setError.errorMessage = "Connection refused";
+              setError.errorMessage = "Votre identifiant ou votre mot de passe est incorrect";
             }
             else{
               console.log(error)
-              setError.errorMessage = "Connection error";
+              setError.errorMessage = "Erreur de connection";
             }
 
           });
