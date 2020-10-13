@@ -7,6 +7,7 @@ const makeCallback = (controller) => {
             ip: req.ip,
             id: req.id,
             host : req.hostname,
+            user : req.user,
             url : req.originalUrl,
             method: req.method,
             path: req.path,

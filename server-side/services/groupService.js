@@ -2,17 +2,12 @@ import {makeGroup} from '../domain'
 
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({
-        addGroup
+        addGroup, listMyGroups
     });
 
     async function addGroup({username, ...groupInfo}) {
 
-        if (!username) return {message: 'You must supply a username.'};
-
         const groupAdmin = await userRepository.findByUsername({username});
-
-        if (!groupAdmin)
-            return {message: "No valid entry found with provided username"}
 
         const group = makeGroup({...groupInfo});
 
@@ -31,6 +26,12 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         });
 
         return createGroup;
+    }
+
+    async function listMyGroups({userId}){
+
+        return await groupRepository.findMyGroups({userId});
+
     }
 
 }

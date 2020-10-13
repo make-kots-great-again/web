@@ -32,9 +32,4 @@ const Group = dbConnection.define('group', {
     }
 });
 
-//Group.belongsToMany(User, {through: userGroup});
-
- Group.associate = (models) => {Group.belongsTo(models.User,
-     {through: userGroup, foreignKey: 'groupId'})};
-
 export {Group};

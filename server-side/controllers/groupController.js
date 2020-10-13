@@ -2,24 +2,17 @@ import {groupService} from "../services";
 
 export default function groupControllerFactory() {
     return Object.freeze({
-        createGroup
+        createGroup, getMyGroups
     });
 
     async function createGroup(httpRequest) {
 
         try {
             const {...groupInfo} = httpRequest.body;
-            const {username} = httpRequest.params;
+            const {username} = httpRequest.user.dataValues;
 
             const createdGroup = await groupService.addGroup(
                 {username, ...groupInfo});
-
-            if (createdGroup.message) {
-                return {
-                    statusCode: 404,
-                    body: {message: createdGroup.message}
-                }
-            }
 
             return {
                 statusCode: 201,
@@ -37,4 +30,26 @@ export default function groupControllerFactory() {
 
     }
 
+
+    async function getMyGroups(httpRequest) {
+
+        try {
+
+            const {userId} = httpRequest.user.dataValues;
+
+            const myGroups = await groupService.listMyGroups({userId});
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    userInfo: myGroups
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+    }
 };
