@@ -21,6 +21,7 @@
           </div>
 
           <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Se Connecter</button>
+          <small class="text-danger" [ngStyle]="{display: getDisplay()}"> {{errorMessage}} </small>
           <hr class="my-4">
           <div class="ml-auto">
             <small class="">
@@ -30,7 +31,6 @@
             </small>
           </div>
         </form>
-        <button (click)="validateLogin()">validateSubmit</button>
       </div>
     </div>
   </div>

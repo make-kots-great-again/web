@@ -4,7 +4,6 @@ import {Login} from '../../../shared/models/user.model';
 import {UserService} from "../../../core/services/user.service";
 import {AuthService} from "../../../core/services/authentification.service";
 import {ReplaySubject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
 import {Router} from "@angular/router";
 
 @Component({
@@ -18,6 +17,7 @@ export class LoginComponent implements OnInit {
 
   pseudo : string;
   password : string;
+  errorMessage: string;
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
   alert: number = 0;
@@ -37,36 +37,16 @@ export class LoginComponent implements OnInit {
       password : this.password 
     };
 
-    
-    this.authService.login(data);
+    this.authService.login(data, this.router, this);
   }
 
-  validateLogin(){
-    console.log("validate test")
-    this.authService.validateLogin();
+  getDisplay(){
+    if(this.errorMessage != ""){
+      return 'bloc';
+    }
+    else{
+      return 'none';
+    }
   }
-  /*
-  onLogin(f : NgForm){
-     const data: Login = {
-       pseudo : this.pseudo,
-       password : this.password 
-     };
-
-     this.userService.connectUser(data)
-     .pipe(takeUntil(this.destroyed$))
-     .subscribe(
-       async (response: any) => {
-         this.alert = response.status;
-         this.router.navigate(['/home'])
-
-       },
-       error => {
-         this.alert = error.status;
-         console.log(error)
-       });
-
-    return false;
-  }
-  */
 
 }
