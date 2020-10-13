@@ -54,7 +54,7 @@ export default function userServiceFactory({userRepository}) {
         if (!id) return {message: 'You must supply an id.'};
 
         if (!(id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${id} is not a valid v4 UUID`};
+            return {message: `${id} is not a valid UUID`};
 
         return userRepository.remove({id});
     }

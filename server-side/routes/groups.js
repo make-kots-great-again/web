@@ -15,9 +15,12 @@ router.post("/group/create",
     passport.authenticate("jwt", {session: false}),
     makeCallback(groupController.createGroup));
 
-router.get("/myGroups",
+router.get("/user/groups",
     passport.authenticate("jwt", {session: false}),
     makeCallback(groupController.getMyGroups));
+
+router.get("/group/:groupId",
+    makeCallback(groupController.getOneGroup));
 
 
 

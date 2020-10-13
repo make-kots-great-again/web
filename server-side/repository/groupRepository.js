@@ -1,6 +1,6 @@
 export default function makeGroupRepository({Group, userGroup, User}) {
     return Object.freeze({
-        save, addUserToGroup, findMyGroups
+        save, addUserToGroup, findMyGroups, findGroupById
     });
 
     async function save({...groupInfo}) {
@@ -18,8 +18,21 @@ export default function makeGroupRepository({Group, userGroup, User}) {
             include: [{
                 model: Group,
                 as: 'groups',
-                attributes: ['groupName'],
-                through: {as: 'role in this group', attributes: ['role']}
+                attributes: ['groupId', 'groupName'],
+                through: {as: 'roleInThisGroup', attributes: ['role']}
+            }]
+        });
+    }
+
+    async function findGroupById({groupId}) {
+        return await Group.findAll({
+            where: {groupId: groupId},
+            attributes: ['groupId', 'groupName', 'groupDescription'],
+            include: [{
+                model: User,
+                as: 'users',
+                attributes: ['username', 'email'],
+                through: {as: 'roleInThisGroup', attributes: ['role']}
             }]
         });
     }

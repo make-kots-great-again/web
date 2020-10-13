@@ -2,7 +2,7 @@ import {groupService} from "../services";
 
 export default function groupControllerFactory() {
     return Object.freeze({
-        createGroup, getMyGroups
+        createGroup, getMyGroups, getOneGroup
     });
 
     async function createGroup(httpRequest) {
@@ -18,7 +18,7 @@ export default function groupControllerFactory() {
                 statusCode: 201,
                 body: {
                     success: true,
-                    message: "A group has been created successfully",
+                    message: "A group has been created successfully !",
                     group: createdGroup
                 }
             }
@@ -29,7 +29,6 @@ export default function groupControllerFactory() {
         }
 
     }
-
 
     async function getMyGroups(httpRequest) {
 
@@ -44,6 +43,35 @@ export default function groupControllerFactory() {
                 body: {
                     success: true,
                     userInfo: myGroups
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+    }
+
+    async function getOneGroup(httpRequest) {
+
+        try {
+
+            const {groupId} = httpRequest.params;
+
+            const group = await groupService.getGroup({groupId});
+
+            if (group.message) {
+                return {
+                    statusCode: 404,
+                    body: {message: group.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    groupInfo: group
                 }
             }
         } catch (e) {

@@ -5,26 +5,22 @@ import {Group} from "./groups";
 
 const userGroup = dbConnection.define('userGroup', {
 
-    id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true
-    },
-
     userId: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         isUUID: 4,
+        primaryKey: true,
         references: {model: User, key: 'userId'}
     },
     groupId: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
         references: {model: Group, key: 'groupId'}
     },
     role: {
         type: Sequelize.ENUM('admin', 'member'),
-        defaultValue: 'member',
+        defaultValue: 'admin',
         allowNull: false
     }
 });

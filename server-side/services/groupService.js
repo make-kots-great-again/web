@@ -2,7 +2,7 @@ import {makeGroup} from '../domain'
 
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({
-        addGroup, listMyGroups
+        addGroup, listMyGroups, getGroup
     });
 
     async function addGroup({username, ...groupInfo}) {
@@ -32,6 +32,16 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         return await groupRepository.findMyGroups({userId});
 
+    }
+
+    async function getGroup({groupId}){
+
+        if (!groupId) return {message: 'You must supply an id.'};
+
+        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${groupId} is not a valid UUID`};
+
+        return await groupRepository.findGroupById({groupId});
     }
 
 }

@@ -19,16 +19,12 @@ usernames.forEach(x => {
 });
 
 groups.forEach(x => {
-    dummyGroups.push({
-        groupId: uuidv4(),
-        groupName: x,
-        groupDescription: `this a ${x} group`,
-    })
+    dummyGroups.push({groupId: uuidv4(), groupName: x,
+        groupDescription: `this a ${x} group`})
 });
 
 Array(5).fill(0).forEach((x, i) => {
     dummyUserGroups.push({
-        id: uuidv4(),
         userId: dummyUsers[i].userId,
         groupId: dummyGroups[i].groupId,
         role: (i === 2) ? 'admin' : 'member'

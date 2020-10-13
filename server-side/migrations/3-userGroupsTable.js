@@ -3,15 +3,12 @@
 module.exports = {
     up: (queryInterface, Sequelize) => {
         return queryInterface.createTable('userGroups', {
-            id: {
-                type: Sequelize.UUID,
-                defaultValue: Sequelize.UUIDV4,
-                primaryKey: true
-            },
+
             userId: {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4,
                 isUUID: 4,
+                primaryKey: true,
                 references: {model: 'users', key: 'userId'},
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
@@ -19,6 +16,7 @@ module.exports = {
             groupId: {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4,
+                primaryKey: true,
                 references: {model: 'groups', key: 'groupId'},
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
