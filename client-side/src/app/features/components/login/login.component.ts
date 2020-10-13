@@ -14,16 +14,16 @@ import {Router} from "@angular/router";
 
 export class LoginComponent implements OnInit {
 
-
+  /** pseudonyme ou email de l'utilisateur */
   pseudo : string;
+  /** mot de passe de l'utilisateur */
   password : string;
+  /** message d'erreur initialement vide */
   errorMessage: string;
 
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
   alert: number = 0;
 
-  constructor(private userService : UserService,
-              private router : Router,
+  constructor(private router : Router,
               private authService : AuthService
   ) { 
   } 
@@ -31,6 +31,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Récupère le contenu des données du formulaire de login.
+   * Passe les valeurs à la fonction {@link AuthService.login}
+   * 
+   * @param f le formulaire devant être traité
+   */
   onLogin(f : NgForm){
     const data: Login = {
       pseudo : this.pseudo,
@@ -40,13 +46,16 @@ export class LoginComponent implements OnInit {
     this.authService.login(data, this.router, this);
   }
 
+  /**
+   * Permet de savoir s'il faut ou non afficher le message d'erreur
+   * 
+   * @returns true si le message doit être affiché ou false aussi non 
+   */
   getDisplay(){
     if(this.errorMessage != ""){
-      return 'bloc';
+      return true;
     }
-    else{
-      return 'none';
-    }
+    return false;
   }
 
 }

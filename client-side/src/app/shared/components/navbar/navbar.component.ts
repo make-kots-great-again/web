@@ -14,6 +14,11 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Verify if the user is login or not
+   * 
+   * @returns true or false 
+   */
   isLogIn(){
 
     if(localStorage.getItem("id_token")){
@@ -25,6 +30,10 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  /** 
+  * Send a confirmation window.
+  * If the user valid the window, disconnect the user
+  */
   logOut(){
     if(confirm("Voulez-vous vraiment vous déconnecter ?")){
       this.authService.logout();
