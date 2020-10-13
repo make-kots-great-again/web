@@ -1,64 +1,66 @@
+
 <div class="row connexion ">
-<div class="container register-form col-lg-7 col-md-8 col-sm-8 rounded">
-
-  <div class="form rounded col-12">
-
-    <div class="note bg-dark">
-      <h3 id="formTitle"class="font-weight-bolder mb-3" style="padding-top: 10px"> Se connecter à KotsApp</h3>
-      <p class="font-weight-bold " style="font-size: 0.9rem">
-        Pour se connecter, veillez remplir ces champs par votre une adresse email et mot de passe.
-      </p>
+  <div class="container register-form col-lg-7 col-md-8 col-sm-8 rounded">
+  
+    <div class="form rounded col-12">
+  
+      <div class="note bg-dark">
+        <h3 id="formTitle"class="font-weight-bolder mb-3" style="padding-top: 10px"> Se connecter à KotsApp</h3>
+        <p class="font-weight-bold " style="font-size: 0.9rem">
+          Pour se connecter, veillez remplir ces champs par votre une adresse email et mot de passe.
+        </p>
+      </div>
+      <form #signUpForm="ngForm" class="form-content text-center col-md-12 rounded" (ngSubmit)="onLogin(signUpForm)" novalidate>
+  
+        <!-- Username or email-->
+        <div class="row justify-content-center col-12 form-label-group input">
+          <input #pseudoInput="ngModel"
+                 [class.is-invalid]="pseudoInput.invalid && pseudoInput.touched"
+                 [class.is-valid]="!(pseudoInput.invalid && pseudoInput.untouched)"
+                 class="form-control" type="text" id="pseudo"
+                 [(ngModel)]="pseudo" name="pseudo"
+                 placeholder="Pseudonyme"  required autofocus>
+                 <label for="pseudo">Pseudonyme</label>
+          <small id="emailError" class="text-danger" [class.d-none]="pseudoInput.valid ||
+            pseudoInput.untouched">Ce champ est obligatoire</small>
+        </div>
+        <br>
+  
+        <!-- password -->
+        <div class="row justify-content-center col-12 form-label-group input">
+          <label for="password"></label>
+          <label for="password"></label>
+          <input #passwordInput="ngModel"
+                 [class.is-invalid]="passwordInput.invalid && passwordInput.touched"
+                 [class.is-valid]="!(passwordInput.invalid && passwordInput.untouched)"
+                 class="form-control" type="password" id="password"
+                 [(ngModel)]="password" name="password"
+                 placeholder="Mot de passe"  required autofocus>
+                 <label for="password">Mot de passe</label>
+          <small id="passwordError" class="text-danger" [class.d-none]="passwordInput.valid ||
+            passwordInput.untouched">Un mot de passe est requis</small>
+        </div>
+        <br>
+  
+        <div class="d-flex">
+          <div>
+            <button [disabled]="signUpForm.form.invalid"
+                    class="btn btn-secondary btn-rounded
+                    text-monospace font-italic font-weight-bolder"
+                    id="submitBtn" type="submit">Connexion
+            </button>
+          </div>
+          <div class="ml-auto">
+            <small class="">
+              <a class="nav-link font-italic" id="signUpLink"
+                 style="text-decoration: underline; color: #343A40"
+                 [routerLink]="['/register']">Pas de compte ? inscrivez-vous</a>
+            </small>
+          </div>
+        </div>
+        <small class="text-danger" *ngIf="getDisplay()"> {{errorMessage}} </small>
+      </form>
+  
     </div>
-    <form #signUpForm="ngForm" class="form-content text-center col-md-12 rounded">
-
-      <!-- Username or email-->
-      <div class="row justify-content-center col-12 form-label-group input">
-        <input #pseudoInput="ngModel"
-               [class.is-invalid]="pseudoInput.invalid && pseudoInput.touched"
-               [class.is-valid]="!(pseudoInput.invalid && pseudoInput.untouched)"
-               class="form-control" type="text" id="pseudo"
-               [(ngModel)]="pseudo" name="pseudo"
-               placeholder="Email address ou Pseudonyme"  required autofocus>
-               <label for="pseudo">Email address ou Pseudonyme</label>
-        <small id="emailError" class="text-danger" [class.d-none]="pseudoInput.valid ||
-          pseudoInput.untouched">Ce champ est obligatoire</small>
-      </div>
-      <br>
-
-      <!-- password -->
-      <div class="row justify-content-center col-12 form-label-group input">
-        <label for="password"></label>
-        <label for="password"></label>
-        <input #passwordInput="ngModel"
-               [class.is-invalid]="passwordInput.invalid && passwordInput.touched"
-               [class.is-valid]="!(passwordInput.invalid && passwordInput.untouched)"
-               class="form-control" type="password" id="password"
-               [(ngModel)]="password" name="password"
-               placeholder="Mot de passe"  required autofocus>
-               <label for="password">Mot de passe</label>
-        <small id="passwordError" class="text-danger" [class.d-none]="passwordInput.valid ||
-          passwordInput.untouched">Un mot de passe est requis</small>
-      </div>
-      <br>
-
-      <div class="d-flex">
-        <div>
-          <button [disabled]="signUpForm.form.invalid"
-                  class="btn btn-secondary btn-rounded
-                  text-monospace font-italic font-weight-bolder"
-                  id="submitBtn" type="submit">Connexion
-          </button>
-        </div>
-        <div class="ml-auto">
-          <small class="">
-            <a class="nav-link font-italic" id="signUpLink"
-               style="text-decoration: underline; color: #343A40"
-               [routerLink]="['/register']">Pas de compte ? inscrivez-vous</a>
-          </small>
-        </div>
-      </div>
-    </form>
-
   </div>
-</div>
-</div>
+  </div>
