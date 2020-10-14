@@ -26,13 +26,8 @@ export class GroupsComponent implements OnInit {
     this.groupService.getMyGroups()
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
-        async (data: any) => {
-         this.groups = data.body.userInfo[0].groups
-          console.log(data);
-        },
-        error => {
-          console.log(error)
-        });
+         (data: any) => {this.groups = data},
+        error => {console.log(error)});
   }
 
   @HostListener('window:beforeunload')

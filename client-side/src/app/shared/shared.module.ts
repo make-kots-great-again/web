@@ -4,11 +4,12 @@ import {Routes, RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {NavbarComponent} from './components/navbar/navbar.component';
+import {SpinnerComponent} from './components/spinner/spinner.component';
 
 const routes: Routes = [];
 
 @NgModule({
-  declarations: [NavbarComponent],
+  declarations: [NavbarComponent, SpinnerComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,6 +19,7 @@ const routes: Routes = [];
   ],
   exports: [
     NavbarComponent,
+    SpinnerComponent,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule

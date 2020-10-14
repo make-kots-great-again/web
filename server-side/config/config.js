@@ -1,4 +1,3 @@
-
 const env = Object.freeze({...process.env});
 
 module.exports = {
@@ -18,9 +17,15 @@ module.exports = {
         database: '', host: '',
         port: '', dialect: '',
     },
-    prod: {
-        username: '', password: '',
-        database: '', host: '',
-        port: '', dialect: '',
+    production: {
+        url: env.DATABASE_URL,
+        dialect: 'postgres',
+        ssl: true,
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        }
     }
 };

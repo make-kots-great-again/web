@@ -789,7 +789,7 @@ false Zulu
     <database id="2" parent="1" name="kots">
       <ObjectId>16394</ObjectId>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>2510</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2564</IntrospectionStateNumber>
       <Current>1</Current>
     </database>
     <database id="3" parent="1" name="postgres">
@@ -846,7 +846,7 @@ false Zulu
       <Comment>standard public schema</Comment>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>2511</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2565</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <access-method id="16" parent="2" name="heap">
@@ -916,15 +916,5 @@ false Zulu
     <language id="25" parent="2" name="internal"/>
     <language id="26" parent="2" name="plpgsql"/>
     <language id="27" parent="2" name="sql"/>
-    <object-type id="28" parent="15" name="enum_userGroups_role">
-      <ObjectId>19209</ObjectId>
-      <Owner>postgres</Owner>
-      <StateNumber>2459</StateNumber>
-      <SubKind>enum</SubKind>
-      <Labels>admin
-member</Labels>
-      <BaseTypeId>0</BaseTypeId>
-      <SubCategory>enum</SubCategory>
-    </object-type>
   </database-model>
 </dataSource>

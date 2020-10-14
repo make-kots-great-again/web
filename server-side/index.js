@@ -15,11 +15,22 @@ export default function express_server(express) {
      */
     this.initDatabase = () => {
         dbConnection.authenticate()
-            .then(() => consola.success(
-                {
-                    message: `Database connected successfully to ${env.POSTGRES_DB} database`,
-                    badge: true
-                }))
+            .then(() => {
+                    if (env.NODE_ENV === 'production') {
+                        consola.success(
+                            {
+                                message: `Database connected successfully to ${env.DATABASE_URL}`,
+                                badge: true
+                            })
+                    } else if (env.NODE_ENV === 'dev') {
+                        consola.success(
+                            {
+                                message: `Database connected successfully to ${env.POSTGRES_DB} database`,
+                                badge: true
+                            })
+                    }
+                }
+            )
             .catch(error => console.error(`Unable to connect to ${env.POSTGRES_DB} database:`, error));
 
         return this;
