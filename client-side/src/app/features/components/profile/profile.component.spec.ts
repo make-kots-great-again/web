@@ -24,9 +24,13 @@ describe('ProfileComponent', () => {
     fixture.detectChanges();
   });
 
-  /*it('should create', () => {
-    expect(component).toBeTruthy();
-  });*/
+
+  it('#onAbort() should set #viewMode to "view" ', () => {
+    component.viewMode = 'edition';
+    expect(component.viewMode).toBe('edition', 'edition mode at first');
+    component.onAbort();
+    expect(component.viewMode).toBe('view', 'view mode after click');
+  });
 
   it('#onEditPwd() should set #showPopup to true', () => {
     expect(component.showPopup).toBe(false, 'false at first');
