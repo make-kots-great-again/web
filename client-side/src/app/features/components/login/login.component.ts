@@ -47,11 +47,11 @@ export class LoginComponent implements OnInit {
           // this.userService.storeUserData(data);
           await this.router.navigate(['/profile']);
           // setTimeout(() => this.router.navigate(['/profile']), 1000);
-          console.log(data);
+         // console.log(data);
         },
         error => {
           this.alert = error.status;
-          console.log(error)
+         // console.log(error)
         });
   }
 

@@ -1,1 +1,97 @@
-<p>groups works!</p>
+<div *ngIf="groups">
+
+  <!-- User Table -->
+  <div class="container text-center my-3">
+
+    <p class="font-weight-bold">List of my groups</p>
+
+    <!-- Table  -->
+    <table
+      class="table table-bordered table-responsive-md table-responsive-lg
+    table-responsive-sm table-striped " id="testTable">
+      <!-- Table head -->
+      <thead class="thead-dark">
+      <tr>
+        <!-- username -->
+        <th id="username" style="cursor: pointer">Name</th>
+        <!-- Email -->
+        <th id="email" style="cursor: pointer">Role</th>
+
+      </tr>
+      </thead>
+      <!-- Table head -->
+
+      <!-- Table body -->
+      <tbody *ngIf="groups" id="demo">
+      <ng-container *ngFor="let group of groups index as i">
+
+        <tr #idRef data-toggle="modal"
+            data-target=".bd-example-modal-lg" style="cursor: pointer"
+            onmousemove="this.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
+                      this.style.color='green'"
+            onmouseout="this.style.backgroundColor = ''; this.style.color=''">
+
+          <th class="text-monospace font-italic" scope="row">
+            {{group['groupName']}} </th>
+          <th class="text-monospace font-italic" scope="row">
+            {{group['roleInThisGroup'].role}} </th>
+        </tr>
+      </ng-container>
+      </tbody>
+      <!-- Table body -->
+    </table>
+  </div>
+</div>
+
+
+
+<div *ngIf="!groups">
+
+  <div class="sk-fading-circle">
+    <div class="sk-circle1 sk-circle"></div>
+    <div class="sk-circle2 sk-circle"></div>
+    <div class="sk-circle3 sk-circle"></div>
+    <div class="sk-circle4 sk-circle"></div>
+    <div class="sk-circle5 sk-circle"></div>
+    <div class="sk-circle6 sk-circle"></div>
+    <div class="sk-circle7 sk-circle"></div>
+    <div class="sk-circle8 sk-circle"></div>
+    <div class="sk-circle9 sk-circle"></div>
+    <div class="sk-circle10 sk-circle"></div>
+    <div class="sk-circle11 sk-circle"></div>
+    <div class="sk-circle12 sk-circle"></div>
+  </div>
+
+</div>
+
+<!-- log details modal -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header font-weight-bold">
+        <h3 class="text-monospace font-italic"><strong>Group details</strong>
+          <p></p>
+          <p style="font-size: small" class="blockquote-footer my-0"></p>
+        </h3>
+
+        <!-- log details close modal button -->
+        <button type="button" class="close"
+                data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container mt-2 mb-2">
+        <div class="modal-body card border-light">
+          <p class="text-monospace font-italic">
+            <strong>Group members</strong>
+          <hr>
+          <p class="text-monospace font-italic">
+            <strong>Group shopping list</strong>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

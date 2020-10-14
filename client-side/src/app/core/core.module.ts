@@ -7,6 +7,7 @@ import {HomePageComponent} from './components/home-page/home-page.component';
 import {AboutComponent} from './components/about/about.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {JwtInterceptor} from './interceptor/jwt.interceptor'
+import {ErrorInterceptor} from "./interceptor/error.interceptor";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -23,7 +24,8 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ]
 })
 export class CoreModule {
