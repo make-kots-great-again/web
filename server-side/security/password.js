@@ -7,7 +7,7 @@ export default function makePasswordFactory({bcrypt}) {
         return await bcrypt.compare(password1, password2);
     }
 
-     function hashPassword(password) {
+    function hashPassword(password) {
         return bcrypt.hashSync(password, 10);
     }
 

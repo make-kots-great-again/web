@@ -1,9 +1,9 @@
+import { UserService } from 'src/app/core/services/user.service';
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {Routes, RouterModule} from '@angular/router';
 import {ChartModule} from "angular2-chartjs";
 
-import {SharedModule} from "../shared/shared.module";
+import {SharedModule} from '../shared/shared.module';
 import {RegisterComponent} from './components/register/register.component';
 import {LoginComponent} from './components/login/login.component';
 import {ProfileComponent} from './components/profile/profile.component';
@@ -30,11 +30,13 @@ const routes: Routes = [
     GroupsComponent,
   ],
   imports: [
-    CommonModule,
     SharedModule,
     ChartModule,
     RouterModule.forChild(routes)
-  ]
+  ],
+  providers: [
+    UserService,
+  ],
 })
 export class FeaturesModule {
 }
