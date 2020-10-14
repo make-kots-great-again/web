@@ -10,7 +10,8 @@
       </li>
 
       <!-- Register -->
-      <li *ngIf="!isLogIn()" class="nav-item" [routerLinkActive]="['active']"
+      <li *ngIf="!authService.currentUserValue"
+        class="nav-item" [routerLinkActive]="['active']"
           [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" [routerLink]="['/register']">
           <i class="fa fa-user-plus"></i> Inscription</a>
@@ -47,25 +48,82 @@
   <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
     <ul class="navbar-nav ml-auto">
 
+      <!-- Dashboard -->
+      <li *ngIf="authService.currentUserValue"
+          class="nav-item" [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" [routerLink]="['/dashboard']">Dashboard</a>
+      </li>
+
       <!-- Profile -->
-      <li  class="nav-item" [routerLinkActive]="['active']"
+      <li *ngIf="authService.currentUserValue"
+          class="nav-item" [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }">
+        <a id="groupBtn" class="nav-link" [routerLink]="['/groups']">
+          <i class="fa fa-sign-in"></i> Profile</a>
+      </li>
+
+      <!-- Profile -->
+      <li *ngIf="authService.currentUserValue"
+        class="nav-item" [routerLinkActive]="['active']"
            [routerLinkActiveOptions]="{ exact: true }">
         <a id="profileBtn" class="nav-link" [routerLink]="['/profile']">
           <i class="fa fa-sign-in"></i> Profile</a>
       </li>
 
       <!-- Login -->
-      <li *ngIf="!isLogIn()" class="nav-item" [routerLinkActive]="['active']"
+      <li *ngIf="!authService.currentUserValue"
+          class="nav-item" [routerLinkActive]="['active']"
           [routerLinkActiveOptions]="{ exact: true }">
         <a id="loginBtn" class="nav-link" [routerLink]="['/login']">
           <i class="fa fa-sign-in"></i> Connexion</a>
       </li>
 
       <!-- Logout -->
-      <li  *ngIf="isLogIn()" class="nav-item">
-        <a id="logoutBtn" class="nav-link" href="#" (click)="logOut()">
+      <li *ngIf="authService.currentUserValue" class="nav-item">
+        <a id="logoutBtns" class="nav-link"
+           data-toggle="modal" data-target="#deleteModel"
+        style="cursor: pointer">
           <i class="fa fa-sign-out"></i>Déconnexion</a>
       </li>
     </ul>
   </div>
 </nav>
+
+<!-- confirm logout modal  -->
+<div class="modal fade" id="deleteModel" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <!-- confirm logout modal header -->
+      <div class="modal-header">
+        <h5 class="modal-title text-monospace font-italic font-weight-bolder"
+            id="exampleModalLongTitle">Se déconnecter de KotsApp</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- confirm logout modal body -->
+      <div class="modal-body">
+        <h5 class="modal-title text-monospace font-italic" style="text-align: center">
+          <strong>Voulez-vous vraiment</strong></h5>
+        <br>
+        <p class="text-monospace font-italic" style="text-align: center">
+          Vous déconnecter de ce compte KotsApp ?</p>
+      </div>
+
+      <!-- confirm logout modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary text-monospace
+        font-italic font-weight-bolder" data-dismiss="modal">Annuler
+        </button>
+        <button (click)="onLogOutClick()" type="button" data-dismiss="modal"
+                class="btn btn-danger text-monospace
+                font-italic font-weight-bolder">Déconnexion
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

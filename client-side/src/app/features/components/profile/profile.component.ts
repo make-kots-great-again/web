@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.userPorfile = this.route.snapshot.data.userprofile[0];
+    // this.userPorfile = this.route.snapshot.data.userprofile[0];
   }
 
 }

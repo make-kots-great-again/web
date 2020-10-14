@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../../core/services/authentification.service";
-
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from "../../../core/services/authentification.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -9,35 +9,21 @@ import {AuthService} from "../../../core/services/authentification.service";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authService : AuthService) { }
+  constructor(
+    public authService: AuthenticationService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
   }
 
-  /**
-   * Verify if the user is login or not
-   * 
-   * @returns true or false 
-   */
-  isLogIn(){
 
-    if(localStorage.getItem("id_token")){
-      return true;
-    }
-    else{
-      return false;
-    }
+  async onLogOutClick() {
+
+    this.authService.logout();
+    await this.router.navigate(['/login']);
+  //  setTimeout(() => this.router.navigate(['/login']) ,1000);
 
   }
-
-  /** 
-  * Send a confirmation window.
-  * If the user valid the window, disconnect the user
-  */
-  logOut(){
-    if(confirm("Voulez-vous vraiment vous déconnecter ?")){
-      this.authService.logout();
-    }
-  }
-
 }

@@ -4,7 +4,8 @@ export interface IUser {
   lastName: string;
   username: string;
   email: string;
-  password: string;
+  token?: string;
+  password?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -39,7 +40,7 @@ export class User implements IUser {
 export class Login implements LoginData{
 
   constructor(
-    public pseudo: string, 
+    public pseudo: string,
     public password: string
   ) {
     this.pseudo = pseudo ? pseudo : null;

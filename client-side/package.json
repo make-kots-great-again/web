@@ -23,6 +23,7 @@
     "@icon/icofont": "^1.0.1-alpha.1",
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
+    "angular2-chartjs": "^0.5.1",
     "bootstrap": "^4.5.2",
     "bootswatch": "^4.5.2",
     "boxicons": "^2.0.5",

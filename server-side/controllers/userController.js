@@ -45,15 +45,13 @@ export default function userControllerFactory() {
 
             const {username, email, userId: id} = user.data;
 
-            console.log(user.token);
-
             return {
                 statusCode: 200,
                 body: {
-                    success: true, token: user.token,
+                    success: true,
                     user: {
                         userId: id, username: username,
-                        userEmail: email
+                        userEmail: email, token: user.token
                     }
                 }
             }

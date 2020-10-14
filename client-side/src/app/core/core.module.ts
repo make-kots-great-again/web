@@ -6,7 +6,7 @@ import {SharedModule} from "../shared/shared.module";
 import {HomePageComponent} from './components/home-page/home-page.component';
 import {AboutComponent} from './components/about/about.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
-import {AuthInterceptor} from './interceptor/auth.interceptor'
+import {JwtInterceptor} from './interceptor/jwt.interceptor'
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -23,7 +23,7 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ]
 })
 export class CoreModule {

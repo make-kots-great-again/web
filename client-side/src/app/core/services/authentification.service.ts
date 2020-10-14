@@ -1,78 +1,42 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {LoginData} from '../../shared/models/user.model';
-import {LoginComponent} from '../../features/components/login/login.component';
-import * as moment from "moment";
-import {Router} from "@angular/router";
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
+import {IUser, LoginData} from '../../shared/models/user.model';
 
+@Injectable({providedIn: 'root'})
+export class AuthenticationService {
+  private currentUserSubject: BehaviorSubject<IUser>;
+  public currentUser: Observable<IUser>;
 
+  constructor(private http: HttpClient) {
+    this.currentUserSubject =
+      new BehaviorSubject<IUser>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
 
-@Injectable({
-    providedIn: 'root'
-  })
-export class AuthService {
+  public get currentUserValue(): IUser {
+    return this.currentUserSubject.value;
+  }
 
-    constructor(private http: HttpClient) {
-    }
-
-    /**
-     * Utilise les données contenues dans le paramètre loginData pour se connecter au serveur
-     * En cas de connection réussie, récupère la réponse du serveur et la transmet à {@link AuthService.setSession}
-     * En cas d'échec de connection, affiche l'erreur sur le module setError passé en paramètre
-     * 
-     * @param loginData les données de connection sous la forme : { pseudo : this.pseudo, password : this.password }
-     * @param router    un router typescript
-     * @param setError  un module LoginComponent pour récupérer le message d'erreur
-     */
-    login(loginData : LoginData, router: Router, setError : LoginComponent){ 
-        
-      return this.http.post<LoginData>('/server/api/login', loginData, { observe: 'response'}).subscribe(async (response: any) => {
-         
-        this.setSession(response, router);
-
-      },
-      error => {
-        // si la requête abouti, mais que les identifiants sont incorrects
-        if(error.status == 401){
-          
-          setError.errorMessage = "Votre identifiant ou votre mot de passe est incorrect";
-        
+  loginUser(loginData: LoginData) {
+    return this.http.post<LoginData>('/server/api/login', loginData,
+      {observe: 'response'})
+      .pipe(map((data: any) => {
+        // login successful if there's a jwt token in the response
+        if (data.status === 200) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify(data.body.user));
+          this.currentUserSubject.next(data.body.user);
         }
-        // si la requête n'a pas aboutie
-        else{
-          
-          console.log(error)
-          setError.errorMessage = "Erreur de connection";
-        
-        }
-      });
-    }
+        return data;
+      }));
+  }
 
-    /**
-     * Récupère le Json Web Token dans le body d'une requête HTTP
-     * Stocke le Json Web Token et sa durée d'expiration dans le localStorage
-     * 
-     * @param authResult  une réponse HTML
-     * @param router      un router typescript
-     */
-    private setSession(authResult, router: Router) {
-        
-      const expiresAt = moment().add(authResult.expiresIn,'second');
-
-      localStorage.setItem('id_token', authResult.body.token);
-      localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
-      router.navigate(["home"]);
-    
-    }
-
-    /**
-     * Retire le Json Web Token et son temps d'expiration du localStorage
-     */
-    logout() {
-      localStorage.removeItem("id_token");
-      localStorage.removeItem("expires_at");
-    }
-
-
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+  }
 }

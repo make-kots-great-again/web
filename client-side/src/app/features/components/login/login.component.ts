@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Login} from '../../../shared/models/user.model';
-import {AuthService} from "../../../core/services/authentification.service";
 import {Router} from "@angular/router";
+import {takeUntil} from "rxjs/operators";
+import {UserService} from "../../../core/services/user.service";
+import {ReplaySubject} from "rxjs";
+import {AuthenticationService} from "../../../core/services/authentification.service";
 
 @Component({
   selector: 'app-login',
@@ -13,45 +15,51 @@ import {Router} from "@angular/router";
 export class LoginComponent implements OnInit {
 
   /** pseudonyme ou email de l'utilisateur */
-  pseudo : string;
+  pseudo: string;
   /** mot de passe de l'utilisateur */
-  password : string;
+  password: string;
   /** message d'erreur initialement vide */
-  errorMessage: string;
+  alert: number = 0;
 
-  constructor(private router : Router,
-              private authService : AuthService
-  ) { 
-  } 
+  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
+
+  constructor(private router: Router,
+              private authService: AuthenticationService,
+              private userService: UserService) {
+  }
 
   ngOnInit(): void {
   }
 
   /**
    * Récupère le contenu des données du formulaire de login.
-   * Passe les valeurs à la fonction {@link AuthService.login}
-   * 
-   * @param f le formulaire devant être traité
    */
-  onLogin(signUpForm : NgForm){
-    const data: Login = {
-      pseudo : this.pseudo,
-      password : this.password 
-    };
 
-    this.authService.login(data, this.router, this);
+  onLoginSubmit(): void {
+    const loginForm: Login = {
+      pseudo: this.pseudo,
+      password: this.password
+    };
+    this.authService.loginUser(loginForm)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(
+        async (data: any) => {
+          // this.userService.storeUserData(data);
+          await this.router.navigate(['/profile']);
+          // setTimeout(() => this.router.navigate(['/profile']), 1000);
+          console.log(data);
+        },
+        error => {
+          this.alert = error.status;
+          console.log(error)
+        });
   }
 
-  /**
-   * Permet de savoir s'il faut ou non afficher le message d'erreur
-   * 
-   * @returns true si le message doit être affiché ou false aussi non 
-   */
-  getDisplay(){
-    if(this.errorMessage != ""){
-      return true;
-    }
-    return false;
+  @HostListener('window:beforeunload')
+  async ngOnDestroy() {
+    this.alert = 0;
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
 }
