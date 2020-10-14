@@ -49,6 +49,14 @@ export default function userServiceFactory({userRepository}) {
         return userRepository.findAll();
     }
 
+    /**
+     * Fonction vérifiant la présence et la validité d'un identifiant avant
+     * de forwarder la requête au userRepository.
+     * @param id l'identifiant de l'utilisateur.
+     * @returns
+     *          -> si l'identifiant est manquant ou invalide : un message d'erreur
+     *          -> sinon, la réponse de la requête envoyé au userRepository.
+     */
     async function listOneUser({id} = {}) { 
 
         if (!id) return {message: 'You must supply an id.'};
@@ -59,6 +67,18 @@ export default function userServiceFactory({userRepository}) {
         return await userRepository.findById({id});
     }
 
+    /**
+     * Fonction vérifiant :
+     *      -> la présence et la validité d'un identifiant
+     *      -> l'unicité de l'email et du pseudo dans la db 
+     * avant de forwarder la requête au userRepository.
+     * @param id l'identifiant de l'utilisateur.
+     * @param userInfo (paramètre spread) contant toutes les infos à modifier de l'utilisateur
+     * @returns
+     *          -> si l'identifiant est manquant ou non valide 
+     *             OU si l'email ou le pseudo existent déjà dans la db : un message d'erreur
+     *          -> sinon, la réponse de la requête envoyé au userRepository.
+     */
     async function putUser({id},{...userInfo}) {
 
         if (!id) return {message: 'You must supply an id.'};
@@ -79,6 +99,19 @@ export default function userServiceFactory({userRepository}) {
         return await userRepository.put({id},{...userInfo});
     }
 
+    /**
+     * Fonction vérifiant :
+     *      -> la présence et la validité d'un identifiant
+     *      -> la validité du mot de passe actuel de l'utilisateur
+     * avant de forwarder la requête au userRepository.
+     * @param id l'identifiant de l'utilisateur.
+     * @param userInfo (paramètre spread) contant le mot de passe actuel ainsi que le nouveau 
+     *                  mot de passe de l'utilisateur.
+     * @returns
+     *          -> si l'identifiant est manquant ou non valide 
+     *             OU si le mot de passe actuel n'est pas bon' : un message d'erreur
+     *          -> sinon, la réponse de la requête envoyé au userRepository.
+     */
     async function patchUserPwd({id},{...userInfo}) {
 
         if (!id) return {message: 'You must supply an id.'};
