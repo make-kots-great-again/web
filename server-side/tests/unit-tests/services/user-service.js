@@ -104,6 +104,73 @@ describe('USER SERVICE', () => {
 
     });
 
+    describe('#list-one-user', () => {
+        
+        it("find user by id", async () => {
+            const {...fakeUser} = makeFakeUser();
+            const inserted = await userService.addUser({...fakeUser});
+            fakeUser.userId = inserted.userId;
+
+            const listedOneUser = await userService.listOneUser({id: fakeUser.userId});
+            expect(listedOneUser.dataValues.username).to.equal(fakeUser.username);
+            expect(listedOneUser.dataValues.firstName).to.equal(fakeUser.firstName);
+            expect(listedOneUser.dataValues.lastName).to.equal(fakeUser.lastName);
+            expect(listedOneUser.dataValues.email).to.equal(fakeUser.email);
+            await userRepository.remove({id: inserted.userId});
+        });
+
+        it("must include an id", async () => {
+            const listedOneUser = await userService.listOneUser();
+            expect(listedOneUser.message).to.equal('You must supply an id.');
+
+        });
+
+        it("id must be valid", async () => {
+            const listedOneUser = await userService.listOneUser(
+                {id: "%,!123"});
+            expect(listedOneUser.message).to.equal('%,!123 is not a valid v4 UUID');
+
+        });
+
+    });
+
+    describe('#put-one-user', () => {
+        
+        it("put user with id", async () => {
+            const {...fakeUser} = makeFakeUser();
+            const inserted = await userService.addUser({...fakeUser});
+            fakeUser.userId = inserted.userId;
+            
+            const modifiedUserInfo = {
+                username: 'test45',
+                lastName: 'test456',
+                firstName: 'test457',
+                email: fakeUser.email,
+            }
+
+            const puttedUser = await userService.putUser({id: fakeUser.userId},{...modifiedUserInfo});
+            expect(puttedUser[1].dataValues.username).to.equal(modifiedUserInfo.username);
+            expect(puttedUser[1].dataValues.firstName).to.equal(modifiedUserInfo.firstName);
+            expect(puttedUser[1].dataValues.lastName).to.equal(modifiedUserInfo.lastName);
+            expect(puttedUser[1].dataValues.email).to.equal(modifiedUserInfo.email);
+            await userRepository.remove({id: inserted.userId});
+        });
+
+        it("must include an id", async () => {
+            const puttedUser = await userService.listOneUser();
+            expect(puttedUser.message).to.equal('You must supply an id.');
+
+        });
+
+        it("id must be valid", async () => {
+            const puttedUser = await userService.listOneUser(
+                {id: "%,!123"});
+            expect(puttedUser.message).to.equal('%,!123 is not a valid v4 UUID');
+
+        });
+
+    });
+
     describe('#remove-user', () => {
 
     });
