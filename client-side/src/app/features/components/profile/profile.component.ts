@@ -1,9 +1,8 @@
 import {ActivatedRoute} from "@angular/router";
 import { UserService } from 'src/app/core/services/user.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/core/services/authentification.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,16 +18,13 @@ export class ProfileComponent implements OnInit {
   editPwdForm: FormGroup;
   userProfile: User;
 
-  UserId = this.authenticationService.currentUserValue.userId;
-
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService,
   ) { }
 
   ngOnInit(): void {
-    this.userService.getUserById(this.UserId).subscribe((user: User) => {
+    this.userService.getUserById().subscribe((user: User) => {
       this.userProfile = user[0];
       if (this.userProfile !== undefined){
         this.initEditUserForm();
@@ -123,7 +119,7 @@ export class ProfileComponent implements OnInit {
       firstName: this.editUserForm.get('firstName').value,
       email: this.editUserForm.get('email').value,
     };
-    this.userService.putUser(this.UserId, user).subscribe(
+    this.userService.putUser(user).subscribe(
       async (response: any) => {
         this.userProfile = response.body.user;
         this.viewMode = 'view';
@@ -164,7 +160,7 @@ export class ProfileComponent implements OnInit {
       password: this.editPwdForm.get('currentPwd').value,
       newPassword: this.editPwdForm.get('newPwd').value,
     };
-    this.userService.patchUserPwd(this.UserId, passwords).subscribe(
+    this.userService.patchUserPwd(passwords).subscribe(
       async (response: any) => {
         document.getElementById('closeModal').click();
         this.onModalClose();

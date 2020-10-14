@@ -33,11 +33,11 @@ describe('UserService', () => {
 
       const id = '123456';
 
-      service.getUserById(id).subscribe(user => {
+      service.getUserById().subscribe(user => {
         expect(user).toEqual(dummyUser);
       });
 
-      const req = httpMock.expectOne(`/server/api/user/${id}`);
+      const req = httpMock.expectOne(`/server/api/user`);
       expect(req.request.method).toBe('GET');
       req.flush(dummyUser);
     });

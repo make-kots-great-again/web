@@ -24,7 +24,7 @@ export class UserService {
    * @param id  : l'identifant de l'utilisateur.
    * @returns un observable http
    */
-  getUserById(id: string): Observable<User> {
+  getUserById(): Observable<User> {
     return this.http.get<User>(`/server/api/user`);
   }
 
@@ -35,7 +35,7 @@ export class UserService {
    * @param user : objet utilisateur contenant tous les champs de celui-ci.
    * @returns un observable http
    */
-  putUser(id: string, user: any): Observable<HttpResponse<IUser>> {
+  putUser(user: any): Observable<HttpResponse<IUser>> {
     return this.http.put<IUser>(`/server/api/user`, user, { observe: 'response' });
   }
 
@@ -48,7 +48,7 @@ export class UserService {
    *                        - le nouveau mot de passe de l'utilisateur
    * @returns un observable http
    */
-  patchUserPwd(id: string, passwords: any): Observable<HttpResponse<IUser>> {
+  patchUserPwd(passwords: any): Observable<HttpResponse<IUser>> {
     return this.http.patch<IUser>(`/server/api/user/password`, passwords, { observe: 'response' });
   }
 
