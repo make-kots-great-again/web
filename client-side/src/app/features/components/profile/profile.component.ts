@@ -3,6 +3,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/core/services/authentification.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,11 +19,12 @@ export class ProfileComponent implements OnInit {
   editPwdForm: FormGroup;
   userProfile: User;
 
-  UserId = 'bc3983f8-dc21-4ea3-a27b-06bafc27a871'; //TODO à récupérer depuis le local storage!
+  UserId = this.authenticationService.currentUserValue.userId;
 
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
   ) { }
 
   ngOnInit(): void {

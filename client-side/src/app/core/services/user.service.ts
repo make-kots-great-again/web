@@ -25,7 +25,7 @@ export class UserService {
    * @returns un observable http
    */
   getUserById(id: string): Observable<User> {
-    return this.http.get<User>(`/server/api/user/${id}`);
+    return this.http.get<User>(`/server/api/user`);
   }
 
   /**
@@ -36,7 +36,7 @@ export class UserService {
    * @returns un observable http
    */
   putUser(id: string, user: any): Observable<HttpResponse<IUser>> {
-    return this.http.put<IUser>(`/server/api/user/${id}`, user, { observe: 'response' });
+    return this.http.put<IUser>(`/server/api/user`, user, { observe: 'response' });
   }
 
   /**
@@ -49,7 +49,7 @@ export class UserService {
    * @returns un observable http
    */
   patchUserPwd(id: string, passwords: any): Observable<HttpResponse<IUser>> {
-    return this.http.patch<IUser>(`/server/api/user/password/${id}`, passwords, { observe: 'response' });
+    return this.http.patch<IUser>(`/server/api/user/password`, passwords, { observe: 'response' });
   }
 
 }

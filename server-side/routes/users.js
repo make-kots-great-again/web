@@ -17,12 +17,12 @@ router.get("/users/profiles",
     passport.authenticate("jwt", { session: false }),
     makeCallback(userController.getAllUsers));
 router
-    .route("/user/:userId")
+    .route("/user")
     .get(passport.authenticate("jwt", { session: false }), makeCallback(userController.getOneUser))
     .put(passport.authenticate("jwt", { session: false }), makeCallback(userController.putOneUser))
     .delete(passport.authenticate("jwt", { session: false }), makeCallback(userController.deleteUser));
 router
-    .route("/user/password/:userId")
+    .route("/user/password")
     .patch(passport.authenticate("jwt", { session: false }), makeCallback(userController.patchUserPwd));
 
 export { router as usersRoutes };

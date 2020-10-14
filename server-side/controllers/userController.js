@@ -89,7 +89,7 @@ export default function userControllerFactory() {
      */
     async function getOneUser(httpRequest) {
         try {
-            const user = await userService.listOneUser({ id: httpRequest.params.userId });
+            const user = await userService.listOneUser({ id: httpRequest.user.userId });
             return {
                 statusCode: 200,
                 body: [user]
@@ -114,7 +114,7 @@ export default function userControllerFactory() {
         try {
             const { ...userInfo } = httpRequest.body;
 
-            const modifiedUser = await userService.putUser({ id: httpRequest.params.userId }, { ...userInfo });
+            const modifiedUser = await userService.putUser({ id: httpRequest.user.userId }, { ...userInfo });
             if (modifiedUser.message) {
                 return { statusCode: 409, body: { success: false, ...modifiedUser, } }
             }
@@ -145,7 +145,7 @@ export default function userControllerFactory() {
     async function patchUserPwd(httpRequest) {
         try {
             const { ...userInfo } = httpRequest.body;
-            const modifiedPwd = await userService.patchUserPwd({ id: httpRequest.params.userId }, { ...userInfo });
+            const modifiedPwd = await userService.patchUserPwd({ id: httpRequest.user.userId }, { ...userInfo });
             if (modifiedPwd.message) {
                 return { 
                     statusCode: 409,
@@ -174,7 +174,7 @@ export default function userControllerFactory() {
 
         try {
             const deletedUser =
-                await userService.removeUser({ id: httpRequest.params.userId });
+                await userService.removeUser({ id: httpRequest.user.userId });
 
             if (!deletedUser) {
                 return {
