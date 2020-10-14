@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
   editPwdForm: FormGroup;
   userProfile: User;
 
-  UserId = '4edb4ef7-2556-4807-9d2d-9eeadc4f563f'; // '79c32cb6-1f46-48bb-b914-6bab936f8cac'; //TODO à récupérer depuis le local storage!
+  UserId = 'bc3983f8-dc21-4ea3-a27b-06bafc27a871'; //TODO à récupérer depuis le local storage!
 
   constructor(
     private userService: UserService,
@@ -27,8 +27,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUserById(this.UserId).subscribe((user: User) => {
       this.userProfile = user[0];
-      this.initEditUserForm();
-      this.initEditPwdForm();
+      if (this.userProfile !== undefined){
+        this.initEditUserForm();
+        this.initEditPwdForm();
+      }
     });
   }
 
