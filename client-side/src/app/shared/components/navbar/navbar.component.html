@@ -55,12 +55,12 @@
         <a class="nav-link" [routerLink]="['/dashboard']">Dashboard</a>
       </li>
 
-      <!-- Profile -->
+      <!-- Groups -->
       <li *ngIf="authService.currentUserValue"
           class="nav-item" [routerLinkActive]="['active']"
           [routerLinkActiveOptions]="{ exact: true }">
         <a id="groupBtn" class="nav-link" [routerLink]="['/groups']">
-          <i class="fa fa-sign-in"></i> Profile</a>
+          <i class="fa fa-sign-in"></i> Groupes</a>
       </li>
 
       <!-- Profile -->
