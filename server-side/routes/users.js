@@ -16,7 +16,15 @@ router.post("/login", makeCallback(userController.logInUser));
 router.get("/users/profiles",
     passport.authenticate("jwt", {session: false}),
     makeCallback(userController.getAllUsers));
-
+router
+    .route("/user/:userId")
+    .get(makeCallback(userController.getOneUser));
+router
+    .route("/user/:userId")
+    .put(makeCallback(userController.putOneUser));
+router
+    .route("/user/password/:userId")
+    .patch(makeCallback(userController.patchUserPwd));
 router
     .route("/user/:userId")
     .delete(makeCallback(userController.deleteUser));

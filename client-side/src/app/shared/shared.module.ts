@@ -18,6 +18,7 @@ const routes: Routes = [];
     RouterModule.forChild(routes)
   ],
   exports: [
+    CommonModule,
     NavbarComponent,
     SpinnerComponent,
     FormsModule,

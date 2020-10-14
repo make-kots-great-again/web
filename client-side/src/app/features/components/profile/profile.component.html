@@ -1,27 +1,159 @@
-<div class="d-flex flex-row flex-wrap justify-content-center page">
-  <div class="d-flex flex-column mx-3">
-    <img src="../../../../assets/0.jpg" style="width: 15em;" class="figure-img img-fluid rounded"
-         alt="A generic square placeholder image with for a profile picture.">
-  </div>
-  <div class="d-flex flex-column mx-3 align-self-center">
-    <h1 class="mt-2 mb-2">james007</h1>
-    <div class="mb-2">
-      <span class="font-weight-bold">Nom : </span> <span>James</span>
+<div class="container-fluid" *ngIf="userProfile != undefined">
+    <div *ngIf="viewMode === 'view'">
+        <div class="d-flex flex-row flex-wrap justify-content-center page">
+            <div class="d-flex flex-column mx-3">
+                <img src="../../../assets/img/profile_pic.jpg" style="width: 15em;" class="figure-img img-fluid rounded"
+                    alt="A generic square placeholder image with for a profile picture.">
+            </div>
+            <div class="d-flex flex-column mx-3 align-self-center">
+                <h1 class="mt-2 mb-3">{{ userProfile.username }}</h1>
+                <div class="mb-3">
+                    <span class="font-weight-bold">Nom : </span> <span>{{ userProfile['lastName'] }}</span>
+                </div>
+                <div class="mb-3">
+                    <span class="font-weight-bold">Prénom : </span> <span>{{ userProfile['firstName'] }}</span>
+                </div>
+                <div class="mb-3">
+                    <span class="font-weight-bold">Email : </span> <span>{{ userProfile['email'] }}</span>
+                </div>
+                <div class="mb-3">
+                    <span class="font-weight-bold">Mot de passe : ••••••••</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row justify-content-center mt-2">
+            <button type="button" class="btn btn-primary" (click)="onEditUserProfile()">Modifier mon profil</button>
+        </div>
     </div>
-    <div class="mb-2">
-      <span class="font-weight-bold">Prénom : </span> <span>Robert</span>
+
+    <div *ngIf="viewMode === 'edition'">
+        <div class="d-flex flex-row flex-wrap justify-content-center page">
+            <div class="d-flex flex-column mx-3">
+                <img src="../../../assets/img/profile_pic.jpg" style="width: 15em;" class="figure-img img-fluid rounded"
+                    alt="A generic square placeholder image with for a profile picture.">
+            </div>
+            <form [formGroup]="editUserForm" class=" align-self-center mx-3">
+                <div class="form-group mb-2 row">
+                    <label for="username" class="font-weight-bold col-4">Pseudo : </label>
+                    <div class="col-8">
+                        <input type="text" name="username" id="username" class="form-control ml-2"
+                            formControlName="username" [ngClass]="{'invalidField': usernameControl.invalid}">
+                        <small id="usernameError" class="form-text text-muted invalidField ml-2"
+                            *ngIf="usernameControl.invalid">Entrez un pseudo valide.</small>
+                    </div>
+                </div>
+                <div class="form-group mb-2 row">
+                    <label for="lastName" class="font-weight-bold col-4">Nom : </label>
+                    <div class="col-8">
+                        <input type="text" class="form-control ml-2" id="lastName" formControlName="lastName"
+                            [ngClass]="{'invalidField': lastNameControl.invalid}">
+                        <small id="lastNameError" class="form-text text-muted invalidField ml-2"
+                            *ngIf="lastNameControl.invalid">Entrez un nom valide.</small>
+                    </div>
+                </div>
+                <div class="form-group mb-2 row">
+                    <label for="firstName" class="font-weight-bold col-4">Prénom : </label>
+                    <div class="col-8">
+                        <input type="text" class="form-control ml-2" id="firstName" formControlName="firstName"
+                            [ngClass]="{'invalidField': firstNameControl.invalid}">
+                        <small id="firstNameError" class="form-text text-muted invalidField ml-2"
+                            *ngIf="firstNameControl.invalid">Entrez un prénom valide.</small>
+                    </div>
+                </div>
+                <div class="form-group mb-2 row">
+                    <label for="email" class="font-weight-bold col-4">Email : </label>
+                    <div class="col-8">
+                        <input type="text" class="form-control ml-2" id="email" formControlName="email"
+                            [ngClass]="{'invalidField': emailControl.invalid}">
+                        <small id="emailError" class="form-text text-muted invalidField ml-2"
+                            *ngIf="emailControl.invalid">Entrez une adresse email valide.</small>
+                    </div>
+                </div>
+                <div class="form-group mb-2 row">
+                    <label for="psw" class="font-weight-bold col-4">Mot de passe : </label>
+                    <div class="col-8">
+                        <button type="button" class="btn btn-info mx-2 center-block" data-toggle="modal"
+                            data-target="#changePwdModal" (click)="onEditPwd()">Modifier mot de passe</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="d-flex flex-row justify-content-center mt-2">
+            <button type="button" class="btn btn-success mx-2" (click)="onSaveUserProfile()"
+                [disabled]="editUserForm.invalid">Enregistrer</button>
+            <button type="button" class="btn btn-danger mx-2" (click)="onAbort()">Annuler</button>
+        </div>
     </div>
-    <div class="mb-2">
-      <span class="font-weight-bold">Email : </span> <span>james@gmail.com</span>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="changePwdModal" tabindex="-1" role="dialog" aria-labelledby="changePwdModal"
+        aria-hidden="true" *ngIf="showPopup">
+        <div class="modal-dialog modal-md" [ngClass]="{'pwdError': pwdError}" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changePwdModal">Modifier mot de passe</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="editPwdForm" class=" align-self-center mx-3">
+                        <div class="row">
+                            <label for="currentPwd" class="font-weight-bold ml-2">Mot de passe :</label>
+                        </div>
+                        <div class="row mb-3">
+                            <input type="password" name="currentPwd" id="currentPwd" class="form-control ml-2 pwd-input"
+                                formControlName="currentPwd" [ngClass]="{'invalidField': pwdError}" (click)="onPwdField()">
+                            <small id="pwdError" class="form-text text-muted invalidField ml-2"
+                                *ngIf="pwdError">Mot de passe incorrect !</small>
+                        </div>
+                        <div class="row">
+                            <label for="newPwd" class="font-weight-bold ml-2">Nouveau mot de passe : </label>
+                        </div>
+                        <div class="row mb-3">
+                            <input type="password" name="newPwd" id="newPwd" class="form-control ml-2 pwd-input"
+                                formControlName="newPwd" [ngClass]="{'invalidField': (newPwdControl.errors && newPwdControl.touched)}">
+                            <small id="confPwdError" class="form-text text-muted invalidField ml-2"
+                                *ngIf="newPwdControl.invalid && newPwdControl.touched">Le mot de passe doit contenir minimum 8 caractères</small>
+                        </div>
+                        <div class="row">
+                            <label for="confNewPwd" class="font-weight-bold ml-2">Confirmez le nouveau mot de passe :
+                            </label>
+                        </div>
+                        <div class="row mb-3">
+                            <input type="password" name="confNewPwd" id="confNewPwd" class="form-control ml-2 pwd-input"
+                                formControlName="confNewPwd"
+                                [ngClass]="{'invalidField': (confNewPwdControl.errors || (editPwdForm.get('newPwd').value !== editPwdForm.get('confNewPwd').value)) && confNewPwdControl.touched}">
+                                <small id="confPwdError" class="form-text text-muted invalidField ml-2"
+                                    *ngIf="confNewPwdControl.invalid && confNewPwdControl.touched">Le mot de passe doit contenir minimum 8 caractères</small>
+                                <small id="confPwdError" class="form-text text-muted invalidField ml-2"
+                                    *ngIf="(editPwdForm.get('newPwd').value !== editPwdForm.get('confNewPwd').value) && confNewPwdControl.touched">Les mots de passes ne correspondent pas</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" (click)="onSaveUserPwd()" [disabled]="editPwdForm.invalid">Enregistrer</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeModal" (click)="onModalClose()">Annuler</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-2">
-      <span class="font-weight-bold">Mot de passe : ••••••••</span>
-    </div>
-  </div>
+
 </div>
 
-<div class="d-flex flex-row justify-content-center mt-2" >
-  <button type="button" class="btn btn-primary">Modifier mon profil</button>
-</div>
-
+<<<<<<< HEAD
 <app-spinner></app-spinner>
+=======
+<div class="container-fluid" *ngIf="userProfile == undefined">
+    <div class="row justify-content-center mt-5">
+        <p>Chargement de votre profil</p>
+    </div>
+    <div class="row justify-content-center">
+        <div class="spinner-border text-info"></div>
+    </div>
+</div>
+>>>>>>> US_3-v2
