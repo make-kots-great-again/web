@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit {
         },
         error => {
           this.alert = error.status;
-         // console.log(error)
         });
   }
 

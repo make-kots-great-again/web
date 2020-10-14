@@ -3,11 +3,12 @@
   <div class="container register-form col-lg-7 col-md-8 col-sm-8 rounded">
 
     <div class="form rounded col-12">
-
-      <div *ngIf="alert === 401" class="alert alert-dismissible alert-danger">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Authentication failed !</strong>
-      </div>
+     <div *ngIf="alert">
+       <div *ngIf="alert === 401" class="alert alert-dismissible alert-danger">
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+         <strong>Authentication failed !</strong>
+       </div>
+     </div>
       <div class="note bg-dark">
         <h3 id="formTitle"class="font-weight-bolder mb-3" style="padding-top: 10px"> Se connecter à KotsApp</h3>
         <p class="font-weight-bold " style="font-size: 0.9rem">
