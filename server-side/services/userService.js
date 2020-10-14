@@ -64,7 +64,7 @@ export default function userServiceFactory({userRepository}) {
         if (!(id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
             return {message: `${id} is not a valid v4 UUID`};
 
-        return await userRepository.findById({id});
+        return userRepository.findById({id});
     }
 
     /**
@@ -89,12 +89,13 @@ export default function userServiceFactory({userRepository}) {
         const existing_email = await userRepository.findByEmail({...userInfo});
         const existing_username = await userRepository.findByUsername({...userInfo});
 
-        if (existing_email.length != 0){
-            if(existing_email[0].userId != id) return {message: "A user with the same email address already exists !"}
-        };
-        if (existing_username.length != 0){
-            if(existing_username[0].userId != id) return {message: "A user with the same username already exists !"}
-        };
+        if (existing_email.length !== 0){
+            if(existing_email[0].userId !== id) return {message: "A user with the same email address already exists !"}
+        }
+
+        if (existing_username.length !== 0){
+            if(existing_username[0].userId !== id) return {message: "A user with the same username already exists !"}
+        }
         
         return await userRepository.put({id},{...userInfo});
     }
@@ -133,7 +134,7 @@ export default function userServiceFactory({userRepository}) {
         if (!(id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
             return {message: `${id} is not a valid v4 UUID`};
 
-        return awaituserRepository.remove({id});
+        return await userRepository.remove({id});
     }
 
 }

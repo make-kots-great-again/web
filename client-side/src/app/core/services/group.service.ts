@@ -13,10 +13,16 @@ export class GroupService {
   }
 
   getMyGroups(): Observable<HttpResponse<any>> {
-
     return this.http.get<any>('/server/api/user/groups',
       {observe: 'response'})
       .pipe(map((data: any) => data.body.userInfo[0].groups));
+
+  }
+
+  getOneGroup(id : string): Observable<HttpResponse<any>> {
+    return this.http.get<any>(`/server/api/group/${id}`,
+      {observe: 'response'})
+      .pipe(map((data: any) => data.body.groupInfo));
 
   }
 }

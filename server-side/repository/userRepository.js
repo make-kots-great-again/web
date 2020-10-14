@@ -62,8 +62,7 @@ export default function makeUserRepository({User, Op}) {
     }
 
     async function findByUsername({username}) {
-        return User.findOne(
-            {where: {username: username}});
+        return User.findOne({where: {username: username}});
     }
 
     async function findByEmailOrUsername({email: email, username: username}) {
@@ -80,14 +79,6 @@ export default function makeUserRepository({User, Op}) {
         return User.findAll({
             where: {
                 email: userInfo.email,
-            }
-        });
-    }
-
-    async function findByUsername({username: username}) {
-        return User.findAll({
-            where: {
-                username: username
             }
         });
     }

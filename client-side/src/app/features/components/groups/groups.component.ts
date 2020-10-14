@@ -10,25 +10,50 @@ import {takeUntil} from "rxjs/operators";
 })
 export class GroupsComponent implements OnInit {
 
-  groups : any ;
+  groups: any;
+  searchValue: string = "";
+  groupDescription: string = "";
+  addUser: string = "";
+  groupUsers : Array<any> = [];
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(
     private groupService: GroupService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.getGroups();
   }
 
-  getGroups() : void {
+  getGroups(): void {
     this.groupService.getMyGroups()
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
-         (data: any) => {this.groups = data},
-        error => {console.log(error)});
+        (data: any) => {
+          this.groups = data
+        },
+        error => {
+          console.log(error)
+        });
   }
+
+
+  groupDetails(event: any) {
+    this.groupService.getOneGroup(event.id)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(
+        (data: any) => {
+          this.groupDescription = data.groupDescription;
+          this.groupUsers = data.users;
+          console.log(this.groupUsers);
+        },
+        error => {
+          console.log(error)
+        });
+  }
+
 
   @HostListener('window:beforeunload')
   async ngOnDestroy() {

@@ -25,7 +25,7 @@ export default function makeGroupRepository({Group, userGroup, User}) {
     }
 
     async function findGroupById({groupId}) {
-        return await Group.findAll({
+        return Group.findOne({
             where: {groupId: groupId},
             attributes: ['groupId', 'groupName', 'groupDescription'],
             include: [{

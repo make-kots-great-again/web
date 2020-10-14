@@ -20,8 +20,12 @@ router.get("/user/groups",
     makeCallback(groupController.getMyGroups));
 
 router.get("/group/:groupId",
+    passport.authenticate("jwt", {session: false}),
     makeCallback(groupController.getOneGroup));
 
+router.get("/group/:groupId/add/:username",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(groupController.addMembersToGroup));
 
 
 export {router as groupsRoutes};

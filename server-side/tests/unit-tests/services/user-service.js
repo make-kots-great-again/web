@@ -156,7 +156,7 @@ describe('USER SERVICE', () => {
             await userRepository.remove({id: inserted.userId});
         });
 
-        it("must include an id", async () => {
+        it("url must include an id", async () => {
             const puttedUser = await userService.listOneUser();
             expect(puttedUser.message).to.equal('You must supply an id.');
 
