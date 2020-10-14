@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-=======
 import { UserService } from 'src/app/core/services/user.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
->>>>>>> US_3-v2
 
 @Component({
   selector: 'app-profile',
@@ -25,12 +21,6 @@ export class ProfileComponent implements OnInit {
   UserId = 'bc3983f8-dc21-4ea3-a27b-06bafc27a871'; //TODO à récupérer depuis le local storage!
 
   constructor(
-<<<<<<< HEAD
-    private route: ActivatedRoute) { }
-
-  ngOnInit(): void {
-    // this.userPorfile = this.route.snapshot.data.userprofile[0];
-=======
     private userService: UserService,
     private formBuilder: FormBuilder,
   ) { }
@@ -81,7 +71,6 @@ export class ProfileComponent implements OnInit {
       confNewPwd: ['', [Validators.required, Validators.minLength(8)]],
     },
     {validator: this.passwordConfirming});
->>>>>>> US_3-v2
   }
 
   /**

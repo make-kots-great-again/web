@@ -13,31 +13,21 @@ import {ChartsComponent} from "./components/dashboard/charts/charts.component";
 import {GroupsComponent} from './components/groups/groups.component';
 
 const routes: Routes = [
-<<<<<<< HEAD
   {path: "register", component: RegisterComponent},
   {path: "login", component: LoginComponent},
   {path: "dashboard", component: DashboardComponent, canActivate: [AuthGuard]},
   {path: "profile", component: ProfileComponent, canActivate: [AuthGuard]},
   {path: "groups", component: GroupsComponent, canActivate: [AuthGuard]},
-=======
-  { path: 'register', component: RegisterComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'profile', component: ProfileComponent},
->>>>>>> US_3-v2
 ];
 
 @NgModule({
   declarations: [
     RegisterComponent,
     LoginComponent,
-<<<<<<< HEAD
     ProfileComponent,
     DashboardComponent,
     ChartsComponent,
     GroupsComponent,
-=======
-    ProfileComponent
->>>>>>> US_3-v2
   ],
   imports: [
     SharedModule,
