@@ -36,4 +36,4 @@ jobs:
         uses: mikeal/publish-to-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_ACTION_TOKEN }}
-          BRANCH_NAME: '' #optional defaults to master
+          BRANCH_NAME: 'release' 
