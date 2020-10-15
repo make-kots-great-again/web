@@ -113,7 +113,7 @@ export default function userControllerFactory() {
     async function putOneUser(httpRequest) {
         try {
             const { ...userInfo } = httpRequest.body;
-
+            
             const modifiedUser = await userService.putUser({ id: httpRequest.user.userId }, { ...userInfo });
             if (modifiedUser.message) {
                 return { statusCode: 409, body: { success: false, ...modifiedUser, } }
