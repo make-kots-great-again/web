@@ -37,7 +37,6 @@ jobs:
         run: |
           git config --global user.email "martin.michotte@gmail.com"
           git config --global user.name "MMichotte"
-          git pull origin release
           git add -A
           git commit -m "release"
-          git push -u origin release
+          git push
