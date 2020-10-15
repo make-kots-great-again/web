@@ -57,7 +57,7 @@ export default function userServiceFactory({userRepository}) {
      *          -> si l'identifiant est manquant ou invalide : un message d'erreur
      *          -> sinon, la réponse de la requête envoyé au userRepository.
      */
-    async function listOneUser({id} = {}) { 
+    async function listOneUser({id} = {}) {
 
         if (!id) return {message: 'You must supply an id.'};
 
@@ -70,12 +70,12 @@ export default function userServiceFactory({userRepository}) {
     /**
      * Fonction vérifiant :
      *      -> la présence et la validité d'un identifiant
-     *      -> l'unicité de l'email et du pseudo dans la db 
+     *      -> l'unicité de l'email et du pseudo dans la db
      * avant de forwarder la requête au userRepository.
      * @param id l'identifiant de l'utilisateur.
      * @param userInfo (paramètre spread) contant toutes les infos à modifier de l'utilisateur
      * @returns
-     *          -> si l'identifiant est manquant ou non valide 
+     *          -> si l'identifiant est manquant ou non valide
      *             OU si l'email ou le pseudo existent déjà dans la db : un message d'erreur
      *          -> sinon, la réponse de la requête envoyé au userRepository.
      */
@@ -92,7 +92,7 @@ export default function userServiceFactory({userRepository}) {
             if(user.userId !== id) {return {message: "A user with the same email address already exists !"} };
             if(user.userId !== id) {return {message: "A user with the same username already exists !"}};
         }
-       
+
         return await userRepository.put({id},{...userInfo});
     }
 
@@ -102,10 +102,10 @@ export default function userServiceFactory({userRepository}) {
      *      -> la validité du mot de passe actuel de l'utilisateur
      * avant de forwarder la requête au userRepository.
      * @param id l'identifiant de l'utilisateur.
-     * @param userInfo (paramètre spread) contant le mot de passe actuel ainsi que le nouveau 
+     * @param userInfo (paramètre spread) contant le mot de passe actuel ainsi que le nouveau
      *                  mot de passe de l'utilisateur.
      * @returns
-     *          -> si l'identifiant est manquant ou non valide 
+     *          -> si l'identifiant est manquant ou non valide
      *             OU si le mot de passe actuel n'est pas bon' : un message d'erreur
      *          -> sinon, la réponse de la requête envoyé au userRepository.
      */
@@ -115,7 +115,7 @@ export default function userServiceFactory({userRepository}) {
 
         if (!(id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
             return {message: `${id} is not a valid v4 UUID`};
-        
+
         const user = await userRepository.findById({id});
         const newPassword = passwordFactory.hashPassword(userInfo.newPassword);
         if ( !await passwordFactory.verifyPassword(userInfo.password,user.password)) return {message: `wrong password`};
