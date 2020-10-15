@@ -35,6 +35,8 @@ jobs:
       - name: push to release branch
         working-directory: ./
         run: |
+          git config --global user.email "martin.michotte@gmail.com"
+          git config --global user.name "MMichotte"
           git add -A
           git commit -m "release"
           git push origin release
