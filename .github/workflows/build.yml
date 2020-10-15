@@ -32,3 +32,9 @@ jobs:
         run: |
           npm i
           npm run build
+      - name: push to release branch
+        working-directory: ./
+        run: |
+          git add -A
+          git commit -m "release"
+          git push origin release
