@@ -33,8 +33,7 @@ jobs:
           npm i
           npm run build
       - name: push to release branch
-        working-directory: ./
-        uses: mikeal/publish-to-github-action@master
-        with:
+      - uses: mikeal/publish-to-github-action@master
+        env:
           GITHUB_TOKEN: ${{ secrets.GIT_ACTION_TOKEN }}
           BRANCH_NAME: 'release' #optional defaults to master
