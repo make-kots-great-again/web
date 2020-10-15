@@ -34,9 +34,7 @@ jobs:
           npm run build
       - name: push to release branch
         working-directory: ./
-        run: |
-          git config --global user.email "martin.michotte@gmail.com"
-          git config --global user.name "MMichotte"
-          git add -A
-          git commit -m "release"
-          git push origin HEAD:release
+        uses: mikeal/publish-to-github-action@master
+          env:
+            GITHUB_TOKEN: ${{ secrets.GIT_ACTION_TOKEN }}
+            BRANCH_NAME: 'release' #optional defaults to master
