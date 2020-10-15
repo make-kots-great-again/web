@@ -1,5 +1,9 @@
-on: push
 name: Build Angular
+on: 
+  push:
+    branches:
+      - master
+      
 jobs:
   build:
     runs-on: ubuntu-latest
