@@ -19,10 +19,26 @@ export class GroupService {
 
   }
 
-  getOneGroup(id : string): Observable<HttpResponse<any>> {
+  getOneGroup(id: string): Observable<HttpResponse<any>> {
     return this.http.get<any>(`/server/api/group/${id}`,
       {observe: 'response'})
       .pipe(map((data: any) => data.body.groupInfo));
 
   }
+
+  createGroup(groupData: any): Observable<HttpResponse<any>> {
+    return this.http.post<any>(`/server/api/group/create`, groupData,
+      {observe: 'response'})
+      .pipe(map((data: any) => data.body.group));
+
+  }
+
+  addMemberToGroup(groudId: string, username: string): Observable<HttpResponse<any>> {
+    return this.http.get<any>(`/server/api/group/${groudId}/add/${username}`,
+      {observe: 'response'})
+      .pipe(map((data: any) => data.body));
+
+  }
+
+
 }

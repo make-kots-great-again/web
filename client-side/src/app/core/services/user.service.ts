@@ -18,6 +18,13 @@ export class UserService {
 
   }
 
+  getAllUsers(): Observable<HttpResponse<IUser>> {
+
+    return this.http.get<IUser>('/server/api/users/profiles',
+      {observe: 'response'});
+
+  }
+
   /**
    * Fonction exécutant une requête auprès de notre API afin de récupérer
    * les informations d'un utilisateur par le biais de son identifiant.

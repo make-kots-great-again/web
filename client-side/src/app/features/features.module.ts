@@ -11,6 +11,7 @@ import {AuthGuard} from "../core/guards/auth.guard";
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {ChartsComponent} from "./components/dashboard/charts/charts.component";
 import {GroupsComponent} from './components/groups/groups.component';
+// import {NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
 
 const routes: Routes = [
   {path: "register", component: RegisterComponent},

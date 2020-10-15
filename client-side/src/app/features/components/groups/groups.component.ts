@@ -12,9 +12,11 @@ export class GroupsComponent implements OnInit {
 
   groups: any;
   searchValue: string = "";
-  groupDescription: string = "";
   addUser: string = "";
-  groupUsers : Array<any> = [];
+  groupName: string = "";
+  groupId: string = "";
+  groupDescription: string = "";
+  groupUsers: Array<any> = [];
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
@@ -39,21 +41,55 @@ export class GroupsComponent implements OnInit {
         });
   }
 
+  clickedGroupId(event: any): void {
+     this.groupId = event.id;
+     this.groupDetails();
+  }
 
-  groupDetails(event: any) {
-    this.groupService.getOneGroup(event.id)
+  groupDetails() {
+    this.groupService.getOneGroup(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
         (data: any) => {
           this.groupDescription = data.groupDescription;
           this.groupUsers = data.users;
-          console.log(this.groupUsers);
         },
         error => {
           console.log(error)
         });
   }
 
+  oncreateGroupSubmit() {
+    const groupData = {
+      groupName: this.groupName,
+      groupDescription: this.groupDescription
+    }
+
+    this.groupService.createGroup(groupData)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(
+        (data: any) => {
+          this.getGroups();
+        },
+        error => {
+          console.log(error)
+        });
+  }
+
+  addUserToGroup() {
+    const groupId = this.groupId;
+    const username = this.addUser;
+
+    this.groupService.addMemberToGroup(groupId, username)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(
+        (data: any) => {
+          this.groupDetails();
+        },
+        error => {
+          console.log(error)
+        });
+  }
 
   @HostListener('window:beforeunload')
   async ngOnDestroy() {

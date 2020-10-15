@@ -16,8 +16,16 @@
   <!-- User Table -->
   <div class="container text-center ">
 
+    <div class="ml-5 row">
+      <button name="createReview" type="submit"
+              class="btn btn-outline-success
+                  text-center text-monospace font-italic font-weight-bolder"
+              data-toggle="modal" data-target="#addReviewBtn"
+              data-whatever="@mdo">Create a group
+      </button>
+    </div>
     <p class="font-weight-bold">List of my groups</p>
-
+    <br>
     <!-- Table  -->
     <table
       class="table table-bordered table-responsive-md table-responsive-lg
@@ -41,7 +49,7 @@
       <tbody id="demo">
       <ng-container *ngFor="let group of groups index as i">
 
-        <tr #idRef id="{{group['groupId']}}" (click)="groupDetails(idRef)" data-toggle="modal"
+        <tr #idRef id="{{group['groupId']}}" (click)="clickedGroupId(idRef)" data-toggle="modal"
             data-target=".bd-example-modal-lg" style="cursor: pointer"
             onmousemove="this.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
                       this.style.color='green'"
@@ -93,23 +101,28 @@
               Group members</strong>
             <div class="ml-auto mr-5">
               <div class="row">
-                <div class="d-flex">
-                  <div class="d-flex justify-content-center">
-                    <label for="user"></label>
-                    <input
-                      class="form-control" id="user"
-                      [(ngModel)]="addUser" name="search"
-                      placeholder="username" aria-label="Search">
+                <form #addUserForm="ngForm">
+                  <div class="d-flex">
+                    <div class="d-flex justify-content-center">
+                      <label for="addUser"></label>
+                      <input #addUserInput="ngModel"
+                             [class.is-invalid]="addUserInput.invalid && addUserInput.touched"
+                             [class.is-valid]="!(addUserInput.invalid && addUserInput.untouched)"
+                             class="form-control" type="text" id="addUser"
+                             minlength="4" maxlength="32"
+                             [(ngModel)]="addUser" name="addUser"
+                             placeholder="username" required>
+                    </div>
+                    <div class="ml-3">
+                      <button (click)="addUserToGroup()"
+                              [disabled]="addUserForm.form.invalid"
+                              name="addMember" type="submit"
+                              class="btn btn-outline-success text-center
+                            text-monospace font-italic font-weight-bolder">Add a member
+                      </button>
+                    </div>
                   </div>
-                  <div class="ml-3">
-                    <button name="createReview" type="submit"
-                            class="btn btn-outline-success
-                  text-center text-monospace font-italic font-weight-bolder"
-                            data-toggle="modal" id="addReviewBtn"
-                            data-target="#addReviewModel" data-whatever="@mdo">Add a member
-                    </button>
-                  </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
@@ -165,3 +178,100 @@
     </div>
   </div>
 </div>
+
+<!-- create a group modal -->
+<div class="modal fade" id="addReviewBtn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- create a group modal header -->
+      <div class="modal-header">
+        <h5 class="modal-title ont-weight-bold text-monospace
+            font-italic font-weight-bolder h4" id="exampleModalLabel">Create a group</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- create a group modal body-->
+      <div class="modal-body">
+
+        <!-- create a group modal form-->
+        <form #addGroupForm="ngForm">
+
+          <!-- create a group modal form groupName input -->
+          <div class="form-group">
+            <label for="groupName" class="font-weight-bold text-monospace
+            font-italic font-weight-bolder">Group Name:</label>
+
+            <input #groupNameInput="ngModel"
+                   [class.is-invalid]="groupNameInput.invalid && groupNameInput.touched"
+                   [class.is-valid]="!(groupNameInput.invalid && groupNameInput.untouched)"
+                   class="form-control" type="text" id="groupName"
+                   [(ngModel)]="groupName" name="groupName" minlength="4" maxlength="32"
+                   placeholder="Le nom du groupe" required>
+            <div *ngIf="groupNameInput.errors && (groupNameInput.invalid ||
+                        groupNameInput.touched)">
+              <small id="groupNameError1" class="text-danger"
+                     *ngIf="groupNameInput.errors.minlength">
+                {{groupNameInput.value}} la longueur minimale est 4
+              </small>
+              <small id="groupNameError2" class="text-danger"
+                     *ngIf="groupNameInput.errors.required
+                      && groupNameInput.touched">Le nom du groupe est requis</small>
+            </div>
+          </div>
+
+          <!-- create a group modal form groupDescription input -->
+          <div class="form-group">
+            <label for="groupDescription" class="font-weight-bold
+            text-monospace font-italic font-weight-bolder">
+              Group Description:</label>
+
+            <!-- groupDescription textarea -->
+            <textarea #textArea="ngModel"
+                      [class.is-invalid]="textArea.invalid && textArea.touched"
+                      class="form-control w-100" id="groupDescription" rows="2"
+                      [class.is-valid]="!(textArea.invalid && textArea.untouched)"
+                      placeholder="La description du groupe"
+                      [(ngModel)]="groupDescription" name="groupDescription" required>
+            </textarea>
+            <small class="text-danger" [class.d-none]="textArea.valid ||
+                textArea.untouched">La description d'un groupe est requise</small>
+          </div>
+
+
+          <!-- create a group modal footer-->
+          <div class="modal-footer">
+
+            <!-- form close button -->
+            <button type="button"
+                    class="btn btn-secondary text-monospace font-italic
+                    font-weight-bolder" data-dismiss="modal" id="modalClose">Close
+            </button>
+
+            <!-- form submit button -->
+            <button (click)="oncreateGroupSubmit()" id="reviewSubmit" type="submit"
+                    data-dismiss="modal" class="btn btn-primary text-monospace
+                    font-italic font-weight-bolder"
+                    [disabled]="addGroupForm.form.invalid">submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- create a group modal
+<div *ngIf="addUserInput.errors && (addUserInput.invalid ||
+                        addUserInput.touched)">
+  <small id="usernameError1" class="text-danger" *ngIf="addUserInput.errors.minlength">
+    {{addUserInput.value}} la longueur minimale est 4
+  </small>
+  <small id="usernameError2" class="text-danger"
+         *ngIf="addUserInput.errors.required
+                      && addUserInput.touched">Un pseudonyme est requis</small>
+</div>
+
+-->
