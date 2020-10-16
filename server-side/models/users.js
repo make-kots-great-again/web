@@ -1,7 +1,5 @@
 import {Sequelize} from 'sequelize';
 import dbConnection from "../config/database";
-import {userGroup} from "./userGroups";
-import {Group} from "./groups";
 
 const User = dbConnection.define('user', {
 

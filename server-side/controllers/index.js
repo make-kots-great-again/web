@@ -1,12 +1,14 @@
 import userControllerFactory from './userController'
 import groupControllerFactory from './groupController'
+import productControllerFactory from './productController'
 
 const userController = userControllerFactory();
 const groupController = groupControllerFactory();
+const productController = productControllerFactory();
 
 const controllers = Object.freeze({
-    userController, groupController
+    userController, groupController, productController
 });
 
 export default controllers
-export {userController, groupController}
+export {userController, groupController, productController}

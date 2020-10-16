@@ -101,6 +101,7 @@ export default function express_server(express) {
         /* API routes */
         this.app.use('/server/api/', route.usersRoutes)
         this.app.use('/server/api/', route.groupsRoutes)
+        this.app.use('/server/api/', route.productsRoutes)
 
         /* ANY route */
         this.app.get('*', (req, res) => {
