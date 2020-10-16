@@ -25,6 +25,9 @@ export default function makeGroupRepository({Group, userGroup, User}) {
     }
 
     async function findGroupById({groupId}) {
+
+      //  userGroup.destroy({where: {userId: 'bb3076cf-16dc-4c97-883f-8d50a541d64c', groupId : groupId}});
+
         return Group.findOne({
             where: {groupId: groupId},
             attributes: ['groupId', 'groupName', 'groupDescription'],

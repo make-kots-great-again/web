@@ -1,0 +1,124 @@
+<!-- group details modal -->
+
+<div class="d-flex justify-content-center align-items-center">
+  <div class="container m-5 p-5 border border-bottom">
+
+    <div class=" font-weight-bold">
+      <h3 class="text-monospace font-italic"><strong>Group details</strong>
+        <p></p>
+        <p style="font-size: small" class="blockquote-footer my-0">
+          {{groupDescription}}
+        </p>
+      </h3>
+    </div>
+    <div class="container mt-2 mb-2">
+      <div class="modal-body card border-light">
+
+        <div class="d-flex">
+          <strong class="text-monospace font-italic font-weight-bolder h5">
+            Group members</strong>
+          <div class="ml-auto mr-5">
+            <div class="row">
+              <form #addUserForm="ngForm">
+                <div class="d-flex">
+                  <div class="d-flex justify-content-center">
+                    <label for="addUser"></label>
+                    <input #addUserInput="ngModel"
+                           [class.is-invalid]="addUserInput.invalid && addUserInput.touched"
+                           [class.is-valid]="!(addUserInput.invalid && addUserInput.untouched)"
+                           class="form-control" type="text" id="addUser"
+                           minlength="4" maxlength="32"
+                           [(ngModel)]="addUser" name="addUser"
+                           placeholder="username" required>
+                  </div>
+                  <div class="ml-3">
+                    <button (click)="addUserToGroup()"
+                            [disabled]="addUserForm.form.invalid"
+                            name="addMember" type="submit"
+                            class="btn btn-outline-success text-center
+                            text-monospace font-italic font-weight-bolder">Add a member
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <br>
+
+        <div *ngIf="!groupUsers">
+          <app-spinner></app-spinner>
+        </div>
+        <!--Table-->
+        <table *ngIf="groupUsers" class="table table-striped w-auto .table-sm table table-bordered">
+
+          <!--Table head-->
+          <thead>
+          <tr>
+            <!-- group number -->
+            <th scope="col">#
+              <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+            </th>
+            <th>username</th>
+            <th>email</th>
+            <th>role</th>
+          </tr>
+          </thead>
+          <!--Table head-->
+
+          <!-- Table body -->
+          <tbody *ngIf="groupUsers" id="demos">
+          <ng-container *ngFor="let user of groupUsers index as i">
+
+            <tr>
+
+              <th class="text-monospace font-italic"
+                  scope="row"> {{i + 1}} </th>
+              <th class="text-monospace font-italic" scope="row">
+                {{user['username']}} </th>
+              <th class="text-monospace font-italic" scope="row">
+                {{user['email']}} </th>
+              <th class="text-monospace font-italic" scope="row">
+                {{user['roleInThisGroup'].role}} </th>
+            </tr>
+          </ng-container>
+          </tbody>
+          <!-- Table body -->
+        </table>
+        <!--Table-->
+        <hr>
+        <br>
+        <p class="text-monospace font-italic font-weight-bolder h5">
+          <strong>Group shopping list</strong>
+        </p>
+        <br>
+        <div class="container">
+          <fieldset class="md-form form-inline">
+            <div class="form-group">
+              <label for="typeahead-http">Search for products:</label>
+              <input id="typeahead-http" type="text"
+                     class="form-control mx-sm-3"
+                     [class.is-invalid]="searchFailed"
+                     [(ngModel)]="model" name="addProductInput" [inputFormatter]="formatter"
+                     [resultFormatter]="formatter" [ngbTypeahead]="productList"
+                     placeholder="Product name"/>
+              <br>
+              <small *ngIf="searching" class="form-text text-muted">searching...</small>
+              <div class="invalid-feedback" *ngIf="searchFailed">Sorry, no product name was found
+                with this name : {{model}}</div>
+            </div>
+            <button (click)="addProduct()"
+                    name="addProduct" type="submit"
+                    [disabled]="!verifyProduct()"
+                    class="btn btn-outline-success text-center
+              text-monospace font-italic font-weight-bolder">Add a product
+            </button>
+          </fieldset>
+          <hr>
+          <pre>Product name : {{ model | json}}</pre>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

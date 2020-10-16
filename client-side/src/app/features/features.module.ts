@@ -14,6 +14,7 @@ import {ChartsComponent} from './components/dashboard/charts/charts.component';
 import {GroupsComponent} from './components/groups/groups.component';
 import {QrGenComponent} from './components/qr-gen/qr-gen.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {GroupInfoComponent} from './components/groups/group-info/group-info.component';
 
 const routes: Routes = [
   {path: 'register', component: RegisterComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'groups', component: GroupsComponent, canActivate: [AuthGuard]},
+  {path: 'group/:groupId', component: GroupInfoComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
@@ -32,6 +34,7 @@ const routes: Routes = [
     ChartsComponent,
     GroupsComponent,
     QrGenComponent,
+    GroupInfoComponent,
   ],
   imports: [
     SharedModule,

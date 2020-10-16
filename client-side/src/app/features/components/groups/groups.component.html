@@ -1,21 +1,6 @@
 <div *ngIf="groups">
 
   <br>
-  <div class="container">
-    <fieldset class="md-form form-inline">
-      <div class="form-group">
-        <label for="typeahead-http">Search for products:</label>
-        <input id="typeahead-http" type="text" class="form-control mx-sm-3"
-               [class.is-invalid]="searchFailed" [(ngModel)]="model"
-               [ngbTypeahead]="productList" placeholder="Product name" />
-        <small *ngIf="searching" class="form-text text-muted">searching...</small>
-        <div class="invalid-feedback" *ngIf="searchFailed">Sorry, no product name was found
-         with this name : {{model}}</div>
-      </div>
-    </fieldset>
-    <hr>
-    <pre>Product name : {{ model | json }}</pre>
-  </div>
 
   <br>
   <!-- Filter Input -->
@@ -56,7 +41,9 @@
         <!-- groupName -->
         <th id="username" style="cursor: pointer">Name</th>
         <!-- Role -->
-        <th id="email" style="cursor: pointer">Role</th>
+        <th id="role" style="cursor: pointer">Role</th>
+        <!-- Action -->
+        <th id="action" style="cursor: pointer">Action</th>
 
       </tr>
       </thead>
@@ -66,18 +53,55 @@
       <tbody id="demo">
       <ng-container *ngFor="let group of groups index as i">
 
-        <tr #idRef id="{{group['groupId']}}" (click)="clickedGroupId(idRef)" data-toggle="modal"
-            data-target=".bd-example-modal-lg" style="cursor: pointer"
-            onmousemove="this.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
-                      this.style.color='green'"
-            onmouseout="this.style.backgroundColor = ''; this.style.color=''">
+        <tr #idRef id="{{group['groupId']}}">
 
-          <th class="text-monospace font-italic"
-              scope="row"> {{i + 1}} </th>
-          <th class="text-monospace font-italic" scope="row">
-            {{group['groupName']}} </th>
-          <th class="text-monospace font-italic" scope="row">
-            {{group['roleInThisGroup'].role}} </th>
+          <td class="text-monospace font-italic font-weight-bold"> {{i + 1}} </td>
+
+          <td>
+            <a
+              [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }"
+              style="cursor: pointer; color: black"
+              onmousemove="this.style.fontSize= '3.3vh'"
+              onmouseout="this.style.backgroundColor = ''; this.style.color='black';
+            this.style.fontSize= ''"
+              [routerLink]="['/group', group['groupId']]"
+            class="text-monospace font-italic font-weight-bold">
+            {{group['groupName']}} </a></td>
+
+          <td class="text-monospace font-italic font-weight-bold" >
+            {{group['roleInThisGroup'].role}} </td>
+          <td class="text-monospace font-italic">
+
+            <span *ngIf="group['roleInThisGroup'].role === 'admin'">
+
+                    <!-- update and delete group icons  -->
+                     <a >
+
+                      <!-- update group icon -->
+                       <i class="fa fa-pencil"
+                          aria-hidden="true" onmousemove="this.style.cursor = 'pointer';
+                       this.style.fontSize= '4.7vh'"
+                          onmouseout="this.style.fontSize= ''" style="color: blue"></i>
+                     </a>
+
+              <!-- delete group a tag -->
+                    <a class="ml-3">
+
+                      <!-- delete group icon -->
+                      <i id="" class="fa fa-trash"
+                         aria-hidden="true" onmousemove="this.style.cursor = 'pointer';
+                       this.style.fontSize= '4.7vh'" onmouseout="this.style.fontSize= ''"
+                         style="color: red"></i>
+                    </a>
+                  </span>
+
+            <span *ngIf="group['roleInThisGroup'].role === 'member'">
+              <button type="submit" class="btn btn-outline-danger text-center btn-sm
+                      text-monospace font-italic font-weight-bolder">Leave
+      </button>
+            </span>
+
+          </td>
         </tr>
       </ng-container>
       </tbody>
@@ -86,114 +110,8 @@
   </div>
 </div>
 
-
 <div *ngIf="!groups">
   <app-spinner></app-spinner>
-</div>
-
-<!-- group details modal -->
-<div *ngIf="groups" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-     aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header font-weight-bold">
-        <h3 class="text-monospace font-italic"><strong>Group details</strong>
-          <p></p>
-          <p style="font-size: small" class="blockquote-footer my-0">
-            {{groupDescription}}
-          </p>
-        </h3>
-
-        <!-- log details close modal button -->
-        <button type="button" class="close"
-                data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="container mt-2 mb-2">
-        <div class="modal-body card border-light">
-
-          <div class="d-flex">
-            <strong class="text-monospace font-italic font-weight-bolder h5">
-              Group members</strong>
-            <div class="ml-auto mr-5">
-              <div class="row">
-                <form #addUserForm="ngForm">
-                  <div class="d-flex">
-                    <div class="d-flex justify-content-center">
-                      <label for="addUser"></label>
-                      <input #addUserInput="ngModel"
-                             [class.is-invalid]="addUserInput.invalid && addUserInput.touched"
-                             [class.is-valid]="!(addUserInput.invalid && addUserInput.untouched)"
-                             class="form-control" type="text" id="addUser"
-                             minlength="4" maxlength="32"
-                             [(ngModel)]="addUser" name="addUser"
-                             placeholder="username" required>
-                    </div>
-                    <div class="ml-3">
-                      <button (click)="addUserToGroup()"
-                              [disabled]="addUserForm.form.invalid"
-                              name="addMember" type="submit"
-                              class="btn btn-outline-success text-center
-                            text-monospace font-italic font-weight-bolder">Add a member
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <br>
-
-          <div *ngIf="!groupUsers">
-            <app-spinner></app-spinner>
-          </div>
-          <!--Table-->
-          <table *ngIf="groupUsers" class="table table-striped w-auto">
-
-            <!--Table head-->
-            <thead>
-            <tr>
-              <!-- group number -->
-              <th scope="col">#
-                <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
-              </th>
-              <th>username</th>
-              <th>email</th>
-              <th>role</th>
-            </tr>
-            </thead>
-            <!--Table head-->
-
-            <!-- Table body -->
-            <tbody *ngIf="groupUsers" id="demos">
-            <ng-container *ngFor="let user of groupUsers index as i">
-
-              <tr>
-
-                <th class="text-monospace font-italic"
-                    scope="row"> {{i + 1}} </th>
-                <th class="text-monospace font-italic" scope="row">
-                  {{user['username']}} </th>
-                <th class="text-monospace font-italic" scope="row">
-                  {{user['email']}} </th>
-                <th class="text-monospace font-italic" scope="row">
-                  {{user['roleInThisGroup'].role}} </th>
-              </tr>
-            </ng-container>
-            </tbody>
-            <!-- Table body -->
-          </table>
-          <!--Table-->
-          <hr>
-          <p class="text-monospace font-italic font-weight-bolder h5">
-            <strong>Group shopping list</strong>
-          </p>
-        </div>
-      </div>
-
-    </div>
-  </div>
 </div>
 
 <!-- create a group modal -->
@@ -279,16 +197,3 @@
     </div>
   </div>
 </div>
-
-<!-- create a group modal
-<div *ngIf="addUserInput.errors && (addUserInput.invalid ||
-                        addUserInput.touched)">
-  <small id="usernameError1" class="text-danger" *ngIf="addUserInput.errors.minlength">
-    {{addUserInput.value}} la longueur minimale est 4
-  </small>
-  <small id="usernameError2" class="text-danger"
-         *ngIf="addUserInput.errors.required
-                      && addUserInput.touched">Un pseudonyme est requis</small>
-</div>
-
--->

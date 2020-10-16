@@ -4,7 +4,8 @@ import {BehaviorSubject, ReplaySubject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {Observable, of} from 'rxjs';
 import {catchError, debounceTime, distinctUntilChanged, map, tap, switchMap} from 'rxjs/operators'
-import {HttpResponse} from "@angular/common/http";
+
+type Product = {product_name: string, code: number};
 
 @Component({
   selector: 'app-groups',
@@ -22,8 +23,9 @@ export class GroupsComponent implements OnInit {
   groupUsers: Array<any> = [];
 
   model: any;
-  searching = false;
-  searchFailed = false;
+  searching : boolean = false;
+  searchFailed : boolean = false;
+  formatter = (product: Product) => product.product_name;
 
   constructor(private groupService: GroupService) {}
 
@@ -33,51 +35,12 @@ export class GroupsComponent implements OnInit {
     this.getGroups();
   }
 
-
-  productList = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap(() => this.searching = true),
-      switchMap((productName: string) => {
-        if (productName === '') return of([]);
-        return this.groupService.searchProducts(productName).pipe(
-          map((data: Array<any>) => data.map(x => x.product_name)),
-          tap((data: Array<any>) => (data.length === 0) ?
-            this.searchFailed = true : this.searchFailed = false),
-          catchError(() => {
-            this.searchFailed = true;
-            return of([]);
-          }))
-      }),
-      tap(() => this.searching = false)
-    )
-
-
   getGroups(): void {
     this.groupService.getMyGroups()
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
         (data: any) => {
           this.groups = data
-        },
-        error => {
-          console.log(error)
-        });
-  }
-
-  clickedGroupId(event: any): void {
-    this.groupId = event.id;
-    this.groupDetails();
-  }
-
-  groupDetails() {
-    this.groupService.getOneGroup(this.groupId)
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe(
-        (data: any) => {
-          this.groupDescription = data.groupDescription;
-          this.groupUsers = data.users;
         },
         error => {
           console.log(error)
@@ -101,20 +64,6 @@ export class GroupsComponent implements OnInit {
         });
   }
 
-  addUserToGroup() {
-    const groupId = this.groupId;
-    const username = this.addUser;
-
-    this.groupService.addMemberToGroup(groupId, username)
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe(
-        (data: any) => {
-          this.groupDetails();
-        },
-        error => {
-          console.log(error)
-        });
-  }
 
   @HostListener('window:beforeunload')
   async ngOnDestroy() {
@@ -123,3 +72,6 @@ export class GroupsComponent implements OnInit {
   }
 
 }
+
+
+// map((data: Array<any>) => data.map(x => x.product_name + ` -> code : ${x.code}`)),
