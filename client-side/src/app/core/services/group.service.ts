@@ -40,5 +40,12 @@ export class GroupService {
 
   }
 
+  searchProducts(productName: string): any {
+    return this.http.get<Array<any>>(`/server/api/products/${productName}`,
+      {observe: 'response'})
+      .pipe(map((data: any) => data.body.products));
+
+  }
+
 
 }

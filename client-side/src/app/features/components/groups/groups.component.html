@@ -1,6 +1,23 @@
 <div *ngIf="groups">
 
   <br>
+  <div class="container">
+    <fieldset class="md-form form-inline">
+      <div class="form-group">
+        <label for="typeahead-http">Search for products:</label>
+        <input id="typeahead-http" type="text" class="form-control mx-sm-3"
+               [class.is-invalid]="searchFailed" [(ngModel)]="model"
+               [ngbTypeahead]="productList" placeholder="Product name" />
+        <small *ngIf="searching" class="form-text text-muted">searching...</small>
+        <div class="invalid-feedback" *ngIf="searchFailed">Sorry, no product name was found
+         with this name : {{model}}</div>
+      </div>
+    </fieldset>
+    <hr>
+    <pre>Product name : {{ model | json }}</pre>
+  </div>
+
+  <br>
   <!-- Filter Input -->
   <div class="container">
     <div class="row justify-content-center">

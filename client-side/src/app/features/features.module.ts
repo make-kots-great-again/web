@@ -1,8 +1,8 @@
-import { UserService } from 'src/app/core/services/user.service';
+import {UserService} from 'src/app/core/services/user.service';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {ChartModule} from 'angular2-chartjs';
-import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import {NgxQRCodeModule} from '@techiediaries/ngx-qrcode';
 
 import {SharedModule} from '../shared/shared.module';
 import {RegisterComponent} from './components/register/register.component';
@@ -12,8 +12,8 @@ import {AuthGuard} from '../core/guards/auth.guard';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {ChartsComponent} from './components/dashboard/charts/charts.component';
 import {GroupsComponent} from './components/groups/groups.component';
-import { QrGenComponent } from './components/qr-gen/qr-gen.component';
-// import {NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
+import {QrGenComponent} from './components/qr-gen/qr-gen.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   {path: 'register', component: RegisterComponent},
@@ -37,7 +37,8 @@ const routes: Routes = [
     SharedModule,
     ChartModule,
     NgxQRCodeModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    NgbModule
   ],
   providers: [
     UserService,
