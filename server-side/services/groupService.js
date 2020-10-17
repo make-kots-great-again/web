@@ -1,8 +1,10 @@
 import {makeGroup} from '../domain'
+import {Group, userGroup} from "../models";
 
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({
-        addGroup, listMyGroups, getGroup, addMembersToGroup
+        addGroup, listMyGroups, getGroup, addMembersToGroup,
+        deleteUserFromGroup, deleteGroup
     });
 
     async function addGroup({username, ...groupInfo}) {
@@ -77,11 +79,38 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         if (existingMember)
             return {message: `${username} is already in this group !`};
 
-        return await groupRepository.addUserToGroup({
+        return groupRepository.addUserToGroup({
             userId: user.dataValues.userId,
             groupId: group.dataValues.groupId,
             role: 'member'
         });
+    }
+
+    async function deleteUserFromGroup({groupId, userId}){
+
+        if (!groupId) return {message: 'You must supply a groupId.'};
+        if (!userId) return {message: 'You must a userId'};
+
+        const deleteUser = await groupRepository.removeUserFromGroup({groupId, userId});
+
+        console.log(deleteUser)
+
+        if (deleteUser === 0)
+            return {message: 'No user with that name was found in this group'};
+
+        return groupRepository.removeUserFromGroup({groupId, userId});
+    }
+
+    async function deleteGroup({groupId}){
+
+        if (!groupId) return {message: 'You must supply a groupId.'};
+
+        const deleteGroup = await groupRepository.removeGroup({groupId});
+
+        if (deleteGroup === 0)
+            return {message: 'No group with that id was found !'};
+
+        return deleteGroup;
     }
 
 }

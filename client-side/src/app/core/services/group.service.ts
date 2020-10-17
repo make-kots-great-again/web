@@ -40,6 +40,21 @@ export class GroupService {
 
   }
 
+
+  leaveGroup(groudId: string, userId: string): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`/server/api/group/${groudId}/delete/${userId}`,
+      {observe: 'response'})
+      .pipe(map((data: any) => data.body));
+
+  }
+
+  deleteGroup(groudId: string): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`/server/api/group/${groudId}`,
+      {observe: 'response'})
+      .pipe(map((data: any) => data.body));
+
+  }
+
   searchProducts(productName: string): any {
     return this.http.get<Array<any>>(`/server/api/products/${productName}`,
       {observe: 'response'})

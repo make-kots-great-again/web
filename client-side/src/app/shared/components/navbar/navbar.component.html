@@ -82,7 +82,7 @@
       <!-- Logout -->
       <li *ngIf="authService.currentUserValue" class="nav-item">
         <a id="logoutBtns" class="nav-link"
-           data-toggle="modal" data-target="#deleteModel"
+           data-toggle="modal" data-target="#LogoutModel"
         style="cursor: pointer">
           <i class="fa fa-sign-out"></i>Déconnexion</a>
       </li>
@@ -91,7 +91,7 @@
 </nav>
 
 <!-- confirm logout modal  -->
-<div class="modal fade" id="deleteModel" tabindex="-1" role="dialog"
+<div class="modal fade" id="LogoutModel" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
