@@ -1,6 +1,7 @@
 export default function makeGroupRepository({Group, userGroup, User}) {
     return Object.freeze({
-        save, addUserToGroup, findMyGroups, findGroupById
+        save, addUserToGroup, findMyGroups, findGroupById, removeUserFromGroup,
+        removeGroup
     });
 
     async function save({...groupInfo}) {
@@ -25,9 +26,6 @@ export default function makeGroupRepository({Group, userGroup, User}) {
     }
 
     async function findGroupById({groupId}) {
-
-      //  userGroup.destroy({where: {userId: 'bb3076cf-16dc-4c97-883f-8d50a541d64c', groupId : groupId}});
-
         return Group.findOne({
             where: {groupId: groupId},
             attributes: ['groupId', 'groupName', 'groupDescription'],
@@ -38,6 +36,14 @@ export default function makeGroupRepository({Group, userGroup, User}) {
                 through: {as: 'roleInThisGroup', attributes: ['role']}
             }]
         });
+    }
+
+    async function removeUserFromGroup({groupId, userId}) {
+        return userGroup.destroy({where: {userId: userId, groupId: groupId}});
+    }
+
+    async function removeGroup({groupId}) {
+        return Group.destroy({where: {groupId: groupId}});
     }
 }
 

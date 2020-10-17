@@ -2,7 +2,8 @@ import {groupService} from "../services";
 
 export default function groupControllerFactory() {
     return Object.freeze({
-        createGroup, getMyGroups, getOneGroup, addMembersToGroup
+        createGroup, getMyGroups, getOneGroup, addMembersToGroup,
+        leaveGroup, deleteGroup
     });
 
     async function createGroup(httpRequest) {
@@ -81,7 +82,7 @@ export default function groupControllerFactory() {
         }
     }
 
-    async function addMembersToGroup(httpRequest){
+    async function addMembersToGroup(httpRequest) {
         try {
 
             const {groupId} = httpRequest.params;
@@ -103,6 +104,66 @@ export default function groupControllerFactory() {
                     success: true,
                     message: `${username} has been successfully added to this group !`,
                     groupInfo: group
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+    }
+
+    async function leaveGroup(httpRequest) {
+        try {
+
+            const {groupId} = httpRequest.params;
+            const {userId} = httpRequest.params;
+
+            const deletedUser = await groupService.deleteUserFromGroup(
+                {groupId, userId});
+
+            if (deletedUser.message) {
+                return {
+                    statusCode: 404,
+                    body: {success: false, message: deletedUser.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    message: "User was successfully removed from this group !"
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+    }
+
+    async function deleteGroup(httpRequest) {
+
+        try {
+
+            const {groupId} = httpRequest.params;
+
+            const deletedUser = await groupService.deleteGroup(
+                {groupId});
+
+            if (deletedUser.message) {
+                return {
+                    statusCode: 404,
+                    body: {success: false, message: deletedUser.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    message: "This group was was successfully deleted !"
                 }
             }
         } catch (e) {

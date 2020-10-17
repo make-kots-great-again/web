@@ -4,8 +4,9 @@ import {BehaviorSubject, ReplaySubject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {Observable, of} from 'rxjs';
 import {catchError, debounceTime, distinctUntilChanged, map, tap, switchMap} from 'rxjs/operators'
+import {AuthenticationService} from "../../../core/services/authentification.service";
 
-type Product = {product_name: string, code: number};
+type Product = { product_name: string, code: number };
 
 @Component({
   selector: 'app-groups',
@@ -22,12 +23,15 @@ export class GroupsComponent implements OnInit {
   groupDescription: string = "";
   groupUsers: Array<any> = [];
 
+
   model: any;
-  searching : boolean = false;
-  searchFailed : boolean = false;
+  searching: boolean = false;
+  searchFailed: boolean = false;
   formatter = (product: Product) => product.product_name;
 
-  constructor(private groupService: GroupService) {}
+  constructor(private groupService: GroupService,
+              private authenticationService: AuthenticationService) {
+  }
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
@@ -64,6 +68,40 @@ export class GroupsComponent implements OnInit {
         });
   }
 
+  leaveGroupClicked(groupId: any, groupName: any) {
+    this.groupId = groupId.id;
+    this.groupName = groupName.id;
+  }
+
+  deleteGroupClicked(groupId: any, groupName: any) {
+    this.groupId = groupId.id;
+    this.groupName = groupName.id;
+  }
+
+  onLeaveGroup(): void {
+    const currentUser: any = this.authenticationService.currentUserValue;
+    this.groupService.leaveGroup(this.groupId, currentUser.userId)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(
+        (data: any) => {
+          this.getGroups();
+        },
+        error => {
+          console.log(error)
+        });
+  }
+
+  ondeleteGroup() {
+    this.groupService.deleteGroup(this.groupId)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(
+        (data: any) => {
+          this.getGroups();
+        },
+        error => {
+          console.log(error)
+        });
+  }
 
   @HostListener('window:beforeunload')
   async ngOnDestroy() {
