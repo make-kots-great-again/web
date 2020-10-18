@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpResponse } from '@angular/common/http';
 import {Observable } from 'rxjs';
 import {IUser, User } from '../../shared/models/user.model';
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,11 @@ export class UserService {
    */
   patchUserPwd(passwords: any): Observable<HttpResponse<IUser>> {
     return this.http.patch<IUser>(`/server/api/user/password`, passwords, { observe: 'response' });
+  }
+
+  searchUsername(username: string): any {
+    return this.http.get<Array<any>>(`/server/api/user/${username}`, {observe: 'response'})
+      .pipe(map((data: any) => data.body));
   }
 
 }

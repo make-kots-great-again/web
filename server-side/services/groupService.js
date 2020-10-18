@@ -50,7 +50,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         const group = makeGroup({...changes});
 
-        return await groupRepository.updateGroup({
+        return  groupRepository.updateGroup({
             groupId : groupId,
             groupName: group.getGroupName(),
             groupDescription: group.getGroupDescription()

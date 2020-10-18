@@ -2,7 +2,8 @@ import {userService} from "../services";
 
 export default function userControllerFactory() {
     return Object.freeze({
-        registerUser, getAllUsers, getOneUser, logInUser, deleteUser, putOneUser, patchUserPwd
+        registerUser, getAllUsers, getOneUser, logInUser,
+        deleteUser, putOneUser, patchUserPwd, searchUsername
     });
 
     async function registerUser(httpRequest) {
@@ -69,6 +70,23 @@ export default function userControllerFactory() {
             return {
                 statusCode: 200,
                 body: [...users]
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+    }
+
+    async function searchUsername(httpRequest) {
+
+        const {username} = httpRequest.params;
+
+        try {
+            const users = await userService.searchUser({username});
+            return {
+                statusCode: 200,
+                body: users
             }
         } catch (e) {
 

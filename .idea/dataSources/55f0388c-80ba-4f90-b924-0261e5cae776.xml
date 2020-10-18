@@ -933,11 +933,13 @@ member</Labels>
     </table>
     <table id="30" parent="15" name="groups">
       <ObjectId>20623</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>2993</StateNumber>
     </table>
     <table id="31" parent="15" name="products">
       <ObjectId>20657</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>2995</StateNumber>
     </table>

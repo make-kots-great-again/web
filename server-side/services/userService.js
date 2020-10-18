@@ -3,7 +3,8 @@ import {jwtFactory, passwordFactory} from "../security";
 
 export default function userServiceFactory({userRepository}) {
     return Object.freeze({
-        addUser, listUsers, listOneUser, logInUser, removeUser, putUser, patchUserPwd
+        addUser, listUsers, listOneUser, logInUser, removeUser,
+        putUser, patchUserPwd, searchUser
     });
 
     async function addUser({...userInfo}) {
@@ -131,6 +132,13 @@ export default function userServiceFactory({userRepository}) {
             return {message: `${id} is not a valid v4 UUID`};
 
         return await userRepository.remove({id});
+    }
+
+    async function searchUser({username} = {}) {
+
+        if (!username) return {message: 'You must supply an id.'};
+
+        return await userRepository.searchUsername({username});
     }
 
 }

@@ -4,7 +4,7 @@ const router = express.Router();
 import passport from 'passport'
 
 import makeCallback from '../helpers/express-callback'
-import controllers from '../controllers'
+import controllers, {groupController, productController} from '../controllers'
 import {userController} from '../controllers'
 
 /**
@@ -18,20 +18,29 @@ router.get("/users/profiles",
     passport.authenticate("jwt", {session: false}),
     makeCallback(userController.getAllUsers));
 
-router
-    .route("/user")
-    .get(passport.authenticate("jwt", {session: false}),
-        makeCallback(userController.getOneUser))
+router.get("/user/groups",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(groupController.getMyGroups));
 
-    .put(passport.authenticate("jwt", {session: false}),
-        makeCallback(userController.putOneUser))
+router.get("/user",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(userController.getOneUser));
 
-    .delete(passport.authenticate("jwt", {session: false}),
-        makeCallback(userController.deleteUser));
-router
-    .route("/user/password")
-    .patch(passport.authenticate("jwt", {session: false}),
-        makeCallback(userController.patchUserPwd));
+router.put("/user",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(userController.putOneUser));
+
+router.delete("/user",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(userController.deleteUser));
+
+router.get("/user/:username",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(userController.searchUsername));
+
+router.patch("/user/password",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(userController.patchUserPwd));
 
 export {router as usersRoutes};
 
