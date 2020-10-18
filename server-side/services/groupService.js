@@ -4,7 +4,7 @@ import {Group, userGroup} from "../models";
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({
         addGroup, listMyGroups, getGroup, addMembersToGroup,
-        deleteUserFromGroup, deleteGroup
+        deleteUserFromGroup, deleteGroup, patchGroup
     });
 
     async function addGroup({username, ...groupInfo}) {
@@ -30,6 +30,33 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         return createGroup;
     }
 
+    async function patchGroup({username, groupId, ...changes}) {
+
+        const groupInfo = await this.getGroup({groupId});
+
+        if (groupInfo.message) return {message: groupInfo.message};
+
+        const users = [];
+
+        groupInfo.dataValues.users.forEach(x => users.push({
+            username: x.dataValues.username,
+            role: x.roleInThisGroup.dataValues.role
+        }));
+
+        const findAdmin= users.find(x => x.role === 'admin');
+
+        if (findAdmin.username !== username)
+            return {message: 'Only the admin of this group can the latter.'};
+
+        const group = makeGroup({...changes});
+
+        return await groupRepository.updateGroup({
+            groupId : groupId,
+            groupName: group.getGroupName(),
+            groupDescription: group.getGroupDescription()
+        });
+    }
+
     async function listMyGroups({userId}) {
 
         return await groupRepository.findMyGroups({userId});
@@ -38,7 +65,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
     async function getGroup({groupId}) {
 
-        if (!groupId) return {message: 'You must supply an id.'};
+        if (!groupId) return {message: 'You must supply a group id.'};
 
         if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
             return {message: `${groupId} is not a valid UUID`};
@@ -86,7 +113,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         });
     }
 
-    async function deleteUserFromGroup({groupId, userId}){
+    async function deleteUserFromGroup({groupId, userId}) {
 
         if (!groupId) return {message: 'You must supply a groupId.'};
         if (!userId) return {message: 'You must a userId'};
@@ -101,7 +128,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         return groupRepository.removeUserFromGroup({groupId, userId});
     }
 
-    async function deleteGroup({groupId}){
+    async function deleteGroup({groupId}) {
 
         if (!groupId) return {message: 'You must supply a groupId.'};
 

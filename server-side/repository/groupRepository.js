@@ -1,7 +1,7 @@
 export default function makeGroupRepository({Group, userGroup, User}) {
     return Object.freeze({
         save, addUserToGroup, findMyGroups, findGroupById, removeUserFromGroup,
-        removeGroup
+        removeGroup, updateGroup
     });
 
     async function save({...groupInfo}) {
@@ -36,6 +36,11 @@ export default function makeGroupRepository({Group, userGroup, User}) {
                 through: {as: 'roleInThisGroup', attributes: ['role']}
             }]
         });
+    }
+
+
+    async function updateGroup({groupId, ...groupInfo}) {
+        return Group.update({...groupInfo}, {where: {groupId: groupId}});
     }
 
     async function removeUserFromGroup({groupId, userId}) {

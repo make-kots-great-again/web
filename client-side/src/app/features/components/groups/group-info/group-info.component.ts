@@ -51,11 +51,9 @@ export class GroupInfoComponent implements OnInit {
   addUserToGroup() {
     const groupId = this.groupId;
     const username = this.addUser;
-
     this.groupService.addMemberToGroup(groupId, username)
       .pipe(takeUntil(this.destroyed$))
-      .subscribe(
-        (data: any) => {
+      .subscribe(() => {
           this.groupDetails();
         },
         error => {

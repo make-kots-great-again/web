@@ -7,17 +7,17 @@
       <label for="search"></label>
       <input
         class="form-control" type="search" id="search" style="width: 12rem;"
-        [(ngModel)]="searchValue" name="search"
+        [(ngModel)]="filterGroups" name="search"
         placeholder="Filter" aria-label="Search">
     </div>
   </div>
   <br>
 
   <div class="container text-center ml-lg-auto ">
-    <button name="createReview" type="submit"
+    <button name="createGroup" type="submit"
             class="btn btn-outline-success
                   text-center text-monospace font-italic font-weight-bolder"
-            data-toggle="modal" data-target="#addReviewBtn"
+            data-toggle="modal" data-target="#createGroup"
             data-whatever="@mdo">Create a group
     </button>
   </div>
@@ -56,15 +56,17 @@
           <td class="text-monospace font-italic font-weight-bold"> {{i + 1}} </td>
 
           <!-- group name td  -->
-          <td>
+          <td onmousemove="this.style.color='green';
+                   this.style.backgroundColor = 'rgba(0, 255, 0, 0.3)'"
+              onmouseout="this.style.backgroundColor = ''; this.style.color=''">
             <a #groupName id="{{group['groupName']}}"
-              [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }"
-              style="cursor: pointer; color: black" title="View this group details"
-              onmousemove="this.style.fontSize= '2.9vh'"
-              onmouseout="this.style.backgroundColor = ''; this.style.color='black';
+               [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }"
+               style="cursor: pointer; color: black" title="View this group details"
+               onmousemove="this.style.fontSize= '2.9vh'"
+               onmouseout="this.style.backgroundColor = ''; this.style.color='black';
             this.style.fontSize= ''"
-              [routerLink]="['/group', group['groupId']]"
-              class="text-monospace font-italic font-weight-bold">
+               [routerLink]="['/group', group['groupId']]"
+               class="text-monospace font-italic font-weight-bold">
               {{group['groupName']}} </a></td>
 
           <!-- role in a group td  -->
@@ -79,9 +81,12 @@
                     <!-- update and delete group icons  -->
                      <a>
 
-                      <!-- update group icon -->
-                       <i class="fa fa-pencil"
-                          aria-hidden="true" onmousemove="this.style.cursor = 'pointer';
+                      <!-- update group icon updateGroup-->
+                       <i (click)="updateGroupClicked(groupId, groupName)"
+                         class="fa fa-pencil" aria-hidden="true"
+                          data-toggle="modal" data-target="#updateGroup"
+                          data-whatever="@mdo"
+                          onmousemove="this.style.cursor = 'pointer';
                        this.style.fontSize= '4.7vh'"
                           onmouseout="this.style.fontSize= ''" style="color: blue"></i>
                      </a>
@@ -93,7 +98,7 @@
                       <i (click)="deleteGroupClicked(groupId, groupName)"
                          data-toggle="modal" data-target="#deleteGroup"
                          data-whatever="@mdo" class="fa fa-trash"
-                         aria-hidden="true" id=""
+                         aria-hidden="true"
                          onmousemove="this.style.cursor = 'pointer';
                        this.style.fontSize= '4.7vh'"
                          onmouseout="this.style.fontSize= ''"
@@ -131,7 +136,7 @@
 </div>
 
 <!-- create a group modal -->
-<div class="modal fade" id="addReviewBtn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="createGroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -180,6 +185,7 @@
               Group Description:</label>
 
             <!-- groupDescription textarea -->
+
             <textarea #textArea="ngModel"
                       [class.is-invalid]="textArea.invalid && textArea.touched"
                       class="form-control w-100" id="groupDescription" rows="2"
@@ -264,7 +270,6 @@
 </div>
 
 
-
 <!-- delete group modal -->
 <div class="modal fade" id="deleteGroup" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -308,6 +313,92 @@
                 data-dismiss="modal" class="btn btn-danger text-monospace
                 font-italic font-weight-bolder">Supprimer le groupe
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- update a group modal -->
+<div class="modal fade" id="updateGroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- update a group modal header -->
+      <div class="modal-header">
+        <h5 class="modal-title ont-weight-bold text-monospace
+            font-italic font-weight-bolder h4">Update {{groupName}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- update a group modal body-->
+      <div class="modal-body">
+
+        <!-- update a group modal form-->
+        <form #updatedGroupForm="ngForm">
+
+          <!-- update a group modal form groupName input -->
+          <div class="form-group">
+            <label for="updateGroupName" class="font-weight-bold text-monospace
+            font-italic font-weight-bolder">Group Name:</label>
+
+            <input #groupNameInput="ngModel"
+                   [class.is-invalid]="groupNameInput.invalid && groupNameInput.touched"
+                   [class.is-valid]="!(groupNameInput.invalid && groupNameInput.untouched)"
+                   class="form-control" type="text" id="updateGroupName"
+                   [(ngModel)]="groupName" name="groupName" minlength="4" maxlength="32"
+                   placeholder="Le nom du groupe" required>
+            <div *ngIf="groupNameInput.errors && (groupNameInput.invalid ||
+                        groupNameInput.touched)">
+              <small id="updateGroupNameError1" class="text-danger"
+                     *ngIf="groupNameInput.errors.minlength">
+                {{groupNameInput.value}} la longueur minimale est 4
+              </small>
+              <small id="updateGroupNameError2" class="text-danger"
+                     *ngIf="groupNameInput.errors.required
+                      && groupNameInput.touched">Le nom du groupe est requis</small>
+            </div>
+          </div>
+
+          <!-- update a group modal form groupDescription input -->
+          <div class="form-group">
+            <label for="updateGroupDescription" class="font-weight-bold
+            text-monospace font-italic font-weight-bolder">
+              Group Description:</label>
+
+            <!-- groupDescription textarea -->
+            <textarea #textArea="ngModel"
+                      [class.is-invalid]="textArea.invalid && textArea.touched"
+                      class="form-control w-100" id="updateGroupDescription" rows="2"
+                      [class.is-valid]="!(textArea.invalid && textArea.untouched)"
+                      placeholder="La description du groupe"
+                      [(ngModel)]="groupDescription" name="groupDescription" required>
+            </textarea>
+            <small class="text-danger" [class.d-none]="textArea.valid ||
+                textArea.untouched">La description d'un groupe est requise</small>
+          </div>
+
+          <!-- update a group modal footer-->
+          <div class="modal-footer">
+
+            <!-- form close button -->
+            <button type="button"
+                    class="btn btn-secondary text-monospace font-italic
+                    font-weight-bolder" data-dismiss="modal"
+                    id="updateGroupClose">Close
+            </button>
+
+            <!-- form submit button -->
+            <button (click)="onupdateGroupSubmit()" id="updateGroupSubmit"
+                    type="submit" data-dismiss="modal"
+                    class="btn btn-primary text-monospace
+                    font-italic font-weight-bolder"
+                    [disabled]="updatedGroupForm.form.invalid">submit
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
