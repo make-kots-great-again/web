@@ -11,13 +11,9 @@ import {groupController}  from '../controllers'
  * If you do not set this to false, the passport framework will try to implement a session.
  */
 
-router.post("/group/create",
+router.post("/group/groups",
     passport.authenticate("jwt", {session: false}),
     makeCallback(groupController.createGroup));
-
-router.get("/user/groups",
-    passport.authenticate("jwt", {session: false}),
-    makeCallback(groupController.getMyGroups));
 
 router.get("/group/:groupId",
     passport.authenticate("jwt", {session: false}),

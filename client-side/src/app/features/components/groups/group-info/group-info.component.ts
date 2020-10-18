@@ -1,12 +1,15 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {takeUntil} from "rxjs/operators";
+import {takeUntil, filter} from "rxjs/operators";
 import {GroupService} from "../../../../core/services/group.service";
+import {UserService} from "../../../../core/services/user.service";
 import {ReplaySubject} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {Observable, of} from 'rxjs';
-import {catchError, debounceTime, distinctUntilChanged, map, tap, switchMap} from 'rxjs/operators'
+import {catchError, debounceTime, distinctUntilChanged, tap, switchMap} from 'rxjs/operators'
+import {User} from "../../../../shared/models/user.model";
 
-type Product = {product_name: string, code: number}
+type Product = { product_name: string, code: number }
+type Member = { username: string, email: string }
 
 @Component({
   selector: 'app-group-info',
@@ -17,15 +20,23 @@ export class GroupInfoComponent implements OnInit {
 
   groupDescription: string = "";
   addUser: string = "";
-  groupUsers: Array<any> = [];
+  groupUsers: Array<User> = [];
   groupId: string = "";
 
-  model: any;
-  searching : boolean = false;
-  searchFailed : boolean = false;
-  formatter = (product: Product) => product.product_name;
+  productModel: any;
+  memberModel: any;
+  searchingUsernames: boolean = false;
+  usernameSearchFailed: boolean = false;
+  searching: boolean = false;
+  searchFailed: boolean = false;
+  productFormatter = (product: Product) => product.product_name;
+  Memberformatter = (member: Member) => member.username;
 
-  constructor(private groupService: GroupService, private route: ActivatedRoute) { }
+  constructor(
+    private groupService: GroupService,
+    private userService: UserService,
+    private route: ActivatedRoute) {
+  }
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
@@ -35,7 +46,7 @@ export class GroupInfoComponent implements OnInit {
 
   }
 
-  groupDetails() {
+  groupDetails(): void {
     this.groupService.getOneGroup(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
@@ -48,9 +59,9 @@ export class GroupInfoComponent implements OnInit {
         });
   }
 
-  addUserToGroup() {
+  addUserToGroup(): void {
     const groupId = this.groupId;
-    const username = this.addUser;
+    const username = this.memberModel.username;
     this.groupService.addMemberToGroup(groupId, username)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
@@ -60,6 +71,25 @@ export class GroupInfoComponent implements OnInit {
           console.log(error)
         });
   }
+
+
+  usernameList = (useranme$: Observable<string>) =>
+    useranme$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.searchingUsernames = true),
+      switchMap((username: string) => {
+        if (username === '') return of([]);
+        return this.userService.searchUsername(username).pipe(
+          tap((data: Array<Member>) => (data.length === 0) ?
+            this.usernameSearchFailed = true : this.usernameSearchFailed = false),
+          catchError(() => {
+            this.usernameSearchFailed = true;
+            return of([]);
+          }))
+      }),
+      tap(() => this.searchingUsernames = false)
+    )
 
 
   productList = (text$: Observable<string>) =>
@@ -80,12 +110,16 @@ export class GroupInfoComponent implements OnInit {
       tap(() => this.searching = false)
     )
 
-  addProduct(){
-    console.log(this.model)
+  addProduct() {
+    console.log(this.productModel)
   }
 
-  verifyProduct() : boolean {
-    return (typeof this.model === 'object');
+  verifyProduct(): boolean {
+    return (typeof this.productModel === 'object');
+  }
+
+  verifyMember(): boolean {
+    return (typeof this.memberModel === 'object');
   }
 
   @HostListener('window:beforeunload')
@@ -95,3 +129,9 @@ export class GroupInfoComponent implements OnInit {
   }
 
 }
+
+
+/*
+tap((data: any) => this.groupUsers
+            .filter((x, i) => x.username !== data[i].username)),
+ */

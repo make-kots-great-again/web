@@ -10,7 +10,7 @@ export default function groupControllerFactory() {
 
         try {
             const {...groupInfo} = httpRequest.body;
-            const {username} = httpRequest.user.dataValues;
+            const {username} = httpRequest.user;
 
             const createdGroup = await groupService.addGroup(
                 {username, ...groupInfo});
@@ -35,7 +35,7 @@ export default function groupControllerFactory() {
 
         try {
 
-            const {userId} = httpRequest.user.dataValues;
+            const {userId} = httpRequest.user;
 
             const myGroups = await groupService.listMyGroups({userId});
 

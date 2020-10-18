@@ -1,11 +1,23 @@
 export default function makeUserRepository({User, Op}) {
     return Object.freeze({
         save, findAll, findPseudo, findByEmailOrUsername,
-        findByEmail, findByUsername, findById, remove, put, patchPwd
+        findByEmail, findByUsername, findById, remove, put, patchPwd,
+        searchUsername
     });
 
     async function save({...userInfo}) {
         return User.create(userInfo);
+    }
+
+    async function searchUsername({username}) {
+        return User.findAll(
+            {
+                where: {
+                    username: {
+                        [Op.startsWith]: username,
+                    }
+                }, attributes: ['username', 'email']
+            });
     }
 
     /**

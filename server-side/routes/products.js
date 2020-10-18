@@ -11,6 +11,7 @@ import {productController}  from '../controllers'
  */
 
 router.get("/products/:productName",
+    passport.authenticate("jwt", {session: false}),
     makeCallback(productController.getProducts));
 
 
