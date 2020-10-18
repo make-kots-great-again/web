@@ -3,7 +3,7 @@ import {groupService} from "../services";
 export default function groupControllerFactory() {
     return Object.freeze({
         createGroup, getMyGroups, getOneGroup, addMembersToGroup,
-        leaveGroup, deleteGroup
+        leaveGroup, deleteGroup, updateGroup
     });
 
     async function createGroup(httpRequest) {
@@ -64,7 +64,7 @@ export default function groupControllerFactory() {
             if (group.message) {
                 return {
                     statusCode: 404,
-                    body: {message: group.message}
+                    body: {success: false, message: group.message}
                 }
             }
 
@@ -73,6 +73,38 @@ export default function groupControllerFactory() {
                 body: {
                     success: true,
                     groupInfo: group
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+    }
+
+    async function updateGroup(httpRequest) {
+
+        try {
+
+            const {groupId} = httpRequest.params;
+            const {username} = httpRequest.user;
+            const {...changes} = httpRequest.body;
+
+            const updatedGroup = await groupService.patchGroup(
+                {username, groupId, ...changes});
+
+            if (updatedGroup.message) {
+                return {
+                    statusCode: 404,
+                    body: {success: false, message: updatedGroup.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    message: "This group's info was was successfully updated !"
                 }
             }
         } catch (e) {
@@ -94,7 +126,7 @@ export default function groupControllerFactory() {
             if (group.message) {
                 return {
                     statusCode: 404,
-                    body: {message: group.message}
+                    body: {success: false, message: group.message}
                 }
             }
 

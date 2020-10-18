@@ -23,6 +23,10 @@ router.get("/group/:groupId",
     passport.authenticate("jwt", {session: false}),
     makeCallback(groupController.getOneGroup));
 
+router.patch("/group/:groupId",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(groupController.updateGroup));
+
 router.get("/group/:groupId/add/:username",
     passport.authenticate("jwt", {session: false}),
     makeCallback(groupController.addMembersToGroup));
