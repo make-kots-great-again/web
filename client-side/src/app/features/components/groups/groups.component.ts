@@ -65,8 +65,7 @@ export class GroupsComponent implements OnInit {
 
     this.groupService.updateGroup(this.groupId, groupData)
       .pipe(takeUntil(this.destroyed$))
-      .subscribe((data) => {
-          console.log(data)
+      .subscribe(() => {
           this.getGroups();
         },
         error => {
