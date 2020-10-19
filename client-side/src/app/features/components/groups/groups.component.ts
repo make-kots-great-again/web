@@ -5,6 +5,8 @@ import {takeUntil} from "rxjs/operators";
 import {AuthenticationService} from "../../../core/services/authentification.service";
 import {Group} from "../../../shared/models/group.model";
 
+declare var $:any;
+
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
@@ -27,6 +29,9 @@ export class GroupsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getGroups();
+    $(".showtoast").click(function(){
+      $('.toast').toast('show');
+    })
   }
 
   getGroups(): void {

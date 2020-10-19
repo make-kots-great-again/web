@@ -21,19 +21,22 @@
             <div class="row">
                 <div class="d-flex">
                   <div class="d-flex justify-content-center form-group">
-                    <label for="typeahead-https"></label>
-                    <input id="typeahead-https" type="text"
+                    <label for="typeahead-member"></label>
+                    <input id="typeahead-member" type="text"
                            class="form-control mx-sm-3"
                            [class.is-invalid]="usernameSearchFailed"
+                           [class.is-valid]="verifyMember()"
                            [(ngModel)]="memberModel" name="addMemberInput"
                            [inputFormatter]="Memberformatter"
                            [resultFormatter]="Memberformatter"
                            [ngbTypeahead]="usernameList"
                            placeholder="username"/>
                     <br>
-                    <small *ngIf="searchingUsernames" class="form-text text-muted">searching...</small>
+                    <small *ngIf="searchingUsernames"
+                           class="form-text text-muted">searching...</small>
                     <div class="invalid-feedback" *ngIf="usernameSearchFailed">
-                      Sorry, no user was found with this username : {{memberModel}}</div>
+                      Sorry, no user was found with this username : {{memberModel}}
+                    </div>
                   </div>
                   <div class="ml-3">
                     <button (click)="addUserToGroup()"

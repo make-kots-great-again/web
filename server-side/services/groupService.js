@@ -1,5 +1,4 @@
 import {makeGroup} from '../domain'
-import {Group, userGroup} from "../models";
 
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({

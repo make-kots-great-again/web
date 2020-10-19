@@ -1,5 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {takeUntil, filter} from "rxjs/operators";
+import {takeUntil} from "rxjs/operators";
 import {GroupService} from "../../../../core/services/group.service";
 import {UserService} from "../../../../core/services/user.service";
 import {ReplaySubject} from "rxjs";
@@ -119,7 +119,13 @@ export class GroupInfoComponent implements OnInit {
   }
 
   verifyMember(): boolean {
-    return (typeof this.memberModel === 'object');
+
+    let existingMember: object = {};
+    if (typeof this.memberModel === 'object') {
+      existingMember = this.groupUsers.find(x =>
+        x.username === this.memberModel.username)
+    }
+    return (typeof this.memberModel === 'object') && !existingMember;
   }
 
   @HostListener('window:beforeunload')
