@@ -11,3 +11,160 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.gem-effect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 20px auto;
+  width: 250px;
+  height: 250px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 1s box-shadow;
+  color: #F0C05A;
+}
+.gem-effect:hover {
+  box-shadow: 0 5px 35px 0 rgba(0,0,0,.1);
+}
+.gem-effect:hover:before,
+.gem-effect:hover:after {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: #5A5B9F;
+  z-index: -1;
+  border-radius: 50%;
+  animation: 1s clockwise infinite;
+}
+.gem-effect:hover:after {
+  background: #45B5AA;
+  animation: 2s counterclockwise infinite;
+}
+@keyframes clockwise {
+  0% {
+    top: -5px;
+    left: 0;
+  }
+  12% {
+    top: -2px;
+    left: 2px;
+  }
+  25% {
+    top: 0;
+    left: 5px;
+  }
+  37% {
+    top: 2px;
+    left: 2px;
+  }
+  50% {
+    top: 5px;
+    left: 0;
+  }
+  62% {
+    top: 2px;
+    left: -2px;
+  }
+  75% {
+    top: 0;
+    left: -5px;
+  }
+  87% {
+    top: -2px;
+    left: -2px;
+  }
+  100% {
+    top: -5px;
+    left: 0;
+  }
+}
+@keyframes counterclockwise {
+  0% {
+    top: -5px;
+    right: 0;
+  }
+  12% {
+    top: -2px;
+    right: 2px;
+  }
+  25% {
+    top: 0;
+    right: 5px;
+  }
+  37% {
+    top: 2px;
+    right: 2px;
+  }
+  50% {
+    top: 5px;
+    right: 0;
+  }
+  62% {
+    top: 2px;
+    right: -2px;
+  }
+  75% {
+    top: 0;
+    right: -5px;
+  }
+  87% {
+    top: -2px;
+    right: -2px;
+  }
+  100% {
+    top: -5px;
+    right: 0;
+  }
+}
+
+.blocks .block {
+  transform: perspective(600px) rotateY(-30deg);
+  transition: transform .3s;
+}
+.blocks .block img {
+  width: auto;
+  max-width: 125%;
+}
+.blocks .block .overlay {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity .3s ease;
+  transform: translate3d(0, 0, 0);
+}
+.blocks .block .overlay img {
+  width: auto;
+  max-width: 50%;
+}
+.blocks .block.hover,
+.blocks .block:hover {
+  transform: rotateY(0);
+  cursor: pointer;
+}
+.blocks .block.hover .overlay,
+.blocks .block:hover .overlay {
+  opacity: 1;
+}
+.tigerlily {
+  color: #f74c3d;
+}
+.aqua-sky {
+  color: #5cc6c3;
+}
+.mimosa {
+  color: #F0C05A;
+}
+.blue-iris {
+  color: #5A5B9F;
+}
