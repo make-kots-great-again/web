@@ -38,7 +38,6 @@ export default function makeGroupRepository({Group, userGroup, User}) {
         });
     }
 
-
     async function updateGroup({groupId, ...groupInfo}) {
         return Group.update({...groupInfo}, {where: {groupId: groupId}});
     }

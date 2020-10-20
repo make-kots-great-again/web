@@ -78,11 +78,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
     async function addMembersToGroup({groupId, username}) {
 
-        if (!groupId) return {message: 'You must supply a groupId.'};
         if (!username) return {message: 'You must a username'};
-
-        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${groupId} is not a valid UUID`};
 
         if (typeof username !== 'string')
             return {message: 'A username must be a string.'};
@@ -90,15 +86,15 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         if (username.length < 4 || username.length >= 32)
             return {message: 'A username length must be between 4 and 32.'};
 
-        const group = await groupRepository.findGroupById({groupId});
+        const groupInfo = await this.getGroup({groupId});
 
-        if (!group) return {message: `No group was found with this id : ${groupId}`};
+        if (groupInfo.message) return {message: groupInfo.message};
 
         const user = await userRepository.findByUsername({username});
 
         if (!user) return {message: `No user was found with this username : ${username}`};
 
-        const {users} = group.dataValues;
+        const {users} = groupInfo.dataValues;
 
         const existingMember = users.find(x => x.username === user.dataValues.username)
 
@@ -107,7 +103,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         return groupRepository.addUserToGroup({
             userId: user.dataValues.userId,
-            groupId: group.dataValues.groupId,
+            groupId: groupInfo.dataValues.groupId,
             role: 'member'
         });
     }

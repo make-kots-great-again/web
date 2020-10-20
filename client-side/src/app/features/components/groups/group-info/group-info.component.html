@@ -19,35 +19,35 @@
             Group members</strong>
           <div class="ml-auto mr-5">
             <div class="row">
-                <div class="d-flex">
-                  <div class="d-flex justify-content-center form-group">
-                    <label for="typeahead-member"></label>
-                    <input id="typeahead-member" type="text"
-                           class="form-control mx-sm-3"
-                           [class.is-invalid]="usernameSearchFailed"
-                           [class.is-valid]="verifyMember()"
-                           [(ngModel)]="memberModel" name="addMemberInput"
-                           [inputFormatter]="Memberformatter"
-                           [resultFormatter]="Memberformatter"
-                           [ngbTypeahead]="usernameList"
-                           placeholder="username"/>
-                    <br>
-                    <small *ngIf="searchingUsernames"
-                           class="form-text text-muted">searching...</small>
-                    <div class="invalid-feedback" *ngIf="usernameSearchFailed">
-                      Sorry, no user was found with this username : {{memberModel}}
-                    </div>
-                  </div>
-                  <div class="ml-3">
-                    <button (click)="addUserToGroup()"
-                            [disabled]="!verifyMember()"
-                            name="addMember" type="submit"
-                            class="btn btn-outline-success text-center
-                            text-monospace font-italic font-weight-bolder">
-                            Add a member
-                    </button>
+              <div class="d-flex">
+                <div class="d-flex justify-content-center form-group">
+                  <label for="typeahead-member"></label>
+                  <input id="typeahead-member" type="text"
+                         class="form-control mx-sm-3 bg-light"
+                         [class.is-invalid]="usernameSearchFailed"
+                         [class.is-valid]="verifyMember()"
+                         [(ngModel)]="memberModel" name="addMemberInput"
+                         [inputFormatter]="Memberformatter"
+                         [resultFormatter]="Memberformatter"
+                         [ngbTypeahead]="usernameList"
+                         placeholder="username"/>
+                  <br>
+                  <small *ngIf="searchingUsernames"
+                         class="form-text text-muted">searching...</small>
+                  <div class="invalid-feedback" *ngIf="usernameSearchFailed">
+                    Sorry, no user was found with this username : {{memberModel}}
                   </div>
                 </div>
+                <div class="ml-3">
+                  <button (click)="addUserToGroup()"
+                          [disabled]="!verifyMember()"
+                          name="addMember" type="submit"
+                          class="btn btn-outline-success text-center
+                            text-monospace font-italic font-weight-bolder">
+                    Add a member
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -126,21 +126,127 @@
           <pre>Product name : {{ productModel | json}}</pre>
         </div>
 
+
+        <div class="container mb-4">
+          <div class="row">
+            <div class="col-12">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead class="font-weight-bold">
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Username</th>
+                    <th scope="col" class="text-center">Quantity</th>
+                    <th scope="col" class="text-right">Price</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td><img src="../../../../../assets/img/product.png" alt=""/></td>
+                    <td><strong class="text-muted">Product Name Dada</strong></td>
+                    <td>Roger</td>
+                    <td><label>
+                      <input class="form-control w-auto" type="number" value="1"/>
+                    </label></td>
+                    <td class="text-right">124,90 €</td>
+                    <td class="text-right">
+                      <button class="btn btn-sm btn-danger">
+                        <i class="fa fa-trash"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><img src="../../../../../assets/img/product.png" alt=""/></td>
+                    <td><strong class="text-muted">Product Name Toto</strong></td>
+                    <td>James</td>
+                    <td><label>
+                      <input class="form-control" type="number" value="1"/>
+                    </label></td>
+                    <td class="text-right">33,90 €</td>
+                    <td class="text-right">
+                      <button class="btn btn-sm btn-danger">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><img src="../../../../../assets/img/product.png" alt=""/></td>
+                    <td><strong class="text-muted">Product Name Titi</strong></td>
+                    <td>John</td>
+                    <td class="justify-content-center row">
+                      <label for="inputGroupSelect01">
+                        <select class="custom-select" id="inputGroupSelect01">
+                          <option selected>1</option>
+                          <option value="1">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                        </select>
+                      </label>
+                    </td>
+                    <td class="text-right">33,90 €</td>
+                    <td class="text-right">
+                      <button class="btn btn-sm btn-danger">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Sub-Total</td>
+                    <td class="text-right">255,90 €</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><strong>Total</strong></td>
+                    <td class="text-right font-weight-bold">
+                      <strong>346,90 €</strong></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="p-4">
+          <p class="font-italic mb-4">
+            <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
+            Shipping and additional costs are calculated based on values you have
+            entered.</p>
+          <ul class="list-unstyled mb-4">
+            <li class="d-flex justify-content-between py-3 border-bottom">
+              <strong class="text-muted">Order Subtotal </strong>
+              <strong>€390.00</strong>
+            </li>
+            <li class="d-flex justify-content-between py-3 border-bottom">
+              <strong class="text-muted">Shipping and handling</strong>
+              <strong>€10.00</strong>
+            </li>
+            <li class="d-flex justify-content-between py-3 border-bottom">
+              <strong class="text-muted">Tax</strong>
+              <strong>€0.00</strong>
+            </li>
+            <li class="d-flex justify-content-between py-3 border-bottom">
+              <strong class="text-muted">Total</strong>
+              <h5 class="font-weight-bold">€400.00</h5>
+            </li>
+          </ul>
+          <a class="btn btn-dark rounded-pill py-2 btn-block
+          text-monospace font-weight-bolder h4">
+            Procceed to checkout</a>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 
-<!--Table
-<div class="d-flex justify-content-center">
-  <label for="addUser"></label>
-  <input #addUserInput="ngModel"
-         [class.is-invalid]="addUserInput.invalid && addUserInput.touched"
-         [class.is-valid]="!(addUserInput.invalid && addUserInput.untouched)"
-         class="form-control" type="text" id="addUser"
-         minlength="4" maxlength="32"
-         [(ngModel)]="addUser" name="addUser"
-         placeholder="username" required>
-</div>
--->
