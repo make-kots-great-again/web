@@ -1,13 +1,27 @@
-.title_home{
-  width: 6em;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+
+.social-link {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  border-radius: 50%;
+  transition: all 0.3s;
+  font-size: 0.9rem;
 }
 
-.main{
-  max-width: 1280px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+.social-link:hover,
+.social-link:focus {
+  background: #ddd;
+  text-decoration: none;
+  color: #555;
 }

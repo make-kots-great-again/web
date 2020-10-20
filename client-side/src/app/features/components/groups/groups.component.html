@@ -81,28 +81,26 @@
                     <!-- update and delete group icons  -->
                      <a>
 
-                      <!-- update group icon updateGroup-->
-                       <i (click)="updateGroupClicked(groupId, groupName)"
-                         class="fa fa-pencil" aria-hidden="true"
-                          data-toggle="modal" data-target="#updateGroup"
-                          data-whatever="@mdo"
-                          onmousemove="this.style.cursor = 'pointer';
-                       this.style.fontSize= '4.7vh'"
-                          onmouseout="this.style.fontSize= ''" style="color: blue"></i>
+                       <!-- update group icon updateGroup-->
+                       <button (click)="updateGroupClicked(groupId, groupName)"
+                               class="btn btn-primary btn-sm rounded"
+                               data-toggle="modal" data-target="#updateGroup"
+                               data-whatever="@mdo"
+                               type="button" data-placement="top" title="Edit">
+                       <i class="fa fa-edit" aria-hidden="true">
+                       </i></button>
                      </a>
 
               <!-- delete group a tag -->
                     <a class="ml-3">
 
                       <!-- delete group icon -->
-                      <i (click)="deleteGroupClicked(groupId, groupName)"
-                         data-toggle="modal" data-target="#deleteGroup"
-                         data-whatever="@mdo" class="fa fa-trash"
-                         aria-hidden="true"
-                         onmousemove="this.style.cursor = 'pointer';
-                       this.style.fontSize= '4.7vh'"
-                         onmouseout="this.style.fontSize= ''"
-                         style="color: red"></i>
+                      <button (click)="deleteGroupClicked(groupId, groupName)"
+                              class="btn btn-danger btn-sm rounded"
+                              data-toggle="modal" data-target="#deleteGroup"
+                              data-whatever="@mdo"
+                              type="button" data-placement="top" title="Delete">
+                      <i class="fa fa-trash" aria-hidden="true"></i></button>
                     </a>
                   </span>
 
