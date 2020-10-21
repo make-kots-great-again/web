@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         async (data: any) => {
           // this.userService.storeUserData(data);
-          await this.router.navigate(['/profile']);
+          await this.router.navigate(['/groups']);
           // setTimeout(() => this.router.navigate(['/profile']), 1000);
          // console.log(data);
         },
