@@ -7,10 +7,11 @@ export default function sendMail(key, username, groupName) {
     sgMail.setApiKey(env.SENDGRID_API_KEY);
 
         const msg = {
-            to: `danbarca95@gmail.com`,
+            to: `toto@gmail.com`,
             from: 'he201718@students.ephec.be',
             subject: 'Group Invitation',
             html: mailTemplate
+                .replace("XXXusernameXXX", `${username}`)
                 .replace("XXXusernameXXX", `${username}`)
                 .replace("XXXgroupXXX", `${groupName}`)
                 .replace("link@link1",

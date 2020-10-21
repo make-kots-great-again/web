@@ -113,7 +113,7 @@ const mailTemplate = '<!DOCTYPE html>\n' +
     '                                        style="padding: 0px; color: #111111; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; line-height: 62px;padding:0 0 15px 0;">\n' +
     '                                        <a href="https://kotsapp.herokuapp.com" target="_blank">\n' +
     '                                            <img width="20" height="30" alt="logo"\n' +
-    '                                                 src="./favicon.jpg"></a>\n' +
+    '                                                 src="https://raw.githubusercontent.com/make-kots-great-again/web/sprint-3/server-side/helpers/favicon.ico"></a>\n' +
     '                                    </td>\n' +
     '                                    <td bgcolor="#ffffff" align="right" valign="middle"\n' +
     '                                        style="padding: 0px; color: #111111; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; line-height: 48px;padding:0 0 15px 0;">\n' +
@@ -141,7 +141,7 @@ const mailTemplate = '<!DOCTYPE html>\n' +
     '                                        style="padding: 20px 0 0 0; color: #666666; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400;-webkit-font-smoothing:antialiased;">\n' +
     '                                        <p class="headingMobile"\n' +
     '                                           style="margin: 0;color: #171717;font-size: 26px;font-weight: 200;line-height: 130%;margin-bottom:5px;">\n' +
-    '                                            Group invitation by XXXusernameXXX</p>\n' +
+    '                                            Group invitation by XXXusernameXXX </p>\n' +
     '                                    </td>\n' +
     '                                </tr>\n' +
     '                                <tr>\n' +
