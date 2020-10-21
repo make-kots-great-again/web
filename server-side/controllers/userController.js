@@ -45,7 +45,7 @@ export default function userControllerFactory() {
 
             const {username, email, userId: id} = user.data;
 
-            sendMail('abcdhdbzyzgdydzygd', 'James', 'football',);
+           // sendMail('abcdhdbzyzgdydzygd', 'James', 'football',);
 
             return {
                 statusCode: 200,
