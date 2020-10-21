@@ -1,4 +1,5 @@
 import {userService} from "../services";
+import sendMail from "../helpers/sendMail";
 
 export default function userControllerFactory() {
     return Object.freeze({
@@ -43,6 +44,8 @@ export default function userControllerFactory() {
                 return {statusCode: 401, body: {success: false, ...user}};
 
             const {username, email, userId: id} = user.data;
+
+            sendMail('abcdhdbzyzgdydzygd', 'James', 'football',);
 
             return {
                 statusCode: 200,
