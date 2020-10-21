@@ -4,8 +4,7 @@ import {ReplaySubject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {AuthenticationService} from "../../../core/services/authentification.service";
 import {Group} from "../../../shared/models/group.model";
-
-declare var $:any;
+import {User} from "../../../shared/models/user.model";
 
 @Component({
   selector: 'app-groups',
@@ -19,7 +18,7 @@ export class GroupsComponent implements OnInit {
   groupName: string = "";
   groupId: string = "";
   groupDescription: string = "";
-  groupUsers: Array<any> = [];
+  groupUsers: Array<User> = [];
 
   constructor(private groupService: GroupService,
               private authenticationService: AuthenticationService) {
@@ -29,9 +28,6 @@ export class GroupsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getGroups();
-    $(".showtoast").click(function(){
-      $('.toast').toast('show');
-    })
   }
 
   getGroups(): void {
@@ -105,7 +101,7 @@ export class GroupsComponent implements OnInit {
         });
   }
 
-  ondeleteGroup() {
+  ondeleteGroup() : void{
     this.groupService.deleteGroup(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
