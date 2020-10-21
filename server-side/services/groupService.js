@@ -78,7 +78,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
     async function addMembersToGroup({groupId, username}) {
 
-        if (!username) return {message: 'You must a username'};
+        if (!username) return {message: 'You must supply a username'};
 
         if (typeof username !== 'string')
             return {message: 'A username must be a string.'};
