@@ -6,7 +6,7 @@ import {SharedModule} from '../shared/shared.module';
 import {HomePageComponent} from './components/home-page/home-page.component';
 import {AboutComponent} from './components/about/about.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
-import {JwtInterceptor} from './interceptor/jwt.interceptor'
+import {JwtInterceptor} from './interceptor/jwt.interceptor';
 import {ErrorInterceptor} from './interceptor/error.interceptor';
 
 const routes: Routes = [

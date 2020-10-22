@@ -1,10 +1,10 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {GroupService} from '../../../core/services/group.service'
-import {ReplaySubject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
-import {AuthenticationService} from "../../../core/services/authentification.service";
-import {Group} from "../../../shared/models/group.model";
-import {User} from "../../../shared/models/user.model";
+import {GroupService} from '../../../core/services/group.service';
+import {ReplaySubject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {AuthenticationService} from '../../../core/services/authentification.service';
+import {Group} from '../../../shared/models/group.model';
+import {User} from '../../../shared/models/user.model';
 
 @Component({
   selector: 'app-groups',
@@ -13,18 +13,17 @@ import {User} from "../../../shared/models/user.model";
 })
 export class GroupsComponent implements OnInit {
 
+  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
   groups: Array<Group>;
-  filterGroups: string = "";
-  groupName: string = "";
-  groupId: string = "";
-  groupDescription: string = "";
+  filterGroups = '';
+  groupName = '';
+  groupId = '';
+  groupDescription = '';
   groupUsers: Array<User> = [];
 
   constructor(private groupService: GroupService,
               private authenticationService: AuthenticationService) {
   }
-
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   ngOnInit(): void {
     this.getGroups();
@@ -35,10 +34,10 @@ export class GroupsComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
         (data: any) => {
-          this.groups = data
+          this.groups = data;
         },
         error => {
-          console.log(error)
+          console.log(error);
         });
   }
 
@@ -46,7 +45,7 @@ export class GroupsComponent implements OnInit {
     const groupData: Group = {
       groupName: this.groupName,
       groupDescription: this.groupDescription
-    }
+    };
 
     this.groupService.createGroup(groupData)
       .pipe(takeUntil(this.destroyed$))
@@ -54,7 +53,7 @@ export class GroupsComponent implements OnInit {
           this.getGroups();
         },
         error => {
-          console.log(error)
+          console.log(error);
         });
   }
 
@@ -62,7 +61,7 @@ export class GroupsComponent implements OnInit {
     const groupData: Group = {
       groupName: this.groupName,
       groupDescription: this.groupDescription
-    }
+    };
 
     this.groupService.updateGroup(this.groupId, groupData)
       .pipe(takeUntil(this.destroyed$))
@@ -70,7 +69,7 @@ export class GroupsComponent implements OnInit {
           this.getGroups();
         },
         error => {
-          console.log(error)
+          console.log(error);
         });
   }
 
@@ -97,23 +96,23 @@ export class GroupsComponent implements OnInit {
           this.getGroups();
         },
         error => {
-          console.log(error)
+          console.log(error);
         });
   }
 
-  ondeleteGroup() : void{
+  ondeleteGroup(): void {
     this.groupService.deleteGroup(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
           this.getGroups();
         },
         error => {
-          console.log(error)
+          console.log(error);
         });
   }
 
   @HostListener('window:beforeunload')
-  async ngOnDestroy() {
+  async ngOnDestroy(): Promise<any> {
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
