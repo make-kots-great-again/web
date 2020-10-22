@@ -150,7 +150,7 @@
 .blocks .block.hover,
 .blocks .block:hover {
   transform: rotateY(0);
-  cursor: pointer;
+  cursor: default;
 }
 .blocks .block.hover .overlay,
 .blocks .block:hover .overlay {
