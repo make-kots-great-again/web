@@ -4,7 +4,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
-import {FeaturesModule} from './features/features.module'
+import {FeaturesModule} from './features/features.module';
 import {AppComponent} from './app.component';
 import {Routes, RouterModule} from '@angular/router';
 

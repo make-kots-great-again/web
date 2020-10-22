@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'app-charts',
@@ -7,16 +7,16 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ChartsComponent implements OnInit {
   @Input()
-  type : string = 'bar';
+  type: string = 'bar';
 
   @Input()
-  title : string = "title";
+  title: string = 'title';
 
   data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
       {
-        label: "My First dataset",
+        label: 'My First dataset',
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -36,7 +36,7 @@ export class ChartsComponent implements OnInit {
         data: [90, 59, 80, 81, 56, 55, 40]
       },
       {
-        label: "My Second dataset",
+        label: 'My Second dataset',
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -63,9 +63,11 @@ export class ChartsComponent implements OnInit {
     responsive: true,
     maintainAspectRatio: false
   };
-  constructor() { }
 
-  ngOnInit() {
+  constructor() {
+  }
+
+  ngOnInit(): void {
   }
 
 }

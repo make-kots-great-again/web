@@ -1,15 +1,15 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {takeUntil} from "rxjs/operators";
-import {GroupService} from "../../../../core/services/group.service";
-import {UserService} from "../../../../core/services/user.service";
-import {ReplaySubject} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
+import {takeUntil} from 'rxjs/operators';
+import {GroupService} from '../../../../core/services/group.service';
+import {UserService} from '../../../../core/services/user.service';
+import {ReplaySubject} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 import {Observable, of} from 'rxjs';
-import {catchError, debounceTime, distinctUntilChanged, tap, switchMap} from 'rxjs/operators'
-import {User} from "../../../../shared/models/user.model";
+import {catchError, debounceTime, distinctUntilChanged, tap, switchMap} from 'rxjs/operators';
+import {User} from '../../../../shared/models/user.model';
 
-type Product = { product_name: string, code: number }
-type Member = { username: string, email: string }
+type Product = { product_name: string, code: number };
+type Member = { username: string, email: string };
 
 @Component({
   selector: 'app-group-info',
@@ -18,17 +18,19 @@ type Member = { username: string, email: string }
 })
 export class GroupInfoComponent implements OnInit {
 
-  groupDescription: string = "";
-  addUser: string = "";
+  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
+
+  groupDescription = '';
+  addUser = '';
   groupUsers: Array<User> = [];
-  groupId: string = "";
+  groupId = '';
 
   productModel: any;
   memberModel: any;
-  searchingUsernames: boolean = false;
-  usernameSearchFailed: boolean = false;
-  searching: boolean = false;
-  searchFailed: boolean = false;
+  searchingUsernames = false;
+  usernameSearchFailed = false;
+  searching = false;
+  searchFailed = false;
   productFormatter = (product: Product) => product.product_name;
   Memberformatter = (member: Member) => member.username;
 
@@ -37,8 +39,6 @@ export class GroupInfoComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute) {
   }
-
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   ngOnInit(): void {
     this.groupId = this.route.snapshot.paramMap.get('groupId');
@@ -55,7 +55,7 @@ export class GroupInfoComponent implements OnInit {
           this.groupUsers = data.users;
         },
         error => {
-          console.log(error)
+          console.log(error);
         });
   }
 
@@ -68,7 +68,7 @@ export class GroupInfoComponent implements OnInit {
           this.groupDetails();
         },
         error => {
-          console.log(error)
+          console.log(error);
         });
   }
 
@@ -86,7 +86,7 @@ export class GroupInfoComponent implements OnInit {
           catchError(() => {
             this.usernameSearchFailed = true;
             return of([]);
-          }))
+          }));
       }),
       tap(() => this.searchingUsernames = false)
     )
@@ -105,13 +105,13 @@ export class GroupInfoComponent implements OnInit {
           catchError(() => {
             this.searchFailed = true;
             return of([]);
-          }))
+          }));
       }),
       tap(() => this.searching = false)
     )
 
-  addProduct() {
-    console.log(this.productModel)
+  addProduct(): void {
+    console.log(this.productModel);
   }
 
   verifyProduct(): boolean {
@@ -123,13 +123,13 @@ export class GroupInfoComponent implements OnInit {
     let existingMember: object = {};
     if (typeof this.memberModel === 'object') {
       existingMember = this.groupUsers.find(x =>
-        x.username === this.memberModel.username)
+        x.username === this.memberModel.username);
     }
     return (typeof this.memberModel === 'object') && !existingMember;
   }
 
   @HostListener('window:beforeunload')
-  async ngOnDestroy() {
+  async ngOnDestroy(): Promise<void> {
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }

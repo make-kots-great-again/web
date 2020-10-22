@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "../../../core/services/authentification.service";
-import {Router} from "@angular/router";
+import {AuthenticationService} from '../../../core/services/authentification.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -19,11 +19,11 @@ export class NavbarComponent implements OnInit {
   }
 
 
-  async onLogOutClick() {
+  async onLogOutClick(): Promise<void> {
 
     this.authService.logout();
     await this.router.navigate(['/login']);
-  //  setTimeout(() => this.router.navigate(['/login']) ,1000);
+    //  setTimeout(() => this.router.navigate(['/login']) ,1000);
 
   }
 }

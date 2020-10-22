@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
-import {HttpClient, HttpResponse} from "@angular/common/http";
-import {IGroup} from "../../shared/models/group.model";
-import {map} from "rxjs/operators";
+import {Observable} from 'rxjs';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {IGroup} from '../../shared/models/group.model';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

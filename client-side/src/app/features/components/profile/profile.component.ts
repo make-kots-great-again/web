@@ -1,4 +1,3 @@
-import {ActivatedRoute} from "@angular/router";
 import { UserService } from 'src/app/core/services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
@@ -85,7 +84,7 @@ export class ProfileComponent implements OnInit {
   /**
    * Fonction "validteur" permettant de vérifier si les mots de passes encodé dans les champs
    * "nouveau mot de passe" et "Confirmez nouveau mot de passe" coïncident.
-   * 
+   *
    * @param cont : le contrôleur du formulaire dont la propriété "invalid" est un boolean
    *               OU null
    * @returns un rien (null) si les mdp sont égaux, la propriété 'invalid' = true si les mdp ne coïncident pas.

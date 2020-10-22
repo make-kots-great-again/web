@@ -950,6 +950,7 @@ member</Labels>
     </table>
     <table id="33" parent="15" name="users">
       <ObjectId>20609</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>2993</StateNumber>
     </table>

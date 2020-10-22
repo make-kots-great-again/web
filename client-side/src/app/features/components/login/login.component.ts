@@ -1,10 +1,10 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {Login} from '../../../shared/models/user.model';
-import {Router} from "@angular/router";
-import {takeUntil} from "rxjs/operators";
-import {UserService} from "../../../core/services/user.service";
-import {ReplaySubject} from "rxjs";
-import {AuthenticationService} from "../../../core/services/authentification.service";
+import {Router} from '@angular/router';
+import {takeUntil} from 'rxjs/operators';
+import {UserService} from '../../../core/services/user.service';
+import {ReplaySubject} from 'rxjs';
+import {AuthenticationService} from '../../../core/services/authentification.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   /** mot de passe de l'utilisateur */
   password: string;
   /** message d'erreur initialement vide */
-  alert: number = 0;
+  alert = 0;
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
   }
 
   @HostListener('window:beforeunload')
-  async ngOnDestroy() {
+  async ngOnDestroy(): Promise<any> {
     this.alert = 0;
     this.destroyed$.next(true);
     this.destroyed$.complete();
