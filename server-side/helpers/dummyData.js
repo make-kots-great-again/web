@@ -152,6 +152,27 @@ Array(5).fill(0).forEach((x, i) => {
     });
 });
 
+dummyUserGroups.push({
+    id_group_user: uuidv4(),
+    userId: dummyUsers[0].userId,
+    groupId: dummyGroups[3].groupId,
+    role: 'member'
+})
+
+shoppingList.push({
+    id: uuidv4(),
+    id_group_user: dummyUserGroups[0].id_group_user,
+    code: products[2].code,
+    quantity: Math.floor(Math.random() * 5) + 1
+});
+
+shoppingList.push({
+    id: uuidv4(),
+    id_group_user: dummyUserGroups[dummyUserGroups.length - 1].id_group_user,
+    code: products[2].code,
+    quantity: Math.floor(Math.random() * 5) + 1
+});
+
 
 module.exports = {
     dummyUsers, usernames, dummyGroups,

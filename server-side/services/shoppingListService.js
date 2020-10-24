@@ -1,19 +1,49 @@
-import {groupService} from "./index";
+import {groupService, userService} from "./index";
 
 export default function shoppingListServiceFactory({shoppingListRepository}) {
     return Object.freeze({
-        listShoppingList,
+        listMyShoppingLists,
     });
 
-    async function listShoppingList() {
+    async function listMyShoppingLists({userId}) {
 
-        const t = await groupService.listMyGroups(
-            {userId : '3082831d-07fb-4562-8757-4273a56f666f'})
+        const findUserGroups = await groupService.listMyGroups({userId})
 
-        const {groups} = t[0].dataValues
+        if (findUserGroups.length === 0) return [];
 
-        groups.forEach(x => console.log(x.dataValues.groupId))
+        const {groups} = findUserGroups[0].dataValues;
 
-        return await shoppingListRepository.findShoppingList();
+        const info = [];
+
+        for (const x of groups) {
+
+            const index = groups.indexOf(x) + 1;
+
+            const shoppingList = await shoppingListRepository.findShoppingList(
+                {groupId: x.dataValues.groupId});
+
+            if (shoppingList.length === 0) info.push(
+                {message: `no shopping list for this group : ${x.dataValues.groupId}`});
+
+            for (const y of shoppingList) {
+
+                const findUsername = await userService.listOneUser(
+                    {id: y.dataValues["owners"].dataValues.userId})
+
+                info.push(
+                    {
+                        product_name: y.dataValues.product.dataValues.product_name,
+                        quantity: y.dataValues.quantity,
+                        code: y.dataValues.product.dataValues.code,
+                        list: `list ${index}`,
+                        username: findUsername.dataValues.username
+                    })
+            }
+        }
+
+        return info.filter(x => x.list !== undefined).reduce(
+            (result, item) => ({
+                ...result, [item['list']]: [...(result[item['list']] || []), item]
+            }), {});
     }
 }

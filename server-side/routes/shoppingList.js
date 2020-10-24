@@ -11,6 +11,7 @@ import {shoppingListController}  from '../controllers'
  */
 
 router.get("/shoppingList",
+    passport.authenticate("jwt", {session: false}),
     makeCallback(shoppingListController.getShoppingList));
 
 

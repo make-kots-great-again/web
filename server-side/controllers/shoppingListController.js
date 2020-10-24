@@ -7,14 +7,16 @@ export default function shoppingListControllerFactory() {
 
     async function getShoppingList(httpRequest) {
 
+        const {userId} = httpRequest.user;
+
         try {
-            const shoppingList = await shoppingListService.listShoppingList();
+            const shoppingList = await shoppingListService.listMyShoppingLists({userId});
 
             return {
                 statusCode: 200,
                 body: {
                     success: true,
-                    shoppingList: [...shoppingList]
+                    shoppingList: shoppingList
                 }
             }
         } catch (e) {
