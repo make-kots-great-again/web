@@ -28,6 +28,7 @@ groups.forEach(x => {
 
 Array(5).fill(0).forEach((x, i) => {
     dummyUserGroups.push({
+        id_group_user: uuidv4(),
         userId: dummyUsers[i].userId,
         groupId: dummyGroups[i].groupId,
         role: (i === 2) ? 'admin' : 'member'
@@ -145,11 +146,10 @@ const products = [
 Array(5).fill(0).forEach((x, i) => {
     shoppingList.push({
         id: uuidv4(),
+        id_group_user: dummyUserGroups[i].id_group_user,
         code: products[i].code,
-        quantity: Math.floor(Math.random() * 5) + 1,
-        userId: dummyUsers[i].userId,
-        groupId: dummyGroups[i].groupId,
-    })
+        quantity: Math.floor(Math.random() * 5) + 1
+    });
 });
 
 

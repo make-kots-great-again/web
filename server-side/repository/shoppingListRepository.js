@@ -14,10 +14,10 @@ export default function makeshoppingListRepository({ShoppingList, userGroup, Pro
                     attributes: ['code', 'product_name']
                 },
                 {
-                model: userGroup,
-                as: 'users',
-                attributes: ['userId', 'groupId']
-            }]
+                    model: userGroup,
+                    as: 'owners',
+                    attributes: ['userId','groupId']
+                }]
         });
     }
 }

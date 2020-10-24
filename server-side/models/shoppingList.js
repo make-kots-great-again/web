@@ -16,20 +16,15 @@ const ShoppingList = dbConnection.define('shoppingList', {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
-        groupId: {
+        id_group_user: {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
-            references: {model: userGroup, key: 'groupId'}
+            references: {model: userGroup, key: 'id_group_user'}
         },
         code: {
             type: Sequelize.INTEGER,
             references: {model: Product, key: 'code'}
-        },
-        userId: {
-            type: Sequelize.UUID,
-            defaultValue: Sequelize.UUIDV4,
-            references: {model: userGroup, key: 'userId'}
-        },
+        }
     },
     {
         freezeTableName: true

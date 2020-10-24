@@ -19,18 +19,11 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 references: {model: 'products', key: 'code'}
             },
-            userId: {
+            id_group_user: {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4,
                 isUUID: 4,
-                references: {model: 'userGroups', key: 'userId'},
-                onDelete: 'CASCADE',
-                onUpdate: 'CASCADE',
-            },
-            groupId: {
-                type: Sequelize.UUID,
-                defaultValue: Sequelize.UUIDV4,
-                references: {model: 'userGroups', key: 'groupId'},
+                references: {model: 'userGroups', key: 'id_group_user'},
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
             },
