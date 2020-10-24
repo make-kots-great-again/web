@@ -14,7 +14,7 @@ export default function makeUserRepository({User, Op}) {
             {
                 where: {
                     username: {
-                        [Op.startsWith]: username,
+                        [Op.startsWith]: username.toLowerCase(),
                     }
                 }, attributes: ['username', 'email']
             });

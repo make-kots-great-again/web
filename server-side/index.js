@@ -3,7 +3,6 @@ import consola from "consola";
 import {authenticateUser} from './security';
 import dbConnection from "./config/database";
 import env from "./config/environment";
-import {groupsRoutes} from "./routes/groups";
 
 export default function express_server(express) {
 
@@ -102,6 +101,7 @@ export default function express_server(express) {
         this.app.use('/server/api/', route.usersRoutes)
         this.app.use('/server/api/', route.groupsRoutes)
         this.app.use('/server/api/', route.productsRoutes)
+        this.app.use('/server/api/', route.shoppingListRoutes)
 
         /* ANY route */
         this.app.get('*', (req, res) => {

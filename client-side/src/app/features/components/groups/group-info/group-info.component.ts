@@ -73,8 +73,8 @@ export class GroupInfoComponent implements OnInit {
   }
 
 
-  usernameList = (useranme$: Observable<string>) =>
-    useranme$.pipe(
+  usernameList = (username$: Observable<string>) =>
+    username$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       tap(() => this.searchingUsernames = true),

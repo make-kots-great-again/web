@@ -2,31 +2,37 @@
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('userGroups', {
+        return queryInterface.createTable('shoppingList', {
 
+            id: {
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.UUIDV4,
+                allowNull: false,
+                primaryKey: true,
+                isUUID: 4,
+            },
+            quantity: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
+            code: {
+                type: Sequelize.INTEGER,
+                references: {model: 'products', key: 'code'}
+            },
             userId: {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4,
                 isUUID: 4,
-                primaryKey: true,
-                unique: true,
-                references: {model: 'users', key: 'userId'},
+                references: {model: 'userGroups', key: 'userId'},
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
             },
             groupId: {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4,
-                primaryKey: true,
-                unique: true,
-                references: {model: 'groups', key: 'groupId'},
+                references: {model: 'userGroups', key: 'groupId'},
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
-            },
-            role: {
-                type: Sequelize.ENUM('admin', 'member'),
-                defaultValue: 'member',
-                allowNull: false
             },
             createdAt: {
                 allowNull: false,
@@ -40,5 +46,5 @@ module.exports = {
             }
         });
     },
-    down: queryInterface => queryInterface.dropTable('groups')
+    down: queryInterface => queryInterface.dropTable('shoppingList')
 };

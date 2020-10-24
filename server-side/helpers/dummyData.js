@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const dummyUsers = [];
 const dummyGroups = [];
 const dummyUserGroups = [];
+const shoppingList = [];
 
 const usernames = ['james', 'john', 'william', 'paul', 'thomas', 'kevin', 'gary', 'larry', 'dennis', 'roger'];
 const groups = ['football', 'tennis', 'basketball', 'volleyball', 'hockey'];
@@ -139,6 +140,20 @@ const products = [
         "brands": "Sunridge",
         "ingredients": "Cashews, curry seasoning (salt, maltodextrin, spices, torula yeast, onion, garlic, turmeric, extractives of spice and natural flavor), canola oil."
     }
-]
+];
 
-module.exports = {dummyUsers, usernames, dummyGroups, groups, dummyUserGroups, products}
+Array(5).fill(0).forEach((x, i) => {
+    shoppingList.push({
+        id: uuidv4(),
+        code: products[i].code,
+        quantity: Math.floor(Math.random() * 5) + 1,
+        userId: dummyUsers[i].userId,
+        groupId: dummyGroups[i].groupId,
+    })
+});
+
+
+module.exports = {
+    dummyUsers, usernames, dummyGroups,
+    groups, dummyUserGroups, products, shoppingList
+}
