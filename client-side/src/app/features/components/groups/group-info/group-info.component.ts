@@ -7,9 +7,9 @@ import {ActivatedRoute} from '@angular/router';
 import {Observable, of} from 'rxjs';
 import {catchError, debounceTime, distinctUntilChanged, tap, switchMap} from 'rxjs/operators';
 import {User} from '../../../../shared/models/user.model';
-
-type Product = { product_name: string, code: number };
-type Member = { username: string, email: string };
+import {Product} from '../../../../shared/models/product.model';
+import {groupMember} from '../../../../shared/models/group.model';
+import {AuthenticationService} from "../../../../core/services/authentification.service";
 
 @Component({
   selector: 'app-group-info',
@@ -23,7 +23,10 @@ export class GroupInfoComponent implements OnInit {
   groupDescription = '';
   addUser = '';
   groupUsers: Array<User> = [];
+  groupProducts: Array<Product> = [];
   groupId = '';
+  currentUser = '';
+  quantity = 1;
 
   productModel: any;
   memberModel: any;
@@ -32,18 +35,20 @@ export class GroupInfoComponent implements OnInit {
   searching = false;
   searchFailed = false;
   productFormatter = (product: Product) => product.product_name;
-  Memberformatter = (member: Member) => member.username;
+  Memberformatter = (member: groupMember) => member.username;
 
   constructor(
     private groupService: GroupService,
     private userService: UserService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
+    this.currentUser = this.authenticationService.currentUserValue.username;
     this.groupId = this.route.snapshot.paramMap.get('groupId');
     this.groupDetails();
-
+    this.showGroupShoppingList();
   }
 
   groupDetails(): void {
@@ -72,6 +77,16 @@ export class GroupInfoComponent implements OnInit {
         });
   }
 
+  showGroupShoppingList(): void {
+    this.groupService.getGroupShoppingList(this.groupId)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((data: any) => {
+          this.groupProducts = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
 
   usernameList = (username$: Observable<string>) =>
     username$.pipe(
@@ -81,7 +96,7 @@ export class GroupInfoComponent implements OnInit {
       switchMap((username: string) => {
         if (username === '') return of([]);
         return this.userService.searchUsername(username).pipe(
-          tap((data: Array<Member>) => (data.length === 0) ?
+          tap((data: Array<groupMember>) => (data.length === 0) ?
             this.usernameSearchFailed = true : this.usernameSearchFailed = false),
           catchError(() => {
             this.usernameSearchFailed = true;
@@ -90,7 +105,6 @@ export class GroupInfoComponent implements OnInit {
       }),
       tap(() => this.searchingUsernames = false)
     )
-
 
   productList = (text$: Observable<string>) =>
     text$.pipe(
@@ -110,12 +124,32 @@ export class GroupInfoComponent implements OnInit {
       tap(() => this.searching = false)
     )
 
-  addProduct(): void {
-    console.log(this.productModel);
+  addProductToShoppingList(): void {
+    const productInfo: Product = {
+      code: this.productModel.code,
+      quantity: this.quantity
+    }
+
+    this.groupService.addProduct(productInfo, this.groupId)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(() => {
+          this.showGroupShoppingList();
+        },
+        error => {
+          console.log(error);
+        });
   }
 
   verifyProduct(): boolean {
-    return (typeof this.productModel === 'object');
+
+    let existingProduct: object = {};
+    if (typeof this.productModel === 'object') {
+      existingProduct = this.groupProducts
+        .find(x => x.code === this.productModel.code
+          && x.username === this.currentUser);
+    }
+    return (typeof this.productModel === 'object') && !existingProduct;
+
   }
 
   verifyMember(): boolean {
@@ -135,9 +169,3 @@ export class GroupInfoComponent implements OnInit {
   }
 
 }
-
-
-/*
-tap((data: any) => this.groupUsers
-            .filter((x, i) => x.username !== data[i].username)),
- */
