@@ -115,10 +115,18 @@
               <div class="invalid-feedback" *ngIf="searchFailed">Sorry, no product name was found
                 with this name : {{productModel}}</div>
             </div>
+            <label for="inputGroupSelect01">
+                <input
+                  [disabled]="!verifyProduct()"
+                  class="btn btn-outline-success text-center
+                  text-monospace font-italic font-weight-bolder"
+                  type="number" id="tentacles" name="tentacles"
+                       min="1" max="20" placeholder="1">
+            </label>
             <button (click)="addProduct()"
                     name="addProduct" type="submit"
                     [disabled]="!verifyProduct()"
-                    class="btn btn-outline-success text-center
+                    class="btn btn-outline-success text-center mx-sm-3
               text-monospace font-italic font-weight-bolder">Add a product
             </button>
           </fieldset>
