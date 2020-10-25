@@ -1,8 +1,12 @@
 export default function makeshoppingListRepository({ShoppingList, userGroup, Product, Op}) {
     return Object.freeze({
-        findShoppingList,
+        save, findShoppingList,
     });
 
+
+    async function save({...productInfo}) {
+        return ShoppingList.create(productInfo);
+    }
 
     async function findShoppingList({groupId}) {
         return ShoppingList.findAll({
@@ -17,9 +21,9 @@ export default function makeshoppingListRepository({ShoppingList, userGroup, Pro
                     model: userGroup,
                     as: 'owners',
                     where: {
-                        groupId : groupId
+                        groupId: groupId
                     },
-                    attributes: ['userId','groupId']
+                    attributes: ['userId', 'groupId']
                 }]
         });
     }

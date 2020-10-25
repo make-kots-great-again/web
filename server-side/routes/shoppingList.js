@@ -14,6 +14,14 @@ router.get("/shoppingList",
     passport.authenticate("jwt", {session: false}),
     makeCallback(shoppingListController.getShoppingList));
 
+router.get("/shoppingList/:groupId",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(shoppingListController.getGroupShoppingList));
+
+router.post("/shoppingList/addProduct/:groupId",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(shoppingListController.addProductToShoppingList));
+
 
 export {router as shoppingListRoutes};
 
