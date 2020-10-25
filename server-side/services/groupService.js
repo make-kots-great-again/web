@@ -1,9 +1,10 @@
 import {makeGroup} from '../domain'
+import user from "../domain/user";
 
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({
         addGroup, listMyGroups, getGroup, addMembersToGroup,
-        deleteUserFromGroup, deleteGroup, patchGroup
+        deleteUserFromGroup, deleteGroup, patchGroup, getIdGroupUser
     });
 
     async function addGroup({username, ...groupInfo}) {
@@ -31,7 +32,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
     async function patchGroup({username, groupId, ...changes}) {
 
-        const groupInfo = await this.getGroup({groupId});
+        const groupInfo = await getGroup({groupId});
 
         if (groupInfo.message) return {message: groupInfo.message};
 
@@ -42,15 +43,15 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
             role: x.roleInThisGroup.dataValues.role
         }));
 
-        const findAdmin= users.find(x => x.role === 'admin');
+        const findAdmin = users.find(x => x.role === 'admin');
 
-        if (findAdmin.username !== username)
-            return {message: 'Only the admin of this group can the latter.'};
+        if (!findAdmin || findAdmin.username !== username)
+            return {message: 'Only the admin of this group can update the latter.'};
 
         const group = makeGroup({...changes});
 
-        return  groupRepository.updateGroup({
-            groupId : groupId,
+        return groupRepository.updateGroup({
+            groupId: groupId,
             groupName: group.getGroupName(),
             groupDescription: group.getGroupDescription()
         });
@@ -86,7 +87,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         if (username.length < 4 || username.length >= 32)
             return {message: 'A username length must be between 4 and 32.'};
 
-        const groupInfo = await this.getGroup({groupId});
+        const groupInfo = await getGroup({groupId});
 
         if (groupInfo.message) return {message: groupInfo.message};
 
@@ -134,5 +135,15 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         return deleteGroup;
     }
+
+    async function getIdGroupUser({groupId, userId}) {
+
+        if (!groupId) return {message: 'You must supply a groupId.'};
+        if (!userId) return {message: 'You must supply a groupId.'};
+
+        return await groupRepository.findIdGroupUser({groupId, userId});
+    }
+
+    //findIdGroupUser
 
 }
