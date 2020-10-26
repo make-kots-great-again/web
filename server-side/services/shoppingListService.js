@@ -1,3 +1,4 @@
+import {makeShoppingList} from '../domain'
 import {groupService, userService} from "./index";
 
 export default function shoppingListServiceFactory({shoppingListRepository}) {
@@ -25,7 +26,7 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
                 {groupId: x.dataValues.groupId});
 
             if (shoppingList.length === 0) info.push(
-                {message: `no shopping list for this group : ${x.dataValues.groupId}`});
+                {message: `No shopping list for this group : ${x.dataValues.groupId}`});
 
             for (const y of shoppingList) {
 
@@ -57,6 +58,8 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
             userId: userId
         });
 
+        if (findGroup.message) return {message: findGroup.message};
+
         const findUser = await userService.listOneUser({id: userId});
 
         const findList = await getGroupShoppingList({groupId: groupId});
@@ -67,9 +70,12 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
         if (existingProduct)
             return {message: `You have already added ${existingProduct.product_name} to this list !`};
 
+        const product = makeShoppingList({...productInfo});
+
         return await shoppingListRepository.save({
             id_group_user: findGroup.dataValues.id_group_user,
-            ...productInfo
+            code: product.getProductCode(),
+            quantity: product.getProductQuantity()
         });
     }
 

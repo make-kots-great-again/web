@@ -189,11 +189,19 @@
                       [class.is-invalid]="textArea.invalid && textArea.touched"
                       class="form-control w-100" id="groupDescription" rows="2"
                       [class.is-valid]="!(textArea.invalid && textArea.untouched)"
-                      placeholder="La description du groupe"
-                      [(ngModel)]="groupDescription" name="groupDescription" required>
+                      placeholder="La description du groupe" minlength="2"
+                      maxlength="250" [(ngModel)]="groupDescription"
+                      name="groupDescription" required>
             </textarea>
-            <small class="text-danger" [class.d-none]="textArea.valid ||
-                textArea.untouched">La description d'un groupe est requise</small>
+            <div *ngIf="textArea.errors && (textArea.invalid ||
+                        textArea.touched)">
+              <small id="textAreaError1" class="text-danger" *ngIf="textArea.errors.minlength">
+                {{textArea.value}} la longueur minimale est 2
+              </small>
+              <small id="textAreaError2" class="text-danger"
+                     *ngIf="textArea.errors.required
+                      && textArea.touched">La description d'un groupe est requise</small>
+            </div>
           </div>
 
 

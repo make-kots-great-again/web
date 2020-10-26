@@ -68,7 +68,9 @@
         class="nav-item" [routerLinkActive]="['active']"
            [routerLinkActiveOptions]="{ exact: true }">
         <a id="profileBtn" class="nav-link" [routerLink]="['/profile']">
-          <i class="fa fa-sign-in"></i> Profile</a>
+          <i class="fa fa-sign-in"></i>
+          {{authService.currentUserValue.username}}
+        </a>
       </li>
 
       <!-- Login -->

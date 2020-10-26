@@ -24,6 +24,10 @@ export class GroupInfoComponent implements OnInit {
   addUser = '';
   groupUsers: Array<User> = [];
   groupProducts: Array<Product> = [];
+  groupby: any = [];
+  templateShoppoingList: any = [];
+  expandView = false;
+  productCode = 0;
   groupId = '';
   currentUser = '';
   quantity = 1;
@@ -60,7 +64,7 @@ export class GroupInfoComponent implements OnInit {
           this.groupUsers = data.users;
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -71,9 +75,10 @@ export class GroupInfoComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
           this.groupDetails();
+          this.memberModel = '';
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -81,10 +86,14 @@ export class GroupInfoComponent implements OnInit {
     this.groupService.getGroupShoppingList(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
+          data.sort((a, b) => (a.product_name > b.product_name) ? 1 :
+            (a.product_name < b.product_name) ? -1 : 0);
           this.groupProducts = data;
+          this.groupByProducts();
+          this.templateShoppoingList = this.groupby;
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -134,9 +143,10 @@ export class GroupInfoComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
           this.showGroupShoppingList();
+          this.productModel = '';
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -160,6 +170,73 @@ export class GroupInfoComponent implements OnInit {
         x.username === this.memberModel.username);
     }
     return (typeof this.memberModel === 'object') && !existingMember;
+  }
+
+  groupByProducts(): void {
+
+    const groupByProductCode = this.groupProducts
+      .reduce((result, item) => ({
+        ...result, [item['code']]: [...(result[item['code']] || []), item]
+      }), {});
+
+    const result = [];
+
+    const productCodes = Object.keys(groupByProductCode)
+      .filter(x => groupByProductCode[x].length > 1)
+      .map(x => groupByProductCode[x])
+      .reduce((a, b) => a.concat(b), [])
+      .reduce((result, item) => ({
+        ...result, [item['code']]: [...(result[item['code']] || []), item]
+      }), {});
+
+    const quantities = Object.keys(productCodes).map(x => productCodes[x].map(y => y.quantity));
+    const usernames = Object.keys(productCodes).map(x => productCodes[x].map(y => y.username));
+    const product_names = Object.keys(productCodes).map(x => productCodes[x].map(y => y.product_name));
+
+    Object.keys(productCodes).forEach((x, i) => {
+      result.push({
+        product_name: product_names[i][0],
+        code: Number(x),
+        username: usernames[i].join(' - '),
+        quantity: quantities[i].reduce((a, b) => a + b, 0),
+        flag: true,
+      })
+    });
+
+    const originalResult = Object.keys(groupByProductCode)
+      .filter(x => groupByProductCode[x].length === 1)
+      .map(x => groupByProductCode[x])
+      .reduce((a, b) => a.concat(b), []);
+
+    const originalResult1 = Object.keys(groupByProductCode)
+      .filter(x => groupByProductCode[x].length > 1)
+      .map(x => groupByProductCode[x])
+      .reduce((a, b) => a.concat(b), []);
+
+    originalResult.forEach((x, i) => originalResult[i].flag = false);
+    originalResult1.forEach((x, i) => originalResult1[i].flag = true);
+
+   // const index = originalResult1.findIndex(x => x.code === 16650);
+
+   // originalResult1[index].flag = true;
+
+    this.groupby = [...originalResult, ...result];
+    this.groupProducts = [...originalResult, ...originalResult1];
+
+  }
+
+  expand(code: any): void {
+    this.templateShoppoingList = this.groupProducts;
+    this.productCode = code.id;
+    console.log(this.productCode)
+    this.expandView = true;
+  }
+
+  collapse(code: any): void {
+    this.templateShoppoingList = this.groupby;
+    this.productCode = code.id;
+    console.log(this.productCode)
+    this.expandView = false;
   }
 
   @HostListener('window:beforeunload')

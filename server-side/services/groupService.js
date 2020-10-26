@@ -1,5 +1,4 @@
 import {makeGroup} from '../domain'
-import user from "../domain/user";
 
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({
@@ -141,9 +140,11 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         if (!groupId) return {message: 'You must supply a groupId.'};
         if (!userId) return {message: 'You must supply a groupId.'};
 
-        return await groupRepository.findIdGroupUser({groupId, userId});
-    }
+        const idGroupUser = await groupRepository.findIdGroupUser({groupId, userId});
 
-    //findIdGroupUser
+        if (!idGroupUser) return {message: `No group was found with this id : ${groupId}`};
+
+        return idGroupUser;
+    }
 
 }
