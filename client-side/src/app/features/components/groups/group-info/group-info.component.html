@@ -19,13 +19,15 @@
       </h3>
     </div>
     
-    <ng-template [ngIf]="!isPersonnalGroup" [ngIfElse]="personnalGroup">
-      <div  class="container mt-2 mb-2">
-        <div class="modal-body card border-light">
+    <div  class="container mt-2 mb-2">
+      <div class="modal-body card border-light">
 
+        <!--  ******************************   Unpersonnal group part   *********************************  -->
+
+        <ng-template [ngIf]="!isPersonnalGroup">
           <div class="d-flex">
             <strong class="text-monospace font-italic font-weight-bolder h5">
-              Group members</strong>
+              membres du groupe</strong>
             <div class="ml-auto mr-5">
               <div class="row">
                 <div class="d-flex">
@@ -44,7 +46,7 @@
                     <small *ngIf="searchingUsernames"
                           class="form-text text-muted">searching...</small>
                     <div class="invalid-feedback" *ngIf="usernameSearchFailed">
-                      Sorry, no user was found with this username : {{memberModel}}
+                      Désolé, aucun utilisateur ayant le username : {{memberModel}} n'a été trouvé !
                     </div>
                   </div>
                   <div class="ml-3">
@@ -53,7 +55,7 @@
                             name="addMember" type="submit"
                             class="btn btn-outline-success text-center
                               text-monospace font-italic font-weight-bolder">
-                      Add a member
+                      Ajouter un membre
                     </button>
                   </div>
                 </div>
@@ -77,7 +79,7 @@
               </th>
               <th>username</th>
               <th>email</th>
-              <th>role</th>
+              <th>rôle</th>
             </tr>
             </thead>
             <!--Table head-->
@@ -104,120 +106,128 @@
           <!--Table-->
           <hr>
           <br>
-          <p class="text-monospace font-italic font-weight-bolder h5">
-            <strong>Group shopping list</strong>
-          </p>
-          <br>
+        </ng-template>
+  
+        <!--  ***************************   Personnal and unpersonnal group part   *****************************  -->
 
-          <!--search for products div-->
-          <div class="container">
-            <fieldset class="md-form form-inline">
-              <div class="form-group">
-                <label for="typeahead-http">Search for products:</label>
-                <input id="typeahead-http" type="text"
-                      class="form-control mx-sm-3"
-                      [class.is-invalid]="searchFailed"
-                      [(ngModel)]="productModel" name="addProductInput"
-                      [inputFormatter]="productFormatter"
-                      [resultFormatter]="productFormatter" [ngbTypeahead]="productList"
-                      placeholder="Product name"/>
-                <br>
-                <small *ngIf="searching" class="form-text text-muted">searching...</small>
-                <div class="invalid-feedback" *ngIf="searchFailed">Sorry, no product name was found
-                  with this name : {{productModel}}</div>
-              </div>
-              <label for="quantityInput">
-                <input
-                  [disabled]="!verifyProduct()"
-                  class="btn btn-outline-success text-center
-                    text-monospace font-italic font-weight-bolder"
-                  [(ngModel)]="quantity" name="quantity"
-                  type="number" id="quantityInput" min="1" max="20"
-                  placeholder="1">
-              </label>
-              <button (click)="addProductToShoppingList()"
-                      name="addProduct" type="submit"
-                      [disabled]="!verifyProduct()"
-                      class="btn btn-outline-success text-center mx-sm-3
-                text-monospace font-italic font-weight-bolder">Add a product
-              </button>
-            </fieldset>
-            <hr>
-          </div>
+        <p class="text-monospace font-italic font-weight-bolder h5">
+          <strong>Liste de courses</strong>
+        </p>
+        <br>
 
-          <!--shopping list table-->
-          <div *ngIf="groupProducts.length !== 0" class="container mb-4">
-            <div class="row">
-              <div class="col-12">
-                <div class="table-responsive">
-                  <table class="table table-striped .table-sm table table-bordered">
+        <!--search for products div-->
+        <div class="container">
+          <fieldset class="md-form form-inline">
+            <div class="form-group">
+              <label for="typeahead-http">Rechercher un produit :</label>
+              <input id="typeahead-http" type="text"
+                    class="form-control mx-sm-3"
+                    [class.is-invalid]="searchFailed"
+                    [(ngModel)]="productModel" name="addProductInput"
+                    [inputFormatter]="productFormatter"
+                    [resultFormatter]="productFormatter" [ngbTypeahead]="productList"
+                    placeholder="nom du produit"/>
+              <br>
+              <small *ngIf="searching" class="form-text text-muted">recherche...</small>
+              <div class="invalid-feedback" *ngIf="searchFailed">désolé aucun produit ayant pour nom <b>{{productModel}}</b> n'a été trouvé ! </div>
+            </div>
+            <label for="quantityInput">
+              <input
+                [disabled]="!verifyProduct()"
+                class="btn btn-outline-success text-center
+                  text-monospace font-italic font-weight-bolder"
+                [(ngModel)]="quantity" name="quantity"
+                type="number" id="quantityInput" min="1" max="20"
+                placeholder="1">
+            </label>
+            <button (click)="addProductToShoppingList()"
+                    name="addProduct" type="submit"
+                    [disabled]="!verifyProduct()"
+                    class="btn btn-outline-success text-center mx-sm-3
+              text-monospace font-italic font-weight-bolder">Ajouter un produit
+            </button>
+          </fieldset>
+          <hr>
+        </div>
 
-                    <!--shopping list table header-->
-                    <thead class="font-weight-bold">
-                    <tr>
-                      <th class="text-monospace font-italic"></th>
-                      <th class="text-monospace font-italic">Product</th>
-                      <th class="text-monospace font-italic">Username</th>
-                      <th class="text-monospace font-italic">Quantity</th>
-                      <th class="text-monospace font-italic">Action</th>
+        <!--shopping list table-->
+        <div *ngIf="groupProducts.length !== 0" class="container mb-4">
+          <div class="row">
+            <div class="col-12">
+              <div class="table-responsive">
+                <table class="table table-striped .table-sm table table-bordered">
+
+                  <!--shopping list table header-->
+                  <thead class="font-weight-bold">
+                  <tr>
+                    <th class="text-monospace font-italic"></th>
+                    <th class="text-monospace font-italic">Produit</th>
+                    <th class="text-monospace font-italic">Username</th>
+                    <th class="text-monospace font-italic">Quanttité</th>
+                    <th class="text-monospace font-italic">Action</th>
+                  </tr>
+                  </thead>
+
+                  <!--shopping list table body-->
+                  <tbody *ngIf="groupProducts">
+                  <ng-container *ngFor="let product of templateShoppoingList index as i">
+                    <tr #code id="{{product['code']}}">
+                      <td><img src="../../../../../assets/img/product.png" alt=""/></td>
+                      <td>
+                        <a class="mr-2" style="color: #1a1a1a"
+                          placement="top" ngbTooltip="code-barres : {{product['code']}}">
+                          <strong class="text-monospace font-italic">
+                            {{product['product_name']}}
+                          </strong>
+                          <!-- Add inputs button -->
+                          <button type="button"
+                                  (click)="expand(code)"
+                                  *ngIf="product['flag'] && !expandView"
+                                  class="btn btn-outline-info btn-sm m-2 rounded text-center"
+                                  data-placement="right" title="Add inputs">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                          </button>
+                          <button type="button"
+                                  (click)="collapse(code)"
+                                  *ngIf="product['flag'] && expandView"
+                                  class="btn btn-outline-danger btn-sm m-2 rounded text-center"
+                                  data-placement="right" title="Add inputs">
+                            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                          </button>
+                        </a>
+                      </td>
+                      <td class="text-monospace font-italic">{{product['username']}}</td>
+                      <td class="text-monospace font-italic">{{product['quantity']}}</td>
+                      <td class="text-monospace font-italic">
+                        <button
+                          [disabled]="!(product['username'] === currentUser)"
+                          class="btn btn-sm btn-danger justify-content-center">
+                          <i class="fa fa-trash"></i></button>
+                      </td>
                     </tr>
-                    </thead>
-
-                    <!--shopping list table body-->
-                    <tbody *ngIf="groupProducts">
-                    <ng-container *ngFor="let product of templateShoppoingList index as i">
-                      <tr #code id="{{product['code']}}">
-                        <td><img src="../../../../../assets/img/product.png" alt=""/></td>
-                        <td>
-                          <a class="mr-2" style="color: #1a1a1a"
-                            placement="top" ngbTooltip="code-barres : {{product['code']}}">
-                            <strong class="text-monospace font-italic">
-                              {{product['product_name']}}
-                            </strong>
-                            <!-- Add inputs button -->
-                            <button type="button"
-                                    (click)="expand(code)"
-                                    *ngIf="product['flag'] && !expandView"
-                                    class="btn btn-outline-info btn-sm m-2 rounded text-center"
-                                    data-placement="right" title="Add inputs">
-                              <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                            </button>
-                            <button type="button"
-                                    (click)="collapse(code)"
-                                    *ngIf="product['flag'] && expandView"
-                                    class="btn btn-outline-danger btn-sm m-2 rounded text-center"
-                                    data-placement="right" title="Add inputs">
-                              <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                            </button>
-                          </a>
-                        </td>
-                        <td class="text-monospace font-italic">{{product['username']}}</td>
-                        <td class="text-monospace font-italic">{{product['quantity']}}</td>
-                        <td class="text-monospace font-italic">
-                          <button
-                            [disabled]="!(product['username'] === currentUser)"
-                            class="btn btn-sm btn-danger justify-content-center">
-                            <i class="fa fa-trash"></i></button>
-                        </td>
-                      </tr>
-                    </ng-container>
-                    </tbody>
-                  </table>
-                </div>
+                  </ng-container>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
+        </div>
 
-          <!--No shopping list div-->
-          <div *ngIf="groupProducts.length === 0" class="container mb-4">
-            <h6 class="text-monospace font-italic font-weight-bolder">
-              <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
-              This group has no shopping list at the moment !
-            </h6>
-          </div>
-          <hr>
+        <!--No shopping list div-->
+        <div *ngIf="groupProducts.length === 0" class="container mb-4">
+          <h6 class="text-monospace font-italic font-weight-bolder">
+            <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
+            Ce groupe n'a aucun élément dans sa liste de courses pour le moment !
+          </h6>
+        </div>
+        <hr>
 
-          <!--checkout div-->
+        <!--  ****************************************   Unpersonnal group part   *************************************  -->
+
+
+        <!--  <ng-template [ngIf]="!isPersonnalGroup">
+          
+          <-- checkout div ->
           <div class="p-4">
             <p class="font-italic mb-4">
               <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
@@ -245,132 +255,11 @@
             text-monospace font-weight-bolder h4">
               Procceed to checkout</a>
           </div>
-        </div>
+
+        </ng-template>
+      -->
       </div>
-
-    </ng-template>
-    
-    <ng-template #personnalGroup>
-      <div  class="container mt-2 mb-2">
-        <div class="modal-body card border-light">
-
-          <p class="text-monospace font-italic font-weight-bolder h5">
-            <strong>Group shopping list</strong>
-          </p>
-          <br>
-
-          <!--search for products div-->
-          <div class="container">
-            <fieldset class="md-form form-inline">
-              <div class="form-group">
-                <label for="typeahead-http">Search for products:</label>
-                <input id="typeahead-http" type="text"
-                      class="form-control mx-sm-3"
-                      [class.is-invalid]="searchFailed"
-                      [(ngModel)]="productModel" name="addProductInput"
-                      [inputFormatter]="productFormatter"
-                      [resultFormatter]="productFormatter" [ngbTypeahead]="productList"
-                      placeholder="Product name"/>
-                <br>
-                <small *ngIf="searching" class="form-text text-muted">searching...</small>
-                <div class="invalid-feedback" *ngIf="searchFailed">Sorry, no product name was found
-                  with this name : {{productModel}}</div>
-              </div>
-              <label for="quantityInput">
-                <input
-                  [disabled]="!verifyProduct()"
-                  class="btn btn-outline-success text-center
-                    text-monospace font-italic font-weight-bolder"
-                  [(ngModel)]="quantity" name="quantity"
-                  type="number" id="quantityInput" min="1" max="20"
-                  placeholder="1">
-              </label>
-              <button (click)="addProductToShoppingList()"
-                      name="addProduct" type="submit"
-                      [disabled]="!verifyProduct()"
-                      class="btn btn-outline-success text-center mx-sm-3
-                text-monospace font-italic font-weight-bolder">Add a product
-              </button>
-            </fieldset>
-            <hr>
-          </div>
-
-          <!--shopping list table-->
-          <div *ngIf="groupProducts.length !== 0" class="container mb-4">
-            <div class="row">
-              <div class="col-12">
-                <div class="table-responsive">
-                  <table class="table table-striped .table-sm table table-bordered">
-
-                    <!--shopping list table header-->
-                    <thead class="font-weight-bold">
-                    <tr>
-                      <th class="text-monospace font-italic"></th>
-                      <th class="text-monospace font-italic">Product</th>
-                      <th class="text-monospace font-italic">Username</th>
-                      <th class="text-monospace font-italic">Quantity</th>
-                      <th class="text-monospace font-italic">Action</th>
-                    </tr>
-                    </thead>
-
-                    <!--shopping list table body-->
-                    <tbody *ngIf="groupProducts">
-                    <ng-container *ngFor="let product of templateShoppoingList index as i">
-                      <tr #code id="{{product['code']}}">
-                        <td><img src="../../../../../assets/img/product.png" alt=""/></td>
-                        <td>
-                          <a class="mr-2" style="color: #1a1a1a"
-                            placement="top" ngbTooltip="code-barres : {{product['code']}}">
-                            <strong class="text-monospace font-italic">
-                              {{product['product_name']}}
-                            </strong>
-                            <!-- Add inputs button -->
-                            <button type="button"
-                                    (click)="expand(code)"
-                                    *ngIf="product['flag'] && !expandView"
-                                    class="btn btn-outline-info btn-sm m-2 rounded text-center"
-                                    data-placement="right" title="Add inputs">
-                              <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                            </button>
-                            <button type="button"
-                                    (click)="collapse(code)"
-                                    *ngIf="product['flag'] && expandView"
-                                    class="btn btn-outline-danger btn-sm m-2 rounded text-center"
-                                    data-placement="right" title="Add inputs">
-                              <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                            </button>
-                          </a>
-                        </td>
-                        <td class="text-monospace font-italic">{{product['username']}}</td>
-                        <td class="text-monospace font-italic">{{product['quantity']}}</td>
-                        <td class="text-monospace font-italic">
-                          <button
-                            [disabled]="!(product['username'] === currentUser)"
-                            class="btn btn-sm btn-danger justify-content-center">
-                            <i class="fa fa-trash"></i></button>
-                        </td>
-                      </tr>
-                    </ng-container>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!--No shopping list div-->
-          <div *ngIf="groupProducts.length === 0" class="container mb-4">
-            <h6 class="text-monospace font-italic font-weight-bolder">
-              <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
-              This group has no shopping list at the moment !
-            </h6>
-          </div>
-          <hr>
-
-
-        </div>
-      </div>
-    </ng-template>
+    </div>
   </div>
 </div>
 
