@@ -65,7 +65,7 @@
                onmousemove="this.style.fontSize= '2.9vh'"
                onmouseout="this.style.backgroundColor = ''; this.style.color='black';
             this.style.fontSize= ''"
-               [routerLink]="['/group', group['groupId'], group['roleInThisGroup']['role']]"
+               [routerLink]="['/group', group['groupId'], group['roleInThisGroup']['role'], group['groupName']]"
                class="text-monospace font-italic font-weight-bold">
               {{group['groupName']}} </a></td>
 

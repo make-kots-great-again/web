@@ -29,6 +29,7 @@ export class GroupInfoComponent implements OnInit {
   expandView = false;
   productCode = 0;
   groupId = '';
+  groupName = '';
   currentUser = '';
   quantity = 1;
   isPersonnalGroup:boolean;
@@ -53,6 +54,7 @@ export class GroupInfoComponent implements OnInit {
     this.currentUser = this.authenticationService.currentUserValue.username;
     this.groupId = this.route.snapshot.paramMap.get('groupId');
     this.isPersonnalGroup = this.route.snapshot.paramMap.get('groupRole') == 'personnal';
+    this.groupName = this.route.snapshot.paramMap.get('groupName'); 
 
     this.groupDetails();
     this.showGroupShoppingList();
