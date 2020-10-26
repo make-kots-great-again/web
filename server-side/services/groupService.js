@@ -2,7 +2,7 @@ import {makeGroup} from '../domain'
 
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({
-        addGroup, listMyGroups, getGroup, addMembersToGroup,
+        addGroup, addOwnGroup, listMyGroups, getGroup, addMembersToGroup,
         deleteUserFromGroup, deleteGroup, patchGroup, getIdGroupUser
     });
 
@@ -24,6 +24,29 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
             userId: userId,
             groupId: groupId,
             role: 'admin'
+        });
+
+        return createGroup;
+    }
+
+    async function addOwnGroup({username, ...groupInfo}) {
+
+        const groupAdmin = await userRepository.findByUsername({username});
+
+        const group = makeGroup({...groupInfo});
+
+        const createGroup = await groupRepository.save({
+            groupName: group.getGroupName(),
+            groupDescription: group.getGroupDescription()
+        });
+
+        const {userId} = groupAdmin.dataValues
+        const {groupId} = createGroup.dataValues
+
+        await groupRepository.addUserToGroup({
+            userId: userId,
+            groupId: groupId,
+            role: 'personnal'
         });
 
         return createGroup;

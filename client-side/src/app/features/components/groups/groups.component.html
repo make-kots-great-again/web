@@ -18,13 +18,13 @@
             class="btn btn-outline-success
                   text-center text-monospace font-italic font-weight-bolder"
             data-toggle="modal" data-target="#createGroup"
-            data-whatever="@mdo">Create a group
+            data-whatever="@mdo">Créer un nouveau groupe
     </button>
   </div>
   <br>
   <!-- User Table -->
   <div *ngIf="groups.length !== 0" class="container text-center ">
-    <p class="font-weight-bold">List of my groups</p>
+    <p class="font-weight-bold">Mes groupes </p>
     <br>
     <!-- Table  -->
     <table
@@ -65,7 +65,7 @@
                onmousemove="this.style.fontSize= '2.9vh'"
                onmouseout="this.style.backgroundColor = ''; this.style.color='black';
             this.style.fontSize= ''"
-               [routerLink]="['/group', group['groupId']]"
+               [routerLink]="['/group', group['groupId'], group['roleInThisGroup']['role']]"
                class="text-monospace font-italic font-weight-bold">
               {{group['groupName']}} </a></td>
 
