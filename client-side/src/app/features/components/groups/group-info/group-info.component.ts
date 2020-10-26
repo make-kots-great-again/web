@@ -31,6 +31,7 @@ export class GroupInfoComponent implements OnInit {
   groupId = '';
   currentUser = '';
   quantity = 1;
+  isPersonnalGroup:boolean;
 
   productModel: any;
   memberModel: any;
@@ -51,8 +52,8 @@ export class GroupInfoComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue.username;
     this.groupId = this.route.snapshot.paramMap.get('groupId');
-    console.log("le role est : " + this.route.snapshot.paramMap.get('groupRole'));
-  
+    this.isPersonnalGroup = this.route.snapshot.paramMap.get('groupRole') == 'personnal';
+
     this.groupDetails();
     this.showGroupShoppingList();
   }
