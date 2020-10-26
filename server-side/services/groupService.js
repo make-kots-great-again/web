@@ -46,7 +46,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         await groupRepository.addUserToGroup({
             userId: userId,
             groupId: groupId,
-            role: 'personnal'
+            role: 'personal'
         });
 
         return createGroup;

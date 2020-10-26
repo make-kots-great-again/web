@@ -56,7 +56,7 @@ export class GroupInfoComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue.username;
     this.groupId = this.route.snapshot.paramMap.get('groupId');
-    this.isPersonnalGroup = this.route.snapshot.paramMap.get('groupRole') == 'personnal';
+    this.isPersonnalGroup = this.route.snapshot.paramMap.get('groupRole') == 'personal';
     this.groupName = this.route.snapshot.paramMap.get('groupName'); 
 
     this.groupDetails();

@@ -23,7 +23,7 @@ const userGroup = dbConnection.define('userGroup', {
         references: {model: Group, key: 'groupId'}
     },
     role: {
-        type: Sequelize.ENUM('admin', 'member'),
+        type: Sequelize.ENUM('admin', 'member', 'personal'),
         defaultValue: 'admin',
         allowNull: false
     }
