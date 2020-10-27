@@ -180,6 +180,7 @@ export class GroupInfoComponent implements OnInit {
       }), {});
 
     const result = [];
+    let originalResult1 = [];
 
     const productCodes = Object.keys(groupByProductCode)
       .filter(x => groupByProductCode[x].length > 1)
@@ -208,7 +209,7 @@ export class GroupInfoComponent implements OnInit {
       .map(x => groupByProductCode[x])
       .reduce((a, b) => a.concat(b), []);
 
-    const originalResult1 = Object.keys(groupByProductCode)
+    originalResult1 = Object.keys(groupByProductCode)
       .filter(x => groupByProductCode[x].length > 1)
       .map(x => groupByProductCode[x])
       .reduce((a, b) => a.concat(b), []);
@@ -216,9 +217,11 @@ export class GroupInfoComponent implements OnInit {
     originalResult.forEach((x, i) => originalResult[i].flag = false);
     originalResult1.forEach((x, i) => originalResult1[i].flag = true);
 
-   // const index = originalResult1.findIndex(x => x.code === 16650);
+    const index = originalResult1.findIndex(x => x.code === this.productCode);
 
-   // originalResult1[index].flag = true;
+    if (index !== -1) {
+      originalResult1[index].flag = true;
+    }
 
     this.groupby = [...originalResult, ...result];
     this.groupProducts = [...originalResult, ...originalResult1];
@@ -228,14 +231,12 @@ export class GroupInfoComponent implements OnInit {
   expand(code: any): void {
     this.templateShoppoingList = this.groupProducts;
     this.productCode = code.id;
-    console.log(this.productCode)
     this.expandView = true;
   }
 
   collapse(code: any): void {
     this.templateShoppoingList = this.groupby;
     this.productCode = code.id;
-    console.log(this.productCode)
     this.expandView = false;
   }
 

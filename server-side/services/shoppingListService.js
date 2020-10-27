@@ -20,7 +20,7 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
 
         for (const x of groups) {
 
-            const index = groups.indexOf(x) + 1;
+          //  const index = groups.indexOf(x) + 1;
 
             const shoppingList = await shoppingListRepository.findShoppingList(
                 {groupId: x.dataValues.groupId});
@@ -33,12 +33,17 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
                 const findUsername = await userService.listOneUser(
                     {id: y.dataValues["owners"].dataValues.userId})
 
+                const findGroupName = await groupService.getGroup(
+                    {groupId: x.dataValues.groupId})
+
                 info.push(
                     {
                         product_name: y.dataValues.product.dataValues.product_name,
                         quantity: y.dataValues.quantity,
                         code: y.dataValues.product.dataValues.code,
-                        list: `list ${index}`,
+                        list: (y.dataValues["owners"].dataValues.role !== 'personal') ?
+                            `list - ${findGroupName.dataValues.groupName}` :
+                            findGroupName.dataValues.groupName,
                         username: findUsername.dataValues.username
                     })
             }

@@ -23,7 +23,7 @@ export default function makeshoppingListRepository({ShoppingList, userGroup, Pro
                     where: {
                         groupId: groupId
                     },
-                    attributes: ['userId', 'groupId']
+                    attributes: ['userId', 'groupId', 'role']
                 }]
         });
     }
