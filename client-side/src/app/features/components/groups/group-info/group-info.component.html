@@ -137,7 +137,7 @@
         </div>
 
         <!--shopping list table-->
-        <div *ngIf="groupProducts.length !== 0" class="container mb-4">
+        <div *ngIf="noGroupByProducts.length !== 0" class="container mb-4">
           <div class="row">
             <div class="col-12">
               <div class="table-responsive">
@@ -155,11 +155,11 @@
                   </thead>
 
                   <!--shopping list table body-->
-                  <tbody *ngIf="groupProducts">
+                  <tbody *ngIf="templateShoppoingList">
                   <ng-container *ngFor="let product of templateShoppoingList index as i">
                     <tr #code id="{{product['code']}}">
                       <td><img src="../../../../../assets/img/product.png" alt=""/></td>
-                      <td>
+                      <td (mouseenter) ="getCode(code)">
                         <a class="mr-2" style="color: #1a1a1a"
                            placement="top" ngbTooltip="code-barres : {{product['code']}}">
                           <strong class="text-monospace font-italic">
@@ -175,7 +175,7 @@
                           </button>
                           <button type="button"
                                   (click)="collapse(code)"
-                                  *ngIf="product['flag'] && expandView"
+                                  *ngIf="product['flag'] && expandView && product['code'] == 16650"
                                   class="btn btn-outline-danger btn-sm m-2 rounded text-center"
                                   data-placement="right" title="Add inputs">
                             <i class="fa fa-minus-circle" aria-hidden="true"></i>
@@ -200,7 +200,7 @@
         </div>
 
         <!--No shopping list div-->
-        <div *ngIf="groupProducts.length === 0" class="container mb-4">
+        <div *ngIf="noGroupByProducts.length === 0" class="container mb-4">
           <h6 class="text-monospace font-italic font-weight-bolder">
             <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
             This group has no shopping list at the moment !

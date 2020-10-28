@@ -23,8 +23,8 @@ export class GroupInfoComponent implements OnInit {
   groupDescription = '';
   addUser = '';
   groupUsers: Array<User> = [];
-  groupProducts: Array<Product> = [];
-  groupby: any = [];
+  noGroupByProducts: Array<Product> = [];
+  groupByCodeProducts: any = [];
   templateShoppoingList: any = [];
   expandView = false;
   productCode = 0;
@@ -88,9 +88,9 @@ export class GroupInfoComponent implements OnInit {
       .subscribe((data: any) => {
           data.sort((a, b) => (a.product_name > b.product_name) ? 1 :
             (a.product_name < b.product_name) ? -1 : 0);
-          this.groupProducts = data;
+          this.noGroupByProducts = data;
           this.groupByProducts();
-          this.templateShoppoingList = this.groupby;
+          this.templateShoppoingList = this.groupByCodeProducts;
         },
         error => {
           console.error(error);
@@ -154,7 +154,7 @@ export class GroupInfoComponent implements OnInit {
 
     let existingProduct: object = {};
     if (typeof this.productModel === 'object') {
-      existingProduct = this.groupProducts
+      existingProduct = this.noGroupByProducts
         .find(x => x.code === this.productModel.code
           && x.username === this.currentUser);
     }
@@ -174,13 +174,12 @@ export class GroupInfoComponent implements OnInit {
 
   groupByProducts(): void {
 
-    const groupByProductCode = this.groupProducts
+    const groupByProductCode = this.noGroupByProducts
       .reduce((result, item) => ({
         ...result, [item['code']]: [...(result[item['code']] || []), item]
       }), {});
 
     const result = [];
-    let originalResult1 = [];
 
     const productCodes = Object.keys(groupByProductCode)
       .filter(x => groupByProductCode[x].length > 1)
@@ -209,34 +208,40 @@ export class GroupInfoComponent implements OnInit {
       .map(x => groupByProductCode[x])
       .reduce((a, b) => a.concat(b), []);
 
-    originalResult1 = Object.keys(groupByProductCode)
-      .filter(x => groupByProductCode[x].length > 1)
+   // const code = this.getCode(this.productCode);
+
+   // console.log(code)
+
+    const originalResult1 = Object.keys(groupByProductCode)
+      .filter(x => groupByProductCode[x].length > 1 && Number(x) == 16650)
       .map(x => groupByProductCode[x])
       .reduce((a, b) => a.concat(b), []);
 
     originalResult.forEach((x, i) => originalResult[i].flag = false);
     originalResult1.forEach((x, i) => originalResult1[i].flag = true);
 
-    const index = originalResult1.findIndex(x => x.code === this.productCode);
+    const index = originalResult1.findIndex(x => x.code === 16650);
 
-    if (index !== -1) {
-      originalResult1[index].flag = true;
-    }
-
-    this.groupby = [...originalResult, ...result];
-    this.groupProducts = [...originalResult, ...originalResult1];
+    this.groupByCodeProducts = [...originalResult, ...result];
+    result.splice(index, 1, ...originalResult1);
+    this.noGroupByProducts = [...originalResult, ...result];
 
   }
 
-  expand(code: any): void {
-    this.templateShoppoingList = this.groupProducts;
+  getCode(code: any): number {
     this.productCode = code.id;
+    return Number(code.id);
+  }
+
+  expand(code: any): void {
+    this.templateShoppoingList = this.noGroupByProducts;
+    this.productCode = Number(code.id);
     this.expandView = true;
   }
 
   collapse(code: any): void {
-    this.templateShoppoingList = this.groupby;
-    this.productCode = code.id;
+    this.templateShoppoingList = this.groupByCodeProducts;
+    this.productCode = Number(code.id);
     this.expandView = false;
   }
 
