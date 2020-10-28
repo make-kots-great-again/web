@@ -64,4 +64,9 @@ export class GroupService {
       .pipe(map((data: any) => data.body.shoppingList));
   }
 
+  deleteProduct(productId: string): Observable<HttpResponse<any>>{
+    return this.http.delete<any>(`/server/api/shoppingList/removeProduct/${productId}`, {observe: 'response'})
+      .pipe(map((data: any) => data.body.message));
+  }
+
 }

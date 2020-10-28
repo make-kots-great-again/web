@@ -3,7 +3,7 @@ import {groupService, userService} from "./index";
 
 export default function shoppingListServiceFactory({shoppingListRepository}) {
     return Object.freeze({
-        listMyShoppingLists, putProductInShoppingList, getGroupShoppingList
+        listMyShoppingLists, putProductInShoppingList, removeProductFromShoppingList, getGroupShoppingList
     });
 
     async function listMyShoppingLists({userId}) {
@@ -84,6 +84,13 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
         });
     }
 
+    async function removeProductFromShoppingList({listId}) {
+        
+        return await shoppingListRepository.removeProduct({
+            id: listId
+        });
+    }
+
     async function getGroupShoppingList({groupId}) {
 
         const result = [];
@@ -100,8 +107,9 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
                     product_name: y.dataValues.product.dataValues.product_name,
                     quantity: y.dataValues.quantity,
                     code: y.dataValues.product.dataValues.code,
-                    username: findUsername.dataValues.username
-                })
+                    username: findUsername.dataValues.username,
+                    id : y.dataValues.id
+                });
         }
 
         return result;

@@ -29,8 +29,13 @@ export class GroupInfoComponent implements OnInit {
   expandView = false;
   productCode = 0;
   groupId = '';
+  groupName = '';
   currentUser = '';
   quantity = 1;
+  suppressButtonMessage: string = "Activer la Suppression";
+  
+  isPersonnalGroup:boolean;
+  isSuppressMode: boolean = true;
 
   productModel: any;
   memberModel: any;
@@ -51,6 +56,9 @@ export class GroupInfoComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue.username;
     this.groupId = this.route.snapshot.paramMap.get('groupId');
+    this.isPersonnalGroup = this.route.snapshot.paramMap.get('groupRole') == 'personal';
+    this.groupName = this.route.snapshot.paramMap.get('groupName'); 
+
     this.groupDetails();
     this.showGroupShoppingList();
   }
@@ -91,6 +99,11 @@ export class GroupInfoComponent implements OnInit {
           this.groupProducts = data;
           this.groupByProducts();
           this.templateShoppoingList = this.groupby;
+
+          if(this.groupProducts.length === 0){
+            this.suppressButtonMessage = "Activer la suppression";
+            this.isSuppressMode = true;
+          }
         },
         error => {
           console.error(error);
@@ -246,4 +259,26 @@ export class GroupInfoComponent implements OnInit {
     this.destroyed$.complete();
   }
 
+  onDeleteProduct(index){
+  
+    this.groupService.deleteProduct(this.templateShoppoingList[index].id)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((data) => {
+          this.showGroupShoppingList();
+        },
+        error => {
+          console.error(error);
+        }); 
+  }
+
+  switchSuppressMode(){
+    if(this.isSuppressMode){
+      this.suppressButtonMessage = "Désactiver la suppression";
+      this.isSuppressMode = false;
+    }
+    else{
+      this.suppressButtonMessage = "Activer la suppression";
+      this.isSuppressMode = true;
+    }
+  }
 }
