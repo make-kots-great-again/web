@@ -1,8 +1,9 @@
+import controllers from ".";
 import {shoppingListService} from "../services";
 
 export default function shoppingListControllerFactory() {
     return Object.freeze({
-        getShoppingList, addProductToShoppingList, getGroupShoppingList
+        getShoppingList, addProductToShoppingList, removeProductToShoppingList, getGroupShoppingList
     });
 
     async function getShoppingList(httpRequest) {
@@ -50,6 +51,38 @@ export default function shoppingListControllerFactory() {
                 body: {
                     success: true,
                     message: 'Product successfully added to the list !',
+                    shoppingList: shoppingList
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+
+    }
+
+    async function removeProductToShoppingList(httpRequest) {
+
+        const {listId} = httpRequest.params;
+
+        try {
+            const shoppingList = await shoppingListService
+                .removeProductFromShoppingList({listId});
+
+
+            if (shoppingList.message) {
+                return {
+                    statusCode: 404,
+                    body: {success: false, message: shoppingList.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    message: 'Product delete from the list !',
                     shoppingList: shoppingList
                 }
             }

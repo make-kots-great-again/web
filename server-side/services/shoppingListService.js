@@ -1,8 +1,9 @@
+import {makeShoppingList} from '../domain'
 import {groupService, userService} from "./index";
 
 export default function shoppingListServiceFactory({shoppingListRepository}) {
     return Object.freeze({
-        listMyShoppingLists, putProductInShoppingList, getGroupShoppingList
+        listMyShoppingLists, putProductInShoppingList, removeProductFromShoppingList, getGroupShoppingList
     });
 
     async function listMyShoppingLists({userId}) {
@@ -19,25 +20,30 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
 
         for (const x of groups) {
 
-            const index = groups.indexOf(x) + 1;
+          //  const index = groups.indexOf(x) + 1;
 
             const shoppingList = await shoppingListRepository.findShoppingList(
                 {groupId: x.dataValues.groupId});
 
             if (shoppingList.length === 0) info.push(
-                {message: `no shopping list for this group : ${x.dataValues.groupId}`});
+                {message: `No shopping list for this group : ${x.dataValues.groupId}`});
 
             for (const y of shoppingList) {
 
                 const findUsername = await userService.listOneUser(
                     {id: y.dataValues["owners"].dataValues.userId})
 
+                const findGroupName = await groupService.getGroup(
+                    {groupId: x.dataValues.groupId})
+
                 info.push(
                     {
                         product_name: y.dataValues.product.dataValues.product_name,
                         quantity: y.dataValues.quantity,
                         code: y.dataValues.product.dataValues.code,
-                        list: `list ${index}`,
+                        list: (y.dataValues["owners"].dataValues.role !== 'personal') ?
+                            `list - ${findGroupName.dataValues.groupName}` :
+                            findGroupName.dataValues.groupName,
                         username: findUsername.dataValues.username
                     })
             }
@@ -57,6 +63,8 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
             userId: userId
         });
 
+        if (findGroup.message) return {message: findGroup.message};
+
         const findUser = await userService.listOneUser({id: userId});
 
         const findList = await getGroupShoppingList({groupId: groupId});
@@ -67,9 +75,19 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
         if (existingProduct)
             return {message: `You have already added ${existingProduct.product_name} to this list !`};
 
+        const product = makeShoppingList({...productInfo});
+
         return await shoppingListRepository.save({
             id_group_user: findGroup.dataValues.id_group_user,
-            ...productInfo
+            code: product.getProductCode(),
+            quantity: product.getProductQuantity()
+        });
+    }
+
+    async function removeProductFromShoppingList({listId}) {
+        
+        return await shoppingListRepository.removeProduct({
+            id: listId
         });
     }
 
@@ -89,8 +107,9 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
                     product_name: y.dataValues.product.dataValues.product_name,
                     quantity: y.dataValues.quantity,
                     code: y.dataValues.product.dataValues.code,
-                    username: findUsername.dataValues.username
-                })
+                    username: findUsername.dataValues.username,
+                    id : y.dataValues.id
+                });
         }
 
         return result;

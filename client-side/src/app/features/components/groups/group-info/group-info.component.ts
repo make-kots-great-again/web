@@ -23,10 +23,19 @@ export class GroupInfoComponent implements OnInit {
   groupDescription = '';
   addUser = '';
   groupUsers: Array<User> = [];
-  groupProducts: Array<Product> = [];
+  noGroupByProducts: Array<Product> = [];
+  groupByCodeProducts: any = [];
+  templateShoppoingList: any = [];
+  expandView = false;
+  productCode = 0;
   groupId = '';
+  groupName = '';
   currentUser = '';
   quantity = 1;
+  suppressButtonMessage: string = "Activer la Suppression";
+
+  isPersonnalGroup:boolean;
+  isSuppressMode: boolean = true;
 
   productModel: any;
   memberModel: any;
@@ -47,6 +56,9 @@ export class GroupInfoComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue.username;
     this.groupId = this.route.snapshot.paramMap.get('groupId');
+    this.isPersonnalGroup = this.route.snapshot.paramMap.get('groupRole') == 'personal';
+    this.groupName = this.route.snapshot.paramMap.get('groupName');
+
     this.groupDetails();
     this.showGroupShoppingList();
   }
@@ -60,7 +72,7 @@ export class GroupInfoComponent implements OnInit {
           this.groupUsers = data.users;
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -71,9 +83,10 @@ export class GroupInfoComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
           this.groupDetails();
+          this.memberModel = '';
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -81,10 +94,20 @@ export class GroupInfoComponent implements OnInit {
     this.groupService.getGroupShoppingList(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
-          this.groupProducts = data;
+          data.sort((a, b) => (a.product_name > b.product_name) ? 1 :
+            (a.product_name < b.product_name) ? -1 : 0);
+          this.noGroupByProducts = data;
+          this.groupByProducts();
+
+          this.templateShoppoingList = this.groupByCodeProducts;
+
+          if(this.groupByCodeProducts.length === 0){
+            this.suppressButtonMessage = "Activer la suppression";
+            this.isSuppressMode = true;
+          }
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -134,9 +157,10 @@ export class GroupInfoComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
           this.showGroupShoppingList();
+          this.productModel = '';
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -144,7 +168,7 @@ export class GroupInfoComponent implements OnInit {
 
     let existingProduct: object = {};
     if (typeof this.productModel === 'object') {
-      existingProduct = this.groupProducts
+      existingProduct = this.noGroupByProducts
         .find(x => x.code === this.productModel.code
           && x.username === this.currentUser);
     }
@@ -162,10 +186,105 @@ export class GroupInfoComponent implements OnInit {
     return (typeof this.memberModel === 'object') && !existingMember;
   }
 
+  groupByProducts(): void {
+
+    const groupByProductCode = this.noGroupByProducts
+      .reduce((result, item) => ({
+        ...result, [item['code']]: [...(result[item['code']] || []), item]
+      }), {});
+
+    const result = [];
+
+    const productCodes = Object.keys(groupByProductCode)
+      .filter(x => groupByProductCode[x].length > 1)
+      .map(x => groupByProductCode[x])
+      .reduce((a, b) => a.concat(b), [])
+      .reduce((result, item) => ({
+        ...result, [item['code']]: [...(result[item['code']] || []), item]
+      }), {});
+
+    const quantities = Object.keys(productCodes).map(x => productCodes[x].map(y => y.quantity));
+    const usernames = Object.keys(productCodes).map(x => productCodes[x].map(y => y.username));
+    const product_names = Object.keys(productCodes).map(x => productCodes[x].map(y => y.product_name));
+
+    Object.keys(productCodes).forEach((x, i) => {
+      result.push({
+        product_name: product_names[i][0],
+        code: Number(x),
+        username: usernames[i].join(' - '),
+        quantity: quantities[i].reduce((a, b) => a + b, 0),
+        flag: true,
+      })
+    });
+
+    const originalResult = Object.keys(groupByProductCode)
+      .filter(x => groupByProductCode[x].length === 1)
+      .map(x => groupByProductCode[x])
+      .reduce((a, b) => a.concat(b), []);
+
+   // const code = this.getCode(this.productCode);
+
+   // console.log(code)
+
+    const originalResult1 = Object.keys(groupByProductCode)
+      .filter(x => groupByProductCode[x].length > 1 && Number(x) == 16650)
+      .map(x => groupByProductCode[x])
+      .reduce((a, b) => a.concat(b), []);
+
+    originalResult.forEach((x, i) => originalResult[i].flag = false);
+    originalResult1.forEach((x, i) => originalResult1[i].flag = true);
+
+    const index = originalResult1.findIndex(x => x.code === 16650);
+
+    this.groupByCodeProducts = [...originalResult, ...result];
+    result.splice(index, 1, ...originalResult1);
+    this.noGroupByProducts = [...originalResult, ...result];
+
+  }
+
+  getCode(code: any): number {
+    this.productCode = code.id;
+    return Number(code.id);
+  }
+
+  expand(code: any): void {
+    this.templateShoppoingList = this.noGroupByProducts;
+    this.productCode = Number(code.id);
+    this.expandView = true;
+  }
+
+  collapse(code: any): void {
+    this.templateShoppoingList = this.groupByCodeProducts;
+    this.productCode = Number(code.id);
+    this.expandView = false;
+  }
+
   @HostListener('window:beforeunload')
   async ngOnDestroy(): Promise<void> {
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
 
+  onDeleteProduct(index){
+
+    this.groupService.deleteProduct(this.templateShoppoingList[index].id)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((data) => {
+          this.showGroupShoppingList();
+        },
+        error => {
+          console.error(error);
+        });
+  }
+
+  switchSuppressMode(){
+    if(this.isSuppressMode){
+      this.suppressButtonMessage = "Désactiver la suppression";
+      this.isSuppressMode = false;
+    }
+    else{
+      this.suppressButtonMessage = "Activer la suppression";
+      this.isSuppressMode = true;
+    }
+  }
 }

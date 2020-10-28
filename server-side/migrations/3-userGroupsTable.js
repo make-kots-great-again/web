@@ -29,7 +29,7 @@ module.exports = {
                     onUpdate: 'CASCADE',
                 },
                 role: {
-                    type: Sequelize.ENUM('admin', 'member'),
+                    type: Sequelize.ENUM('admin', 'member', 'personal'),
                     defaultValue: 'member',
                     allowNull: false
                 },

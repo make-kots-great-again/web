@@ -15,6 +15,11 @@ const ShoppingList = dbConnection.define('shoppingList', {
         quantity: {
             type: Sequelize.INTEGER,
             allowNull: false,
+            defaultValue: 1,
+            validate: {
+                min: 1,
+                max: 20
+            }
         },
         id_group_user: {
             type: Sequelize.UUID,

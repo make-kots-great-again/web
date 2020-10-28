@@ -12,3 +12,11 @@ body {
   background: linear-gradient(to right, #eecda3, #ef629f);
   min-height: 100vh;
 }
+
+h1{
+  margin-bottom: 5%;
+}
+
+.margin_bottom{
+  margin-bottom: 1%;
+}

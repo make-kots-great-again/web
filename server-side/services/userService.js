@@ -36,14 +36,17 @@ export default function userServiceFactory({userRepository}) {
 
         const {dataValues: data} = existing["0"];
 
-        const {email: userEmail, userId: id, password: userPassword} = data;
+        const {username, email: userEmail, userId, password: userPassword} = data;
 
         const validPassword = await passwordFactory.verifyPassword(password, userPassword);
 
         if (!validPassword) return {message: "Authentication failed !"};
 
         if (validPassword)
-            return {token: jwtFactory.generateJwt({userEmail, id}), data};
+            return {
+                token: jwtFactory.generateJwt({username, userEmail, userId}),
+                data
+            };
     }
 
     async function listUsers() {
@@ -80,21 +83,30 @@ export default function userServiceFactory({userRepository}) {
      *             OU si l'email ou le pseudo existent déjà dans la db : un message d'erreur
      *          -> sinon, la réponse de la requête envoyé au userRepository.
      */
-    async function putUser({id},{...userInfo}) {
+    async function putUser({id}, {...userInfo}) {
 
         if (!id) return {message: 'You must supply an id.'};
 
         if (!(id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
             return {message: `${id} is not a valid v4 UUID`};
 
-        const existing_users = await userRepository.findByEmailOrUsername({email: userInfo.email, username: userInfo.username});
+        const existing_users = await userRepository.findByEmailOrUsername({
+            email: userInfo.email,
+            username: userInfo.username
+        });
 
-        for ( let user of existing_users){
-            if(user.userId !== id) {return {message: "A user with the same email address already exists !"} };
-            if(user.userId !== id) {return {message: "A user with the same username already exists !"}};
+        for (let user of existing_users) {
+            if (user.userId !== id) {
+                return {message: "A user with the same email address already exists !"}
+            }
+            ;
+            if (user.userId !== id) {
+                return {message: "A user with the same username already exists !"}
+            }
+            ;
         }
 
-        return await userRepository.put({id},{...userInfo});
+        return await userRepository.put({id}, {...userInfo});
     }
 
     /**
@@ -110,7 +122,7 @@ export default function userServiceFactory({userRepository}) {
      *             OU si le mot de passe actuel n'est pas bon' : un message d'erreur
      *          -> sinon, la réponse de la requête envoyé au userRepository.
      */
-    async function patchUserPwd({id},{...userInfo}) {
+    async function patchUserPwd({id}, {...userInfo}) {
 
         if (!id) return {message: 'You must supply an id.'};
 
@@ -119,9 +131,9 @@ export default function userServiceFactory({userRepository}) {
 
         const user = await userRepository.findById({id});
         const newPassword = passwordFactory.hashPassword(userInfo.newPassword);
-        if ( !await passwordFactory.verifyPassword(userInfo.password,user.password)) return {message: `wrong password`};
+        if (!await passwordFactory.verifyPassword(userInfo.password, user.password)) return {message: `wrong password`};
 
-        return await userRepository.patchPwd({id},{newPassword});
+        return await userRepository.patchPwd({id}, {newPassword});
     }
 
     async function removeUser({id} = {}) {

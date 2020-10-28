@@ -1,4 +1,6 @@
 import {userService} from "../services";
+import {groupService} from "../services";
+import generateGroupInfos from "../helpers/ownGroupFactory"
 import sendMail from "../helpers/sendMail";
 
 export default function userControllerFactory() {
@@ -16,13 +18,20 @@ export default function userControllerFactory() {
 
             if (createdUser.message)
                 return {statusCode: 409, body: {success: false, ...createdUser}}
+            
+            //TODO : to move when Mail-signup is implemented
+
+            const username = createdUser.username
+            const {...groupInfo} = generateGroupInfos(createdUser.username, "french");
+            const createdGroup = await groupService.addOwnGroup({username, ...groupInfo});
 
             return {
                 statusCode: 201,
                 body: {
                     success: true,
                     message: "User has been created successfully",
-                    user: createdUser
+                    user: createdUser,
+                    personnalGroup : createdGroup
                 }
             }
         } catch (e) {
