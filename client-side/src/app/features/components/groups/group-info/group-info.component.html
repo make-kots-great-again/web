@@ -4,13 +4,13 @@
   <div class="container m-5 p-5 border border-bottom">
 
     <div class=" font-weight-bold">
-      
+
       <h1 class="d-flex justify-content-center">{{groupName}}</h1>
-        
+
       <p></p>
-      
+
       <h3 class="text-monospace font-italic"><strong>Description du groupe</strong>
-        
+
         <p></p>
         <p style="font-size: small" class="blockquote-footer my-0">
           {{groupDescription}}
@@ -18,7 +18,7 @@
 
       </h3>
     </div>
-    
+
     <div  class="container mt-2 mb-2">
       <div class="modal-body card border-light">
 
@@ -107,7 +107,7 @@
           <hr>
           <br>
         </ng-template>
-  
+
         <!--  ***************************   Personnal and unpersonnal group part   *****************************  -->
 
         <p class="text-monospace font-italic font-weight-bolder h5">
@@ -171,7 +171,7 @@
                     <th class="text-monospace font-italic"></th>
                     <th class="text-monospace font-italic">Produit</th>
                     <th class="text-monospace font-italic">Username</th>
-                    <th class="text-monospace font-italic">Quanttité</th>
+                    <th class="text-monospace font-italic">Quantité</th>
                     <th class="text-monospace font-italic">Action</th>
                   </tr>
                   </thead>
@@ -207,7 +207,7 @@
                       <td class="text-monospace font-italic">{{product['username']}}</td>
                       <td class="text-monospace font-italic">{{product['quantity']}}</td>
                       <td class="text-monospace font-italic">
-                        <button 
+                        <button
                           [disabled]="!(product['username'] === currentUser) || isSuppressMode"
                           class="btn btn-sm btn-danger justify-content-center" (click)="onDeleteProduct(i)">
                           <i class="fa fa-trash"></i></button>
@@ -234,7 +234,7 @@
 
 
         <!--  <ng-template [ngIf]="!isPersonnalGroup">
-          
+
           <-- checkout div ->
           <div class="p-4">
             <p class="font-italic mb-4">
