@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'groups', component: GroupsComponent, canActivate: [AuthGuard]},
-  {path: 'group/:groupId', component: GroupInfoComponent, canActivate: [AuthGuard]},
+  {path: 'group/:groupId/:groupRole/:groupName', component: GroupInfoComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 export default function makeshoppingListRepository({ShoppingList, userGroup, Product, Op}) {
     return Object.freeze({
-        save, findShoppingList,
+        save, findShoppingList,removeProduct,
     });
 
 
@@ -10,7 +10,7 @@ export default function makeshoppingListRepository({ShoppingList, userGroup, Pro
 
     async function findShoppingList({groupId}) {
         return ShoppingList.findAll({
-            attributes: ['quantity'],
+            attributes: ['quantity', 'id'],
             include: [
                 {
                     model: Product,
@@ -26,5 +26,9 @@ export default function makeshoppingListRepository({ShoppingList, userGroup, Pro
                     attributes: ['userId', 'groupId', 'role']
                 }]
         });
+    }
+
+    async function removeProduct({id}) {
+        return ShoppingList.destroy({where: {id: id}});
     }
 }
