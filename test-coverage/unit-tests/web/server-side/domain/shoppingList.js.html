@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for web/server-side/repository/productRepository.js</title>
+    <title>Code coverage report for web/server-side/domain/shoppingList.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">web/server-side/repository</a> productRepository.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">web/server-side/domain</a> shoppingList.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">10% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/3</span>
+                <span class='fraction'>1/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/3</span>
+                <span class='fraction'>1/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">11.11% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/3</span>
+                <span class='fraction'>1/9</span>
             </div>
         
             
@@ -76,53 +76,44 @@
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
-<a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L20'></a><a href='#L20'>20</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export default function makeProductRepository({Product, Op}) {
-    return Object.freeze({
-        save, findAll,
-    });
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export default function buildMakeShoppingList(requiredParameter) {
+    return <span class="fstat-no" title="function not covered" >({</span>
+                code = <span class="branch-0 cbranch-no" title="branch not covered" >requiredParameter('</span>A product code'),
+                quantity = <span class="branch-0 cbranch-no" title="branch not covered" >requiredParameter('</span>A product quantity')
+            } = <span class="branch-0 cbranch-no" title="branch not covered" >{}) =&gt; {</span>
 &nbsp;
-    async function <span class="fstat-no" title="function not covered" >save({</span>...userInfo}) {
-<span class="cstat-no" title="statement not covered" >        return P</span>roduct.create(userInfo);
+<span class="cstat-no" title="statement not covered" >        if (typeof code !== 'number') <span class="cstat-no" title="statement not covered" >throw n</span></span>ew TypeError('A product code must be a number.');
+<span class="cstat-no" title="statement not covered" >        if (typeof quantity !== 'number')</span>
+<span class="cstat-no" title="statement not covered" >            throw n</span>ew TypeError("A product's quantity must be a number.");
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (quantity &lt; 1 || quantity &gt; 20)</span>
+<span class="cstat-no" title="statement not covered" >            throw n</span>ew RangeError("A product's quantity must be between 1 and 20.");
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return O</span>bject.freeze({
+            getProductCode: <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >c</span>ode,</span>
+            getProductQuantity: <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >q</span>uantity</span>
+        });
     }
-&nbsp;
-    async function <span class="fstat-no" title="function not covered" >findAll({</span>productName}) {
-<span class="cstat-no" title="statement not covered" >        return P</span>roduct.findAll(
-            {
-                where: {
-                    product_name: {
-                        [Op.startsWith]: productName[0].toUpperCase() + productName.slice(1),
-                    }
-                }, attributes: ['code', 'product_name']
-            });
-    }
-&nbsp;
 }
-&nbsp;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

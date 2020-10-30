@@ -34,7 +34,7 @@ export class GroupInfoComponent implements OnInit {
   quantity = 1;
   suppressButtonMessage: string = "Activer la Suppression";
 
-  isPersonnalGroup:boolean;
+  isPersonnalGroup: boolean;
   isSuppressMode: boolean = true;
 
   productModel: any;
@@ -101,7 +101,7 @@ export class GroupInfoComponent implements OnInit {
 
           this.templateShoppoingList = this.groupByCodeProducts;
 
-          if(this.groupByCodeProducts.length === 0){
+          if (this.groupByCodeProducts.length === 0) {
             this.suppressButtonMessage = "Activer la suppression";
             this.isSuppressMode = true;
           }
@@ -222,24 +222,24 @@ export class GroupInfoComponent implements OnInit {
       .map(x => groupByProductCode[x])
       .reduce((a, b) => a.concat(b), []);
 
-   // const code = this.getCode(this.productCode);
+    // const code = this.getCode(this.productCode);
 
-   // console.log(code)
+    // console.log(this.productCode)
 
     const originalResult1 = Object.keys(groupByProductCode)
-      .filter(x => groupByProductCode[x].length > 1 && Number(x) == 16650)
+      .filter(x => groupByProductCode[x].length > 1)
       .map(x => groupByProductCode[x])
       .reduce((a, b) => a.concat(b), []);
 
     originalResult.forEach((x, i) => originalResult[i].flag = false);
     originalResult1.forEach((x, i) => originalResult1[i].flag = true);
 
-    const index = originalResult1.findIndex(x => x.code === 16650);
+    // const index = originalResult1.findIndex(x => x.code === 18265);
 
     this.groupByCodeProducts = [...originalResult, ...result];
-    result.splice(index, 1, ...originalResult1);
-    this.noGroupByProducts = [...originalResult, ...result];
 
+    //   result.splice(index, 1, ...originalResult1);
+    this.noGroupByProducts = [...originalResult, ...originalResult1];
   }
 
   getCode(code: any): number {
@@ -265,7 +265,7 @@ export class GroupInfoComponent implements OnInit {
     this.destroyed$.complete();
   }
 
-  onDeleteProduct(index){
+  onDeleteProduct(index) {
 
     this.groupService.deleteProduct(this.templateShoppoingList[index].id)
       .pipe(takeUntil(this.destroyed$))
@@ -277,12 +277,11 @@ export class GroupInfoComponent implements OnInit {
         });
   }
 
-  switchSuppressMode(){
-    if(this.isSuppressMode){
+  switchSuppressMode() {
+    if (this.isSuppressMode) {
       this.suppressButtonMessage = "Désactiver la suppression";
       this.isSuppressMode = false;
-    }
-    else{
+    } else {
       this.suppressButtonMessage = "Activer la suppression";
       this.isSuppressMode = true;
     }
