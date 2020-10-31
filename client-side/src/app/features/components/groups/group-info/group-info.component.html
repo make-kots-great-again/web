@@ -19,7 +19,7 @@
       </h3>
     </div>
 
-    <div  class="container mt-2 mb-2">
+    <div class="container mt-2 mb-2">
       <div class="modal-body card border-light">
 
         <!--  ******************************   Unpersonnal group part   *********************************  -->
@@ -34,17 +34,17 @@
                   <div class="d-flex justify-content-center form-group">
                     <label for="typeahead-member"></label>
                     <input id="typeahead-member" type="text"
-                          class="form-control mx-sm-3 bg-light"
-                          [class.is-invalid]="usernameSearchFailed"
-                          [class.is-valid]="verifyMember()"
-                          [(ngModel)]="memberModel" name="addMemberInput"
-                          [inputFormatter]="Memberformatter"
-                          [resultFormatter]="Memberformatter"
-                          [ngbTypeahead]="usernameList"
-                          placeholder="username"/>
+                           class="form-control mx-sm-3 bg-light"
+                           [class.is-invalid]="usernameSearchFailed"
+                           [class.is-valid]="verifyMember()"
+                           [(ngModel)]="memberModel" name="addMemberInput"
+                           [inputFormatter]="Memberformatter"
+                           [resultFormatter]="Memberformatter"
+                           [ngbTypeahead]="usernameList"
+                           placeholder="username"/>
                     <br>
                     <small *ngIf="searchingUsernames"
-                          class="form-text text-muted">searching...</small>
+                           class="form-text text-muted">searching...</small>
                     <div class="invalid-feedback" *ngIf="usernameSearchFailed">
                       Désolé, aucun utilisateur ayant le username : {{memberModel}} n'a été trouvé !
                     </div>
@@ -68,10 +68,10 @@
             <app-spinner></app-spinner>
           </div>
           <!--Table-->
-          <table *ngIf="groupUsers" class="table table-striped w-auto .table-sm table table-bordered">
+          <table *ngIf="groupUsers" class="table table-striped table-bordered">
 
             <!--Table head-->
-            <thead>
+            <thead class="font-weight-bold thead-dark">
             <tr>
               <!-- group number -->
               <th scope="col">#
@@ -121,15 +121,17 @@
             <div class="form-group">
               <label for="typeahead-http">Rechercher un produit :</label>
               <input id="typeahead-http" type="text"
-                    class="form-control mx-sm-3"
-                    [class.is-invalid]="searchFailed"
-                    [(ngModel)]="productModel" name="addProductInput"
-                    [inputFormatter]="productFormatter"
-                    [resultFormatter]="productFormatter" [ngbTypeahead]="productList"
-                    placeholder="nom du produit"/>
+                     class="form-control mx-sm-3"
+                     [class.is-invalid]="searchFailed"
+                     [(ngModel)]="productModel" name="addProductInput"
+                     [inputFormatter]="productFormatter"
+                     [resultFormatter]="productFormatter" [ngbTypeahead]="productList"
+                     placeholder="nom du produit"/>
               <br>
               <small *ngIf="searching" class="form-text text-muted">recherche...</small>
-              <div class="invalid-feedback" *ngIf="searchFailed">désolé aucun produit ayant pour nom <b>{{productModel}}</b> n'a été trouvé ! </div>
+              <div class="invalid-feedback" *ngIf="searchFailed">désolé aucun produit ayant pour nom
+                <b>{{productModel}}</b> n'a été trouvé !
+              </div>
             </div>
             <label for="quantityInput">
               <input
@@ -151,22 +153,23 @@
         </div>
 
         <!--shopping list table-->
-        <div *ngIf="noGroupByProducts.length !== 0" class="container mb-4">
+        <div *ngIf="templateShoppoingList.length !== 0" class="container mb-4">
           <div class="row">
             <div class="col-12">
               <button (click)="switchSuppressMode()"
-                name="addProduct" type="submit"
-                [ngClass]="{ 'btn-outline-danger': isSuppressMode,
+                      name="addProduct" type="submit"
+                      [ngClass]="{ 'btn-outline-danger': isSuppressMode,
                              'btn-outline-success': !isSuppressMode }"
-                class="btn text-center mx-sm-3
-                  text-monospace font-italic font-weight-bolder pull-right margin_bottom">
-                  {{suppressButtonMessage}}
+                      class="btn text-center mx-sm-3
+                  text-monospace font-italic font-weight-bolder pull-right
+                  margin_bottom">{{suppressButtonMessage}}
               </button>
               <div class="table-responsive">
-                <table class="table table-striped .table-sm table table-bordered">
+
+                <table class="table table-striped table table-bordered">
 
                   <!--shopping list table header-->
-                  <thead class="font-weight-bold">
+                  <thead class="font-weight-bold thead-dark">
                   <tr>
                     <th class="text-monospace font-italic"></th>
                     <th class="text-monospace font-italic">Produit</th>
@@ -181,26 +184,21 @@
                   <ng-container *ngFor="let product of templateShoppoingList index as i">
                     <tr #code id="{{product['code']}}">
                       <td><img src="../../../../../assets/img/product.png" alt=""/></td>
-                      <td (mouseenter) ="getCode(code)">
+                      <td>
                         <a class="mr-2" style="color: #1a1a1a"
-                          placement="top" ngbTooltip="code-barres : {{product['code']}}">
+                           placement="top" ngbTooltip="code-barres : {{product['code']}}">
                           <strong class="text-monospace font-italic">
                             {{product['product_name']}}
                           </strong>
                           <!-- Add inputs button -->
                           <button type="button"
+                                  data-toggle="modal"
+                                  data-target="#groupedByShoppinglist"
                                   (click)="expand(code)"
-                                  *ngIf="product['flag'] && !expandView"
+                                  *ngIf="product['flag']"
                                   class="btn btn-outline-info btn-sm m-2 rounded text-center"
                                   data-placement="right" title="Add inputs">
                             <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                          </button>
-                          <button type="button"
-                                  (click)="collapse(code)"
-                                  *ngIf="product['flag'] && expandView"
-                                  class="btn btn-outline-danger btn-sm m-2 rounded text-center"
-                                  data-placement="right" title="Add inputs">
-                            <i class="fa fa-minus-circle" aria-hidden="true"></i>
                           </button>
                         </a>
                       </td>
@@ -209,7 +207,8 @@
                       <td class="text-monospace font-italic">
                         <button
                           [disabled]="!(product['username'] === currentUser) || isSuppressMode"
-                          class="btn btn-sm btn-danger justify-content-center" (click)="onDeleteProduct(i)">
+                          class="btn btn-sm btn-danger justify-content-center"
+                          (click)="onDeleteProduct(i)">
                           <i class="fa fa-trash"></i></button>
                       </td>
                     </tr>
@@ -222,7 +221,7 @@
         </div>
 
         <!--No shopping list div-->
-        <div *ngIf="noGroupByProducts.length === 0" class="container mb-4">
+        <div *ngIf="templateShoppoingList.length === 0" class="container mb-4">
           <h6 class="text-monospace font-italic font-weight-bolder">
             <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
             Ce groupe n'a aucun élément dans sa liste de courses pour le moment !
@@ -232,43 +231,135 @@
 
         <!--  ****************************************   Unpersonnal group part   *************************************  -->
 
-
-        <!--  <ng-template [ngIf]="!isPersonnalGroup">
-
-          <-- checkout div ->
-          <div class="p-4">
-            <p class="font-italic mb-4">
-              <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
-              Shipping and additional costs are calculated based on values you have
-              entered.</p>
-            <ul class="list-unstyled mb-4">
-              <li class="d-flex justify-content-between py-3 border-bottom">
-                <strong class="text-muted">Order Subtotal </strong>
-                <strong>€390.00</strong>
-              </li>
-              <li class="d-flex justify-content-between py-3 border-bottom">
-                <strong class="text-muted">Shipping and handling</strong>
-                <strong>€10.00</strong>
-              </li>
-              <li class="d-flex justify-content-between py-3 border-bottom">
-                <strong class="text-muted">Tax</strong>
-                <strong>€0.00</strong>
-              </li>
-              <li class="d-flex justify-content-between py-3 border-bottom">
-                <strong class="text-muted">Total</strong>
-                <h5 class="font-weight-bold">€400.00</h5>
-              </li>
-            </ul>
-            <a class="btn btn-dark rounded-pill py-2 btn-block
-            text-monospace font-weight-bolder h4">
-              Procceed to checkout</a>
-          </div>
-
-        </ng-template>
-      -->
       </div>
     </div>
   </div>
 </div>
 
+<!-- grouped by shopping list table modal-->
+<div class="modal fade" id="groupedByShoppinglist"
+     data-backdrop="static" data-keyboard="false"
+     tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div *ngIf="templateShoppoingList.length > 0" class=" modal-header">
+        <h5 class="modal-title text-monospace font-italic font-weight-bold">
+          Utilisateurs qui ont ajouté ce produit
+          <p></p>
+          <p style="font-size: small" class="blockquote-footer my-0">
+            James - Paul
+          </p>
+        </h5>
+        <button
+          (click)="showGroupShoppingList()"
+          type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngIf="templateShoppoingList.length === 0" class=" modal-header">
+        <h5 class="modal-title text-monospace font-italic font-weight-bold">
+          Message :
+        </h5>
+        <button
+          (click)="showGroupShoppingList()"
+          type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngIf="templateShoppoingList.length > 0" class="modal-body">
 
+        <!-- grouped by shopping list table table-->
+        <table class="table table-striped table table-bordered">
+
+          <!-- grouped by shopping list table header-->
+          <thead class="font-weight-bold thead-dark">
+          <tr>
+            <th scope="col" class="text-monospace font-italic">#
+              <i class="fa fa-sort-numeric-asc" aria-hidden="true">
+              </i>
+            </th>
+            <th class="text-monospace font-italic">Produit</th>
+            <th class="text-monospace font-italic">Username</th>
+            <th class="text-monospace font-italic">Quantité</th>
+            <th class="text-monospace font-italic">Action</th>
+          </tr>
+          </thead>
+
+          <!-- grouped by shopping list table body-->
+          <tbody *ngIf="templateShoppoingList">
+          <ng-container *ngFor="let product1 of templateShoppoingList index as i">
+
+            <tr #code id="{{product1['code']}}">
+
+              <td>{{i + 1}}</td>
+
+              <td>
+                <a class="mr-2" style="color: #1a1a1a"
+                   placement="top"
+                   ngbTooltip="{{product1['product_name']}}">
+                  <strong class="text-monospace font-italic">
+                    {{product1['product_name'] | truncate:[9]}}
+                  </strong>
+                  <!-- Add inputs button -->
+                </a>
+              </td>
+
+              <td class="text-monospace font-italic">{{product1['username']}}</td>
+              <td class="text-monospace font-italic">{{product1['quantity']}}</td>
+              <td class="text-monospace font-italic">
+                <button
+                  [disabled]="!(product1['username'] === currentUser)"
+                  class="btn btn-sm btn-danger justify-content-center"
+                  (click)="onDeleteProduct(i, code)">
+                  <i class="fa fa-trash"></i></button>
+              </td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="templateShoppoingList.length === 0"
+           class="modal-body">
+        <p class="text-monospace font-italic font-weight-bold">
+          <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
+          Vous pouvez fermer ce pop up !
+        </p>
+      </div>
+    </div>>
+  </div>
+</div>
+
+
+<!--  <ng-template [ngIf]="!isPersonnalGroup">
+
+  <-- checkout div ->
+  <div class="p-4">
+    <p class="font-italic mb-4">
+      <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
+      Shipping and additional costs are calculated based on values you have
+      entered.</p>
+    <ul class="list-unstyled mb-4">
+      <li class="d-flex justify-content-between py-3 border-bottom">
+        <strong class="text-muted">Order Subtotal </strong>
+        <strong>€390.00</strong>
+      </li>
+      <li class="d-flex justify-content-between py-3 border-bottom">
+        <strong class="text-muted">Shipping and handling</strong>
+        <strong>€10.00</strong>
+      </li>
+      <li class="d-flex justify-content-between py-3 border-bottom">
+        <strong class="text-muted">Tax</strong>
+        <strong>€0.00</strong>
+      </li>
+      <li class="d-flex justify-content-between py-3 border-bottom">
+        <strong class="text-muted">Total</strong>
+        <h5 class="font-weight-bold">€400.00</h5>
+      </li>
+    </ul>
+    <a class="btn btn-dark rounded-pill py-2 btn-block
+    text-monospace font-weight-bolder h4">
+      Procceed to checkout</a>
+  </div>
+
+</ng-template>
+-->

@@ -20,3 +20,8 @@ h1{
 .margin_bottom{
   margin-bottom: 1%;
 }
+
+
+.modal.fade:not(.show).top-right-3d .modal-dialog {
+  transform: translate3d(25%, -25%, 0);
+}

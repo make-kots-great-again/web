@@ -20,22 +20,21 @@ export class GroupInfoComponent implements OnInit {
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
-  groupDescription = '';
-  addUser = '';
   groupUsers: Array<User> = [];
   noGroupByProducts: Array<Product> = [];
-  groupByCodeProducts: any = [];
-  templateShoppoingList: any = [];
-  expandView = false;
-  productCode = 0;
+  templateShoppoingList: Array<Product> = [];
+
+  groupDescription = '';
   groupId = '';
   groupName = '';
   currentUser = '';
   quantity = 1;
+
   suppressButtonMessage: string = "Activer la Suppression";
 
   isPersonnalGroup: boolean;
-  isSuppressMode: boolean = true;
+  isSuppressMode = true;
+  expandedView = false;
 
   productModel: any;
   memberModel: any;
@@ -59,11 +58,11 @@ export class GroupInfoComponent implements OnInit {
     this.isPersonnalGroup = this.route.snapshot.paramMap.get('groupRole') == 'personal';
     this.groupName = this.route.snapshot.paramMap.get('groupName');
 
-    this.groupDetails();
+    this.groupMembers();
     this.showGroupShoppingList();
   }
 
-  groupDetails(): void {
+  groupMembers(): void {
     this.groupService.getOneGroup(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
@@ -82,7 +81,7 @@ export class GroupInfoComponent implements OnInit {
     this.groupService.addMemberToGroup(groupId, username)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
-          this.groupDetails();
+          this.groupMembers();
           this.memberModel = '';
         },
         error => {
@@ -91,17 +90,20 @@ export class GroupInfoComponent implements OnInit {
   }
 
   showGroupShoppingList(): void {
+
     this.groupService.getGroupShoppingList(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
-          data.sort((a, b) => (a.product_name > b.product_name) ? 1 :
-            (a.product_name < b.product_name) ? -1 : 0);
+
           this.noGroupByProducts = data;
-          this.groupByProducts();
 
-          this.templateShoppoingList = this.groupByCodeProducts;
+          this.templateShoppoingList = this.groupByProducts(data);
 
-          if (this.groupByCodeProducts.length === 0) {
+          this.templateShoppoingList
+            .sort((a, b) => (a.product_name > b.product_name) ? 1 :
+              (a.product_name < b.product_name) ? -1 : 0);
+
+          if (this.templateShoppoingList.length === 0) {
             this.suppressButtonMessage = "Activer la suppression";
             this.isSuppressMode = true;
           }
@@ -110,42 +112,6 @@ export class GroupInfoComponent implements OnInit {
           console.error(error);
         });
   }
-
-  usernameList = (username$: Observable<string>) =>
-    username$.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap(() => this.searchingUsernames = true),
-      switchMap((username: string) => {
-        if (username === '') return of([]);
-        return this.userService.searchUsername(username).pipe(
-          tap((data: Array<groupMember>) => (data.length === 0) ?
-            this.usernameSearchFailed = true : this.usernameSearchFailed = false),
-          catchError(() => {
-            this.usernameSearchFailed = true;
-            return of([]);
-          }));
-      }),
-      tap(() => this.searchingUsernames = false)
-    )
-
-  productList = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap(() => this.searching = true),
-      switchMap((productName: string) => {
-        if (productName === '') return of([]);
-        return this.groupService.searchProducts(productName).pipe(
-          tap((data: Array<Product>) => (data.length === 0) ?
-            this.searchFailed = true : this.searchFailed = false),
-          catchError(() => {
-            this.searchFailed = true;
-            return of([]);
-          }));
-      }),
-      tap(() => this.searching = false)
-    )
 
   addProductToShoppingList(): void {
     const productInfo: Product = {
@@ -158,37 +124,16 @@ export class GroupInfoComponent implements OnInit {
       .subscribe(() => {
           this.showGroupShoppingList();
           this.productModel = '';
+          this.quantity = 1;
         },
         error => {
           console.error(error);
         });
   }
 
-  verifyProduct(): boolean {
+  groupByProducts(data: Array<any>): Array<any> {
 
-    let existingProduct: object = {};
-    if (typeof this.productModel === 'object') {
-      existingProduct = this.noGroupByProducts
-        .find(x => x.code === this.productModel.code
-          && x.username === this.currentUser);
-    }
-    return (typeof this.productModel === 'object') && !existingProduct;
-
-  }
-
-  verifyMember(): boolean {
-
-    let existingMember: object = {};
-    if (typeof this.memberModel === 'object') {
-      existingMember = this.groupUsers.find(x =>
-        x.username === this.memberModel.username);
-    }
-    return (typeof this.memberModel === 'object') && !existingMember;
-  }
-
-  groupByProducts(): void {
-
-    const groupByProductCode = this.noGroupByProducts
+    const groupByProductCode = data
       .reduce((result, item) => ({
         ...result, [item['code']]: [...(result[item['code']] || []), item]
       }), {});
@@ -222,62 +167,53 @@ export class GroupInfoComponent implements OnInit {
       .map(x => groupByProductCode[x])
       .reduce((a, b) => a.concat(b), []);
 
-    // const code = this.getCode(this.productCode);
+    return [...originalResult, ...result];
 
-    // console.log(this.productCode)
+  }
 
-    const originalResult1 = Object.keys(groupByProductCode)
-      .filter(x => groupByProductCode[x].length > 1)
+  expand(code: { id: string }): void {
+
+    this.expandedView = true;
+
+    const groupByProductCode = this.noGroupByProducts
+      .reduce((result, item) => ({
+        ...result, [item['code']]: [...(result[item['code']] || []), item]
+      }), {});
+
+    this.templateShoppoingList = Object.keys(groupByProductCode)
+      .filter(x => groupByProductCode[x].length > 1 && x == code.id)
       .map(x => groupByProductCode[x])
       .reduce((a, b) => a.concat(b), []);
-
-    originalResult.forEach((x, i) => originalResult[i].flag = false);
-    originalResult1.forEach((x, i) => originalResult1[i].flag = true);
-
-    // const index = originalResult1.findIndex(x => x.code === 18265);
-
-    this.groupByCodeProducts = [...originalResult, ...result];
-
-    //   result.splice(index, 1, ...originalResult1);
-    this.noGroupByProducts = [...originalResult, ...originalResult1];
   }
 
-  getCode(code: any): number {
-    this.productCode = code.id;
-    return Number(code.id);
-  }
-
-  expand(code: any): void {
-    this.templateShoppoingList = this.noGroupByProducts;
-    this.productCode = Number(code.id);
-    this.expandView = true;
-  }
-
-  collapse(code: any): void {
-    this.templateShoppoingList = this.groupByCodeProducts;
-    this.productCode = Number(code.id);
-    this.expandView = false;
-  }
-
-  @HostListener('window:beforeunload')
-  async ngOnDestroy(): Promise<void> {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
-  }
-
-  onDeleteProduct(index) {
+  onDeleteProduct(index: string | number, code?: any): void {
 
     this.groupService.deleteProduct(this.templateShoppoingList[index].id)
       .pipe(takeUntil(this.destroyed$))
-      .subscribe((data) => {
-          this.showGroupShoppingList();
+      .subscribe(() => {
+
+          if (this.expandedView) {
+
+            this.groupService.getGroupShoppingList(this.groupId)
+              .pipe(takeUntil(this.destroyed$))
+              .subscribe((data: any) => {
+
+                  this.noGroupByProducts = data;
+                  this.expand(code);
+                },
+                error => {
+                  console.error(error);
+                });
+          } else {
+            this.showGroupShoppingList();
+          }
         },
         error => {
           console.error(error);
         });
   }
 
-  switchSuppressMode() {
+  switchSuppressMode(): void {
     if (this.isSuppressMode) {
       this.suppressButtonMessage = "Désactiver la suppression";
       this.isSuppressMode = false;
@@ -286,4 +222,67 @@ export class GroupInfoComponent implements OnInit {
       this.isSuppressMode = true;
     }
   }
+
+  verifyProduct(): boolean {
+
+    let existingProduct: object = {};
+    if (typeof this.productModel === 'object') {
+      existingProduct = this.templateShoppoingList
+        .find(x => x.code === this.productModel.code
+          && x.username === this.currentUser);
+    }
+    return (typeof this.productModel === 'object') && !existingProduct;
+  }
+
+  verifyMember(): boolean {
+
+    let existingMember: object = {};
+    if (typeof this.memberModel === 'object') {
+      existingMember = this.groupUsers.find(x =>
+        x.username === this.memberModel.username);
+    }
+    return (typeof this.memberModel === 'object') && !existingMember;
+  }
+
+  usernameList = (username$: Observable<string>) =>
+    username$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.searchingUsernames = true),
+      switchMap((username: string) => {
+        if (username === '') return of([]);
+        return this.userService.searchUsername(username).pipe(
+          tap((data: Array<groupMember>) => (data.length === 0) ?
+            this.usernameSearchFailed = true : this.usernameSearchFailed = false),
+          catchError(() => {
+            this.usernameSearchFailed = true;
+            return of([]);
+          }));
+      }),
+      tap(() => this.searchingUsernames = false))
+
+  productList = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.searching = true),
+      switchMap((productName: string) => {
+        if (productName === '') return of([]);
+        return this.groupService.searchProducts(productName).pipe(
+          tap((data: Array<Product>) => (data.length === 0) ?
+            this.searchFailed = true : this.searchFailed = false),
+          catchError(() => {
+            this.searchFailed = true;
+            return of([]);
+          }));
+      }),
+      tap(() => this.searching = false))
+
+  @HostListener('window:beforeunload')
+  async ngOnDestroy(): Promise<void> {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
+  }
 }
+
+

@@ -1,17 +1,19 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Input, OnInit} from '@angular/core';
 import {GroupService} from '../../../core/services/group.service';
-import {ReplaySubject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {Observable, of, ReplaySubject} from 'rxjs';
+import {catchError, defaultIfEmpty, takeUntil, tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../../core/services/authentification.service';
-import {Group} from '../../../shared/models/group.model';
-import {User} from '../../../shared/models/user.model';
+import {Group, IGroup} from '../../../shared/models/group.model';
 
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
-  styleUrls: ['./groups.component.css']
+  styleUrls: ['./groups.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GroupsComponent implements OnInit {
+
+  //defaultIfEmpty(false),
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
   groups: Array<Group>;
@@ -19,17 +21,25 @@ export class GroupsComponent implements OnInit {
   groupName = '';
   groupId = '';
   groupDescription = '';
-  groupUsers: Array<User> = [];
+
+  groupsA$: Observable<Array<Group>> = this.groupService.groups$
+    .pipe(
+      catchError(error => {
+        console.error(error);
+        return of([]);
+      }));
 
   constructor(private groupService: GroupService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private cd: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
-    this.getGroups();
+    // this.getGroups();
   }
 
-  getGroups(): void {
+  /*
+    getGroups(): void {
     this.groupService.getMyGroups()
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
@@ -39,6 +49,11 @@ export class GroupsComponent implements OnInit {
         error => {
           console.log(error);
         });
+  }
+   */
+
+  ngDoCheck() {
+    this.cd.markForCheck();
   }
 
   oncreateGroupSubmit(): void {
@@ -50,7 +65,7 @@ export class GroupsComponent implements OnInit {
     this.groupService.createGroup(groupData)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
-          this.getGroups();
+          // this.getGroups();
         },
         error => {
           console.log(error);
@@ -66,7 +81,7 @@ export class GroupsComponent implements OnInit {
     this.groupService.updateGroup(this.groupId, groupData)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
-          this.getGroups();
+          this.groupsA$.pipe(tap(() => console.log('toto')))
         },
         error => {
           console.log(error);
@@ -93,7 +108,7 @@ export class GroupsComponent implements OnInit {
     this.groupService.leaveGroup(this.groupId, currentUser.userId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
-          this.getGroups();
+          //  this.getGroups();
         },
         error => {
           console.log(error);
@@ -104,7 +119,7 @@ export class GroupsComponent implements OnInit {
     this.groupService.deleteGroup(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {
-          this.getGroups();
+          //  this.getGroups();
         },
         error => {
           console.log(error);

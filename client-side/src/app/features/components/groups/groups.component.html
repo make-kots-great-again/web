@@ -1,4 +1,4 @@
-<div *ngIf="groups">
+<div *ngIf="groupsA$ | async as groupsArray else loadingSpinner">
 
   <br><br>
   <!-- Filter Input -->
@@ -23,7 +23,7 @@
   </div>
   <br>
   <!-- User Table -->
-  <div *ngIf="groups.length !== 0" class="container text-center ">
+  <div class="container text-center ">
     <p class="font-weight-bold">Mes groupes </p>
     <br>
     <!-- Table  -->
@@ -49,7 +49,7 @@
 
       <!-- Table body -->
       <tbody id="demo">
-      <ng-container *ngFor="let group of groups index as i">
+      <ng-container *ngFor="let group of groupsArray index as i">
 
         <tr #groupId id="{{group['groupId']}}">
 
@@ -120,18 +120,10 @@
     </table>
   </div>
 
-  <br>
-  <div *ngIf="groups.length === 0" class="container text-center ml-lg-auto">
-    <i class="fa fa-exclamation-triangle fa-4x" style="color: red"></i>
-    <h3 class="text-monospace font-italic font-weight-bolder">
-      You have no groups at the moment
-    </h3>
-  </div>
 </div>
-
-<div *ngIf="!groups">
+<ng-template #loadingSpinner>
   <app-spinner></app-spinner>
-</div>
+</ng-template>
 
 <!-- create a group modal -->
 <div class="modal fade top-right-3d" id="createGroup" tabindex="-1"
