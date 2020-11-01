@@ -5,11 +5,13 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {SpinnerComponent} from './components/spinner/spinner.component';
+import {TruncatePipe} from './pipes/truncate.pipe';
 
 const routes: Routes = [];
 
 @NgModule({
-  declarations: [NavbarComponent, SpinnerComponent],
+  declarations:
+    [NavbarComponent, SpinnerComponent, TruncatePipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -23,7 +25,8 @@ const routes: Routes = [];
     SpinnerComponent,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TruncatePipe
   ]
 })
 export class SharedModule {

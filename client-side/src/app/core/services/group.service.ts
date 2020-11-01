@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {IGroup, IgroupMember} from '../../shared/models/group.model';
 import {IProduct} from '../../shared/models/product.model';
-import {map} from 'rxjs/operators';
+import {map, shareReplay} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,9 @@ export class GroupService {
 
   constructor(private http: HttpClient) {
   }
+
+  groups$ = this.http.get<IGroup>('/server/api/user/groups', {observe: 'response'})
+    .pipe(map((data: any) => data.body.userInfo[0].groups), shareReplay(1));
 
   createGroup(groupData: IGroup): Observable<HttpResponse<IGroup>> {
     return this.http.post<IGroup>(`/server/api/group/create`, groupData, {observe: 'response'})
@@ -25,7 +28,7 @@ export class GroupService {
 
   getOneGroup(id: string): Observable<HttpResponse<IGroup>> {
     return this.http.get<IGroup>(`/server/api/group/${id}`, {observe: 'response'})
-      .pipe(map((data: any) => data.body.groupInfo));
+      .pipe(map((data: any) => data.body.groupInfo), shareReplay(1));
   }
 
   updateGroup(groudId: string, groupData: IGroup): Observable<HttpResponse<IGroup>> {
@@ -55,7 +58,7 @@ export class GroupService {
 
   getGroupShoppingList(groudId: string): Observable<HttpResponse<IProduct>> {
     return this.http.get<IProduct>(`/server/api/shoppingList/${groudId}`, {observe: 'response'})
-      .pipe(map((data: any) => data.body.shoppingList));
+      .pipe(map((data: any) => data.body.shoppingList), shareReplay(1));
   }
 
   addProduct(productInfo: IProduct, groudId: string): Observable<HttpResponse<IProduct>> {
