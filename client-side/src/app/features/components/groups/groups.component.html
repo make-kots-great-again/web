@@ -1,4 +1,4 @@
-<div *ngIf="groupsA$ | async as groupsArray else loadingSpinner">
+<div *ngIf="groups.length > 0 else loadingSpinner">
 
   <br><br>
   <!-- Filter Input -->
@@ -49,7 +49,7 @@
 
       <!-- Table body -->
       <tbody id="demo">
-      <ng-container *ngFor="let group of groupsArray index as i">
+      <ng-container *ngFor="let group of groups index as i">
 
         <tr #groupId id="{{group['groupId']}}">
 
@@ -121,6 +121,8 @@
   </div>
 
 </div>
+
+<!-- loading spinner -->
 <ng-template #loadingSpinner>
   <app-spinner></app-spinner>
 </ng-template>
