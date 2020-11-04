@@ -1,9 +1,10 @@
 import {makeGroup} from '../domain'
+import {jwtFactory} from "../security";
 
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({
         addGroup, addOwnGroup, listMyGroups, getGroup, addMembersToGroup,
-        deleteUserFromGroup, deleteGroup, patchGroup, getIdGroupUser
+        deleteUserFromGroup, deleteGroup, patchGroup, getIdGroupUser, getGroupToken
     });
 
     async function addGroup({username, ...groupInfo}) {
@@ -97,6 +98,33 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         if (!group) return {message: `No group was found with this id : ${groupId}`};
 
         return group;
+    }
+
+    /**
+     * Fonction permettant de récupérer un token à partir d'un identifant 
+     * de groupe valide
+     * @param groupId l'identifiant du groupe.
+     * @returns
+     *          -> si l'identifiant est manquant ou non valide
+     *             OU s'il ne correspond pas à un groupe existant : un message d'erreur
+     *          -> sinon, un token JWT propre au groupe.
+     */
+    async function getGroupToken({groupId}) {
+
+        if (!groupId) return {message: 'You must supply a group id.'};
+
+        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${groupId} is not a valid UUID`};
+
+        const group = await groupRepository.findGroupById({groupId});
+       
+        if (!group) return {message: `No group was found with this id : ${groupId}`};
+
+        const gName = group.dataValues.groupName;
+        const gId = group.dataValues.groupId;
+        const token = jwtFactory.generateGroupJwt({gName, gId}); 
+
+        return token;
     }
 
     async function addMembersToGroup({groupId, username}) {

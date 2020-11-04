@@ -3,7 +3,7 @@ import {groupService} from "../services";
 export default function groupControllerFactory() {
     return Object.freeze({
         createGroup, getMyGroups, getOneGroup, addMembersToGroup,
-        leaveGroup, deleteGroup, updateGroup
+        leaveGroup, deleteGroup, updateGroup, getGroupToken
     });
 
     async function createGroup(httpRequest) {
@@ -204,4 +204,44 @@ export default function groupControllerFactory() {
             return {statusCode: 400, body: {error: e.message}}
         }
     }
+
+    /**
+     * Fonction de contrôle pour la requête de récupération d'un token JWT
+     * pour un groupe.
+     * Transmettant la requête http reçue depuis la route vers le service associé,
+     * vérifie si la requête à réussi ou échoué et agit en conséquence.
+     * @param httpRequest
+     * @returns
+     *     si OK -> statusCode 200, un messages de réussite et le token JWT
+     *     si NOK -> statusCode 400 et le message d'erreur
+     */
+    async function getGroupToken(httpRequest) {
+
+        try {
+
+            const {groupId} = httpRequest.params;
+
+            const token = await groupService.getGroupToken({groupId});
+
+            if (token.message) {
+                return {
+                    statusCode: 404,
+                    body: {success: false, message: token.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    token: token
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+    }
+
 };
