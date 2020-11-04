@@ -12,9 +12,10 @@ import {AuthGuard} from '../core/guards/auth.guard';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {ChartsComponent} from './components/dashboard/charts/charts.component';
 import {GroupsComponent} from './components/groups/groups.component';
-import {QrGenComponent} from './components/qr-gen/qr-gen.component';
+import {QrGenComponent} from './components/profile/qr-gen/qr-gen.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {GroupInfoComponent} from './components/groups/group-info/group-info.component';
+import { BarcodeGenComponent } from './components/groups/barcode-gen/barcode-gen.component';
 
 const routes: Routes = [
   {path: 'register', component: RegisterComponent},
@@ -35,6 +36,7 @@ const routes: Routes = [
     GroupsComponent,
     QrGenComponent,
     GroupInfoComponent,
+    BarcodeGenComponent,
   ],
   imports: [
     SharedModule,

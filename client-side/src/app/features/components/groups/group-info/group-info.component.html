@@ -6,18 +6,19 @@
     <div class=" font-weight-bold">
 
       <h1 class="d-flex justify-content-center">{{groupName}}</h1>
-
+      
       <p></p>
 
       <h3 class="text-monospace font-italic"><strong>Description du groupe</strong>
-
         <p></p>
         <p style="font-size: small" class="blockquote-footer my-0">
           {{groupDescription}}
         </p>
-
       </h3>
+      <app-barcode-gen class="font-weight-normal" [groupId]="groupId"></app-barcode-gen>
     </div>
+
+    
 
     <div class="container mt-2 mb-2">
       <div class="modal-body card border-light">
