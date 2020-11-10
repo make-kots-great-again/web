@@ -10,7 +10,7 @@ Documentation available [here](https://make-kots-great-again.github.io/web/ "api
 
 ### Usage
 
-* Clone the GitHub repo
+* Clone the GitHub repo.
 * Run `docker-compose up -d` in the root directory and hit `http://localhost:8000` in 
 your browser. 
 
