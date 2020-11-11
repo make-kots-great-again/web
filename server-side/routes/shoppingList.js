@@ -22,6 +22,28 @@ router.post("/shoppingList/addProduct/:groupId",
     passport.authenticate("jwt", {session: false}),
     makeCallback(shoppingListController.addProductToShoppingList));
 
+/**
+ * @api {delete} /shoppingList/removeProduct/:listId Supprime un produit d'une liste de course.
+ * @apiName ShoppingList Remove Product
+ * @apiGroup ShoppingList
+ *
+ * @apiParam {listId} id Product ID unique.
+ *
+ * @apiSuccess {boolean} success le statut de la requête.
+ * @apiSuccess {String} message le message de retour de la requête.
+ * @apiSuccess {int} nombre d'ojets restant dans la liste de course.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *      {
+ *          "success": true,
+ *          "message": "Product delete from the list !",
+ *          "shoppingList": 0
+ *      }
+ *
+ * @apiError 400 erreur indéterminée venant du serveur lui-même.
+ * @apiError 404 erreur due à une mauvaise utilisation du code.
+ */
 router.delete("/shoppingList/removeProduct/:listId",
     passport.authenticate("jwt", {session: false}),
     makeCallback(shoppingListController.removeProductToShoppingList));

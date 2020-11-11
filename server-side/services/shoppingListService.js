@@ -80,7 +80,6 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
     }
 
     async function removeProductFromShoppingList({listId}) {
-        console.log("in service : "+ listId)
         return await shoppingListRepository.removeProduct({
             id: listId
         });
