@@ -6,7 +6,7 @@
     <div class=" font-weight-bold">
 
       <h1 class="d-flex justify-content-center">{{groupName}}</h1>
-      
+
       <p></p>
 
       <h3 class="text-monospace font-italic"><strong>Description du groupe</strong>
@@ -18,7 +18,6 @@
       <app-barcode-gen class="font-weight-normal" [groupId]="groupId"></app-barcode-gen>
     </div>
 
-    
 
     <div class="container mt-2 mb-2">
       <div class="modal-body card border-light">
@@ -134,21 +133,30 @@
                 <b>{{productModel}}</b> n'a été trouvé !
               </div>
             </div>
-            <label for="quantityInput">
-              <input
-                [disabled]="!verifyProduct()"
-                class="btn btn-outline-success text-center
+              <div *ngIf="verifyProduct() && !isPersonnalGroup"
+                class="custom-control custom-checkbox">
+                <input
+                  type="checkbox" class="custom-control-input" id="customCheck1"
+                  (click)="groupProductButton($event.target)">
+                <label for="customCheck1"
+                  class="custom-control-label text-monospace font-italic font-weight-bolder">
+                  Groupe
+                </label>
+              </div>
+              <label class="ml-3" for="quantityInput">
+                <input *ngIf="verifyProduct()"
+                  class="btn btn-outline-success text-center
                   text-monospace font-italic font-weight-bolder"
-                [(ngModel)]="quantity" name="quantity"
-                type="number" id="quantityInput" min="1" max="20"
-                placeholder="1">
-            </label>
-            <button (click)="addProductToShoppingList()"
-                    name="addProduct" type="submit"
-                    [disabled]="!verifyProduct()"
-                    class="btn btn-outline-success text-center mx-sm-3
+                  [(ngModel)]="quantity" name="quantity"
+                  type="number" id="quantityInput" min="1" max="20"
+                  placeholder="1">
+              </label>
+              <button (click)="addProductToShoppingList()"
+                      name="addProduct" type="submit"
+                      [disabled]="!verifyProduct()"
+                      class="btn btn-outline-success text-center mx-sm-3
               text-monospace font-italic font-weight-bolder">Ajouter un produit
-            </button>
+              </button>
           </fieldset>
           <hr>
         </div>
@@ -203,7 +211,13 @@
                           </button>
                         </a>
                       </td>
-                      <td class="text-monospace font-italic">{{product['username']}}</td>
+
+                      <td *ngIf="product['groupProduct']"
+                          class="text-monospace font-italic">groupe
+                      </td>
+                      <td *ngIf="!product['groupProduct']"
+                          class="text-monospace font-italic">{{product['username']}}</td>
+
                       <td class="text-monospace font-italic">{{product['quantity']}}</td>
                       <td class="text-monospace font-italic">
                         <button
@@ -326,7 +340,8 @@
           Vous pouvez fermer ce pop up !
         </p>
       </div>
-    </div>>
+    </div>
+    >
   </div>
 </div>
 

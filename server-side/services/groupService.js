@@ -111,20 +111,14 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
      */
     async function getGroupToken({groupId}) {
 
-        if (!groupId) return {message: 'You must supply a group id.'};
+        const groupInfo = await getGroup({groupId});
 
-        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${groupId} is not a valid UUID`};
+        if (groupInfo.message) return {message: groupInfo.message};
 
-        const group = await groupRepository.findGroupById({groupId});
-       
-        if (!group) return {message: `No group was found with this id : ${groupId}`};
+        const gName = groupInfo.dataValues.groupName;
+        const gId = groupInfo.dataValues.groupId;
 
-        const gName = group.dataValues.groupName;
-        const gId = group.dataValues.groupId;
-        const token = jwtFactory.generateGroupJwt({gName, gId}); 
-
-        return token;
+        return jwtFactory.generateGroupJwt({gName, gId});
     }
 
     async function addMembersToGroup({groupId, username}) {

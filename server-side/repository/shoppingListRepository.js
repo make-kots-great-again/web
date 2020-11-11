@@ -10,7 +10,7 @@ export default function makeshoppingListRepository({ShoppingList, userGroup, Pro
 
     async function findShoppingList({groupId}) {
         return ShoppingList.findAll({
-            attributes: ['quantity', 'id'],
+            attributes: ['quantity', 'id', 'groupProduct'],
             include: [
                 {
                     model: Product,

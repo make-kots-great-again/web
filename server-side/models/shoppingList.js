@@ -21,6 +21,11 @@ const ShoppingList = dbConnection.define('shoppingList', {
                 max: 20
             }
         },
+        groupProduct: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
+        },
         id_group_user: {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,

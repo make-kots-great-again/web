@@ -80,7 +80,8 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
         return await shoppingListRepository.save({
             id_group_user: findGroup.dataValues.id_group_user,
             code: product.getProductCode(),
-            quantity: product.getProductQuantity()
+            quantity: product.getProductQuantity(),
+            groupProduct: product.getgroupProduct()
         });
     }
 
@@ -106,6 +107,7 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
                 {
                     product_name: y.dataValues.product.dataValues.product_name,
                     quantity: y.dataValues.quantity,
+                    groupProduct: y.dataValues.groupProduct,
                     code: y.dataValues.product.dataValues.code,
                     username: findUsername.dataValues.username,
                     id : y.dataValues.id

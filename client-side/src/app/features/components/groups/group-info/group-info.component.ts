@@ -26,6 +26,7 @@ export class GroupInfoComponent implements OnInit {
 
   groupDescription = '';
   groupId = '';
+  groupProduct = false;
   groupName = '';
   currentUser = '';
   quantity = 1;
@@ -113,10 +114,15 @@ export class GroupInfoComponent implements OnInit {
         });
   }
 
+  groupProductButton(event: EventTarget): void {
+    this.groupProduct = event["checked"];
+  }
+
   addProductToShoppingList(): void {
     const productInfo: Product = {
       code: this.productModel.code,
-      quantity: this.quantity
+      quantity: this.quantity,
+      groupProduct: this.groupProduct
     }
 
     this.groupService.addProduct(productInfo, this.groupId)

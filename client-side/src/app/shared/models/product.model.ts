@@ -3,6 +3,7 @@ export interface IProduct {
   product_name?: string;
   quantity?: number;
   username?: string;
+  groupProduct?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -13,12 +14,14 @@ export class Product implements IProduct {
     public product_name?: string,
     public quantity?: number,
     public username?: string,
+    public groupProduct?: boolean,
     public createdAt?: Date,
     public updatedAt?: Date
   ) {
     this.product_name = product_name ? product_name : null;
     this.code = code ? code : null;
     this.quantity = quantity ? quantity : null;
+    this.groupProduct = groupProduct ? groupProduct : null;
     this.username = username ? username : null;
     this.createdAt = createdAt ? createdAt : null;
     this.updatedAt = updatedAt ? updatedAt : null;

@@ -54,7 +54,9 @@ Array(20).fill(0).forEach((x, i) => {
         id: uuidv4(),
         id_group_user: dummyUserGroups[i].id_group_user,
         code: products[i].code,
-        quantity: Math.floor(Math.random() * 5) + 1
+        quantity: Math.floor(Math.random() * 5) + 1,
+        groupProduct: (dummyUserGroups[i].role !== 'personal'
+            && i === 0 || i === 4 || i === 10 || i === 14 || i === 18)
     });
 });
 
@@ -63,7 +65,8 @@ shoppingList.push({
     id: uuidv4(),
     id_group_user: dummyUserGroups[0].id_group_user,
     code: products[5].code,
-    quantity: Math.floor(Math.random() * 5) + 1
+    quantity: Math.floor(Math.random() * 5) + 1,
+    groupProduct: true
 });
 
 // make james join group 3
@@ -79,7 +82,8 @@ shoppingList.push({
     id: uuidv4(),
     id_group_user: dummyUserGroups[dummyUserGroups.length - 1].id_group_user,
     code: products[2].code,
-    quantity: Math.floor(Math.random() * 5) + 1
+    quantity: Math.floor(Math.random() * 5) + 1,
+    groupProduct: false
 });
 
 dummyGroups.push(...dummyPersonalGroups);
