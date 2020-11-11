@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import * as JsBarcode from 'JsBarcode';
+import * as JsBarcode from 'jsbarcode';
 
 @Component({
   selector: 'app-barcode-gen',
