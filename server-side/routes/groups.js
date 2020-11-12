@@ -27,7 +27,7 @@ router.get("/group/:groupId/add/:username",
     passport.authenticate("jwt", {session: false}),
     makeCallback(groupController.addMembersToGroup));
 
-router.get("/group/token/:groupId",
+router.get("/group/token/:groupBarCode",
     makeCallback(groupController.getGroupToken));
 
 router.delete("/group/:groupId/delete/:userId",

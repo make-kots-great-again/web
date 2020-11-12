@@ -3,7 +3,7 @@ import {jwtFactory} from "../security";
 
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({
-        addGroup, addOwnGroup, listMyGroups, getGroup, addMembersToGroup,
+        addGroup, addOwnGroup, listMyGroups, getGroup, getGroupByBarCode, addMembersToGroup,
         deleteUserFromGroup, deleteGroup, patchGroup, getIdGroupUser, getGroupToken
     });
 
@@ -100,23 +100,34 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         return group;
     }
 
+    async function getGroupByBarCode({groupBarCode}) {
+
+        if (!groupBarCode) return {message: 'You must supply a group bar-code.'};
+
+        const group = await groupRepository.findGroupByBarCode({groupBarCode});
+
+        if (!group) return {message: `No group was found with this barCode : ${groupBarCode}`};
+
+        return group;
+    }
+
     /**
-     * Fonction permettant de récupérer un token à partir d'un identifant 
+     * Fonction permettant de récupérer un token à partir d'un identifiant code barre
      * de groupe valide
-     * @param groupId l'identifiant du groupe.
+     * @param groupBarCode l'identifiant du groupe.
      * @returns
      *          -> si l'identifiant est manquant ou non valide
      *             OU s'il ne correspond pas à un groupe existant : un message d'erreur
      *          -> sinon, un token JWT propre au groupe.
      */
-    async function getGroupToken({groupId}) {
+    async function getGroupToken({groupBarCode}) {
 
-        const groupInfo = await getGroup({groupId});
+        const groupInfo = await getGroupByBarCode({groupBarCode});
 
         if (groupInfo.message) return {message: groupInfo.message};
 
         const gName = groupInfo.dataValues.groupName;
-        const gId = groupInfo.dataValues.groupId;
+        const gId = groupInfo.dataValues.groupBarCode;
 
         return jwtFactory.generateGroupJwt({gName, gId});
     }

@@ -1,6 +1,6 @@
 export default function makeGroupRepository({Group, userGroup, User}) {
     return Object.freeze({
-        save, addUserToGroup, findMyGroups, findGroupById, removeUserFromGroup,
+        save, addUserToGroup, findMyGroups, findGroupById, findGroupByBarCode, removeUserFromGroup,
         removeGroup, updateGroup, findIdGroupUser
     });
 
@@ -28,13 +28,20 @@ export default function makeGroupRepository({Group, userGroup, User}) {
     async function findGroupById({groupId}) {
         return Group.findOne({
             where: {groupId: groupId},
-            attributes: ['groupId', 'groupName', 'groupDescription'],
+            attributes: ['groupId', 'groupBarCode', 'groupName', 'groupDescription'],
             include: [{
                 model: User,
                 as: 'users',
                 attributes: ['username', 'email'],
                 through: {as: 'roleInThisGroup', attributes: ['role']}
             }]
+        });
+    }
+
+    async function findGroupByBarCode({groupBarCode}) {
+        return Group.findOne({
+            where: {groupBarCode: groupBarCode},
+            attributes: ['groupId', 'groupBarCode', 'groupName', 'groupDescription']
         });
     }
 

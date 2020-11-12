@@ -20,7 +20,7 @@
       <div class="d-flex justify-content-between py-3 border-bottom">
         <strong class="text-muted"></strong>
         <h5 class="font-weight-bold">
-          <app-barcode-gen class="font-weight-normal" [groupId]="groupId"></app-barcode-gen>
+          <app-barcode-gen class="font-weight-normal" *ngIf="groupBarCode!=''" [groupBarCode]="groupBarCode"></app-barcode-gen>
         </h5>
       </div>
     </div>

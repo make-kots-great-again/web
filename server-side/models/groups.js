@@ -9,6 +9,12 @@ const Group = dbConnection.define('group', {
         primaryKey: true,
         isUUID: 4,
     },
+    groupBarCode: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false,
+        validate: {len: [12, 14]}
+    },
     groupName: {
         type: Sequelize.STRING,
         allowNull: false,

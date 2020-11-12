@@ -8,12 +8,12 @@ import * as JsBarcode from 'jsbarcode';
 })
 export class BarcodeGenComponent implements OnInit {
 
-  @Input() groupId: string;
+  @Input() groupBarCode: string;
 
   constructor() { }
 
   ngOnInit(): void {
-    JsBarcode('#barcode', this.groupId, {
+    JsBarcode('#barcode', this.groupBarCode, {
       displayValue: true,
     });
   }

@@ -42,6 +42,7 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
                         product_name: y.dataValues.product.dataValues.product_name,
                         quantity: y.dataValues.quantity,
                         code: y.dataValues.product.dataValues.code,
+                        groupProduct: y.dataValues.groupProduct,
                         list: (y.dataValues["owners"].dataValues.role !== 'personal') ?
                             `list - ${findGroupName.dataValues.groupName}` :
                             findGroupName.dataValues.groupName,
