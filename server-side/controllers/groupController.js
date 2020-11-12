@@ -219,9 +219,9 @@ export default function groupControllerFactory() {
 
         try {
 
-            const {groupId} = httpRequest.params;
+            const {groupBarCode} = httpRequest.params;
 
-            const token = await groupService.getGroupToken({groupId});
+            const token = await groupService.getGroupToken({groupBarCode});
 
             if (token.message) {
                 return {
