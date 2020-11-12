@@ -122,7 +122,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
      */
     async function getGroupToken({groupBarCode}) {
 
-        const groupInfo = await getGroupbyBarCode({groupBarCode});
+        const groupInfo = await getGroupByBarCode({groupBarCode});
 
         if (groupInfo.message) return {message: groupInfo.message};
 
