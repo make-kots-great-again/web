@@ -233,9 +233,13 @@ export class GroupInfoComponent implements OnInit {
 
     let existingProduct: object = {};
     if (typeof this.productModel === 'object') {
+
+    //  const existingProduct1 = this.templateShoppoingList.find((x: Product) => x.code === this.productModel.code && x.product_name);
+
       existingProduct = this.templateShoppoingList
-        .find(x => x.code === this.productModel.code
-          && x.username === this.currentUser);
+        .find((x: Product) => (x.code === this.productModel.code
+          && x.username === this.currentUser) ||
+          (x.code === this.productModel.code && x.product_name));
     }
     return (typeof this.productModel === 'object') && !existingProduct;
   }
