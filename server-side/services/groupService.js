@@ -1,5 +1,6 @@
 import {makeGroup} from '../domain'
 import {jwtFactory} from "../security";
+import crypto from 'crypto';
 
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({
@@ -15,7 +16,8 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         const createGroup = await groupRepository.save({
             groupName: group.getGroupName(),
-            groupDescription: group.getGroupDescription()
+            groupDescription: group.getGroupDescription(),
+            groupBarCode: crypto.randomBytes(6).toString('hex')
         });
 
         const {userId} = groupAdmin.dataValues
@@ -171,10 +173,8 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         const deleteUser = await groupRepository.removeUserFromGroup({groupId, userId});
 
-        console.log(deleteUser)
-
         if (deleteUser === 0)
-            return {message: 'No user with that name was found in this group'};
+            return {message: 'No user with such id was found in this group !'};
 
         return groupRepository.removeUserFromGroup({groupId, userId});
     }

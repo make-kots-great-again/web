@@ -1,0 +1,19 @@
+{
+    "code": {
+        "type": "UUID",
+        "allowNull": false,
+        "primaryKey": true
+    },
+    "product_name": {
+        "type": "string",
+        "allowNull": false
+    },
+    "brands": {
+        "type": "string",
+        "allowNull": true
+    },
+    "ingredients": {
+        "type": "string(500)",
+        "allowNull": true
+    }
+}

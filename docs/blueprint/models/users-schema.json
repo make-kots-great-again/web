@@ -1,10 +1,9 @@
 {
     "userId": {
         "type": "UUIDV4",
-        "defaultValue": "Sequelize.UUIDV4",
+        "defaultValue": "UUIDV4",
         "allowNull": false,
-        "primaryKey": true,
-        "isUUID": 4
+        "primaryKey": true
     },
     "username": {
         "type": "string",

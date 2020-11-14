@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "groupInfo": {
+      "groupId": "84d0f97c-44e4-48ba-b26b-89e23bed9afa",
+      "groupBarCode": "ddb11bb1851e",
+      "groupName": "football",
+      "groupDescription": "this a football group",
+      "users": [
+          {
+              "username": "james",
+              "email": "james@gmail.com",
+              "roleInThisGroup": {
+                  "role": "member"
+              }
+          },
+          {
+              "username": "roger",
+              "email": "roger@gmail.com",
+              "roleInThisGroup": {
+                  "role": "member"
+              }
+          }
+      ]
+  }
+}
