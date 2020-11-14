@@ -1,0 +1,412 @@
+# Group Groups
+This the group entity.
+
+## Groups List [/user/groups]
+A list of my groups
+
+```no-highlight
+A JWT needs to be sent in the request header
+```
+
+### Get groups [GET]
+Get a list of groups.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
+:::
+
+Example:
+
+```http
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+```
+
++ Request (application/json)
+
+  + Headers
+
+            Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
++ Response 200 (application/json)
+
+   + Body
+
+            <!-- include(get-all-my-groups.json) -->
+
++ Response 401 (application/json)
+
+    + Body
+
+              "Unauthorized"
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+## Create group [/group/create]
+Allow one user to create a group
+
+### Create Group [POST]
+Create one group.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
+:::
+
+Example:
+
+```http
+res: "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg"
+```
+
+> The request's body is required and can't be null.
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "groupName": "test group",
+                "groupDescription": "this a test group"
+            }
+
++ Response 200 (application/json)
+
+   + Body
+
+            {
+                "success": "true",
+                "message": "A group has been created successfully !",
+                "group": {
+                    "groupId": "bc909fda-f609-4633-a274-f6d94b5df2df",
+                    "groupName": "creating this group",
+                    "groupDescription": "this is a test group",
+                    "groupBarCode": "083010752e25"
+                }
+            }
+
++ Response 401 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "Authentication failed"
+              }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+## Add User To group [/group/{groupId}/add/{username}]
+Add one user to a group.
+
++ Parameters
+
+    + groupId: `bc909fda-f609-4633-a274-f6d94b5df2df` (required, UUID) - The group id
+    + username: `roger` (required, string) - The user username
+
+### Add User To group Group [GET]
+Add one user to a group.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
+:::
+
+Example:
+
+```http
+res: "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg"
+```
+
++ Response 200 (application/json)
+
+   + Body
+
+            {
+                "success": "true",
+                "message": "roger has been successfully added to this group !",
+                "groupInfo": {
+                    "id_group_user": "41fd1305-9d2b-4129-ad47-1e2b2c3e7cc5",
+                    "userId": "2af3fb31-c670-4048-bbe5-1d79ca8da272",
+                    "groupId": "84d0f97c-44e4-48ba-b26b-89e23bed9afa",
+                    "role": "member"
+                }
+            }
+
+
++ Response 401 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "Authentication failed"
+              }
+
++ Response 404 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "No user was found with this username : *******"
+              }
+
++ Response 409 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "roger is already in this group !"
+              }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+## Delete User From group [/group/{groupId}/delete/{userId}]
+Remove a user from a group.
+
++ Parameters
+
+    + groupId: `bc909fda-f609-4633-a274-f6d94b5df2df` (required, UUID) - The group id
+    + userId: `2af3fb31-c670-4048-bbe5-1d79ca8da272` (required, string) - The user id
+
+### Delete User From group [DELETE]
+Remove a user from a group.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
+:::
+
+Example:
+
+```http
+res: "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg"
+```
+
++ Response 200 (application/json)
+
+   + Body
+
+            {
+                "success": "true",
+                "message": "User was successfully removed from this group !"
+            }
+
++ Response 401 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "Authentication failed"
+              }
+
++ Response 404 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "No user with such id was found in this group !"
+              }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+
+## Group [/group/{groupId}]
+
+CRUD operations on the group entity.
+
++ Parameters
+
+    + groupId: `84d0f97c-44e4-48ba-b26b-89e23bed9afa` (required, UUID) - The group id
+
+### Get Group [GET]
+
+Get one group's information.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 http status is sent back from the server.
+:::
+
++ Request
+
+    + Headers
+
+                Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
++ Response 200 (application/json)
+
+   + Body
+
+            <!-- include(get-one-group-rep.json) -->
+
++ Response 401 (application/json)
+
+    + Body
+
+              "Unauthorized"
+
++ Response 404 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "No group was found with this id : 84d0f97c-44e4-48ba-b26b-89e23bed9abc"
+              }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                message : "Server error"
+            }
+
+### Update a group [PATCH]
+Update a group's information.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 status is sent back from the server.
+:::
+
+A basic user can only update his own profile. Only the Admin can update his own
+and everyone's else profile.
+
++ Request with a body (application/json)
+
+    + Headers
+
+                Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
+    + Body
+
+            {
+                "groupName": "test group !!",
+                "groupDescription": "updating test group"
+            }
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "message": "This group's info was was successfully updated !"
+            }
+
++ Response 401 (application/json)
+
+    + Body
+
+              "Unauthorized"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "message": "Only the admin of this group can update the latter."
+            }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+### Delete a groupId [DELETE]
+**<i class="fa fa-trash"></i> Delete a group.**
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in `the request header` and if the token is invalid or
+has `expired`, a 401 status is sent back from the server.
+:::
+
+::: warning
+#### <i class="fa fa-warning"></i> Caution
+This is action is **irreversible !**.
+:::
+
++ Request
+
+    + Headers
+
+                Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "message": "This group was was successfully deleted !"
+            }
+
++ Response 401 (application/json)
+
+    + Body
+
+              "Unauthorized"
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                "success": false,
+                "message": "No group with that id was found !"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+
+
+
+

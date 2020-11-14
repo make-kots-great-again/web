@@ -193,27 +193,19 @@ access protected routes.
                 "message": "Server error"
             }
 
-## User [/user/{userId}]
+## User [/user]
 
-CRUD operations on one user using their id.
-
-+ Parameters
-
-    + userId: `b340ce80-8d49-4659-a953-3f4dc35167bc` (required, string) - The user ID
+CRUD operations on one user info.
 
 ### Get User [GET]
 
-Get one user.
+Get one user's information.
 
 ::: note
 #### <i class="fa fa-info-circle"></i> Info
 To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
 has **`expired`**, a 401 http status is sent back from the server.
 :::
-
-+ Parameters
-
-    + userId: `b340ce80-8d49-4659-a953-3f4dc35167bc` (string)
 
 + Request
 
@@ -233,22 +225,6 @@ has **`expired`**, a 401 http status is sent back from the server.
 
               "Unauthorized"
 
-+ Response 403 (application/json)
-
-    + Body
-
-            {
-                message: "You don't have enough permission to perform this action"
-            }
-
-+ Response 404 (application/json)
-
-    + Body
-
-            {
-                message: "No valid entry found for provided ID"
-            }
-
 + Response 500 (application/json)
 
     + Body
@@ -258,7 +234,7 @@ has **`expired`**, a 401 http status is sent back from the server.
             }
 
 ### Update a user [PATCH]
-Update a user.
+Update a user's information.
 
 ::: note
 #### <i class="fa fa-info-circle"></i> Info
@@ -315,14 +291,6 @@ and everyone's else profile.
                 message: "Can NOT update admin's info !!!"
             }
 
-+ Response 404 (application/json)
-
-    + Body
-
-            {
-                message: "No valid entry found for provided ID"
-            }
-
 + Response 405 (application/json)
 
     + Body
@@ -373,14 +341,6 @@ This is action is **irreversible !**.
     + Body
 
               "Unauthorized"
-
-+ Response 404 (application/json)
-
-    + Body
-
-            {
-                message: "No valid entry found for provided ID"
-            }
 
 + Response 500 (application/json)
 

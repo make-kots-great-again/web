@@ -10,7 +10,7 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
 
         if (!userId) return {message: 'You must supply a user id.'};
 
-        const findUserGroups = await groupService.listMyGroups({userId})
+        const findUserGroups = await groupService.listMyGroups({userId});
 
         if (findUserGroups.length === 0) return [];
 
@@ -31,10 +31,10 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
             for (const y of shoppingList) {
 
                 const findUsername = await userService.listOneUser(
-                    {id: y.dataValues["owners"].dataValues.userId})
+                    {id: y.dataValues["owners"].dataValues.userId});
 
                 const findGroupName = await groupService.getGroup(
-                    {groupId: x.dataValues.groupId})
+                    {groupId: x.dataValues.groupId});
 
                 info.push(
                     {
@@ -43,12 +43,11 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
                         quantity: y.dataValues.quantity,
                         code: y.dataValues.product.dataValues.code,
                         groupProduct: y.dataValues.groupProduct,
+                        username: (y.dataValues.groupProduct) ? 'group' : findUsername.dataValues.username,
                         list: (y.dataValues["owners"].dataValues.role !== 'personal') ?
                             `list - ${findGroupName.dataValues.groupName}` :
-                            findGroupName.dataValues.groupName,
-                        username: (y.dataValues.groupProduct) ? 'group' :
-                        findUsername.dataValues.username
-                    })
+                            findGroupName.dataValues.groupName
+                    });
             }
         }
 
@@ -73,7 +72,7 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
         const findList = await getGroupShoppingList({groupId: groupId});
 
         const existingProduct = findList.find(x =>
-            x.code === productInfo.code && x.username === findUser.dataValues.username)
+            x.code === productInfo.code && x.username === findUser.dataValues.username);
 
         if (existingProduct)
             return {message: `You have already added ${existingProduct.product_name} to this list !`};

@@ -1,0 +1,25 @@
+{
+    "success": true,
+    "userInfo": [
+        {
+            "userId": "2fd2a349-a924-42d2-ba64-ffd566175c1f",
+            "username": "james",
+            "groups": [
+                {
+                    "groupId": "84d0f97c-44e4-48ba-b26b-89e23bed9afa",
+                    "groupName": "football",
+                    "roleInThisGroup": {
+                        "role": "member"
+                    }
+                },
+                {
+                    "groupId": "cf45fc9b-ee6e-4bee-8cec-45a092afabdd",
+                    "groupName": "volleyball",
+                    "roleInThisGroup": {
+                        "role": "admin"
+                    }
+                }
+            ]
+        }
+    ]
+}
