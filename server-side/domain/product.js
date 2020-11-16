@@ -1,6 +1,6 @@
 export default function buildMakeProduct(requiredParameter) {
     return ({
-                productName = requiredParameter('A groupName')
+                productName = requiredParameter('A productName')
             } = {}) => {
 
         if (typeof productName !== 'string')
