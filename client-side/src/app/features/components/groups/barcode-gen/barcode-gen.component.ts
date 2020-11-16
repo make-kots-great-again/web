@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import * as JsBarcode from 'JsBarcode';
+import * as JsBarcode from 'jsbarcode';
 
 @Component({
   selector: 'app-barcode-gen',
@@ -13,7 +13,7 @@ export class BarcodeGenComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    JsBarcode('#barcode', this.groupId, {
+    JsBarcode('#barcode', "20-10-2020-12-24-36-365", {
       displayValue: true,
     });
   }
