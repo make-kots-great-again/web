@@ -15,8 +15,10 @@ describe('PRODUCT ENTITY', () => {
     describe('#product', () => {
 
         it('it should make a product', () => {
+            
             const product = makeFakeProduct("jasmin");
             const buildProduct = makeProduct({...product});
+            
             expect(buildProduct.getProductName()).to.be.eql(product.productName);
         });
     });

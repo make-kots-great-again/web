@@ -16,8 +16,10 @@ describe('SHOPPINGLIST ENTITY', () => {
     describe('#shoppingList', () => {
 
         it('it should make a shopping list', () => {
+            
             const shoppingList = makeFakeShoppingList(11223344, 4);
             const buildShoppingList = makeShoppingList({...shoppingList});
+            
             expect(buildShoppingList.getProductCode()).to.be.eql(shoppingList.code);
             expect(buildShoppingList.getProductQuantity()).to.be.eql(shoppingList.quantity);
         });
@@ -25,7 +27,7 @@ describe('SHOPPINGLIST ENTITY', () => {
 
     describe('#code', () => {
 
-        it('a code must have a code', () => {
+        it('a shoppingList must have a code', () => {
             
             const shoppingList = makeFakeShoppingList(undefined, 4);
             
@@ -52,7 +54,7 @@ describe('SHOPPINGLIST ENTITY', () => {
 
     describe('#quantity', () => {
 
-        it('a quantity must have a code', () => {
+        it('a shoppingList must have a quantity', () => {
             
             const shoppingList = makeFakeShoppingList(11223344, undefined);
             
