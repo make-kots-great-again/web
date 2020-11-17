@@ -1,6 +1,6 @@
 export default function makeProductRepository({Product, Op}) {
     return Object.freeze({
-        save, findAll,
+        save, findAll, findByCode
     });
 
     async function save({...userInfo}) {
@@ -16,6 +16,11 @@ export default function makeProductRepository({Product, Op}) {
                     }
                 }, attributes: ['code', 'product_name']
             });
+    }
+
+    async function findByCode({code: code}) {
+        return Product.findByPk(code);
+
     }
 
 }

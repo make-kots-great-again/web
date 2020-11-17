@@ -71,7 +71,9 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         const findAdmin = users.find(x => x.role === 'admin');
 
         if (!findAdmin || findAdmin.username !== username)
-            return {message: 'Only the admin of this group can update the latter.'};
+            return {
+            statusCode: 403,
+            message: 'Only the admin of this group can update the latter.'};
 
         const group = makeGroup({...changes});
 
@@ -93,7 +95,9 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         if (!groupId) return {message: 'You must supply a group id.'};
 
         if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${groupId} is not a valid UUID`};
+            return {
+            statusCode: 400,
+            message: `${groupId} is not a valid UUID`};
 
         const group = await groupRepository.findGroupById({groupId});
 

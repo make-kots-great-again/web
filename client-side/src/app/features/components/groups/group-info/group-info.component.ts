@@ -98,6 +98,8 @@ export class GroupInfoComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
 
+          console.log(data);
+
           this.noGroupByProducts = data;
 
           this.templateShoppoingList = this.groupByProducts(data);
@@ -241,7 +243,7 @@ export class GroupInfoComponent implements OnInit {
       existingProduct = this.templateShoppoingList
         .find((x: Product) => (x.code === this.productModel.code
           && x.username === this.currentUser) ||
-          (x.code === this.productModel.code && x.product_name));
+          (x.code === this.productModel.code && x.groupProduct));
     }
     return (typeof this.productModel === 'object') && !existingProduct;
   }

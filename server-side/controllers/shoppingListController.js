@@ -41,7 +41,7 @@ export default function shoppingListControllerFactory() {
 
             if (shoppingList.message) {
                 return {
-                    statusCode: 404,
+                    statusCode: (shoppingList.statusCode) ? shoppingList.statusCode : 404,
                     body: {success: false, message: shoppingList.message}
                 }
             }
@@ -64,16 +64,16 @@ export default function shoppingListControllerFactory() {
 
     async function removeProductToShoppingList(httpRequest) {
 
-        const {listId} = httpRequest.params;
+        const {itemId} = httpRequest.params;
+        const {userId} = httpRequest.user;
 
         try {
             const shoppingList = await shoppingListService
-                .removeProductFromShoppingList({listId});
-
+                .removeProductFromShoppingList({itemId, userId});
 
             if (shoppingList.message) {
                 return {
-                    statusCode: 404,
+                    statusCode: (shoppingList.statusCode) ? shoppingList.statusCode : 404,
                     body: {success: false, message: shoppingList.message}
                 }
             }
@@ -87,20 +87,25 @@ export default function shoppingListControllerFactory() {
                 }
             }
         } catch (e) {
-
             console.log(e);
             return {statusCode: 400, body: {error: e.message}}
         }
 
     }
 
-
-    async function getGroupShoppingList(httpRequest){
+    async function getGroupShoppingList(httpRequest) {
 
         const {groupId} = httpRequest.params;
 
         try {
             const shoppingList = await shoppingListService.getGroupShoppingList({groupId});
+
+            if (shoppingList.message) {
+                return {
+                    statusCode: 400,
+                    body: {success: false, message: shoppingList.message}
+                }
+            }
 
             return {
                 statusCode: 200,

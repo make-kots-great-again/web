@@ -1,0 +1,29 @@
+{
+    "success": true,
+    "shoppingList": [
+        {
+            "id": "1c4aaae8-daff-4810-b1d4-423f52bd63b3",
+            "code": 16612,
+            "product_name": "Organic Adzuki Beans",
+            "quantity": 2,
+            "groupProduct": false,
+            "username": "james"
+        },
+        {
+            "id": "856bc1b0-4616-41e4-ab6a-deb4b62968f7",
+            "code": 16650,
+            "product_name": "Organic Penne Pasta",
+            "quantity": 3,
+            "groupProduct": true,
+            "username": "group"
+        },
+        {
+            "id": "61b63a20-e603-41b8-ab31-15e60ce3e4ef",
+            "code": 18012,
+            "product_name": "Cinnamon Nut Granola",
+            "quantity": 1,
+            "groupProduct": false,
+            "username": "james"
+        }
+    ]
+}

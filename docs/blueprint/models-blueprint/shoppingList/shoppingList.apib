@@ -1,0 +1,282 @@
+# Group ShoppingList
+This the shoppingList entity.
+
+## Search shoppingList [/shoppingList]
+Get all one user's shopping lists.
+
+> :warning: A JWT needs to be sent in the request header to have access to product's entity routes.
+
+### Get shoppingLists [GET]
+Get all one user's shopping lists.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To have acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
+:::
+
+Example:
+
+```http
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+```
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+This route was made specifically for the **mobile team** on this project.   
+:::
+
++ Request (application/json)
+
+  + Headers
+
+            Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
++ Response 200 (application/json)
+
+   + Body
+
+            <!-- include(get-shoppingList.json) -->
+
++ Response 401 (application/json)
+
+    + Body
+
+              "Unauthorized"
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+
+## Add product to shoppingList [/shoppingList/addProduc/{groupId}]
+Add a product to a shopping list.
+
++ Parameters
+
+    + groupId: `bc909fda-f609-4633-a274-f6d94b5df2df` (required, UUID) - The group id
+
+### Add product to shoppingList [POST]
+Add a product to a shopping list.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
+:::
+
+Example:
+
+```http
+res: "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg"
+```
+
+> The request's body is required and can't be null.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+If you want to add a product for the whole group, add this **groupProduct : true** in your request's body.
+If groupProduct is NOT in the request's body, it's value will be false which implies the product added is 
+not for the whole group. 
+:::
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "code": 18192,
+                "quantity": 2
+            }
+
++ Response 200 (application/json)
+
+   + Body
+
+            {
+                "success": true,
+                "message": "Product successfully added to the list !",
+                "shoppingList": {
+                    "id": "856bc1b0-4616-41e4-ab6a-deb4b62968f7",
+                    "id_group_user": "bf90111f-829b-4c08-8fca-22f9a9574291",
+                    "code": 18192,
+                    "quantity": 2
+                }
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "No product was found with this code 111"
+              }
+
++ Response 401 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "Authentication failed"
+              }
+
+
++ Response 404 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "No group was found with this id : 95a93ec6-1f1e-41a8-93d2-bc3bdc380607"
+              }
+
++ Response 409 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "You have already added Organic Penne Pasta to this list !"
+              }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+## Get group shoppingList [/shoppingList/{groupId}]
+Get a list of items of one group's shopping list. 
+
++ Parameters
+
+    + groupId: `bc909fda-f609-4633-a274-f6d94b5df2df` (required, UUID) - The group id
+
+### Get group shoppingList [GET]
+Add one user to a group.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
+:::
+
+Example:
+
+```http
+res: "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg"
+```
+
++ Response 200 (application/json)
+
+   + Body
+
+            <!-- include(get-one-shoppingList-rep.json) -->
+
++ Response 400 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "e57e372d-5af6-4c7d-6a2116 is not a valid UUID"
+              }
+
++ Response 401 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "Authentication failed"
+              }
+
++ Response 404 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "No group was found with this id : e57e372d-5af6-4c26-9f7d-6a211686a057"
+              }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+## Delete shoppingList item [/shoppingList/removeProduct/{itemId}]
+Delete one item in the shopping list. 
+
++ Parameters
+
+    + itemId: `bc909fda-f609-4633-a274-f6d94b5df2df` (required, UUID) - The item id
+
+### Delete shoppingList item [DELETE]
+Delete one item in the shopping list. 
+
+> :exclamation: **itemId** represents one item in one shopping list.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
+:::
+
+Example:
+
+```http
+res: "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg"
+```
+
++ Response 200 (application/json)
+
+   + Body
+
+            <!-- include(get-one-shoppingList-rep.json) -->
+
++ Response 401 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "Authentication failed"
+              }
+
++ Response 403 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "Unfortunately you don't own this item."
+              }
+
++ Response 404 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "No item with this id 'e51e372d-5af6-4c26-9f7d-6a211686a032' was found in the shopping list !"
+              }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }

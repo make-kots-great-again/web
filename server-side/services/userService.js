@@ -76,37 +76,27 @@ export default function userServiceFactory({userRepository}) {
      *      -> la présence et la validité d'un identifiant
      *      -> l'unicité de l'email et du pseudo dans la db
      * avant de forwarder la requête au userRepository.
-     * @param id l'identifiant de l'utilisateur.
+     * @param userId l'identifiant de l'utilisateur.
      * @param userInfo (paramètre spread) contant toutes les infos à modifier de l'utilisateur
      * @returns
      *          -> si l'identifiant est manquant ou non valide
      *             OU si l'email ou le pseudo existent déjà dans la db : un message d'erreur
      *          -> sinon, la réponse de la requête envoyé au userRepository.
      */
-    async function putUser({id}, {...userInfo}) {
+    async function putUser({userId, ...userInfo}) {
 
-        if (!id) return {message: 'You must supply an id.'};
-
-        if (!(id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${id} is not a valid v4 UUID`};
-
-        const existing_users = await userRepository.findByEmailOrUsername({
+        const existingUser = await userRepository.findByEmailOrUsername({
             email: userInfo.email,
             username: userInfo.username
         });
 
-        for (let user of existing_users) {
-            if (user.userId !== id) {
-                return {message: "A user with the same email address already exists !"}
-            }
-            ;
-            if (user.userId !== id) {
-                return {message: "A user with the same username already exists !"}
-            }
-            ;
-        }
+        const findUser = existingUser.find(x => userId === x.dataValues.userId
+            && userInfo.email === x.dataValues.email
+            && userInfo.username === x.dataValues.username);
 
-        return await userRepository.put({id}, {...userInfo});
+        if (!findUser) return {message: "A user with the same username or email already exists !"};
+
+        return await userRepository.put({userId, ...userInfo});
     }
 
     /**
@@ -138,17 +128,12 @@ export default function userServiceFactory({userRepository}) {
 
     async function removeUser({id} = {}) {
 
-        if (!id) return {message: 'You must supply an id.'};
-
-        if (!(id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${id} is not a valid v4 UUID`};
-
         return await userRepository.remove({id});
     }
 
     async function searchUser({username} = {}) {
 
-        if (!username) return {message: 'You must supply an id.'};
+        if (!username) return {message: 'You must supply an username.'};
 
         return await userRepository.searchUsername({username});
     }

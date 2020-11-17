@@ -1,19 +1,17 @@
 # Group Groups
 This the group entity.
 
-## Groups List [/user/groups]
+## Groups list [/user/groups]
 A list of my groups
 
-```no-highlight
-A JWT needs to be sent in the request header
-```
+> :warning: A JWT needs to be sent in the request header to have access to group'sentity routes.  
 
 ### Get groups [GET]
 Get a list of groups.
 
 ::: note
 #### <i class="fa fa-info-circle"></i> Info
-To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+To have acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
 has **`expired`**, a 401 HTTP status is sent back from the server.
 :::
 
@@ -52,7 +50,7 @@ Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdt
 ## Create group [/group/create]
 Allow one user to create a group
 
-### Create Group [POST]
+### Create group [POST]
 Create one group.
 
 ::: note
@@ -110,7 +108,7 @@ res: "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdt
                 "message": "Server error"
             }
 
-## Add User To group [/group/{groupId}/add/{username}]
+## Add user to group [/group/{groupId}/add/{username}]
 Add one user to a group.
 
 + Parameters
@@ -118,7 +116,7 @@ Add one user to a group.
     + groupId: `bc909fda-f609-4633-a274-f6d94b5df2df` (required, UUID) - The group id
     + username: `roger` (required, string) - The user username
 
-### Add User To group Group [GET]
+### Add user to group [GET]
 Add one user to a group.
 
 ::: note
@@ -184,7 +182,7 @@ res: "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdt
                 "message": "Server error"
             }
 
-## Delete User From group [/group/{groupId}/delete/{userId}]
+## Delete user from group [/group/{groupId}/delete/{userId}]
 Remove a user from a group.
 
 + Parameters
@@ -192,7 +190,7 @@ Remove a user from a group.
     + groupId: `bc909fda-f609-4633-a274-f6d94b5df2df` (required, UUID) - The group id
     + userId: `2af3fb31-c670-4048-bbe5-1d79ca8da272` (required, string) - The user id
 
-### Delete User From group [DELETE]
+### Delete user from group [DELETE]
 Remove a user from a group.
 
 ::: note
@@ -251,7 +249,7 @@ CRUD operations on the group entity.
 
     + groupId: `84d0f97c-44e4-48ba-b26b-89e23bed9afa` (required, UUID) - The group id
 
-### Get Group [GET]
+### Get group [GET]
 
 Get one group's information.
 
@@ -272,6 +270,15 @@ has **`expired`**, a 401 http status is sent back from the server.
    + Body
 
             <!-- include(get-one-group-rep.json) -->
+
++ Response 400 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "e57e372d-5af6-4c7d-6a2116 is not a valid UUID"
+              }
 
 + Response 401 (application/json)
 

@@ -9,7 +9,7 @@ import {userRepository, groupRepository,
 const userService = userServiceFactory({userRepository});
 const groupService = groupServiceFactory({groupRepository, userRepository});
 const productService = productServiceFactory({productRepository});
-const shoppingListService = shoppingListServiceFactory({shoppingListRepository});
+const shoppingListService = shoppingListServiceFactory({shoppingListRepository, productRepository});
 
 const services = Object.freeze(
     {userService, groupService, productService, shoppingListService});
