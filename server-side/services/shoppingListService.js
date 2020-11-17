@@ -1,7 +1,7 @@
 import {makeShoppingList} from '../domain'
 import {groupService, userService} from "./index";
 
-export default function shoppingListServiceFactory({shoppingListRepository}) {
+export default function shoppingListServiceFactory({shoppingListRepository, productRepository}) {
     return Object.freeze({
         listMyShoppingLists, putProductInShoppingList, removeProductFromShoppingList, getGroupShoppingList
     });
@@ -78,6 +78,11 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
             return {message: `You have already added ${existingProduct.product_name} to this list !`};
 
         const product = makeShoppingList({...productInfo});
+
+        const findProductCode = await productRepository.findByCode({code : product.getProductCode()}); 
+
+        if (!findProductCode)
+            return {message: `No product was found with this code ${product.getProductCode()}`};
 
         return await shoppingListRepository.save({
             id_group_user: findGroup.dataValues.id_group_user,
