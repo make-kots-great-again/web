@@ -271,6 +271,15 @@ has **`expired`**, a 401 http status is sent back from the server.
 
             <!-- include(get-one-group-rep.json) -->
 
++ Response 400 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "e57e372d-5af6-4c7d-6a2116 is not a valid UUID"
+              }
+
 + Response 401 (application/json)
 
     + Body

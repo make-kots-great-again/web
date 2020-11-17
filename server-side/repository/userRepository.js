@@ -23,25 +23,25 @@ export default function makeUserRepository({User, Op}) {
     /**
      * Fonction permettant de mettre à jour tout le profil d'un utilisateur
      * dans la db.
-     * @param id : l'identifiant de l'utilisateur à modifier. 
+     * @param userId : l'identifiant de l'utilisateur à modifier.
      * @param userInfo (opérateur spread) toutes les données à modifier.
      * @returns l'utilisateur modifié
      */
-    async function put({id},{...userInfo}) {
+    async function put({userId, ...userInfo}) {
         return User.update(
             {...userInfo},
-            {returning: true, plain: true, where: {userId: id}}
+            {returning: true, plain: true, where: {userId: userId}}
         )
     }
 
     /**
      * Fonction permettant de mettre à jour le mot de passe d'un utilisateur
      * dans la db.
-     * @param id : l'identifiant de l'utilisateur à modifier. 
+     * @param id : l'identifiant de l'utilisateur à modifier.
      * @param newPassword le nouveau mot de passe préalablement encrypté.
      * @returns l'utilisateur modifié
      */
-    async function patchPwd({id},{newPassword}) {
+    async function patchPwd({id}, {newPassword}) {
         return User.update(
             {password: newPassword},
             {returning: true, plain: true, where: {userId: id}}
@@ -55,7 +55,7 @@ export default function makeUserRepository({User, Op}) {
     /**
      * Fonction permettant de récupérer le profil d'un utilisateur
      * depuis la db sur base de son identifiant.
-     * @param id : l'identifiant de l'utilisateur à modifier. 
+     * @param id : l'identifiant de l'utilisateur à modifier.
      * @returns l'utilisateur.
      */
     async function findById({id: userId}) {

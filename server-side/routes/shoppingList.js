@@ -22,7 +22,7 @@ router.post("/shoppingList/addProduct/:groupId",
     passport.authenticate("jwt", {session: false}),
     makeCallback(shoppingListController.addProductToShoppingList));
 
-router.delete("/shoppingList/removeProduct/:listId",
+router.delete("/shoppingList/removeProduct/:itemId",
     passport.authenticate("jwt", {session: false}),
     makeCallback(shoppingListController.removeProductToShoppingList));
 

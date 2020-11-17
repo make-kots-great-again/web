@@ -20,9 +20,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
         for (const x of groups) {
 
-          //  const index = groups.indexOf(x) + 1;
-
-            const shoppingList = await shoppingListRepository.findShoppingList(
+            const shoppingList = await shoppingListRepository.findGroupShoppingList(
                 {groupId: x.dataValues.groupId});
 
             if (shoppingList.length === 0) info.push(
@@ -38,10 +36,11 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
                 info.push(
                     {
-                        groupId : x.dataValues.groupId,
+                        code: y.dataValues.product.dataValues.code,
                         product_name: y.dataValues.product.dataValues.product_name,
                         quantity: y.dataValues.quantity,
-                        code: y.dataValues.product.dataValues.code,
+                        groupId: x.dataValues.groupId,
+                        shoppingListId: y.dataValues.id,
                         groupProduct: y.dataValues.groupProduct,
                         username: (y.dataValues.groupProduct) ? 'group' : findUsername.dataValues.username,
                         list: (y.dataValues["owners"].dataValues.role !== 'personal') ?
@@ -75,14 +74,20 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
             x.code === productInfo.code && x.username === findUser.dataValues.username);
 
         if (existingProduct)
-            return {message: `You have already added ${existingProduct.product_name} to this list !`};
+            return {
+                statusCode: 409,
+                message: `You have already added ${existingProduct.product_name} to this list !`
+            };
 
         const product = makeShoppingList({...productInfo});
 
-        const findProductCode = await productRepository.findByCode({code : product.getProductCode()}); 
+        const findProductCode = await productRepository.findByCode({code: product.getProductCode()});
 
         if (!findProductCode)
-            return {message: `No product was found with this code ${product.getProductCode()}`};
+            return {
+                statusCode: 400,
+                message: `No product was found with this code ${product.getProductCode()}`
+            };
 
         return await shoppingListRepository.save({
             id_group_user: findGroup.dataValues.id_group_user,
@@ -92,18 +97,33 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
         });
     }
 
-    async function removeProductFromShoppingList({listId}) {
-        
-        return await shoppingListRepository.removeProduct({
-            id: listId
-        });
+    async function removeProductFromShoppingList({itemId, userId}) {
+
+        const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
+
+        if (!findItem)
+            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
+
+        const findItemUser = await shoppingListRepository.findItemOwner({itemId, userId});
+
+        if (!findItemUser) return {
+            statusCode: 403,
+            message: `Unfortunately you don't own this item.`
+        };
+
+        return await shoppingListRepository.removeProduct({id: itemId});
     }
 
     async function getGroupShoppingList({groupId}) {
 
+        const groupInfo = await groupService.getGroup({groupId});
+
+        if (groupInfo.message) return {message: groupInfo.message};
+
         const result = [];
 
-        const shoppingList = await shoppingListRepository.findShoppingList({groupId: groupId});
+        const shoppingList = await shoppingListRepository
+            .findGroupShoppingList({groupId: groupId});
 
         for (const y of shoppingList) {
 
@@ -112,12 +132,12 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
             result.push(
                 {
+                    id: y.dataValues.id,
+                    code: y.dataValues.product.dataValues.code,
                     product_name: y.dataValues.product.dataValues.product_name,
                     quantity: y.dataValues.quantity,
                     groupProduct: y.dataValues.groupProduct,
-                    code: y.dataValues.product.dataValues.code,
-                    username: findUsername.dataValues.username,
-                    id : y.dataValues.id
+                    username: findUsername.dataValues.username
                 });
         }
 
