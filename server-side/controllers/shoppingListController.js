@@ -80,6 +80,13 @@ export default function shoppingListControllerFactory() {
                 }
             }
 
+            if (shoppingList == 0){
+                return {
+                    statusCode: 400,
+                    body: {success: false, message: "this product doesn't exist in the shopping list"}
+                }
+            }
+
             return {
                 statusCode: 200,
                 body: {
