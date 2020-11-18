@@ -1,5 +1,7 @@
 <!-- group details modal -->
 
+
+
 <div class="d-flex justify-content-center align-items-center">
   <div class="container m-5 p-5 border border-bottom">
 
@@ -15,7 +17,12 @@
           {{groupDescription}}
         </p>
       </h3>
-      <app-barcode-gen class="font-weight-normal" [groupId]="groupId"></app-barcode-gen>
+      <div class="d-flex justify-content-between py-3 border-bottom">
+        <strong class="text-muted"></strong>
+        <h5 class="font-weight-bold">
+          <app-barcode-gen class="font-weight-normal" *ngIf="groupBarCode!=''" [groupBarCode]="groupBarCode"></app-barcode-gen>
+        </h5>
+      </div>
     </div>
 
 
@@ -27,7 +34,7 @@
         <ng-template [ngIf]="!isPersonnalGroup">
           <div class="d-flex">
             <strong class="text-monospace font-italic font-weight-bolder h5">
-              membres du groupe</strong>
+              <u>Membres du groupe</u></strong>
             <div class="ml-auto mr-5">
               <div class="row">
                 <div class="d-flex">
@@ -111,7 +118,7 @@
         <!--  ***************************   Personnal and unpersonnal group part   *****************************  -->
 
         <p class="text-monospace font-italic font-weight-bolder h5">
-          <strong>Liste de courses</strong>
+          <strong><u>Liste de courses</u></strong>
         </p>
         <br>
 
@@ -169,7 +176,7 @@
                       name="addProduct" type="submit"
                       [ngClass]="{ 'btn-outline-danger': isSuppressMode,
                              'btn-outline-success': !isSuppressMode }"
-                      class="btn text-center mx-sm-3
+                      class="btn btn-sm text-center mx-sm-3
                   text-monospace font-italic font-weight-bolder pull-right
                   margin_bottom">{{suppressButtonMessage}}
               </button>
@@ -213,7 +220,7 @@
                       </td>
 
                       <td *ngIf="product['groupProduct']"
-                          class="text-monospace font-italic">groupe
+                          class="text-monospace font-italic font-weight-bolder" style="color: blue">groupe
                       </td>
                       <td *ngIf="!product['groupProduct']"
                           class="text-monospace font-italic">{{product['username']}}</td>
@@ -346,9 +353,8 @@
 </div>
 
 
-<!--  <ng-template [ngIf]="!isPersonnalGroup">
+<!-- search for products div
 
-  <-- checkout div ->
   <div class="p-4">
     <p class="font-italic mb-4">
       <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
@@ -377,5 +383,4 @@
       Procceed to checkout</a>
   </div>
 
-</ng-template>
 -->

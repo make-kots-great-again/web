@@ -63,7 +63,7 @@ export default function groupControllerFactory() {
 
             if (group.message) {
                 return {
-                    statusCode: 404,
+                    statusCode: (group.statusCode) ? group.statusCode : 404,
                     body: {success: false, message: group.message}
                 }
             }
@@ -95,7 +95,7 @@ export default function groupControllerFactory() {
 
             if (updatedGroup.message) {
                 return {
-                    statusCode: 404,
+                    statusCode: (updatedGroup.statusCode) ? updatedGroup.statusCode : 404,
                     body: {success: false, message: updatedGroup.message}
                 }
             }
@@ -219,9 +219,9 @@ export default function groupControllerFactory() {
 
         try {
 
-            const {groupId} = httpRequest.params;
+            const {groupBarCode} = httpRequest.params;
 
-            const token = await groupService.getGroupToken({groupId});
+            const token = await groupService.getGroupToken({groupBarCode});
 
             if (token.message) {
                 return {

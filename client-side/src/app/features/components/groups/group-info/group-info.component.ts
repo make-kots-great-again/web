@@ -9,7 +9,7 @@ import {catchError, debounceTime, distinctUntilChanged, tap, switchMap} from 'rx
 import {User} from '../../../../shared/models/user.model';
 import {Product} from '../../../../shared/models/product.model';
 import {groupMember} from '../../../../shared/models/group.model';
-import {AuthenticationService} from "../../../../core/services/authentification.service";
+import {AuthenticationService} from '../../../../core/services/authentification.service';
 
 @Component({
   selector: 'app-group-info',
@@ -26,12 +26,13 @@ export class GroupInfoComponent implements OnInit {
 
   groupDescription = '';
   groupId = '';
+  groupBarCode = '';
   groupProduct = false;
   groupName = '';
   currentUser = '';
   quantity = 1;
 
-  suppressButtonMessage: string = "Activer la Suppression";
+  suppressButtonMessage: string = 'Activer la Suppression';
 
   isPersonnalGroup: boolean;
   isSuppressMode = true;
@@ -68,6 +69,7 @@ export class GroupInfoComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
         (data: any) => {
+          this.groupBarCode = data.groupBarCode;
           this.groupDescription = data.groupDescription;
           this.groupUsers = data.users;
         },
@@ -96,6 +98,8 @@ export class GroupInfoComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
 
+          console.log(data);
+
           this.noGroupByProducts = data;
 
           this.templateShoppoingList = this.groupByProducts(data);
@@ -105,7 +109,7 @@ export class GroupInfoComponent implements OnInit {
               (a.product_name < b.product_name) ? -1 : 0);
 
           if (this.templateShoppoingList.length === 0) {
-            this.suppressButtonMessage = "Activer la suppression";
+            this.suppressButtonMessage = 'Activer la suppression';
             this.isSuppressMode = true;
           }
         },
@@ -115,7 +119,7 @@ export class GroupInfoComponent implements OnInit {
   }
 
   groupProductButton(event: EventTarget): void {
-    this.groupProduct = event["checked"];
+    this.groupProduct = event['checked'];
   }
 
   addProductToShoppingList(): void {
@@ -221,10 +225,10 @@ export class GroupInfoComponent implements OnInit {
 
   switchSuppressMode(): void {
     if (this.isSuppressMode) {
-      this.suppressButtonMessage = "Désactiver la suppression";
+      this.suppressButtonMessage = 'Désactiver la suppression';
       this.isSuppressMode = false;
     } else {
-      this.suppressButtonMessage = "Activer la suppression";
+      this.suppressButtonMessage = 'Activer la suppression';
       this.isSuppressMode = true;
     }
   }
@@ -233,9 +237,13 @@ export class GroupInfoComponent implements OnInit {
 
     let existingProduct: object = {};
     if (typeof this.productModel === 'object') {
+
+    //  const existingProduct1 = this.templateShoppoingList.find((x: Product) => x.code === this.productModel.code && x.product_name);
+
       existingProduct = this.templateShoppoingList
-        .find(x => x.code === this.productModel.code
-          && x.username === this.currentUser);
+        .find((x: Product) => (x.code === this.productModel.code
+          && x.username === this.currentUser) ||
+          (x.code === this.productModel.code && x.groupProduct));
     }
     return (typeof this.productModel === 'object') && !existingProduct;
   }

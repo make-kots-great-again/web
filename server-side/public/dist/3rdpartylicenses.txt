@@ -271,6 +271,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+jsbarcode
+MIT
+
 moment
 MIT
 Copyright (c) JS Foundation and other contributors

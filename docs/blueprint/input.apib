@@ -5,13 +5,13 @@ HOST: http://localhost:8000/server/api
 This an API documentation of our web application.
 
 ## Website
-https://kotsapp.herokuapp.com/home
+https://kotsapp.herokuapp.com
 
 # Group Models
 
 > List of models in the PostgreSQL database
 
-## <i class="fa fa-users"></i> Users
+## <i class="fa fa-user"></i> Users
  ::: note
 * Users model/table in the PostgreSQL database
  :::
@@ -20,8 +20,47 @@ https://kotsapp.herokuapp.com/home
     
       <!-- include(./models/users-schema.json) -->
 
+## <i class="fa fa-users"></i> Groups
+ ::: note
+* Groups model/table in the PostgreSQL database
+ :::
+
+    + Schema
+    
+      <!-- include(./models/groups-schema.json) -->
+
+## <i class="fa fa-users"></i> userGroups
+ ::: note
+* userGroups model/table in the PostgreSQL database
+ :::
+
+    + Schema
+    
+      <!-- include(./models/userGroups-schema.json) -->
+
+## <i class="fa fa-amazon"></i> Products
+ ::: note
+* Products model/table in the PostgreSQL database
+ :::
+
+    + Schema
+    
+      <!-- include(./models/products-schema.json) -->
+
+## <i class="fa fa-shopping-cart"></i> ShoppingList
+ ::: note
+* ShoopingList model/table in the PostgreSQL database
+ :::
+
+    + Schema
+    
+      <!-- include(./models/shoppingList-schema.json) -->
+
 
 <!-- include(./models-blueprint/users/users.apib) -->
+<!-- include(./models-blueprint/groups/groups.apib) -->
+<!-- include(./models-blueprint/products/products.apib) -->
+<!-- include(./models-blueprint/shoppingList/shoppingList.apib) -->
 
 
 

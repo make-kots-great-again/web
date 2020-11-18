@@ -1,5 +1,7 @@
 const {v4: uuidv4} = require('uuid');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+
 const {products} = require('./dummyProducts');
 
 const dummyUsers = [];
@@ -24,11 +26,13 @@ Array(10).fill(0).forEach((x, i) => {
 
     dummyGroups.push({
         groupId: uuidv4(), groupName: groups[i],
+        groupBarCode: crypto.randomBytes(6).toString('hex'),
         groupDescription: `this a ${groups[i]} group`
     });
 
     dummyPersonalGroups.push({
         groupId: uuidv4(), groupName: `personal list - ${usernames[i]}`,
+        groupBarCode: crypto.randomBytes(6).toString('hex'),
         groupDescription: `Personal group`
     });
 

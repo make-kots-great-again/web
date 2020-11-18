@@ -18,7 +18,7 @@ export default function userControllerFactory() {
 
             if (createdUser.message)
                 return {statusCode: 409, body: {success: false, ...createdUser}}
-            
+
             //TODO : to move when Mail-signup is implemented
 
             const username = createdUser.username
@@ -31,7 +31,7 @@ export default function userControllerFactory() {
                     success: true,
                     message: "User has been created successfully",
                     user: createdUser,
-                    personnalGroup : createdGroup
+                    personnalGroup: createdGroup
                 }
             }
         } catch (e) {
@@ -54,7 +54,7 @@ export default function userControllerFactory() {
 
             const {username, email, userId: id} = user.data;
 
-           // sendMail('abcdhdbzyzgdydzygd', 'James', 'football',);
+            // sendMail('abcdhdbzyzgdydzygd', 'James', 'football',);
 
             return {
                 statusCode: 200,
@@ -141,12 +141,15 @@ export default function userControllerFactory() {
      */
     async function putOneUser(httpRequest) {
         try {
-            const {...userInfo} = httpRequest.body;
 
-            const modifiedUser = await userService.putUser({id: httpRequest.user.userId}, {...userInfo});
-            if (modifiedUser.message) {
+            const {...userInfo} = httpRequest.body;
+            const {userId} = httpRequest.user;
+
+            const modifiedUser = await userService.putUser({userId, ...userInfo});
+
+            if (modifiedUser.message)
                 return {statusCode: 409, body: {success: false, ...modifiedUser,}}
-            }
+
             return {
                 statusCode: 200,
                 body: {

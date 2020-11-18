@@ -1,9 +1,10 @@
 import {makeGroup} from '../domain'
 import {jwtFactory} from "../security";
+import crypto from 'crypto';
 
 export default function groupServiceFactory({groupRepository, userRepository}) {
     return Object.freeze({
-        addGroup, addOwnGroup, listMyGroups, getGroup, addMembersToGroup,
+        addGroup, addOwnGroup, listMyGroups, getGroup, getGroupByBarCode, addMembersToGroup,
         deleteUserFromGroup, deleteGroup, patchGroup, getIdGroupUser, getGroupToken
     });
 
@@ -15,7 +16,8 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         const createGroup = await groupRepository.save({
             groupName: group.getGroupName(),
-            groupDescription: group.getGroupDescription()
+            groupDescription: group.getGroupDescription(),
+            groupBarCode: crypto.randomBytes(6).toString('hex')
         });
 
         const {userId} = groupAdmin.dataValues
@@ -69,7 +71,9 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         const findAdmin = users.find(x => x.role === 'admin');
 
         if (!findAdmin || findAdmin.username !== username)
-            return {message: 'Only the admin of this group can update the latter.'};
+            return {
+            statusCode: 403,
+            message: 'Only the admin of this group can update the latter.'};
 
         const group = makeGroup({...changes});
 
@@ -91,7 +95,9 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         if (!groupId) return {message: 'You must supply a group id.'};
 
         if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${groupId} is not a valid UUID`};
+            return {
+            statusCode: 400,
+            message: `${groupId} is not a valid UUID`};
 
         const group = await groupRepository.findGroupById({groupId});
 
@@ -100,23 +106,34 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         return group;
     }
 
+    async function getGroupByBarCode({groupBarCode}) {
+
+        if (!groupBarCode) return {message: 'You must supply a group bar-code.'};
+
+        const group = await groupRepository.findGroupByBarCode({groupBarCode});
+
+        if (!group) return {message: `No group was found with this barCode : ${groupBarCode}`};
+
+        return group;
+    }
+
     /**
-     * Fonction permettant de récupérer un token à partir d'un identifant 
+     * Fonction permettant de récupérer un token à partir d'un identifiant code barre
      * de groupe valide
-     * @param groupId l'identifiant du groupe.
+     * @param groupBarCode l'identifiant du groupe.
      * @returns
      *          -> si l'identifiant est manquant ou non valide
      *             OU s'il ne correspond pas à un groupe existant : un message d'erreur
      *          -> sinon, un token JWT propre au groupe.
      */
-    async function getGroupToken({groupId}) {
+    async function getGroupToken({groupBarCode}) {
 
-        const groupInfo = await getGroup({groupId});
+        const groupInfo = await getGroupByBarCode({groupBarCode});
 
         if (groupInfo.message) return {message: groupInfo.message};
 
         const gName = groupInfo.dataValues.groupName;
-        const gId = groupInfo.dataValues.groupId;
+        const gId = groupInfo.dataValues.groupBarCode;
 
         return jwtFactory.generateGroupJwt({gName, gId});
     }
@@ -160,10 +177,8 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         const deleteUser = await groupRepository.removeUserFromGroup({groupId, userId});
 
-        console.log(deleteUser)
-
         if (deleteUser === 0)
-            return {message: 'No user with that name was found in this group'};
+            return {message: 'No user with such id was found in this group !'};
 
         return groupRepository.removeUserFromGroup({groupId, userId});
     }

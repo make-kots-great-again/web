@@ -1,0 +1,59 @@
+# Group Products
+This the Product entity.
+
+## Search product [/user/{productName}]
+Search a product by it's name.
+
+> :warning: A JWT needs to be sent in the request header to have access to product's entity routes.
+
++ Parameters
+
+    + productName: `Organic Penne Pasta` (required, string) - product's name
+
+### Search product [GET]
+Search a product by it's name.
+
+::: important
+#### <i class="fa fa-info-circle"></i> Info
+To have acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
+:::
+
+Example:
+
+```http
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+```
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+You don't need to pass the whole product name as a paramter to this route. If **Organic Penne Pasta** 
+is the product you are looking for passing **org** will work just fine. The server will return all Products 
+that starts with **org**. A more robust search will be implemented later.  
+:::
+
++ Request (application/json)
+
+  + Headers
+
+            Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
++ Response 200 (application/json)
+
+   + Body
+
+            <!-- include(get-all-my-products.json) -->
+
++ Response 401 (application/json)
+
+    + Body
+
+              "Unauthorized"
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }

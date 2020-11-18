@@ -1,0 +1,36 @@
+{
+    "success": true,
+    "shoppingList": {
+        "list - football": [
+            {
+                "groupId": "84d0f97c-44e4-48ba-b26b-89e23bed9afa",
+                "product_name": "Organic Spicy Punks",
+                "quantity": 5,
+                "code": 17497,
+                "groupProduct": true,
+                "username": "group",
+                "list": "list - football"
+            }
+        ],
+        "list - volleyball": [
+            {
+                "groupId": "cf45fc9b-ee6e-4bee-8cec-45a092afabdd",
+                "product_name": "Cinnamon Nut Granola",
+                "quantity": 2,
+                "code": 18012,
+                "groupProduct": false,
+                "username": "paul",
+                "list": "list - volleyball"
+            },
+            {
+                "groupId": "cf45fc9b-ee6e-4bee-8cec-45a092afabdd",
+                "product_name": "Organic Penne Pasta",
+                "quantity": 1,
+                "code": 16650,
+                "groupProduct": false,
+                "username": "james",
+                "list": "list - volleyball"
+            }
+        ]
+    }
+}
