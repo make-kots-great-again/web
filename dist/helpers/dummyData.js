@@ -12,61 +12,51 @@ const {
 
 const dummyUsers = [];
 const dummyGroups = [];
-const dummyPersonalGroups = [];
 const dummyUserGroups = [];
 const shoppingList = [];
 const usernames = ['james', 'john', 'william', 'paul', 'thomas', 'kevin', 'gary', 'larry', 'dennis', 'roger'];
-const groups = ['football', 'tennis', 'basketball', 'volleyball', 'hockey', 'cricket', 'baseball', 'golf', 'rugby', 'boxing'];
-Array(10).fill(0).forEach((x, i) => {
+const groups = ['football', 'tennis', 'basketball', 'volleyball', 'hockey'];
+usernames.forEach(x => {
   dummyUsers.push({
-    firstName: usernames[i].split('').reverse().join(''),
-    lastName: usernames[i].split('').sort(() => Math.random() - 0.5).join(''),
-    username: usernames[i],
-    email: `${usernames[i]}@gmail.com`,
+    firstName: x.split('').reverse().join(''),
+    lastName: x.split('').sort(() => Math.random() - 0.5).join(''),
+    username: x,
+    email: `${x}@gmail.com`,
     userId: uuidv4(),
     password: bcrypt.hashSync('toto', 10),
     createdAt: new Date(),
     updatedAt: new Date()
   });
+});
+groups.forEach(x => {
   dummyGroups.push({
     groupId: uuidv4(),
-    groupName: groups[i],
-    groupDescription: `this a ${groups[i]} group`
+    groupName: x,
+    groupDescription: `this a ${x} group`
   });
-  dummyPersonalGroups.push({
-    groupId: uuidv4(),
-    groupName: `personal list - ${usernames[i]}`,
-    groupDescription: `Personal group`
-  });
+});
+Array(5).fill(0).forEach((x, i) => {
   dummyUserGroups.push({
     id_group_user: uuidv4(),
     userId: dummyUsers[i].userId,
     groupId: dummyGroups[i].groupId,
     role: i === 2 ? 'admin' : 'member'
   });
-  dummyUserGroups.push({
-    id_group_user: uuidv4(),
-    userId: dummyUsers[i].userId,
-    groupId: dummyPersonalGroups[i].groupId,
-    role: 'personal'
-  });
 });
-Array(20).fill(0).forEach((x, i) => {
+Array(5).fill(0).forEach((x, i) => {
   shoppingList.push({
     id: uuidv4(),
     id_group_user: dummyUserGroups[i].id_group_user,
     code: products[i].code,
-    quantity: Math.floor(Math.random() * 5) + 1,
-    groupProduct: dummyUserGroups[i].role !== 'personal' && i === 0 || i === 4 || i === 10 || i === 14 || i === 18
+    quantity: Math.floor(Math.random() * 5) + 1
   });
 }); // add a second product for james in the shopping list of group 1
 
 shoppingList.push({
   id: uuidv4(),
   id_group_user: dummyUserGroups[0].id_group_user,
-  code: products[5].code,
-  quantity: Math.floor(Math.random() * 5) + 1,
-  groupProduct: true
+  code: products[2].code,
+  quantity: Math.floor(Math.random() * 5) + 1
 }); // make james join group 3
 
 dummyUserGroups.push({
@@ -80,10 +70,8 @@ shoppingList.push({
   id: uuidv4(),
   id_group_user: dummyUserGroups[dummyUserGroups.length - 1].id_group_user,
   code: products[2].code,
-  quantity: Math.floor(Math.random() * 5) + 1,
-  groupProduct: false
+  quantity: Math.floor(Math.random() * 5) + 1
 });
-dummyGroups.push(...dummyPersonalGroups);
 module.exports = {
   dummyUsers,
   usernames,

@@ -26,7 +26,7 @@ function makeshoppingListRepository({
     groupId
   }) {
     return ShoppingList.findAll({
-      attributes: ['quantity', 'id', 'groupProduct'],
+      attributes: ['quantity', 'id'],
       include: [{
         model: Product,
         as: 'product',
@@ -37,7 +37,7 @@ function makeshoppingListRepository({
         where: {
           groupId: groupId
         },
-        attributes: ['userId', 'groupId', 'role']
+        attributes: ['userId', 'groupId']
       }]
     });
   }

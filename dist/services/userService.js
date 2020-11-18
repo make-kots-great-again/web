@@ -61,9 +61,8 @@ function userServiceFactory({
       dataValues: data
     } = existing["0"];
     const {
-      username,
       email: userEmail,
-      userId,
+      userId: id,
       password: userPassword
     } = data;
     const validPassword = await _security.passwordFactory.verifyPassword(password, userPassword);
@@ -72,9 +71,8 @@ function userServiceFactory({
     };
     if (validPassword) return {
       token: _security.jwtFactory.generateJwt({
-        username,
         userEmail,
-        userId
+        id
       }),
       data
     };

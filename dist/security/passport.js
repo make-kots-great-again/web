@@ -15,7 +15,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
-// to auth the user or group by JWT strategy
+// to auth the user by JWT strategy
 const authenticateUser = passport => {
   // At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
   const opts = {
@@ -24,23 +24,12 @@ const authenticateUser = passport => {
   }; // The JWT payload is passed into the verify callback
 
   passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
-    let obj = null;
+    const user = await _repository.userRepository.findById({
+      id: jwt_payload.userId
+    });
+    if (!user) return done(user, false); // here, the JWT is valid and the user is authenticated successfully
 
-    if (jwt_payload.username) {
-      obj = await _repository.userRepository.findByUsername({
-        username: jwt_payload.username
-      });
-    }
-
-    if (jwt_payload.groupId) {
-      obj = await _repository.groupRepository.findGroupById({
-        groupId: jwt_payload.groupId
-      });
-    }
-
-    if (!obj) return done(obj, false); // here, the JWT is valid and the user or group is authenticated successfully
-
-    if (obj) return done(null, obj);
+    if (user) return done(null, user);
     return done(null, false);
   }));
 };

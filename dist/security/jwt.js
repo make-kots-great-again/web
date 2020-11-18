@@ -13,33 +13,18 @@ function makeJwtFactory({
   jwt
 }) {
   return Object.freeze({
-    generateJwt,
-    generateGroupJwt
+    generateJwt
   });
 
   function generateJwt({
-    username,
     userEmail,
-    userId
+    id
   } = {}) {
     return "JWT " + jwt.sign({
-      username: username,
-      userEmail: userEmail,
-      userId: userId
+      email: userEmail,
+      userId: id
     }, _environment.default.JWT_KEY, {
-      expiresIn: "7d"
-    });
-  }
-
-  function generateGroupJwt({
-    gName,
-    gId
-  } = {}) {
-    return "JWT " + jwt.sign({
-      groupeName: gName,
-      groupId: gId
-    }, _environment.default.JWT_KEY, {
-      expiresIn: "14d"
+      expiresIn: "168h"
     });
   }
 }

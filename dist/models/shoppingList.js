@@ -32,11 +32,6 @@ const ShoppingList = _database.default.define('shoppingList', {
       max: 20
     }
   },
-  groupProduct: {
-    type: _sequelize.Sequelize.BOOLEAN,
-    defaultValue: false,
-    allowNull: false
-  },
   id_group_user: {
     type: _sequelize.Sequelize.UUID,
     defaultValue: _sequelize.Sequelize.UUIDV4,

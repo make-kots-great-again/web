@@ -7,8 +7,6 @@ exports.default = groupServiceFactory;
 
 var _domain = require("../domain");
 
-var _security = require("../security");
-
 function groupServiceFactory({
   groupRepository,
   userRepository
@@ -22,8 +20,7 @@ function groupServiceFactory({
     deleteUserFromGroup,
     deleteGroup,
     patchGroup,
-    getIdGroupUser,
-    getGroupToken
+    getIdGroupUser
   });
 
   async function addGroup({
@@ -133,33 +130,6 @@ function groupServiceFactory({
       message: `No group was found with this id : ${groupId}`
     };
     return group;
-  }
-  /**
-   * Fonction permettant de récupérer un token à partir d'un identifant 
-   * de groupe valide
-   * @param groupId l'identifiant du groupe.
-   * @returns
-   *          -> si l'identifiant est manquant ou non valide
-   *             OU s'il ne correspond pas à un groupe existant : un message d'erreur
-   *          -> sinon, un token JWT propre au groupe.
-   */
-
-
-  async function getGroupToken({
-    groupId
-  }) {
-    const groupInfo = await getGroup({
-      groupId
-    });
-    if (groupInfo.message) return {
-      message: groupInfo.message
-    };
-    const gName = groupInfo.dataValues.groupName;
-    const gId = groupInfo.dataValues.groupId;
-    return _security.jwtFactory.generateGroupJwt({
-      gName,
-      gId
-    });
   }
 
   async function addMembersToGroup({

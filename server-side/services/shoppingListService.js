@@ -1,5 +1,6 @@
 import {makeShoppingList} from '../domain'
 import {groupService, userService} from "./index";
+import {productRepository} from '../repository'
 
 export default function shoppingListServiceFactory({shoppingListRepository}) {
     return Object.freeze({
@@ -53,6 +54,8 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
 
     async function putProductInShoppingList({groupId, userId, ...productInfo}) {
 
+        if (!groupId) return {message: 'You must supply a group id.'};
+
         const findGroup = await groupService.getIdGroupUser({
             groupId: groupId,
             userId: userId
@@ -65,21 +68,36 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
         const findList = await getGroupShoppingList({groupId: groupId});
 
         const existingProduct = findList.find(x =>
-            x.code === productInfo.code && x.username === findUser.dataValues.username)
+            x.code === productInfo.code && x.username === findUser.dataValues.username);
 
         if (existingProduct)
-            return {message: `You have already added ${existingProduct.product_name} to this list !`};
+            return {
+                statusCode: 409,
+                message: `You have already added ${existingProduct.product_name} to this list !`
+            };
 
         const product = makeShoppingList({...productInfo});
+
+        const findProductCode = await productRepository.findByCode({code: product.getProductCode()});
+
+        if (!findProductCode)
+            return {
+                statusCode: 400,
+                message: `No product was found with this code ${product.getProductCode()}`
+            };
 
         return await shoppingListRepository.save({
             id_group_user: findGroup.dataValues.id_group_user,
             code: product.getProductCode(),
-            quantity: product.getProductQuantity()
+            quantity: product.getProductQuantity(),
+            groupProduct: product.getgroupProduct()
         });
     }
 
     async function removeProductFromShoppingList({listId}) {
+
+        if (!listId) return {message: 'You must supply a listProduct id.'};
+        
         return await shoppingListRepository.removeProduct({
             id: listId
         });

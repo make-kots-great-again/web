@@ -26,11 +26,6 @@ module.exports = {
           key: 'code'
         }
       },
-      groupProduct: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-        allowNull: false
-      },
       id_group_user: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,

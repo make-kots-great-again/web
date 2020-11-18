@@ -35,7 +35,7 @@ function shoppingListServiceFactory({
     const info = [];
 
     for (const x of groups) {
-      //  const index = groups.indexOf(x) + 1;
+      const index = groups.indexOf(x) + 1;
       const shoppingList = await shoppingListRepository.findShoppingList({
         groupId: x.dataValues.groupId
       });
@@ -47,15 +47,11 @@ function shoppingListServiceFactory({
         const findUsername = await _index.userService.listOneUser({
           id: y.dataValues["owners"].dataValues.userId
         });
-        const findGroupName = await _index.groupService.getGroup({
-          groupId: x.dataValues.groupId
-        });
         info.push({
-          groupId: x.dataValues.groupId,
           product_name: y.dataValues.product.dataValues.product_name,
           quantity: y.dataValues.quantity,
           code: y.dataValues.product.dataValues.code,
-          list: y.dataValues["owners"].dataValues.role !== 'personal' ? `list - ${findGroupName.dataValues.groupName}` : findGroupName.dataValues.groupName,
+          list: `list ${index}`,
           username: findUsername.dataValues.username
         });
       }
@@ -71,6 +67,9 @@ function shoppingListServiceFactory({
     userId,
     ...productInfo
   }) {
+    if (true) return {
+      message: 'You must supply a group id.'
+    };
     const findGroup = await _index.groupService.getIdGroupUser({
       groupId: groupId,
       userId: userId
@@ -93,8 +92,7 @@ function shoppingListServiceFactory({
     return await shoppingListRepository.save({
       id_group_user: findGroup.dataValues.id_group_user,
       code: product.getProductCode(),
-      quantity: product.getProductQuantity(),
-      groupProduct: product.getgroupProduct()
+      quantity: product.getProductQuantity()
     });
   }
 
@@ -121,7 +119,6 @@ function shoppingListServiceFactory({
       result.push({
         product_name: y.dataValues.product.dataValues.product_name,
         quantity: y.dataValues.quantity,
-        groupProduct: y.dataValues.groupProduct,
         code: y.dataValues.product.dataValues.code,
         username: findUsername.dataValues.username,
         id: y.dataValues.id

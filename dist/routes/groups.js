@@ -39,7 +39,6 @@ router.patch("/group/:groupId", _passport.default.authenticate("jwt", {
 router.get("/group/:groupId/add/:username", _passport.default.authenticate("jwt", {
   session: false
 }), (0, _expressCallback.default)(_controllers.groupController.addMembersToGroup));
-router.get("/group/token/:groupId", (0, _expressCallback.default)(_controllers.groupController.getGroupToken));
 router.delete("/group/:groupId/delete/:userId", _passport.default.authenticate("jwt", {
   session: false
 }), (0, _expressCallback.default)(_controllers.groupController.leaveGroup)); // deleteGroup

@@ -96,6 +96,7 @@ function shoppingListControllerFactory() {
     const {
       listId
     } = httpRequest.params;
+    console.log("in controllers : " + listId);
 
     try {
       const shoppingList = await _services.shoppingListService.removeProductFromShoppingList({
