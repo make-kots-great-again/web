@@ -5,8 +5,8 @@ export default function makeJwtFactory({jwt}) {
         generateJwt, generateGroupJwt
     });
 
-    function generateJwt({username, userEmail, userId} = {}) {
-        return "JWT " + jwt.sign({username: username, userEmail: userEmail, userId: userId},
+    function generateJwt({userEmail, userId} = {}) {
+        return "JWT " + jwt.sign({userEmail: userEmail, userId: userId},
             env.JWT_KEY, {expiresIn: "7d"});
     }
 

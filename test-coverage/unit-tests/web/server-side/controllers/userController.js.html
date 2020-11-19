@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">6.15% </span>
+                <span class="strong">6.06% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/65</span>
+                <span class='fraction'>4/66</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">6.15% </span>
+                <span class="strong">6.06% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/65</span>
+                <span class='fraction'>4/66</span>
             </div>
         
             
@@ -293,7 +293,11 @@
 <a name='L234'></a><a href='#L234'>234</a>
 <a name='L235'></a><a href='#L235'>235</a>
 <a name='L236'></a><a href='#L236'>236</a>
-<a name='L237'></a><a href='#L237'>237</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -436,29 +440,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -469,7 +460,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -549,7 +557,7 @@ export default function userControllerFactory() {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            if (createdUser.message)</span>
 <span class="cstat-no" title="statement not covered" >                return {</span>statusCode: 409, body: {success: false, ...createdUser}}
-            
+&nbsp;
             //TODO : to move when Mail-signup is implemented
 &nbsp;
             const username = <span class="cstat-no" title="statement not covered" >createdUser.username</span>
@@ -562,7 +570,7 @@ export default function userControllerFactory() {
                     success: true,
                     message: "User has been created successfully",
                     user: createdUser,
-                    personnalGroup : createdGroup
+                    personnalGroup: createdGroup
                 }
             }
         } catch (e) {
@@ -585,7 +593,7 @@ export default function userControllerFactory() {
 &nbsp;
             const {username, email, userId: id} = <span class="cstat-no" title="statement not covered" >user.data;</span>
 &nbsp;
-           // sendMail('abcdhdbzyzgdydzygd', 'James', 'football',);
+            // sendMail('abcdhdbzyzgdydzygd', 'James', 'football',);
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            return {</span>
                 statusCode: 200,
@@ -672,12 +680,15 @@ export default function userControllerFactory() {
      */
     async function <span class="fstat-no" title="function not covered" >putOneUser(h</span>ttpRequest) {
 <span class="cstat-no" title="statement not covered" >        try {</span>
-            const {...userInfo} = <span class="cstat-no" title="statement not covered" >httpRequest.body;</span>
 &nbsp;
-            const modifiedUser = <span class="cstat-no" title="statement not covered" >await userService.p</span>utUser({id: httpRequest.user.userId}, {...userInfo});
-<span class="cstat-no" title="statement not covered" >            if (modifiedUser.message) {</span>
+            const {...userInfo} = <span class="cstat-no" title="statement not covered" >httpRequest.body;</span>
+            const {userId} = <span class="cstat-no" title="statement not covered" >httpRequest.user;</span>
+&nbsp;
+            const modifiedUser = <span class="cstat-no" title="statement not covered" >await userService.p</span>utUser({userId, ...userInfo});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (modifiedUser.message)</span>
 <span class="cstat-no" title="statement not covered" >                return {</span>statusCode: 409, body: {success: false, ...modifiedUser,}}
-            }
+&nbsp;
 <span class="cstat-no" title="statement not covered" >            return {</span>
                 statusCode: 200,
                 body: {
@@ -705,7 +716,8 @@ export default function userControllerFactory() {
     async function <span class="fstat-no" title="function not covered" >patchUserPwd(h</span>ttpRequest) {
 <span class="cstat-no" title="statement not covered" >        try {</span>
             const {...userInfo} = <span class="cstat-no" title="statement not covered" >httpRequest.body;</span>
-            const modifiedPwd = <span class="cstat-no" title="statement not covered" >await userService.p</span>atchUserPwd({id: httpRequest.user.userId}, {...userInfo});
+            const modifiedPwd = <span class="cstat-no" title="statement not covered" >await userService</span>
+                .patchUserPwd({id: httpRequest.user.userId}, {...userInfo});
 <span class="cstat-no" title="statement not covered" >            if (modifiedPwd.message) {</span>
 <span class="cstat-no" title="statement not covered" >                return {</span>
                     statusCode: 409,
@@ -772,7 +784,7 @@ export default function userControllerFactory() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Oct 28 2020 22:04:28 GMT+0100 (Central European Standard Time)
+                at Thu Nov 19 2020 03:20:38 GMT+0100 (Central European Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

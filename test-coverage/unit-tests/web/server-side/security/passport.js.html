@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.14% </span>
+                <span class="strong">44.44% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/14</span>
+                <span class='fraction'>8/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.67% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/12</span>
+                <span class='fraction'>8/16</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -85,7 +85,13 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -101,8 +107,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -116,9 +128,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 import env from '../config/environment'
-import {userRepository} from '../repository';
+import {groupRepository, userRepository} from '../repository';
 &nbsp;
-// to auth the user by JWT strategy
+// to auth the user or group by JWT strategy
 const authenticateUser = passport =&gt; {
 &nbsp;
     // At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
@@ -129,13 +141,19 @@ const authenticateUser = passport =&gt; {
 &nbsp;
     // The JWT payload is passed into the verify callback
     passport.use(new JwtStrategy(opts, <span class="fstat-no" title="function not covered" >async (j</span>wt_payload, done) =&gt; {
+        let obj = <span class="cstat-no" title="statement not covered" >null;</span>
 &nbsp;
-        const user = <span class="cstat-no" title="statement not covered" >await userRepository.f</span>indByUsername({username: jwt_payload.username});
+<span class="cstat-no" title="statement not covered" >        if(jwt_payload.username){</span>
+<span class="cstat-no" title="statement not covered" >            obj </span>= await userRepository.findByUsername({username: jwt_payload.username});
+        }
+<span class="cstat-no" title="statement not covered" >        if(jwt_payload.groupId){</span>
+<span class="cstat-no" title="statement not covered" >            obj </span>= await groupRepository.findGroupById({groupId: jwt_payload.groupId});
+        }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (!user) <span class="cstat-no" title="statement not covered" >return d</span></span>one(user, false);
+<span class="cstat-no" title="statement not covered" >        if (!obj) <span class="cstat-no" title="statement not covered" >return d</span></span>one(obj, false);
 &nbsp;
-        // here, the JWT is valid and the user is authenticated successfully
-<span class="cstat-no" title="statement not covered" >        if (user) <span class="cstat-no" title="statement not covered" >return d</span></span>one(null, user);
+        // here, the JWT is valid and the user or group is authenticated successfully
+<span class="cstat-no" title="statement not covered" >        if (obj) <span class="cstat-no" title="statement not covered" >return d</span></span>one(null, obj);
 <span class="cstat-no" title="statement not covered" >        return d</span>one(null, false);
     }));
 };
@@ -148,7 +166,7 @@ export default authenticateUser;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Oct 28 2020 22:04:28 GMT+0100 (Central European Standard Time)
+                at Thu Nov 19 2020 03:20:38 GMT+0100 (Central European Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
