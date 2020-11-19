@@ -38,9 +38,13 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         const group = makeGroup({...groupInfo});
 
+        //TODO : change because is a fix for the presentation
+
+
         const createGroup = await groupRepository.save({
             groupName: group.getGroupName(),
-            groupDescription: group.getGroupDescription()
+            groupDescription: group.getGroupDescription(),
+            groupBarCode: crypto.randomBytes(6).toString('hex')
         });
 
         const {userId} = groupAdmin.dataValues

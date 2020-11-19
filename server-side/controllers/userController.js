@@ -25,6 +25,8 @@ export default function userControllerFactory() {
             const {...groupInfo} = generateGroupInfos(createdUser.username, "french");
             const createdGroup = await groupService.addOwnGroup({username, ...groupInfo});
 
+            //TODO : change because is a fix for the presentation
+
             return {
                 statusCode: 201,
                 body: {
