@@ -16,8 +16,8 @@ const authenticateUser = passport => {
     passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
         let obj = null;
 
-        if(jwt_payload.username){
-            obj = await userRepository.findByUsername({username: jwt_payload.username});
+        if(jwt_payload.userId){
+            obj = await userRepository.findById({id: jwt_payload.userId});
         }
         if(jwt_payload.groupId){
             obj = await groupRepository.findGroupById({groupId: jwt_payload.groupId});
