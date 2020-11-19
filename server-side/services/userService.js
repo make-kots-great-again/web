@@ -44,7 +44,7 @@ export default function userServiceFactory({userRepository}) {
 
         if (validPassword)
             return {
-                token: jwtFactory.generateJwt({username, userEmail, userId}),
+                token: jwtFactory.generateJwt({userEmail, userId}),
                 data
             };
     }
@@ -89,8 +89,7 @@ export default function userServiceFactory({userRepository}) {
         makeUser({...userInfo});
         delete userInfo.password;
 
-        const existingUser = await userRepository
-            .findByEmailOrUsername({...userInfo});
+        const existingUser = await userRepository.findByEmailOrUsername({...userInfo});
 
         if (existingUser.length !== 0 && userId !== existingUser[0].dataValues.userId)
             return {message: 'A user with the same username or email already exists !'};
