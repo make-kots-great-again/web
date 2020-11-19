@@ -1,4 +1,6 @@
 //During the test the env variable is set to test
+import {makeUser} from "../../../domain";
+
 process.env.NODE_ENV = 'test';
 
 //import server to bring in everything together
@@ -10,9 +12,7 @@ import {describe, it} from 'mocha';
 
 import makeFakeUser from '../../fixtures/fakeUser'
 import env from '../../../config/environment'
-import {userService} from "../../../services"
-import {userRepository} from '../../../repository'
-
+import {userService} from '../../../services'
 
 //TODO test can login function
 
@@ -29,7 +29,7 @@ describe('USER SERVICE', () => {
             fakeUser.userId = inserted.userId;
             expect(inserted).to.deep.include(fakeUser);
 
-            await userRepository.remove({id: inserted.userId});
+            await userService.removeUser({userId: inserted.userId});
         });
 
         it("can't register a user if he/she already exists", async () => {
@@ -41,7 +41,7 @@ describe('USER SERVICE', () => {
             expect(secondtUser.message).to
                 .equal("A user with the same username or email already exists !");
 
-            await userRepository.remove({id: firstUser.userId});
+            await userService.removeUser({userId: firstUser.userId});
         });
     });
 
@@ -59,7 +59,7 @@ describe('USER SERVICE', () => {
             expect(loggedInUser).to.have.property('token');
             expect(loggedInUser.data.username).to.equal(fakeUser.username);
 
-            await userRepository.remove({id: createdUser.userId});
+            await userService.removeUser({userId: createdUser.userId});
         });
 
         it("must include an pseudo", async () => {
@@ -94,7 +94,7 @@ describe('USER SERVICE', () => {
 
             expect(loggedInUser.message).to.equal("Authentication failed !");
 
-            await userRepository.remove({id: createdUser.userId});
+            await userService.removeUser({userId: createdUser.userId});
 
         });
 
@@ -105,7 +105,7 @@ describe('USER SERVICE', () => {
     });
 
     describe('#list-one-user', () => {
-        
+
         it("find user by id", async () => {
             const {...fakeUser} = makeFakeUser();
             const inserted = await userService.addUser({...fakeUser});
@@ -116,7 +116,8 @@ describe('USER SERVICE', () => {
             expect(listedOneUser.dataValues.firstName).to.equal(fakeUser.firstName);
             expect(listedOneUser.dataValues.lastName).to.equal(fakeUser.lastName);
             expect(listedOneUser.dataValues.email).to.equal(fakeUser.email);
-            await userRepository.remove({id: inserted.userId});
+
+            await userService.removeUser({userId: inserted.userId});
         });
 
         it("must include an id", async () => {
@@ -134,45 +135,38 @@ describe('USER SERVICE', () => {
 
     });
 
-    describe('#put-one-user', () => {
-        
-        xit("put user with id", async () => {
-            const {...fakeUser} = makeFakeUser();
-            const inserted = await userService.addUser({...fakeUser});
-            fakeUser.userId = inserted.userId;
-            
-            const modifiedUserInfo = {
-                username: 'test',
-                lastName: 'test45',
-                firstName: 'test4',
-                email: fakeUser.email,
-            }
-            
-            const puttedUser = await userService.putUser({userId: fakeUser.userId, ...modifiedUserInfo});
+    describe('#update-one-user', () => {
 
-            console.log(puttedUser);
+        it("update one user with userId", async () => {
 
-            expect(puttedUser[1].dataValues.username).to.equal(modifiedUserInfo.username);
-            expect(puttedUser[1].dataValues.firstName).to.equal(modifiedUserInfo.firstName);
-            expect(puttedUser[1].dataValues.lastName).to.equal(modifiedUserInfo.lastName);
-            expect(puttedUser[1].dataValues.email).to.equal(modifiedUserInfo.email);
-            
-            await userRepository.remove({id: inserted.userId});
+            const inserted = await userService.addUser({...makeFakeUser()});
+
+            const updatedInfo = makeFakeUser({username: 'test'});
+
+            const updatedUser = await userService
+                .putUser({userId: inserted.userId, ...updatedInfo});
+
+            expect(updatedUser[1].dataValues.username).to.equal(updatedInfo.username);
+
+            await userService.removeUser({userId: inserted.userId});
         });
 
-        it("url must include an id", async () => {
-            const puttedUser = await userService.listOneUser();
-            expect(puttedUser.message).to.equal('You must supply an id.');
+        it("can not update a user with an existing username or email", async () => {
 
+            const user1 = await userService.addUser({...makeFakeUser()});
+            const user2 = await userService.addUser({...makeFakeUser()});
+
+            const updatedInfo = makeFakeUser({username: user2.username});
+
+            const updatedUser1 = await userService
+                .putUser({userId: user1.userId, ...updatedInfo});
+
+            expect(updatedUser1.message)
+                .to.equal('A user with the same username or email already exists !');
+
+            await userService.removeUser({userId: user1.userId});
+            await userService.removeUser({userId: user2.userId});
         });
-
-        it("id must be valid", async () => {
-            const puttedUser = await userService.listOneUser(
-                {id: "%,!123"});
-            expect(puttedUser.message).to.equal('%,!123 is not a valid v4 UUID');
-
-        });
-
     });
 
     describe('#remove-user', () => {

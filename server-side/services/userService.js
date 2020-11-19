@@ -85,16 +85,15 @@ export default function userServiceFactory({userRepository}) {
      */
     async function putUser({userId, ...userInfo}) {
 
-        const existingUser = await userRepository.findByEmailOrUsername({
-            email: userInfo.email,
-            username: userInfo.username
-        });
+        userInfo.password = 'a'.repeat(10);
+        makeUser({...userInfo});
+        delete userInfo.password;
 
-        const findUser = existingUser.find(x => userId === x.dataValues.userId
-            && userInfo.email === x.dataValues.email
-            && userInfo.username === x.dataValues.username);
+        const existingUser = await userRepository
+            .findByEmailOrUsername({...userInfo});
 
-        if (!findUser) return {message: "A user with the same username or email already exists !"};
+        if (existingUser.length !== 0 && userId !== existingUser[0].dataValues.userId)
+            return {message: 'A user with the same username or email already exists !'};
 
         return await userRepository.put({userId, ...userInfo});
     }
@@ -112,23 +111,22 @@ export default function userServiceFactory({userRepository}) {
      *             OU si le mot de passe actuel n'est pas bon' : un message d'erreur
      *          -> sinon, la réponse de la requête envoyé au userRepository.
      */
-    async function patchUserPwd({id}, {...userInfo}) {
+    async function patchUserPwd({userId, ...userInfo}) {
 
-        if (!id) return {message: 'You must supply an id.'};
+        if (!userInfo.password) return {message: 'You must supply the current password.'};
+        if (!userInfo.newPassword) return {message: 'You must supply a new password.'};
 
-        if (!(id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${id} is not a valid v4 UUID`};
-
-        const user = await userRepository.findById({id});
+        const user = await userRepository.findById({userId});
         const newPassword = passwordFactory.hashPassword(userInfo.newPassword);
-        if (!await passwordFactory.verifyPassword(userInfo.password, user.password)) return {message: `wrong password`};
+        if (!await passwordFactory.verifyPassword(userInfo.password, user.password))
+            return {message: 'wrong password'};
 
-        return await userRepository.patchPwd({id}, {newPassword});
+        return await userRepository.patchPwd({userId, newPassword});
     }
 
-    async function removeUser({id} = {}) {
+    async function removeUser({userId} = {}) {
 
-        return await userRepository.remove({id});
+        return await userRepository.remove({userId});
     }
 
     async function searchUser({username} = {}) {

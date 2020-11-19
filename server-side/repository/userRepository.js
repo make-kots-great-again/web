@@ -37,19 +37,20 @@ export default function makeUserRepository({User, Op}) {
     /**
      * Fonction permettant de mettre à jour le mot de passe d'un utilisateur
      * dans la db.
-     * @param id : l'identifiant de l'utilisateur à modifier.
+     * @param userId : l'identifiant de l'utilisateur à modifier.
      * @param newPassword le nouveau mot de passe préalablement encrypté.
      * @returns l'utilisateur modifié
      */
-    async function patchPwd({id}, {newPassword}) {
+    async function patchPwd({userId, newPassword}) {
         return User.update(
             {password: newPassword},
-            {returning: true, plain: true, where: {userId: id}}
+            {returning: true, plain: true, where: {userId: userId}}
         )
     }
 
     async function findAll() {
-        return User.findAll({attributes: ['userId', 'username', 'email', 'firstName', 'lastName']});
+        return User.findAll(
+            {attributes: ['userId', 'username', 'email', 'firstName', 'lastName']});
     }
 
     /**
@@ -95,8 +96,7 @@ export default function makeUserRepository({User, Op}) {
         });
     }
 
-    async function remove({id: userId}) {
+    async function remove({userId: userId}) {
         return User.destroy({where: {userId: userId}});
     }
 }
-

@@ -98,8 +98,6 @@ export class GroupInfoComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
 
-          console.log(data);
-
           this.noGroupByProducts = data;
 
           this.templateShoppoingList = this.groupByProducts(data);
