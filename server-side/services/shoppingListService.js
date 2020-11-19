@@ -1,5 +1,6 @@
 import {makeShoppingList} from '../domain'
 import {groupService, userService} from "./index";
+import {productRepository} from '../repository'
 
 export default function shoppingListServiceFactory({shoppingListRepository, productRepository}) {
     return Object.freeze({
@@ -59,6 +60,8 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
     async function putProductInShoppingList({groupId, userId, ...productInfo}) {
 
+        if (!groupId) return {message: 'You must supply a group id.'};
+
         const findGroup = await groupService.getIdGroupUser({
             groupId: groupId,
             userId: userId
@@ -98,6 +101,8 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
     }
 
     async function removeProductFromShoppingList({itemId, userId}) {
+
+        if (!itemId) return {message: 'You must supply a listProduct id.'};
 
         const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
 
