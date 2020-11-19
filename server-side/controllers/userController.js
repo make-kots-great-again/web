@@ -177,7 +177,8 @@ export default function userControllerFactory() {
     async function patchUserPwd(httpRequest) {
         try {
             const {...userInfo} = httpRequest.body;
-            const modifiedPwd = await userService.patchUserPwd({id: httpRequest.user.userId}, {...userInfo});
+            const modifiedPwd = await userService
+                .patchUserPwd({id: httpRequest.user.userId}, {...userInfo});
             if (modifiedPwd.message) {
                 return {
                     statusCode: 409,

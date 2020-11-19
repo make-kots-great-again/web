@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>6/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.29% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -79,29 +79,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export default function buildMakeGroup(requiredParameter) {
-    return <span class="fstat-no" title="function not covered" >({</span>
-                groupName = <span class="branch-0 cbranch-no" title="branch not covered" >requiredParameter('</span>A groupName'),
-                groupDescription = <span class="branch-0 cbranch-no" title="branch not covered" >requiredParameter('</span>A group description')
+    return ({
+                groupName = requiredParameter('A groupName'),
+                groupDescription = requiredParameter('A group description')
             } = <span class="branch-0 cbranch-no" title="branch not covered" >{}) =&gt; {</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (typeof groupName !== 'string') <span class="cstat-no" title="statement not covered" >throw n</span></span>ew TypeError('A groupName must be a string.');
-<span class="cstat-no" title="statement not covered" >        if (typeof groupDescription !== 'string')</span>
-<span class="cstat-no" title="statement not covered" >            throw n</span>ew TypeError('A group description must be a string.');
+        if (typeof groupName !== 'string') throw new TypeError('A groupName must be a string.');
+        if (typeof groupDescription !== 'string')
+            throw new TypeError('A group description must be a string.');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return O</span>bject.freeze({
-            getGroupName: <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >g</span>roupName,</span>
-            getGroupDescription: <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >g</span>roupDescription</span>
+        return Object.freeze({
+            getGroupName: () =&gt; groupName,
+            getGroupDescription: () =&gt; groupDescription
         });
     }
 }
@@ -112,7 +112,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Oct 28 2020 22:04:28 GMT+0100 (Central European Standard Time)
+                at Thu Nov 19 2020 03:20:38 GMT+0100 (Central European Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

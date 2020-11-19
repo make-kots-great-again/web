@@ -12,9 +12,7 @@ import env from '../../../config/environment'
 import {groupService, shoppingListService, userService} from "../../../services"
 import makeFakeGroup from '../../fixtures/fakeGroup';
 import makeFakeUser from '../../fixtures/fakeUser'
-import { groupRepository, userRepository } from "../../../repository";
 import makeFakeShoppingList from "../../fixtures/fakeShoppingList";
-import { product } from "puppeteer";
 
 const CODE_BARRE = 16650;
 
@@ -37,9 +35,9 @@ describe ('SHOPPINGLIST SERVICE', () => {
 
     after(async () => {
 
-        await groupRepository.removeUserFromGroup({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId})
-        await groupRepository.removeGroup({groupId: insertedGroup.dataValues.groupId});
-        await userRepository.remove({id: insertedUser.userId});
+        await groupService.deleteUserFromGroup({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId})
+        await groupService.deleteGroup({groupId: insertedGroup.dataValues.groupId});
+        await userService.removeUser({userId: insertedUser.userId});
     });
 
     //TODO
@@ -143,8 +141,6 @@ describe ('SHOPPINGLIST SERVICE', () => {
             const addProduct = await shoppingListService.putProductInShoppingList({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
             await shoppingListService.removeProductFromShoppingList({itemId: addProduct.id, userId: insertedUser.userId});
             const newRemoveProduct = await shoppingListService.removeProductFromShoppingList({itemId: addProduct.id, userId: insertedUser.userId});
-
-
 
             expect(newRemoveProduct.message).to
                 .equal(`No item with this id '${addProduct.id}' was found in the shopping list !`);
