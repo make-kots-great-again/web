@@ -32,28 +32,23 @@ export class ReserveComponent implements OnInit {
           console.log(error);
         });*/
     }
-    changeModeGestion():void{
+    FieldsChange(values:any){
+      console.log(values.currentTarget.checked);
+      if(values.currentTarget.checked){
 
-      const element1 = document.getElementsByClassName('gestionMode') as HTMLCollectionOf<HTMLElement>;
-      const element2 = document.getElementsByClassName('consultMode') as HTMLCollectionOf<HTMLElement>;
-      element2[0].style.visibility = "collapse";
-      var i;
-      for (i = 0; i < element1.length; i++){
-        element1[i].style.visibility = "visible";
       }
-      
-    }
-    changeModeConstultation():void{
-      const element1 = document.getElementsByClassName('gestionMode') as HTMLCollectionOf<HTMLElement>;
-      const element2 = document.getElementsByClassName('consultMode') as HTMLCollectionOf<HTMLElement>;
-      element2[0].style.visibility = "visible";
-      var i;
-      for (i = 0; i < element1.length; i++){
-        element1[i].style.visibility = "collapse";
+      else{
+
       }
     }
-    
-    staticProducts =  [{},{}];
+    staticProducts =  [
+      {nom: 'tomates', quantity: 30, expiration: 30},
+      {nom: 'poire', quantity: 40, expiration: 30},
+      {nom: 'bouteille de vin', quantity: 40, expiration: 30},
+      {nom: 'Jupiler', quantity: 40, expiration: 30},
+      {nom: 'pates', quantity: 30, expiration: 30},
+      {nom: 'pomme', quantity: 70, expiration: 30}
+    ];
     getProductStatic(): void{
 
     }

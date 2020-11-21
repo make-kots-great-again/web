@@ -9,8 +9,10 @@
                 name="search" placeholder="Filter" aria-label="Search">
         </div>
     </div>
-    <button type="button" class="btn btn-danger consultMode" (click)="changeModeGestion()">mode Gestion</button>
-    <button type="button" class="btn btn-success gestionMode" (click)="changeModeConstultation()">mode Consultation</button>
+    <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="customSwitches" (change)="FieldsChange($event)">
+        <label class="custom-control-label" for="customSwitches">mode Consultation</label>
+      </div>
     <!-- User Table -->
     <div class="container text-center ">
         
@@ -21,49 +23,24 @@
             <!-- Table head -->
             <thead class="thead-dark">
                 <tr>
-
-                    <!-- group number -->
+                    <!-- productnumber -->
                     <th scope="col"># <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i></th>
-                    <!-- groupName -->
+                    <!-- productName -->
                     <th id="productName" style="cursor: pointer">Nom du produit</th>
-                    <!-- Role -->
+                    <!-- Date d'expiration -->
+                    <th id="expiration" style="cursor: pointer">Date d'expiration</th>
+                    <!-- Quantité -->
                     <th id="quantity" style="cursor: pointer">Quantité</th>
                     <!-- Action -->
-                    <th id="action" class="gestionMode" style="cursor: pointer">Action</th>
-
+                    <th id="action" style="cursor: pointer">Action</th>
                 </tr>
             </thead>
             <!-- Table head -->
 
             <!-- Table body -->
             <tbody id="demo">
-                <ng-container *ngFor="">
-
-                    <tr #groupId id="{{group['groupId']}}">
-
-                        <td class="text-monospace font-italic font-weight-bold"> {{i + 1}} </td>
-
-                        <!-- product name td  -->
-                        <td onmousemove="this.style.color='green';
-                        this.style.backgroundColor = 'rgba(0, 255, 0, 0.3)'" onmouseout="this.style.backgroundColor = ''; this.style.color=''">
-                            <a #productName
-                                [routerLinkActiveOptions]="{ exact: true }" style="cursor: pointer; color: black"
-                                title="View this group details" onmousemove="this.style.fontSize= '2.9vh'" onmouseout="this.style.backgroundColor = ''; this.style.color='black';
-                                this.style.fontSize= ''"
-                                class="text-monospace font-italic font-weight-bold">
-                                <!--{{group['groupName']}} -->
-                            </a>
-                        </td>
-
-                        <!-- Quantity of a product in Reserve td  -->
-                        <td class="text-monospace font-italic font-weight-bold"> <!--{{product['productQuantity'].quantity}}--> </td>
-
-                        <!-- Action td  -->
-                        <td class="text-monospace font-italic">
-                            <!-- todo  -->
-                        </td>
-                    </tr>
-                </ng-container>
+                
+                <!-- todo  -->
             </tbody>
             <!-- Table body -->
         </table>
