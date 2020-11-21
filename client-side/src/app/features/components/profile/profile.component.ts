@@ -16,6 +16,8 @@ export class ProfileComponent implements OnInit {
   editUserForm: FormGroup;
   editPwdForm: FormGroup;
   userProfile: User;
+  usernameAllreadyExists: boolean;
+  emailAllreadyExists: boolean;
 
   constructor(
     private userService: UserService,
@@ -23,6 +25,8 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.usernameAllreadyExists = false;
+    this.emailAllreadyExists = false;
     this.userService.getUserById().subscribe((user: User) => {
       this.userProfile = user[0];
       if (this.userProfile !== undefined){
@@ -124,8 +128,20 @@ export class ProfileComponent implements OnInit {
         this.viewMode = 'view';
       },
       error => {
-        console.log(error); // TODO gérer si erreur
+        // console.log(error);
+        this.usernameAllreadyExists = (error.error.message === 'A user with the same username already exists !') ? true : false;
+        this.emailAllreadyExists = (error.error.message === 'A user with the same email address already exists !') ? true : false;
       });
+  }
+
+  /**
+   * Fonction "eventHandler" appelée lors d'un clique dans le champ
+   * "email ou username".
+   * Permet de ne plus afficher l'erreur éventuellement générée.
+   */
+  onEditField(): void{
+    this.usernameAllreadyExists = false;
+    this.emailAllreadyExists = false;
   }
 
   /**
@@ -134,6 +150,8 @@ export class ProfileComponent implements OnInit {
    */
   onAbort(): void {
     this.viewMode = 'view';
+    this.usernameAllreadyExists = false;
+    this.emailAllreadyExists = false;
   }
 
   /**

@@ -91,8 +91,17 @@ export default function userServiceFactory({userRepository}) {
 
         const existingUser = await userRepository.findByEmailOrUsername({...userInfo});
 
-        if (existingUser.length !== 0 && userId !== existingUser[0].dataValues.userId)
-            return {message: 'A user with the same username or email already exists !'};
+        if (existingUser.length !== 0)
+            for (let u of existingUser){
+                if (userId !== u.dataValues.userId){
+                    if (userInfo.username == u.dataValues.username){
+                        return {message: 'A user with the same username already exists !'};    
+                    }
+                    else {
+                        return {message: 'A user with the same email address already exists !'};    
+                    }
+                }
+            }
 
         return await userRepository.put({userId, ...userInfo});
     }
