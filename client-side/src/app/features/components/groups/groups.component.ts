@@ -27,8 +27,6 @@ export class GroupsComponent implements OnInit {
   ngOnInit(): void {
      this.getGroups();
   }
-
-
     getGroups(): void {
     this.groupService.getMyGroups()
       .pipe(takeUntil(this.destroyed$))
