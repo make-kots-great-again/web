@@ -1,8 +1,6 @@
-<p>reserve works!</p>
-<p>reserve works!</p>
-<div>
-    <br>
-    <br>
+<div class="d-flex justify-content-center align-items-center">
+    <div class="container m-5 p-5 border border-bottom">
+    <h1 class="d-flex justify-content-center font-weight-bold">La réserve </h1>
     <!-- Filter Input -->
     <div class="container">
         <div class="row justify-content-center">
@@ -11,14 +9,15 @@
                 name="search" placeholder="Filter" aria-label="Search">
         </div>
     </div>
-    <br>
+    <button type="button" class="btn btn-danger consultMode" (click)="changeModeGestion()">mode Gestion</button>
+    <button type="button" class="btn btn-success gestionMode" (click)="changeModeConstultation()">mode Consultation</button>
     <!-- User Table -->
     <div class="container text-center ">
-        <p class="font-weight-bold">La réserve </p>
+        
         <br>
         <!-- Table  -->
         <table class="table table-bordered table-responsive-md table-responsive-lg
-      table-responsive-sm table-striped " id="testTable">
+      table-responsive-sm table-striped" id="testTable">
             <!-- Table head -->
             <thead class="thead-dark">
                 <tr>
@@ -30,7 +29,7 @@
                     <!-- Role -->
                     <th id="quantity" style="cursor: pointer">Quantité</th>
                     <!-- Action -->
-                    <th id="action" style="cursor: pointer">Action</th>
+                    <th id="action" class="gestionMode" style="cursor: pointer">Action</th>
 
                 </tr>
             </thead>
@@ -69,5 +68,5 @@
             <!-- Table body -->
         </table>
     </div>
-
+    </div>
 </div>

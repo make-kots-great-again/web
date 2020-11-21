@@ -20,7 +20,6 @@ export class ReserveComponent implements OnInit {
     private cd: ChangeDetectorRef) { }
 
     ngOnInit(): void {
-      this.getProduct();
     }
     getProduct(): void {/*
       this.groupService.getMyGroups()
@@ -32,5 +31,30 @@ export class ReserveComponent implements OnInit {
         error => {
           console.log(error);
         });*/
+    }
+    changeModeGestion():void{
+
+      const element1 = document.getElementsByClassName('gestionMode') as HTMLCollectionOf<HTMLElement>;
+      const element2 = document.getElementsByClassName('consultMode') as HTMLCollectionOf<HTMLElement>;
+      element2[0].style.visibility = "collapse";
+      var i;
+      for (i = 0; i < element1.length; i++){
+        element1[i].style.visibility = "visible";
+      }
+      
+    }
+    changeModeConstultation():void{
+      const element1 = document.getElementsByClassName('gestionMode') as HTMLCollectionOf<HTMLElement>;
+      const element2 = document.getElementsByClassName('consultMode') as HTMLCollectionOf<HTMLElement>;
+      element2[0].style.visibility = "visible";
+      var i;
+      for (i = 0; i < element1.length; i++){
+        element1[i].style.visibility = "collapse";
+      }
+    }
+    
+    staticProducts =  [{},{}];
+    getProductStatic(): void{
+
     }
 }
