@@ -23,23 +23,23 @@
             <!-- Table head -->
             <thead class="thead-dark">
                 <tr>
-                    <!-- productnumber -->
-                    <th scope="col"># <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i></th>
-                    <!-- productName -->
-                    <th id="productName" style="cursor: pointer">Nom du produit</th>
-                    <!-- Date d'expiration -->
-                    <th id="expiration" style="cursor: pointer">Date d'expiration</th>
-                    <!-- Quantité -->
-                    <th id="quantity" style="cursor: pointer">Quantité</th>
-                    <!-- Action -->
-                    <th id="action" style="cursor: pointer">Action</th>
+                    <th *ngFor = "let column of mockupHeaders">
+                        {{column}}
+                      </th>
+                      <th id="action" style="cursor: pointer">Action</th>
                 </tr>
             </thead>
             <!-- Table head -->
 
             <!-- Table body -->
             <tbody id="demo">
-                
+                <tr *ngFor = "let row of staticProducts">
+                    <td *ngFor = "let column of headers">
+                        {{row[column]}}
+                    </td>
+                    <td>ajouter/retirer</td>
+                </tr>
+
                 <!-- todo  -->
             </tbody>
             <!-- Table body -->

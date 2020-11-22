@@ -19,9 +19,9 @@ export class ReserveComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService,
     private cd: ChangeDetectorRef) { }
 
-    ngOnInit(): void {
-    }
-    getProduct(): void {/*
+  ngOnInit(): void {
+  }
+  getProduct(): void {/*
       this.groupService.getMyGroups()
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
@@ -31,25 +31,60 @@ export class ReserveComponent implements OnInit {
         error => {
           console.log(error);
         });*/
-    }
-    FieldsChange(values:any){
-      console.log(values.currentTarget.checked);
-      if(values.currentTarget.checked){
-
-      }
-      else{
-
-      }
-    }
-    staticProducts =  [
-      {nom: 'tomates', quantity: 30, expiration: 30},
-      {nom: 'poire', quantity: 40, expiration: 30},
-      {nom: 'bouteille de vin', quantity: 40, expiration: 30},
-      {nom: 'Jupiler', quantity: 40, expiration: 30},
-      {nom: 'pates', quantity: 30, expiration: 30},
-      {nom: 'pomme', quantity: 70, expiration: 30}
-    ];
-    getProductStatic(): void{
+  }
+  FieldsChange(values: any) {
+    console.log(values.currentTarget.checked);
+    if (values.currentTarget.checked) {
 
     }
+    else {
+
+    }
+  }
+  mockupHeaders=["id","nom","expiration","quantity"];
+  header=["id_element","id_prod","date_expiration","quantity"];
+  staticProducts = [
+    {
+      id: 123654,
+      nom: 'tomates',
+      expiration: 15,
+      quantity: 30
+      
+    },
+    {
+      id: 12365423789,
+      nom: 'poire',
+      expiration: 13,
+      quantity: 40,
+    },
+    {
+      id: 897413,
+      nom: 'bouteille de vin',
+      expiration: 460,
+      quantity: 40,
+      
+    },
+    {
+      id: 82344812,
+      nom: 'Jupiler',
+      expiration: 351,
+      quantity: 40,
+      
+    },
+    {
+      id: 20748979,
+      nom: 'pates',
+      expiration: 32,
+      quantity: 30,
+      
+    },
+    {
+      id: 7513623,
+      nom: 'pomme',
+      expiration: 7,
+      quantity: 70,
+      
+    }];
+  getProductStatic(): void {
+  }
 }
