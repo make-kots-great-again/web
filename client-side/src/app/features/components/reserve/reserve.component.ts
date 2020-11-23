@@ -27,7 +27,7 @@ export class ReserveComponent implements OnInit {
   open(content, object) {
     let expiration = object['Expiration'];
     let quantity = object["Quantité"];
-    this.modalService.open(content);
+    this.modalService.open(content, { centered: true });
     this.createform(quantity,expiration);
     //console.log(expiration);
   }  
