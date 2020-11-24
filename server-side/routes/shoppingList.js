@@ -20,7 +20,11 @@ router.get("/shoppingList/:groupId",
 
 router.post("/shoppingList/addProduct/:groupId",
     passport.authenticate("jwt", {session: false}),
-    makeCallback(shoppingListController.addProductToShoppingList));
+    makeCallback(shoppingListController.addProductToShoppingList)); //updateItemQuantity
+
+router.patch("/shoppingList/updateQuantity/:itemId",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(shoppingListController.updateItemQuantity)); //updateItemQuantity
 
 /**
  * @api {delete} /shoppingList/removeProduct/:itemId Supprime un produit d'une liste de course.

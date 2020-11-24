@@ -3,7 +3,8 @@ import {shoppingListService} from "../services";
 
 export default function shoppingListControllerFactory() {
     return Object.freeze({
-        getShoppingList, addProductToShoppingList, removeProductToShoppingList, getGroupShoppingList
+        getShoppingList, addProductToShoppingList, removeProductToShoppingList,
+        getGroupShoppingList, updateItemQuantity
     });
 
     async function getShoppingList(httpRequest) {
@@ -119,6 +120,41 @@ export default function shoppingListControllerFactory() {
                 body: {
                     success: true,
                     shoppingList: shoppingList
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+
+
+    }
+
+    //editItemQuantity
+
+    async function updateItemQuantity(httpRequest) {
+
+        const {itemId} = httpRequest.params;
+        const {userId} = httpRequest.user;
+        const {quantity} = httpRequest.body;
+
+        try {
+            const updatedShoppingList = await shoppingListService
+                .editItemQuantity({itemId, userId, quantity});
+
+            if (updatedShoppingList.message) {
+                return {
+                    statusCode: 400,
+                    body: {success: false, message: updatedShoppingList.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    shoppingList: updatedShoppingList
                 }
             }
         } catch (e) {

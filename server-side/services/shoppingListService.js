@@ -4,7 +4,8 @@ import {productRepository} from '../repository'
 
 export default function shoppingListServiceFactory({shoppingListRepository, productRepository}) {
     return Object.freeze({
-        listMyShoppingLists, putProductInShoppingList, removeProductFromShoppingList, getGroupShoppingList
+        listMyShoppingLists, putProductInShoppingList, removeProductFromShoppingList,
+        getGroupShoppingList, editItemQuantity
     });
 
     async function listMyShoppingLists({userId}) {
@@ -39,6 +40,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
                     {
                         code: y.dataValues.product.dataValues.code,
                         product_name: y.dataValues.product.dataValues.product_name,
+                        product_brand: y.dataValues.product.dataValues.brands,
                         quantity: y.dataValues.quantity,
                         groupId: x.dataValues.groupId,
                         shoppingListId: y.dataValues.id,
@@ -91,13 +93,6 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
                 statusCode: 400,
                 message: `No product was found with this code ${product.getProductCode()}`
             };
-
-        return await shoppingListRepository.save({
-            id_group_user: findGroup.dataValues.id_group_user,
-            code: product.getProductCode(),
-            quantity: product.getProductQuantity(),
-            groupProduct: product.getgroupProduct()
-        });
     }
 
     async function removeProductFromShoppingList({itemId, userId}) {
@@ -147,5 +142,18 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
         }
 
         return result;
+    }
+
+
+    async function editItemQuantity({itemId, userId, quantity}){
+
+        if (!itemId) return {message: 'You must supply a listProduct id.'};
+
+        const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
+
+        if (!findItem)
+            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
+
+        return await shoppingListRepository.updateQuantity({itemId, quantity});
     }
 }
