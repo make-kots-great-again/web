@@ -38,9 +38,6 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         const group = makeGroup({...groupInfo});
 
-        //TODO : change because is a fix for the presentation
-
-
         const createGroup = await groupRepository.save({
             groupName: group.getGroupName(),
             groupDescription: group.getGroupDescription(),
@@ -60,6 +57,9 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
     }
 
     async function patchGroup({username, groupId, ...changes}) {
+
+        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${groupId} is not a valid UUID`};
 
         const groupInfo = await getGroup({groupId});
 
@@ -152,6 +152,9 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         if (username.length < 4 || username.length >= 32)
             return {message: 'A username length must be between 4 and 32.'};
 
+        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${groupId} is not a valid v4 UUID`};
+
         const groupInfo = await getGroup({groupId});
 
         if (groupInfo.message) return {message: groupInfo.message};
@@ -179,6 +182,9 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         if (!groupId) return {message: 'You must supply a groupId.'};
         if (!userId) return {message: 'You must a userId'};
 
+        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${groupId} is not a valid v4 UUID`};
+
         const deleteUser = await groupRepository.removeUserFromGroup({groupId, userId});
 
         if (deleteUser === 0)
@@ -193,8 +199,7 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         const deleteGroup = await groupRepository.removeGroup({groupId});
 
-        if (deleteGroup === 0)
-            return {message: 'No group with that id was found !'};
+        if (deleteGroup === 0) return {message: 'No group with that id was found !'};
 
         return deleteGroup;
     }
@@ -203,6 +208,9 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
 
         if (!groupId) return {message: 'You must supply a groupId.'};
         if (!userId) return {message: 'You must supply a groupId.'};
+
+        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${groupId} is not a valid v4 UUID`};
 
         const idGroupUser = await groupRepository.findIdGroupUser({groupId, userId});
 

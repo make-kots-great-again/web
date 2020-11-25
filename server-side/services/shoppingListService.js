@@ -1,6 +1,5 @@
 import {makeShoppingList} from '../domain'
 import {groupService, userService} from "./index";
-import {productRepository} from '../repository'
 
 export default function shoppingListServiceFactory({shoppingListRepository, productRepository}) {
     return Object.freeze({
@@ -64,6 +63,9 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
         if (!groupId) return {message: 'You must supply a group id.'};
 
+        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${groupId} is not a valid UUID`};
+
         const findGroup = await groupService.getIdGroupUser({
             groupId: groupId,
             userId: userId
@@ -97,6 +99,9 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
     async function removeProductFromShoppingList({itemId, userId}) {
 
+        if (!(itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${itemId} is not a valid UUID`};
+
         if (!itemId) return {message: 'You must supply a listProduct id.'};
 
         const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
@@ -115,6 +120,9 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
     }
 
     async function getGroupShoppingList({groupId}) {
+
+        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${groupId} is not a valid UUID`};
 
         const groupInfo = await groupService.getGroup({groupId});
 
@@ -145,14 +153,28 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
     }
 
 
-    async function editItemQuantity({itemId, userId, quantity}){
+    async function editItemQuantity({itemId, userId, quantity}) {
 
         if (!itemId) return {message: 'You must supply a listProduct id.'};
+        if (!quantity) return {message: 'You must supply a quantity.'};
+
+        if (!(itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {statusCode: 400, message: `${itemId} is not a valid UUID`};
 
         const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
 
-        if (!findItem)
-            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
+        if (!findItem) return {message: `No item with this id '${itemId}' was found in the shopping list !`};
+
+        const findItemUser = await shoppingListRepository.findItemOwner({itemId, userId});
+
+        if (!findItemUser) return {
+            statusCode: 403,
+            message: `Unfortunately you don't own this item.`
+        };
+
+        if (typeof quantity !== 'number') return {message: "A product's quantity must be a number."};
+
+        if (quantity < 1 || quantity > 20) return {message: "A product's quantity must be between 1 and 20."};
 
         return await shoppingListRepository.updateQuantity({itemId, quantity});
     }

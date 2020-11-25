@@ -79,13 +79,6 @@ export default function shoppingListControllerFactory() {
                 }
             }
 
-            /*if (shoppingList == 0){
-                return {
-                    statusCode: 400,
-                    body: {success: false, message: "this product doesn't exist in the shopping list"}
-                }
-            }*/
-
             return {
                 statusCode: 200,
                 body: {
@@ -127,11 +120,7 @@ export default function shoppingListControllerFactory() {
             console.log(e);
             return {statusCode: 400, body: {error: e.message}}
         }
-
-
     }
-
-    //editItemQuantity
 
     async function updateItemQuantity(httpRequest) {
 
@@ -140,12 +129,11 @@ export default function shoppingListControllerFactory() {
         const {quantity} = httpRequest.body;
 
         try {
-            const updatedShoppingList = await shoppingListService
-                .editItemQuantity({itemId, userId, quantity});
+            const updatedShoppingList = await shoppingListService.editItemQuantity({itemId, userId, quantity});
 
             if (updatedShoppingList.message) {
                 return {
-                    statusCode: 400,
+                    statusCode: (updatedShoppingList.statusCode) ? updatedShoppingList.statusCode : 404,
                     body: {success: false, message: updatedShoppingList.message}
                 }
             }
@@ -154,7 +142,7 @@ export default function shoppingListControllerFactory() {
                 statusCode: 200,
                 body: {
                     success: true,
-                    shoppingList: updatedShoppingList
+                    message: "Item's quantity was successfully updated !"
                 }
             }
         } catch (e) {
