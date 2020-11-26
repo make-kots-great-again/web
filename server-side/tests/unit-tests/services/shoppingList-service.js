@@ -1,6 +1,3 @@
-//During the test the env variable is set to test
-process.env.NODE_ENV = 'test';
-
 //import server to bring in everything together
 import server from "../../../../app";
 

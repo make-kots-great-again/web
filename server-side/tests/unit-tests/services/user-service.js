@@ -1,20 +1,42 @@
-//During the test the env variable is set to test
-import {makeUser} from "../../../domain";
-
-process.env.NODE_ENV = 'test';
-
 //import server to bring in everything together
-import server from "../../../../app";
+//import server from "../../../../app";
 
 //bring in dev-dependencies
 import {expect} from 'chai';
 import {describe, it} from 'mocha';
 
 import makeFakeUser from '../../fixtures/fakeUser'
+import {makeUser} from "../../../domain";
 import env from '../../../config/environment'
 import {userService} from '../../../services'
+import dbConnection from "../../../config/database";
+import User from '../../../models/users'
 
 //TODO test can login function
+
+/*
+1. créer des mocks des ./models 
+2. modifier les userService (?) 
+    -> si env : test -> models/mock
+    -> else : models/.... 
+*/
+
+
+describe.skip('USER SERVICE', async () => {
+    var UserMock = dbConnection.define('user', {
+        'email': 'email@example.com',
+        'username': 'blink',
+        'picture': 'user-picture.jpg',
+    });
+
+    let a = await UserMock.findOne({
+        where: {
+            username: 'blink',
+        },
+    });
+    console.log(a);
+
+});
 
 describe('USER SERVICE', () => {
 
@@ -23,12 +45,19 @@ describe('USER SERVICE', () => {
         it('inserts a user in the database', async () => {
 
             const {...fakeUser} = makeFakeUser();
-
+            console.log('---------');
+            let resp = await userService.listUsers(); 
+            console.log(resp[0].dataValues.username); //prints types of
+            console.log('---------')
+            
             const inserted = await userService.addUser({...fakeUser});
+            console.log('---------');
+            console.log(inserted);
+            console.log('---------')
             fakeUser.password = inserted.password;
             fakeUser.userId = inserted.userId;
             expect(inserted).to.deep.include(fakeUser);
-
+            
             await userService.removeUser({userId: inserted.userId});
         });
 
@@ -45,7 +74,7 @@ describe('USER SERVICE', () => {
         });
     });
 
-    describe('#login-user', () => {
+    describe.skip('#login-user', () => {
 
         it("can authenticate a user", async () => {
 
@@ -100,11 +129,11 @@ describe('USER SERVICE', () => {
 
     });
 
-    describe('#list-users', () => {
+    describe.skip('#list-users', () => {
 
     });
 
-    describe('#list-one-user', () => {
+    describe.skip('#list-one-user', () => {
 
         it("find user by id", async () => {
             const {...fakeUser} = makeFakeUser();
@@ -135,7 +164,7 @@ describe('USER SERVICE', () => {
 
     });
 
-    describe('#update-one-user', () => {
+    describe.skip('#update-one-user', () => {
 
         it("update one user with userId", async () => {
 
@@ -169,7 +198,7 @@ describe('USER SERVICE', () => {
         });
     });
 
-    describe('#remove-user', () => {
+    describe.skip('#remove-user', () => {
 
     });
 
