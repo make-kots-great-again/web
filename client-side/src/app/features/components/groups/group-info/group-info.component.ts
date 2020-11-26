@@ -127,6 +127,8 @@ export class GroupInfoComponent implements OnInit {
       groupProduct: this.groupProduct
     }
 
+    console.log(productInfo)
+
     this.groupService.addProduct(productInfo, this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => {

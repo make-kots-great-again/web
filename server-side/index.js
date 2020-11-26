@@ -102,6 +102,7 @@ export default function express_server(express) {
         this.app.use('/server/api/', route.groupsRoutes)
         this.app.use('/server/api/', route.productsRoutes)
         this.app.use('/server/api/', route.shoppingListRoutes)
+        this.app.use('/server/api/', route.reserveRoutes)
 
         /* ANY route */
         this.app.get('*', (req, res) => {

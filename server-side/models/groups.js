@@ -36,4 +36,4 @@ const Group = dbConnection.define('group', {
     }
 });
 
-export {Group};
+export default Group;

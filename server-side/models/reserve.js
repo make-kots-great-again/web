@@ -1,10 +1,9 @@
 import {Sequelize} from 'sequelize';
 import dbConnection from "../config/database";
-import userGroup from "./userGroups";
 import Product from "./products";
 import Group from "./groups";
 
-const ShoppingList = dbConnection.define('shoppingList', {
+const Reserve = dbConnection.define('reserve', {
 
         id: {
             type: Sequelize.UUID,
@@ -17,28 +16,30 @@ const ShoppingList = dbConnection.define('shoppingList', {
             type: Sequelize.INTEGER,
             allowNull: false,
             defaultValue: 1,
-            validate: {
-                min: 1,
-                max: 20
-            }
+            validate: {min: 1, max: 20}
         },
-        groupProduct: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false,
-            allowNull: false
-        },
-        id_group_user: {
+        groupId: {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
-            references: {model: userGroup, key: 'id_group_user'}
+            references: {model: Group, key: 'groupId'}
         },
         code: {
             type: Sequelize.INTEGER,
             references: {model: Product, key: 'code'}
-        }
+        },
+        expiringIn: {
+            type: Sequelize.INTEGER,
+            defaultValue: 5,
+            allowNull: false
+        },
+        valid: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
+        },
     },
     {
         freezeTableName: true
     });
 
-export default ShoppingList;
+export default Reserve

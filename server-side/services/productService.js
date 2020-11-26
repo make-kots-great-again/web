@@ -1,5 +1,3 @@
-import {makeProduct} from '../domain'
-
 export default function productServiceFactory({productRepository}) {
     return Object.freeze({
         listProducts

@@ -2,8 +2,7 @@
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('shoppingList', {
-
+        return queryInterface.createTable('reserve', {
             id: {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4,
@@ -15,10 +14,14 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 defaultValue: 1,
-                validate: {
-                    min: 1,
-                    max: 20
-                }
+                validate: {min: 1, max: 20}
+            },
+            groupId: {
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.UUIDV4,
+                references: {model: 'groups', key: 'groupId'},
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
             code: {
                 type: Sequelize.INTEGER,
@@ -26,18 +29,15 @@ module.exports = {
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
             },
-            groupProduct: {
+            valid: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,
                 allowNull: false
             },
-            id_group_user: {
-                type: Sequelize.UUID,
-                defaultValue: Sequelize.UUIDV4,
-                isUUID: 4,
-                references: {model: 'userGroups', key: 'id_group_user'},
-                onDelete: 'CASCADE',
-                onUpdate: 'CASCADE',
+            expiringIn: {
+                type: Sequelize.INTEGER,
+                defaultValue: 5,
+                allowNull: false
             },
             createdAt: {
                 allowNull: false,
@@ -51,5 +51,5 @@ module.exports = {
             }
         });
     },
-    down: queryInterface => queryInterface.dropTable('shoppingList')
+    down: queryInterface => queryInterface.dropTable('reserve')
 };

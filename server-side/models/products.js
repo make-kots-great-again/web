@@ -22,4 +22,4 @@ const Product = dbConnection.define('product', {
     }
 });
 
-export {Product};
+export default Product;

@@ -9,6 +9,7 @@ const dummyGroups = [];
 const dummyPersonalGroups = [];
 const dummyUserGroups = [];
 const shoppingList = [];
+const reverse = [];
 
 const usernames = ['james', 'john', 'william', 'paul', 'thomas', 'kevin', 'gary', 'larry', 'dennis', 'roger'];
 const groups = ['football', 'tennis', 'basketball', 'volleyball', 'hockey', 'cricket', 'baseball', 'golf', 'rugby', 'boxing'];
@@ -48,6 +49,24 @@ Array(10).fill(0).forEach((x, i) => {
         userId: dummyUsers[i].userId,
         groupId: dummyPersonalGroups[i].groupId,
         role: 'personal'
+    });
+
+    reverse.push({
+        id: uuidv4(),
+        code: products[i].code,
+        quantity: Math.floor(Math.random() * 5) + 1,
+        groupId: dummyGroups[i].groupId,
+        expiringIn: 5,
+        valid: (i % 2 === 0)
+    });
+
+    reverse.push({
+        id: uuidv4(),
+        code: products[19 - i].code,
+        quantity: Math.floor(Math.random() * 5) + 1,
+        groupId: dummyGroups[i].groupId,
+        expiringIn: 5,
+        valid: (i % 2 !== 0)
     });
 
 });
@@ -93,6 +112,6 @@ shoppingList.push({
 dummyGroups.push(...dummyPersonalGroups);
 
 module.exports = {
-    dummyUsers, usernames, dummyGroups,
+    dummyUsers, usernames, dummyGroups, reverse,
     groups, dummyUserGroups, products, shoppingList
 }
