@@ -97,6 +97,13 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
             };
     }
 
+    return await shoppingListRepository.save({
+        id_group_user: findGroup.dataValues.id_group_user,
+        code: product.getProductCode(),
+        quantity: product.getProductQuantity(),
+        groupProduct: product.getgroupProduct()
+    });
+
     async function removeProductFromShoppingList({itemId, userId}) {
 
         if (!(itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
