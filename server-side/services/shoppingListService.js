@@ -95,14 +95,13 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
                 statusCode: 400,
                 message: `No product was found with this code ${product.getProductCode()}`
             };
+        return await shoppingListRepository.save({
+            id_group_user: findGroup.dataValues.id_group_user,
+            code: product.getProductCode(),
+            quantity: product.getProductQuantity(),
+            groupProduct: product.getgroupProduct()
+        });
     }
-
-    return await shoppingListRepository.save({
-        id_group_user: findGroup.dataValues.id_group_user,
-        code: product.getProductCode(),
-        quantity: product.getProductQuantity(),
-        groupProduct: product.getgroupProduct()
-    });
 
     async function removeProductFromShoppingList({itemId, userId}) {
 
