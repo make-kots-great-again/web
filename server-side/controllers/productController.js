@@ -2,7 +2,7 @@ import {productService} from "../services";
 
 export default function productControllerFactory() {
     return Object.freeze({
-        getProducts
+        getProducts, getOneProduct
     });
 
     async function getProducts(httpRequest) {
@@ -20,6 +20,31 @@ export default function productControllerFactory() {
                 body: {
                     success: true,
                     products: [...products]
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
+
+    }
+
+    async function getOneProduct(httpRequest) {
+
+        const {productId} = httpRequest.params;
+
+        try {
+            const product = await productService.getOneProduct({productId});
+    
+            if (product.message)
+                return {statusCode: 404, body: {success: false, message: product.message}}
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    products : product
                 }
             }
         } catch (e) {
