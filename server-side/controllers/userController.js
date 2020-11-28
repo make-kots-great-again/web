@@ -31,7 +31,7 @@ export default function userControllerFactory() {
                 statusCode: 201,
                 body: {
                     success: true,
-                    message: "User has been created successfully",
+                    message: "User has been created successfully !",
                     user: createdUser,
                     personnalGroup: createdGroup
                 }
@@ -156,7 +156,7 @@ export default function userControllerFactory() {
                 statusCode: 200,
                 body: {
                     success: true,
-                    message: "User has been patched successfully",
+                    message: "User info has been updated successfully !",
                     user: modifiedUser[1].dataValues,
                 }
             }
@@ -208,22 +208,8 @@ export default function userControllerFactory() {
     async function deleteUser(httpRequest) {
 
         try {
-            const deletedUser =
-                await userService.removeUser({id: httpRequest.user.userId});
 
-            if (!deletedUser) {
-                return {
-                    statusCode: 404,
-                    body: {message: "No valid entry found with provided id"}
-                }
-            }
-
-            if (deletedUser.message) {
-                return {
-                    statusCode: 404,
-                    body: {message: deletedUser.message}
-                }
-            }
+            const deletedUser = await userService.removeUser({userId: httpRequest.user.userId});
 
             return {
                 statusCode: 200,

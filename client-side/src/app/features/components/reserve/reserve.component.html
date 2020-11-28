@@ -1,33 +1,38 @@
-<!--Table-->
-<table *ngIf="reserveArray" class="table table-striped table-bordered">
+<div *ngIf="reserveArray.length !== 0" class="container mb-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
 
-  <!--Table head-->
-  <thead class="font-weight-bold thead-dark">
-  <tr>
-    <!-- group number -->
-    <th class="text-monospace font-italic"></th>
-    <th class="text-monospace font-italic">Produit</th>
-    <th class="text-monospace font-italic">Marque</th>
-    <th class="text-monospace font-italic">Quantité</th>
-    <th class="text-monospace font-italic">Jours Restant</th>
-    <th class="text-monospace font-italic">Valid</th>
-    <th class="text-monospace font-italic">Action</th>
-  </tr>
-  </thead>
-  <!--Table head-->
+        <!--Table-->
+        <table *ngIf="reserveArray" class="table table-striped table-bordered">
 
-  <!-- Table body -->
-  <tbody *ngIf="reserveArray" id="demos">
-  <ng-container *ngFor="let reserve of reserveArray index as i">
+          <!--Table head-->
+          <thead class="font-weight-bold thead-dark">
+          <tr>
+            <!-- group number -->
+            <th class="text-monospace font-italic"></th>
+            <th class="text-monospace font-italic">Produit</th>
+            <th class="text-monospace font-italic">Marque</th>
+            <th class="text-monospace font-italic">Quantité</th>
+            <th class="text-monospace font-italic">Jours Restant</th>
+            <th class="text-monospace font-italic">Valid</th>
+            <th class="text-monospace font-italic">Action</th>
+          </tr>
+          </thead>
+          <!--Table head-->
 
-    <tr>
-      <td><img src="../../../../assets/img/product.png" alt=""/></td>
-      <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
-      <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
-      <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
-      <th class="text-monospace font-italic" scope="row">{{reserve['expiringIn']}} </th>
-      <th class="text-monospace font-italic" scope="row">{{reserve['valid']}} </th>
-      <td class="text-monospace font-italic">
+          <!-- Table body -->
+          <tbody *ngIf="reserveArray" id="demos">
+          <ng-container *ngFor="let reserve of reserveArray index as i">
+
+            <tr>
+              <td><img src="../../../../assets/img/product.png" alt=""/></td>
+              <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
+              <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
+              <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
+              <th class="text-monospace font-italic" scope="row">{{reserve['expiringIn']}} </th>
+              <th class="text-monospace font-italic" scope="row">{{reserve['valid']}} </th>
+              <td class="text-monospace font-italic">
 
             <span>
                     <!-- update reserve icons  -->
@@ -55,10 +60,24 @@
                       </button>
                     </a>
             </span>
-      </td>
-    </tr>
-  </ng-container>
-  </tbody>
-  <!-- Table body -->
-</table>
-<!--Table-->
+              </td>
+            </tr>
+          </ng-container>
+          </tbody>
+          <!-- Table body -->
+        </table>
+        <!--Table-->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--No reserve list div-->
+<div *ngIf="reserveArray.length === 0" class="container mb-4">
+  <h6 class="text-monospace font-italic font-weight-bolder">
+    <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
+    Ce groupe n'a aucun élément dans sa reserve pour le moment !
+  </h6>
+</div>
+<hr>

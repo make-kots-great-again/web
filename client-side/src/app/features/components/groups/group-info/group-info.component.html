@@ -32,29 +32,30 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
-                <li class="nav-item" [routerLinkActive]="['active']"
+                <li *ngIf="!isPersonnalGroup"
+                  class="nav-item" [routerLinkActive]="['active']"
                     [routerLinkActiveOptions]="{ exact: true }">
-                  <a id="usersBtn" [routerLink]="['/users/all']"
+                  <a id="membersBtn" (click)="changeView($event.target)"
                      class="nav-link text-monospace font-italic font-weight-bolder" style="cursor: pointer">
-                    All Users</a>
+                    Members</a>
                 </li>
                 <li class="nav-item" [routerLinkActive]="['active']"
                     [routerLinkActiveOptions]="{ exact: true }">
-                  <a id="allQuestionsBtn" [routerLink]="['/questions/all']"
+                  <a id="shoppingListBtn" (click)="changeView($event.target)"
                      class="nav-link text-monospace font-italic font-weight-bolder" style="cursor: pointer">
-                    All questions</a>
+                    ShoppingList</a>
                 </li>
                 <li class="nav-item" [routerLinkActive]="['active']"
                     [routerLinkActiveOptions]="{ exact: true }">
-                  <a id="usersResultsBtn" [routerLink]="['/users/info']"
+                  <a id="reserveBtn" (click)="changeView($event.target)"
                      class="nav-link text-monospace font-italic font-weight-bolder" style="cursor: pointer">
-                    Users results</a>
+                    Reserve</a>
                 </li>
                 <li class="nav-item" [routerLinkActive]="['active']"
                     [routerLinkActiveOptions]="{ exact: true }">
-                  <a id="metricsBtn" [routerLink]="['/users/metrics']"
+                  <a id="reserveMagBtn" (click)="changeView($event.target)"
                      class="nav-link text-monospace font-italic font-weight-bolder" style="cursor: pointer">
-                    Metrics</a>
+                    ReserveMag</a>
                 </li>
               </ul>
             </div>
@@ -90,9 +91,9 @@
     <div class="container mt-2 mb-2">
       <div class="modal-body card border-light">
 
-        <!--  ******************************   Unpersonnal group part   *********************************  -->
+        <!--  ******************************   personnal group part   *********************************  -->
 
-        <ng-template [ngIf]="!isPersonnalGroup">
+        <ng-template [ngIf]="!isPersonnalGroup && viewPage === 'membersBtn'">
           <div class="d-flex">
             <strong class="text-monospace font-italic font-weight-bolder h5">
               <u>Membres du groupe</u></strong>
@@ -111,8 +112,7 @@
                            [ngbTypeahead]="usernameList"
                            placeholder="username"/>
                     <br>
-                    <small *ngIf="searchingUsernames"
-                           class="form-text text-muted">searching...</small>
+                    <small *ngIf="searchingUsernames" class="form-text text-muted">searching...</small>
                     <div class="invalid-feedback" *ngIf="usernameSearchFailed">
                       Désolé, aucun utilisateur ayant le username : {{memberModel}} n'a été trouvé !
                     </div>
@@ -177,15 +177,21 @@
           <br>
         </ng-template>
 
-        <!--  ***************************   Personnal and unpersonnal group part   *****************************  -->
+        <!--  ******************************  END of  personnal group part   *********************************  -->
 
-        <p class="text-monospace font-italic font-weight-bolder h5">
+        <!--  ***************************   shoppingList group part   *****************************  -->
+
+        <p *ngIf="viewPage === 'shoppingListBtn'" class="text-monospace font-italic font-weight-bolder h5">
           <strong><u>Liste de courses</u></strong>
+        </p>
+        <p *ngIf="viewPage === 'reserveBtn' || viewPage === 'reserveMagBtn'" class="text-monospace font-italic font-weight-bolder h5">
+          <strong><u>Reserve</u></strong>
         </p>
         <br>
 
         <!--search for products div-->
-        <div class="container">
+        <div *ngIf="viewPage === 'shoppingListBtn' || viewPage === 'reserveBtn' || viewPage === 'reserveMagBtn'"
+          class="container">
           <fieldset class="md-form form-inline">
             <div class="form-group">
               <label for="typeahead-http">Rechercher un produit :</label>
@@ -231,7 +237,8 @@
         </div>
 
         <!--shopping list table-->
-        <div *ngIf="templateShoppoingList.length !== 0" class="container mb-4">
+        <div *ngIf="templateShoppoingList.length !== 0
+             && viewPage === 'shoppingListBtn'" class="container mb-4">
           <div class="row">
             <div class="col-12">
               <button (click)="switchSuppressMode()"
@@ -242,10 +249,6 @@
                   text-monospace font-italic font-weight-bolder pull-right
                   margin_bottom">{{suppressButtonMessage}}
               </button>
-
-              <app-reserve class="font-weight-normal"
-                           *ngIf="groupBarCode !=''" [groupId]="groupId">
-              </app-reserve>
 
               <div class="table-responsive">
 
@@ -316,9 +319,12 @@
             Ce groupe n'a aucun élément dans sa liste de courses pour le moment !
           </h6>
         </div>
-        <hr>
 
         <!--  ****************************************   Unpersonnal group part   *************************************  -->
+
+        <app-reserve *ngIf="viewPage === 'reserveBtn' || viewPage === 'reserveMagBtn'"
+          class="font-weight-normal" [groupId]="groupId">
+        </app-reserve>
 
       </div>
     </div>

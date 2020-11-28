@@ -16,7 +16,7 @@ import makeFakeShoppingList from "../../fixtures/fakeShoppingList";
 
 const CODE_BARRE = 16650;
 
-describe ('SHOPPINGLIST SERVICE', () => {
+describe('SHOPPINGLIST SERVICE', () => {
 
     let insertedUser = "";
     let insertedGroup = "";
@@ -101,9 +101,7 @@ describe ('SHOPPINGLIST SERVICE', () => {
             const addProduct = await shoppingListService.putProductInShoppingList({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
             const newAddProduct = await shoppingListService.putProductInShoppingList({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
 
-
-            expect(newAddProduct.statusCode).to
-                .equal(409);
+            expect(newAddProduct.statusCode).to.equal(409);
 
             await shoppingListService.removeProductFromShoppingList({itemId: addProduct.id, userId: insertedUser.userId});
         });
@@ -113,11 +111,11 @@ describe ('SHOPPINGLIST SERVICE', () => {
     
     describe('#remove-product-to-shopping-list', () => {
         
-        it('url must include a listId', async () => {
+        it('itemId must include in parameters', async () => {
 
-            const removedProduct = await shoppingListService.removeProductFromShoppingList({});
+            const removedProduct = await shoppingListService.removeProductFromShoppingList({itemId : undefined, userId : ''});
             
-            expect(removedProduct.message).to.equal('You must supply a listProduct id.');
+            expect(removedProduct.message).to.equal('You must supply the item id.');
             
         });
 
@@ -128,10 +126,8 @@ describe ('SHOPPINGLIST SERVICE', () => {
             const addProduct = await shoppingListService.putProductInShoppingList({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
             const removeProduct = await shoppingListService.removeProductFromShoppingList({itemId: addProduct.id, userId: insertedUser.userId});
             
-            expect(removeProduct).to
-                .equal(1);
+            expect(removeProduct).to.equal(1);
 
-            
         });
 
         it('cannot remove an inexisting product', async () => {
@@ -147,5 +143,4 @@ describe ('SHOPPINGLIST SERVICE', () => {
         });
     });
 
-    
 });

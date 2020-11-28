@@ -13,9 +13,13 @@ export class ReserveComponent implements OnInit {
 
   @Input() groupId: string;
 
+
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
+
   reserveArray: Array<Reserve> = [];
+
+  quantity = 1;
 
   constructor(
     private reserveService: ReserveService,
@@ -30,7 +34,6 @@ export class ReserveComponent implements OnInit {
     this.reserveService.getGroupReserveItems(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
-          console.log(data);
           this.reserveArray = data;
         },
         error => {

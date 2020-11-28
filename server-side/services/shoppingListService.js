@@ -106,10 +106,10 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
     async function removeProductFromShoppingList({itemId, userId}) {
 
+        if (!itemId) return {message: 'You must supply the item id.'};
+
         if (!(itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
             return {message: `${itemId} is not a valid UUID`};
-
-        if (!itemId) return {message: 'You must supply a listProduct id.'};
 
         const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
 

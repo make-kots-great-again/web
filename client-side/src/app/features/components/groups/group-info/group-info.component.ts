@@ -30,6 +30,7 @@ export class GroupInfoComponent implements OnInit {
   groupProduct = false;
   groupName = '';
   currentUser = '';
+  viewPage = '';
   quantity = 1;
 
   suppressButtonMessage: string = 'Activer la Suppression';
@@ -62,6 +63,7 @@ export class GroupInfoComponent implements OnInit {
 
     this.groupMembers();
     this.showGroupShoppingList();
+    (this.isPersonnalGroup) ? this.viewPage = 'shoppingListBtn' :  this.viewPage = 'membersBtn';
   }
 
   groupMembers(): void {
@@ -125,9 +127,7 @@ export class GroupInfoComponent implements OnInit {
       code: this.productModel.code,
       quantity: this.quantity,
       groupProduct: this.groupProduct
-    }
-
-    console.log(productInfo)
+    };
 
     this.groupService.addProduct(productInfo, this.groupId)
       .pipe(takeUntil(this.destroyed$))
@@ -223,6 +223,13 @@ export class GroupInfoComponent implements OnInit {
         });
   }
 
+  changeView(event: any): void {
+    (event.id === 'membersBtn') ? this.viewPage = 'membersBtn' :
+      (event.id === 'shoppingListBtn') ? this.viewPage = 'shoppingListBtn' :
+        (event.id === 'reserveBtn') ? this.viewPage = 'reserveBtn' :
+          (event.id === 'reserveMagBtn') ? this.viewPage = 'reserveMagBtn' : undefined;
+  }
+
   switchSuppressMode(): void {
     if (this.isSuppressMode) {
       this.suppressButtonMessage = 'Désactiver la suppression';
@@ -238,7 +245,7 @@ export class GroupInfoComponent implements OnInit {
     let existingProduct: object = {};
     if (typeof this.productModel === 'object') {
 
-    //  const existingProduct1 = this.templateShoppoingList.find((x: Product) => x.code === this.productModel.code && x.product_name);
+      //  const existingProduct1 = this.templateShoppoingList.find((x: Product) => x.code === this.productModel.code && x.product_name);
 
       existingProduct = this.templateShoppoingList
         .find((x: Product) => (x.code === this.productModel.code

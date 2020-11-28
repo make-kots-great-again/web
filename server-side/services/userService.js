@@ -36,7 +36,7 @@ export default function userServiceFactory({userRepository}) {
 
         const {dataValues: data} = existing["0"];
 
-        const {username, email: userEmail, userId, password: userPassword} = data;
+        const {email: userEmail, userId, password: userPassword} = data;
 
         const validPassword = await passwordFactory.verifyPassword(password, userPassword);
 
@@ -62,11 +62,6 @@ export default function userServiceFactory({userRepository}) {
      *          -> sinon, la réponse de la requête envoyé au userRepository.
      */
     async function listOneUser({id} = {}) {
-
-        if (!id) return {message: 'You must supply an id.'};
-
-        if (!(id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${id} is not a valid v4 UUID`};
 
         return userRepository.findById({id});
     }

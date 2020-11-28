@@ -1,0 +1,488 @@
+{
+  "stats": {
+    "suites": 7,
+    "tests": 13,
+    "passes": 13,
+    "pending": 0,
+    "failures": 0,
+    "start": "2020-11-28T05:21:03.042Z",
+    "end": "2020-11-28T05:21:04.437Z",
+    "duration": 1395,
+    "testsRegistered": 13,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "3885ba9a-215c-454e-9d65-99f2d8a80c1b",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "93e36a7d-346c-47d7-b4cd-eb889e0829b5",
+          "title": "Users",
+          "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\integration-tests\\users..js",
+          "file": "\\server-side\\tests\\integration-tests\\users..js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook",
+              "fullTitle": "Users \"before all\" hook",
+              "timedOut": false,
+              "duration": 477,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await _chai.default.request(_app.default).post('/server/api/signup').send({ ...user\n});\nloginUser = await _chai.default.request(_app.default).post('/server/api/login').send({\n  pseudo: user.username,\n  password: user.password\n});",
+              "err": {},
+              "uuid": "6edb0642-936c-42ef-8a80-3c145174e783",
+              "parentUUID": "93e36a7d-346c-47d7-b4cd-eb889e0829b5",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook",
+              "fullTitle": "Users \"after all\" hook",
+              "timedOut": false,
+              "duration": 2,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const findUser = await _repository.userRepository.findByUsername({\n  username: user.username\n});\nawait _services.userService.removeUser({\n  userId: findUser.dataValues.userId\n});",
+              "err": {},
+              "uuid": "66550ff9-cfdd-4510-8012-c9efe2389589",
+              "parentUUID": "93e36a7d-346c-47d7-b4cd-eb889e0829b5",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "b05e5f0e-d72d-451b-8d53-bb48d7dca1d7",
+              "title": "/login user",
+              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\integration-tests\\users..js",
+              "file": "\\server-side\\tests\\integration-tests\\users..js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "it should login a user",
+                  "fullTitle": "Users /login user it should login a user",
+                  "timedOut": false,
+                  "duration": 2,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "loginUser.status.should.be.eql(200);\nloginUser.body.user.should.have.property('token');\n(0, _chai.expect)(loginUser.body.success).to.be.true;",
+                  "err": {},
+                  "uuid": "0d58e43c-d0bd-4e57-acd1-4a5f0258bc12",
+                  "parentUUID": "b05e5f0e-d72d-451b-8d53-bb48d7dca1d7",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "it should NOT login a user with a wrong password",
+                  "fullTitle": "Users /login user it should NOT login a user with a wrong password",
+                  "timedOut": false,
+                  "duration": 6,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const loggedIn = await _chai.default.request(_app.default).post('/server/api/login').send({\n  pseudo: 'xxxxxx',\n  password: 'xxxxxx'\n});\nloggedIn.status.should.be.eql(401);\n(0, _chai.expect)(loggedIn.body.success).to.be.false;\nloggedIn.body.should.have.property('message').eql('Authentication failed !');",
+                  "err": {},
+                  "uuid": "ce7ec030-2474-4d7b-87f3-fb2356f4a205",
+                  "parentUUID": "b05e5f0e-d72d-451b-8d53-bb48d7dca1d7",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "0d58e43c-d0bd-4e57-acd1-4a5f0258bc12",
+                "ce7ec030-2474-4d7b-87f3-fb2356f4a205"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 8,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 10000
+            },
+            {
+              "uuid": "3ef9cb55-8240-403b-9b4f-26ba9d19ea3b",
+              "title": "/singup user",
+              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\integration-tests\\users..js",
+              "file": "\\server-side\\tests\\integration-tests\\users..js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "it should create a new user",
+                  "fullTitle": "Users /singup user it should create a new user",
+                  "timedOut": false,
+                  "duration": 96,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const newUser = (0, _fakeUser.default)();\nconst createdUser = await _chai.default.request(_app.default).post('/server/api/signup').send({ ...newUser\n});\ncreatedUser.status.should.be.eql(201);\ncreatedUser.body.should.have.property('personnalGroup');\ncreatedUser.body.should.have.property('message').eql('User has been created successfully !');\n(0, _chai.expect)(createdUser.body.success).to.be.true;\nawait _services.userService.removeUser({\n  userId: createdUser.body.user.userId\n});",
+                  "err": {},
+                  "uuid": "19cb09c6-532f-48a0-b31f-1a3c1d54f20a",
+                  "parentUUID": "3ef9cb55-8240-403b-9b4f-26ba9d19ea3b",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "it should NOT create a user if he/she already exists",
+                  "fullTitle": "Users /singup user it should NOT create a user if he/she already exists",
+                  "timedOut": false,
+                  "duration": 98,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const newUser = (0, _fakeUser.default)();\nconst createdUser1 = await _chai.default.request(_app.default).post('/server/api/signup').send({ ...newUser\n});\nconst createdUser2 = await _chai.default.request(_app.default).post('/server/api/signup').send({ ...newUser\n});\ncreatedUser2.status.should.be.eql(409);\ncreatedUser2.body.should.have.property('message').eql('A user with the same username or email already exists !');\n(0, _chai.expect)(createdUser2.body.success).to.be.false;\nawait _services.userService.removeUser({\n  userId: createdUser1.body.user.userId\n});",
+                  "err": {},
+                  "uuid": "74ca4e7a-4ceb-4926-a5d8-1e727a5c9f4b",
+                  "parentUUID": "3ef9cb55-8240-403b-9b4f-26ba9d19ea3b",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "19cb09c6-532f-48a0-b31f-1a3c1d54f20a",
+                "74ca4e7a-4ceb-4926-a5d8-1e727a5c9f4b"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 194,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 10000
+            },
+            {
+              "uuid": "9860e07a-3b0f-42c3-9997-cfeadec832a5",
+              "title": "/GET users",
+              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\integration-tests\\users..js",
+              "file": "\\server-side\\tests\\integration-tests\\users..js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "it should GET all users",
+                  "fullTitle": "Users /GET users it should GET all users",
+                  "timedOut": false,
+                  "duration": 11,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const users = await _chai.default.request(_app.default).get('/server/api/users/profiles').set('Authorization', loginUser.body.user.token);\nusers.status.should.be.eql(200);\nusers.body.should.be.an('array');",
+                  "err": {},
+                  "uuid": "e382f183-de41-470e-849e-fcf255ea8dca",
+                  "parentUUID": "9860e07a-3b0f-42c3-9997-cfeadec832a5",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "it should NOT GET all user with a missing or invalid JWT",
+                  "fullTitle": "Users /GET users it should NOT GET all user with a missing or invalid JWT",
+                  "timedOut": false,
+                  "duration": 8,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const users = await _chai.default.request(_app.default).get('/server/api/users/profiles');\nconst users1 = await _chai.default.request(_app.default).get('/server/api/users/profiles').set('Authorization', \"abc\");\nusers.status.should.be.eql(401);\nusers1.status.should.be.eql(401);\nusers.body.should.be.empty;\nusers1.body.should.be.empty;",
+                  "err": {},
+                  "uuid": "2014dc95-a20c-45ed-8872-fa387e716da8",
+                  "parentUUID": "9860e07a-3b0f-42c3-9997-cfeadec832a5",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "e382f183-de41-470e-849e-fcf255ea8dca",
+                "2014dc95-a20c-45ed-8872-fa387e716da8"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 19,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 10000
+            },
+            {
+              "uuid": "90e20d4c-d70f-4378-baf6-9830c477abe1",
+              "title": "/GET user",
+              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\integration-tests\\users..js",
+              "file": "\\server-side\\tests\\integration-tests\\users..js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "it should GET one user",
+                  "fullTitle": "Users /GET user it should GET one user",
+                  "timedOut": false,
+                  "duration": 9,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const getUser = await _chai.default.request(_app.default).get('/server/api/user/').set('Authorization', loginUser.body.user.token);\ngetUser.status.should.be.eql(200);\ngetUser.body.should.have.lengthOf(1);",
+                  "err": {},
+                  "uuid": "94d6ee25-9a07-41af-8c81-ae4659decb7f",
+                  "parentUUID": "90e20d4c-d70f-4378-baf6-9830c477abe1",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "it should NOT GET a user with a missing or invalid JWT",
+                  "fullTitle": "Users /GET user it should NOT GET a user with a missing or invalid JWT",
+                  "timedOut": false,
+                  "duration": 10,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const users = await _chai.default.request(_app.default).get('/server/api/user/');\nconst users1 = await _chai.default.request(_app.default).get('/server/api/user/').set('Authorization', \"abc\");\nusers.status.should.be.eql(401);\nusers1.status.should.be.eql(401);\nusers.body.should.be.empty;\nusers1.body.should.be.empty;",
+                  "err": {},
+                  "uuid": "01e69e3f-3c17-482e-b6aa-fb015912ae9a",
+                  "parentUUID": "90e20d4c-d70f-4378-baf6-9830c477abe1",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "94d6ee25-9a07-41af-8c81-ae4659decb7f",
+                "01e69e3f-3c17-482e-b6aa-fb015912ae9a"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 19,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 10000
+            },
+            {
+              "uuid": "34651599-5995-49d3-b674-0853bb127c1c",
+              "title": "/PATCH user",
+              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\integration-tests\\users..js",
+              "file": "\\server-side\\tests\\integration-tests\\users..js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "it should PATCH a user",
+                  "fullTitle": "Users /PATCH user it should PATCH a user",
+                  "timedOut": false,
+                  "duration": 186,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const userToUpdate = (0, _fakeUser.default)();\nawait _chai.default.request(_app.default).post('/server/api/signup').send({ ...userToUpdate\n});\nconst logInUser = await _chai.default.request(_app.default).post('/server/api/login').send({\n  pseudo: userToUpdate.username,\n  password: userToUpdate.password\n});\nconst patchedUser = await _chai.default.request(_app.default).put('/server/api/user/').set('Authorization', logInUser.body.user.token).send({ ...(0, _fakeUser.default)({\n    username: 'toto123'\n  })\n});\npatchedUser.status.should.be.eql(200);\n(0, _chai.expect)(patchedUser.body.success).to.be.true;\npatchedUser.body.user.should.have.property('username').eql('toto123');\npatchedUser.body.should.have.property('message').eql('User info has been updated successfully !');\nawait _services.userService.removeUser({\n  userId: logInUser.body.user.userId\n});",
+                  "err": {},
+                  "uuid": "9cf2b558-d95f-48c3-8b95-f90243d390a3",
+                  "parentUUID": "34651599-5995-49d3-b674-0853bb127c1c",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "it should NOT PATCH a user with a taken username",
+                  "fullTitle": "Users /PATCH user it should NOT PATCH a user with a taken username",
+                  "timedOut": false,
+                  "duration": 275,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const userToUpdate = (0, _fakeUser.default)();\nawait _chai.default.request(_app.default).post('/server/api/signup').send({ ...userToUpdate\n});\nconst user2 = await _chai.default.request(_app.default).post('/server/api/signup').send({ ...(0, _fakeUser.default)()\n});\nconst logInUser = await _chai.default.request(_app.default).post('/server/api/login').send({\n  pseudo: userToUpdate.username,\n  password: userToUpdate.password\n});\nconst patchedUser = await _chai.default.request(_app.default).put('/server/api/user/').set('Authorization', logInUser.body.user.token).send({ ...(0, _fakeUser.default)({\n    username: user2.body.user.username\n  })\n});\npatchedUser.status.should.be.eql(409);\n(0, _chai.expect)(patchedUser.body.success).to.be.false;\npatchedUser.body.should.have.property('message').eql('A user with the same username already exists !');\nawait _services.userService.removeUser({\n  userId: logInUser.body.user.userId\n});\nawait _services.userService.removeUser({\n  userId: user2.body.user.userId\n});",
+                  "err": {},
+                  "uuid": "ca0ae20e-60c2-4459-ae2b-f6cd6957ccb6",
+                  "parentUUID": "34651599-5995-49d3-b674-0853bb127c1c",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "it should NOT PATCH a user with a missing or invalid JWT",
+                  "fullTitle": "Users /PATCH user it should NOT PATCH a user with a missing or invalid JWT",
+                  "timedOut": false,
+                  "duration": 8,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const users = await _chai.default.request(_app.default).put('/server/api/user/');\nconst users1 = await _chai.default.request(_app.default).put('/server/api/user/').set('Authorization', \"abc\");\nusers.status.should.be.eql(401);\nusers1.status.should.be.eql(401);\nusers.body.should.be.empty;\nusers1.body.should.be.empty;",
+                  "err": {},
+                  "uuid": "251c4956-6799-49dd-80cb-f06a8232b14d",
+                  "parentUUID": "34651599-5995-49d3-b674-0853bb127c1c",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "9cf2b558-d95f-48c3-8b95-f90243d390a3",
+                "ca0ae20e-60c2-4459-ae2b-f6cd6957ccb6",
+                "251c4956-6799-49dd-80cb-f06a8232b14d"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 469,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 10000
+            },
+            {
+              "uuid": "0e9a2a43-84df-4515-9508-087f06b73edf",
+              "title": "/DELETE user",
+              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\integration-tests\\users..js",
+              "file": "\\server-side\\tests\\integration-tests\\users..js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "it should DELETE a user",
+                  "fullTitle": "Users /DELETE user it should DELETE a user",
+                  "timedOut": false,
+                  "duration": 179,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const userToDelete = (0, _fakeUser.default)();\nawait _chai.default.request(_app.default).post('/server/api/signup').send({ ...userToDelete\n});\nconst logInUser = await _chai.default.request(_app.default).post('/server/api/login').send({\n  pseudo: userToDelete.username,\n  password: userToDelete.password\n});\nconst deletedUser = await _chai.default.request(_app.default).delete('/server/api/user/').set('Authorization', logInUser.body.user.token);\ndeletedUser.status.should.be.eql(200);\ndeletedUser.body.should.have.property('message').eql('User deleted successfully !');\ndeletedUser.body.should.have.property('removedUser').eql(1);",
+                  "err": {},
+                  "uuid": "d1ac452a-95b3-4d70-9b0c-6d405d93bf91",
+                  "parentUUID": "0e9a2a43-84df-4515-9508-087f06b73edf",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "it should NOT DELETE a user with a missing or invalid JWT",
+                  "fullTitle": "Users /DELETE user it should NOT DELETE a user with a missing or invalid JWT",
+                  "timedOut": false,
+                  "duration": 7,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const users = await _chai.default.request(_app.default).delete('/server/api/user/');\nconst users1 = await _chai.default.request(_app.default).delete('/server/api/user/').set('Authorization', \"abc\");\nusers.status.should.be.eql(401);\nusers1.status.should.be.eql(401);\nusers.body.should.be.empty;\nusers1.body.should.be.empty;",
+                  "err": {},
+                  "uuid": "5d1e7b92-e5ef-4363-8288-311eec6c2203",
+                  "parentUUID": "0e9a2a43-84df-4515-9508-087f06b73edf",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "d1ac452a-95b3-4d70-9b0c-6d405d93bf91",
+                "5d1e7b92-e5ef-4363-8288-311eec6c2203"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 186,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 10000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 10000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 10000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.1.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "index",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.1.1"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "test-reports/integration",
+        "reportFilename": "index"
+      },
+      "version": "5.1.0"
+    }
+  }
+}

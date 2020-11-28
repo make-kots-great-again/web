@@ -203,12 +203,7 @@
 <a name='L144'></a><a href='#L144'>144</a>
 <a name='L145'></a><a href='#L145'>145</a>
 <a name='L146'></a><a href='#L146'>146</a>
-<a name='L147'></a><a href='#L147'>147</a>
-<a name='L148'></a><a href='#L148'>148</a>
-<a name='L149'></a><a href='#L149'>149</a>
-<a name='L150'></a><a href='#L150'>150</a>
-<a name='L151'></a><a href='#L151'>151</a>
-<a name='L152'></a><a href='#L152'>152</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L147'></a><a href='#L147'>147</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -311,31 +306,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -349,11 +319,31 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -377,7 +367,7 @@ import makeFakeShoppingList from "../../fixtures/fakeShoppingList";
 &nbsp;
 const CODE_BARRE = 16650;
 &nbsp;
-describe ('SHOPPINGLIST SERVICE', () =&gt; {
+describe('SHOPPINGLIST SERVICE', () =&gt; {
 &nbsp;
     let insertedUser = "";
     let insertedGroup = "";
@@ -462,9 +452,7 @@ describe ('SHOPPINGLIST SERVICE', () =&gt; {
             const addProduct = await shoppingListService.putProductInShoppingList({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
             const newAddProduct = await shoppingListService.putProductInShoppingList({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
 &nbsp;
-&nbsp;
-            expect(newAddProduct.statusCode).to
-                .equal(409);
+            expect(newAddProduct.statusCode).to.equal(409);
 &nbsp;
             await shoppingListService.removeProductFromShoppingList({itemId: addProduct.id, userId: insertedUser.userId});
         });
@@ -474,11 +462,11 @@ describe ('SHOPPINGLIST SERVICE', () =&gt; {
     
     describe('#remove-product-to-shopping-list', () =&gt; {
         
-        it('url must include a listId', async () =&gt; {
+        it('itemId must include in parameters', async () =&gt; {
 &nbsp;
-            const removedProduct = await shoppingListService.removeProductFromShoppingList({});
+            const removedProduct = await shoppingListService.removeProductFromShoppingList({itemId : undefined, userId : ''});
             
-            expect(removedProduct.message).to.equal('You must supply a listProduct id.');
+            expect(removedProduct.message).to.equal('You must supply the item id.');
             
         });
 &nbsp;
@@ -489,10 +477,8 @@ describe ('SHOPPINGLIST SERVICE', () =&gt; {
             const addProduct = await shoppingListService.putProductInShoppingList({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
             const removeProduct = await shoppingListService.removeProductFromShoppingList({itemId: addProduct.id, userId: insertedUser.userId});
             
-            expect(removeProduct).to
-                .equal(1);
+            expect(removeProduct).to.equal(1);
 &nbsp;
-            
         });
 &nbsp;
         it('cannot remove an inexisting product', async () =&gt; {
@@ -508,7 +494,6 @@ describe ('SHOPPINGLIST SERVICE', () =&gt; {
         });
     });
 &nbsp;
-    
 });
 &nbsp;</pre></td></tr></table></pre>
 
@@ -517,7 +502,7 @@ describe ('SHOPPINGLIST SERVICE', () =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Nov 19 2020 03:20:38 GMT+0100 (Central European Standard Time)
+                at Sat Nov 28 2020 06:23:16 GMT+0100 (Central European Standard Time)
             </div>
         </div>
         <script src="../../../../../prettify.js"></script>
