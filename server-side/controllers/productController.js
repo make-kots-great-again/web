@@ -36,7 +36,7 @@ export default function productControllerFactory() {
 
         try {
             const product = await productService.getOneProduct({productId});
-    
+            
             if (product.message)
                 return {statusCode: 404, body: {success: false, message: product.message}}
 
@@ -44,7 +44,7 @@ export default function productControllerFactory() {
                 statusCode: 200,
                 body: {
                     success: true,
-                    product : product
+                    product : product.dataValues
                 }
             }
         } catch (e) {
