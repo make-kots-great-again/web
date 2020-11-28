@@ -44,7 +44,7 @@ export default function productControllerFactory() {
                 statusCode: 200,
                 body: {
                     success: true,
-                    products : product
+                    product : product
                 }
             }
         } catch (e) {
