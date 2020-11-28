@@ -33,7 +33,7 @@ const ShoppingList = dbConnection.define('shoppingList', {
             references: {model: userGroup, key: 'id_group_user'}
         },
         code: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.BIGINT                      ,
             references: {model: Product, key: 'code'}
         }
     },

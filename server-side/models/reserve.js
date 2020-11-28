@@ -24,7 +24,7 @@ const Reserve = dbConnection.define('reserve', {
             references: {model: Group, key: 'groupId'}
         },
         code: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.BIGINT                      ,
             references: {model: Product, key: 'code'}
         },
         expiringIn: {

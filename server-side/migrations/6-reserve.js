@@ -24,7 +24,7 @@ module.exports = {
                 onUpdate: 'CASCADE',
             },
             code: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.BIGINT                      ,
                 references: {model: 'products', key: 'code'},
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
