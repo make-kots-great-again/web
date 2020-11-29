@@ -13,6 +13,7 @@ import {Group} from '../../../shared/models/group.model';
 export class GroupsComponent implements OnInit {
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
+
   groups: Array<Group> = [];
   filterGroups = '';
   groupName = '';
@@ -28,7 +29,6 @@ export class GroupsComponent implements OnInit {
      this.getGroups();
   }
 
-
     getGroups(): void {
     this.groupService.getMyGroups()
       .pipe(takeUntil(this.destroyed$))
@@ -37,7 +37,7 @@ export class GroupsComponent implements OnInit {
           this.groups = data;
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -58,7 +58,7 @@ export class GroupsComponent implements OnInit {
           this.getGroups();
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -74,7 +74,7 @@ export class GroupsComponent implements OnInit {
           this.getGroups();
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -101,7 +101,7 @@ export class GroupsComponent implements OnInit {
            this.getGroups();
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
@@ -112,7 +112,7 @@ export class GroupsComponent implements OnInit {
             this.getGroups();
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 

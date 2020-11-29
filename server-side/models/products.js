@@ -4,7 +4,7 @@ import dbConnection from "../config/database";
 const Product = dbConnection.define('product', {
 
     code: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT                      ,
         allowNull: false,
         primaryKey: true,
     },
@@ -22,4 +22,4 @@ const Product = dbConnection.define('product', {
     }
 });
 
-export {Product};
+export default Product;

@@ -1,7 +1,7 @@
 import {Sequelize} from 'sequelize';
 import dbConnection from "../config/database";
-import {User} from "./users";
-import {Group} from "./groups";
+import User from "./users";
+import Group from "./groups";
 
 const userGroup = dbConnection.define('userGroup', {
 
@@ -29,4 +29,4 @@ const userGroup = dbConnection.define('userGroup', {
     }
 });
 
-export {userGroup};
+export default userGroup;

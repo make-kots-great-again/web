@@ -41,4 +41,4 @@ const User = dbConnection.define('user', {
 
 // User.associate = (models) => {User.belongsToMany(models.Group, {through: userGroup, foreignKey: 'userId', as: 'groups'})};
 
-export {User};
+export default User;

@@ -29,8 +29,11 @@ export class GroupInfoComponent implements OnInit {
   groupBarCode = '';
   groupProduct = false;
   groupName = '';
+  productNote = '';
   currentUser = '';
+  viewPage = '';
   quantity = 1;
+  isCollapsed = false;
 
   suppressButtonMessage: string = 'Activer la Suppression';
 
@@ -62,6 +65,7 @@ export class GroupInfoComponent implements OnInit {
 
     this.groupMembers();
     this.showGroupShoppingList();
+    (this.isPersonnalGroup) ? this.viewPage = 'shoppingListBtn' : this.viewPage = 'membersBtn';
   }
 
   groupMembers(): void {
@@ -98,7 +102,7 @@ export class GroupInfoComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
 
-          this.noGroupByProducts = data;
+          this.noGroupByProducts = data.forEach(x => x.showNote = false);
 
           this.templateShoppoingList = this.groupByProducts(data);
 
@@ -122,10 +126,13 @@ export class GroupInfoComponent implements OnInit {
 
   addProductToShoppingList(): void {
     const productInfo: Product = {
-      code: this.productModel.code,
+      code: Number(this.productModel.code),
       quantity: this.quantity,
-      groupProduct: this.groupProduct
-    }
+      groupProduct: this.groupProduct,
+      productNote: this.productNote
+    };
+
+    (this.productNote.length === 0) ? delete productInfo.productNote : undefined;
 
     this.groupService.addProduct(productInfo, this.groupId)
       .pipe(takeUntil(this.destroyed$))
@@ -194,6 +201,11 @@ export class GroupInfoComponent implements OnInit {
       .reduce((a, b) => a.concat(b), []);
   }
 
+  showNote(codee: any) {
+   // const findItem : any = this.templateShoppoingList.find((x: any) => x.code = codee.id);
+   // findItem.showItem = true;
+  }
+
   onDeleteProduct(index: string | number, code?: any): void {
 
     this.groupService.deleteProduct(this.templateShoppoingList[index].id)
@@ -221,6 +233,13 @@ export class GroupInfoComponent implements OnInit {
         });
   }
 
+  changeView(event: any): void {
+    (event.id === 'membersBtn') ? this.viewPage = 'membersBtn' :
+      (event.id === 'shoppingListBtn') ? this.viewPage = 'shoppingListBtn' :
+        (event.id === 'reserveBtn') ? this.viewPage = 'reserveBtn' :
+          (event.id === 'reserveMagBtn') ? this.viewPage = 'reserveMagBtn' : undefined;
+  }
+
   switchSuppressMode(): void {
     if (this.isSuppressMode) {
       this.suppressButtonMessage = 'Désactiver la suppression';
@@ -236,7 +255,7 @@ export class GroupInfoComponent implements OnInit {
     let existingProduct: object = {};
     if (typeof this.productModel === 'object') {
 
-    //  const existingProduct1 = this.templateShoppoingList.find((x: Product) => x.code === this.productModel.code && x.product_name);
+      //  const existingProduct1 = this.templateShoppoingList.find((x: Product) => x.code === this.productModel.code && x.product_name);
 
       existingProduct = this.templateShoppoingList
         .find((x: Product) => (x.code === this.productModel.code

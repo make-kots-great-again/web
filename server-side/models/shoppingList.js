@@ -1,7 +1,8 @@
 import {Sequelize} from 'sequelize';
 import dbConnection from "../config/database";
-import {userGroup} from "./userGroups";
-import {Product} from "./products";
+import userGroup from "./userGroups";
+import Product from "./products";
+import Group from "./groups";
 
 const ShoppingList = dbConnection.define('shoppingList', {
 
@@ -26,13 +27,17 @@ const ShoppingList = dbConnection.define('shoppingList', {
             defaultValue: false,
             allowNull: false
         },
+        productNote: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
         id_group_user: {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
             references: {model: userGroup, key: 'id_group_user'}
         },
         code: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.BIGINT                      ,
             references: {model: Product, key: 'code'}
         }
     },
@@ -40,4 +45,4 @@ const ShoppingList = dbConnection.define('shoppingList', {
         freezeTableName: true
     });
 
-export {ShoppingList};
+export default ShoppingList;
