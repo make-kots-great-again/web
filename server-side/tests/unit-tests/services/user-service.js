@@ -12,32 +12,6 @@ import {userService} from '../../../services'
 import dbConnection from "../../../config/database";
 import User from '../../../models/users'
 
-//TODO test can login function
-
-/*
-1. créer des mocks des ./models 
-2. modifier les userService (?) 
-    -> si env : test -> models/mock
-    -> else : models/.... 
-*/
-
-
-describe.skip('USER SERVICE', async () => {
-    var UserMock = dbConnection.define('user', {
-        'email': 'email@example.com',
-        'username': 'blink',
-        'picture': 'user-picture.jpg',
-    });
-
-    let a = await UserMock.findOne({
-        where: {
-            username: 'blink',
-        },
-    });
-    console.log(a);
-
-});
-
 describe('USER SERVICE', () => {
 
     describe('#register-user', () => {
@@ -45,15 +19,7 @@ describe('USER SERVICE', () => {
         it('inserts a user in the database', async () => {
 
             const {...fakeUser} = makeFakeUser();
-            console.log('---------');
-            let resp = await userService.listUsers(); 
-            console.log(resp[0].dataValues.username); //prints types of
-            console.log('---------')
-            
             const inserted = await userService.addUser({...fakeUser});
-            console.log('---------');
-            console.log(inserted);
-            console.log('---------')
             fakeUser.password = inserted.password;
             fakeUser.userId = inserted.userId;
             expect(inserted).to.deep.include(fakeUser);
@@ -74,7 +40,7 @@ describe('USER SERVICE', () => {
         });
     });
 
-    describe.skip('#login-user', () => {
+    describe('#login-user', () => {
 
         it("can authenticate a user", async () => {
 
@@ -129,11 +95,11 @@ describe('USER SERVICE', () => {
 
     });
 
-    describe.skip('#list-users', () => {
+    describe('#list-users', () => {
 
     });
 
-    describe.skip('#list-one-user', () => {
+    describe('#list-one-user', () => {
 
         it("find user by id", async () => {
             const {...fakeUser} = makeFakeUser();
@@ -164,7 +130,7 @@ describe('USER SERVICE', () => {
 
     });
 
-    describe.skip('#update-one-user', () => {
+    describe('#update-one-user', () => {
 
         it("update one user with userId", async () => {
 
@@ -191,14 +157,14 @@ describe('USER SERVICE', () => {
                 .putUser({userId: user1.userId, ...updatedInfo});
 
             expect(updatedUser1.message)
-                .to.equal('A user with the same username or email already exists !');
+                .to.equal('A user with the same username already exists !');
 
             await userService.removeUser({userId: user1.userId});
             await userService.removeUser({userId: user2.userId});
         });
     });
 
-    describe.skip('#remove-user', () => {
+    describe('#remove-user', () => {
 
     });
 

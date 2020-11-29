@@ -4,9 +4,10 @@ import env from "./environment";
 
 let dbConnection = "";
 
-if (env.NODE_ENV === 'test') {
+if (env.NODE_ENV === 'test2') {
     dbConnection = new SequelizeMock();
-} else if (env.NODE_ENV === 'dev') {
+} else if (env.NODE_ENV === 'dev' || env.NODE_ENV === 'test') {
+    console.log(env.NODE_ENV);
     dbConnection = new Sequelize(
         env.POSTGRES_DB,
         env.POSTGRES_USER,
