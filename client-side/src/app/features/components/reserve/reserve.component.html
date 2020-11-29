@@ -31,7 +31,26 @@
               <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
               <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
               <th class="text-monospace font-italic" scope="row">{{reserve['expiringIn']}} </th>
-              <th class="text-monospace font-italic" scope="row">{{reserve['valid']}} </th>
+              <th *ngIf="reserve['valid']"
+                class="text-monospace font-italic" scope="row">
+                <button
+                  class="btn btn-success btn-sm rounded"
+                  data-toggle="modal" data-target="#updateGroup"
+                  data-whatever="@mdo"
+                  type="button" data-placement="top" title="Edit">
+                  <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                </button>
+              </th>
+              <th *ngIf="!reserve['valid']"
+                class="text-monospace font-italic" scope="row">
+                <button
+                  class="btn btn-danger btn-sm rounded"
+                  data-toggle="modal" data-target="#updateGroup"
+                  data-whatever="@mdo"
+                  type="button" data-placement="top" title="Edit">
+                  <i class="fa fa-times-circle" aria-hidden="true"></i>
+                </button>
+              </th>
               <td class="text-monospace font-italic">
 
             <span>

@@ -26,6 +26,10 @@ module.exports = {
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
             },
+            productNote: {
+                type: Sequelize.STRING,
+                allowNull: true,
+            },
             groupProduct: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,
