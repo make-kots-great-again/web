@@ -96,20 +96,12 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
                 statusCode: 400,
                 message: `No product was found with this code ${product.getProductCode()}`
             };
-<<<<<<< HEAD
-=======
-
->>>>>>> sprint-5
         return await shoppingListRepository.save({
             id_group_user: findGroup.dataValues.id_group_user,
             code: product.getProductCode(),
             quantity: product.getProductQuantity(),
-<<<<<<< HEAD
-            groupProduct: product.getgroupProduct()
-=======
             groupProduct: product.getgroupProduct(),
             productNote: product.getproductNote()
->>>>>>> sprint-5
         });
     }
 
