@@ -1,7 +1,3 @@
-//During the test the env variable is set to test
-
-//process.env.NODE_ENV = 'test';
-
 //import server to bring in everything together
 //import server from "../../../../app";
 
@@ -10,10 +6,11 @@ import {expect} from 'chai';
 import {describe, it} from 'mocha';
 
 import makeFakeUser from '../../fixtures/fakeUser'
+import {makeUser} from "../../../domain";
 import env from '../../../config/environment'
 import {userService} from '../../../services'
-
-//TODO test can login function
+import dbConnection from "../../../config/database";
+import User from '../../../models/users'
 
 describe('USER SERVICE', async () => {
 
@@ -22,12 +19,11 @@ describe('USER SERVICE', async () => {
         it('inserts a user in the database', async () => {
 
             const {...fakeUser} = makeFakeUser();
-
             const inserted = await userService.addUser({...fakeUser});
             fakeUser.password = inserted.password;
             fakeUser.userId = inserted.userId;
             expect(inserted).to.deep.include(fakeUser);
-
+            
             await userService.removeUser({userId: inserted.userId});
         });
 

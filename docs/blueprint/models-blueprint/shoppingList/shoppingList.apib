@@ -94,7 +94,8 @@ not for the whole group.
 
             {
                 "code": 18192,
-                "quantity": 2
+                "quantity": 2,
+                "productNote" : "This is a note"
             }
 
 + Response 200 (application/json)
@@ -332,6 +333,11 @@ Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdt
     + Headers
 
             Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+    + Body
+
+            {
+                "quantity": 2
+            }
 
 + Response 200 (application/json)
 

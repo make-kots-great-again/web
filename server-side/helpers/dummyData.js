@@ -77,6 +77,7 @@ Array(20).fill(0).forEach((x, i) => {
         id: uuidv4(),
         id_group_user: dummyUserGroups[i].id_group_user,
         code: products[i].code,
+        productNote: (i % 2 !== 0) ? 'This is a note for this product' : null,
         quantity: Math.floor(Math.random() * 5) + 1,
         groupProduct: (dummyUserGroups[i].role !== 'personal'
             && i === 0 || i === 4 || i === 10 || i === 14 || i === 18)
@@ -105,6 +106,7 @@ shoppingList.push({
     id: uuidv4(),
     id_group_user: dummyUserGroups[dummyUserGroups.length - 1].id_group_user,
     code: products[2].code,
+    productNote: null,
     quantity: Math.floor(Math.random() * 5) + 1,
     groupProduct: false
 });

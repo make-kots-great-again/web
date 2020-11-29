@@ -1,6 +1,3 @@
-//During the test the env variable is set to test
-process.env.NODE_ENV = 'test';
-
 //bring in dev-dependencies
 import {expect} from 'chai';
 import {describe, it} from 'mocha';

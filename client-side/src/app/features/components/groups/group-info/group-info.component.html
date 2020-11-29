@@ -33,7 +33,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
                 <li *ngIf="!isPersonnalGroup"
-                  class="nav-item" [routerLinkActive]="['active']"
+                    class="nav-item" [routerLinkActive]="['active']"
                     [routerLinkActiveOptions]="{ exact: true }">
                   <a id="membersBtn" (click)="changeView($event.target)"
                      class="nav-link text-monospace font-italic font-weight-bolder" style="cursor: pointer">
@@ -184,17 +184,18 @@
         <p *ngIf="viewPage === 'shoppingListBtn'" class="text-monospace font-italic font-weight-bolder h5">
           <strong><u>Liste de courses</u></strong>
         </p>
-        <p *ngIf="viewPage === 'reserveBtn' || viewPage === 'reserveMagBtn'" class="text-monospace font-italic font-weight-bolder h5">
+        <p *ngIf="viewPage === 'reserveBtn' || viewPage === 'reserveMagBtn'"
+           class="text-monospace font-italic font-weight-bolder h5">
           <strong><u>Reserve</u></strong>
         </p>
         <br>
 
         <!--search for products div-->
         <div *ngIf="viewPage === 'shoppingListBtn' || viewPage === 'reserveBtn' || viewPage === 'reserveMagBtn'"
-          class="container">
+             class="container">
           <fieldset class="md-form form-inline">
             <div class="form-group">
-              <label for="typeahead-http">Rechercher un produit :</label>
+              <label class="text-monospace font-italic" for="typeahead-http">Rechercher un produit :</label>
               <input id="typeahead-http" type="text"
                      class="form-control mx-sm-3"
                      [class.is-invalid]="searchFailed"
@@ -233,6 +234,21 @@
               text-monospace font-italic font-weight-bolder">Ajouter un produit
             </button>
           </fieldset>
+          <br>
+          <div *ngIf="verifyProduct()">
+            <label  for="productNote" class="text-monospace font-italic">
+              Une note sur le produit:</label>
+            <textarea #textArea="ngModel"
+                      class="form-control w-50" id="productNote" rows="2"
+                      placeholder="Note du produit" minlength="2"
+                      maxlength="250" [(ngModel)]="productNote"
+                      name="productNoteName">
+            </textarea>
+            <small class="font-italic">
+              <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i>
+              Ce champ n'est pas obligatoire.
+            </small>
+          </div>
           <hr>
         </div>
 
@@ -287,6 +303,18 @@
                             <i class="fa fa-plus-circle" aria-hidden="true"></i>
                           </button>
                         </a>
+                        <p *ngIf="product['product_note']">
+                          <a #codee (click)="showNote(codee)" id="{{code}}"
+                            class="text-monospace font-italic" data-toggle="collapse" href="#collapseNote"
+                             role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i> note
+                          </a>
+                        </p>
+                        <div *ngIf="product['product_note']" class="collapse" id="collapseNote">
+                          <div  class="card card-header text-monospace">
+                            {{product['product_note']}}
+                          </div>
+                        </div>
                       </td>
 
                       <td *ngIf="product['groupProduct']"
@@ -323,7 +351,7 @@
         <!--  ****************************************   Unpersonnal group part   *************************************  -->
 
         <app-reserve *ngIf="viewPage === 'reserveBtn' || viewPage === 'reserveMagBtn'"
-          class="font-weight-normal" [groupId]="groupId">
+                     class="font-weight-normal" [groupId]="groupId">
         </app-reserve>
 
       </div>

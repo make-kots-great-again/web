@@ -21,10 +21,14 @@ module.exports = {
                 }
             },
             code: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.BIGINT                      ,
                 references: {model: 'products', key: 'code'},
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
+            },
+            productNote: {
+                type: Sequelize.STRING,
+                allowNull: true,
             },
             groupProduct: {
                 type: Sequelize.BOOLEAN,

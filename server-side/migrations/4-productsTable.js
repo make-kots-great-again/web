@@ -4,7 +4,7 @@ module.exports = {
     up: (queryInterface, Sequelize) => {
         return queryInterface.createTable('products', {
             code: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.BIGINT                      ,
                 allowNull: false,
                 primaryKey: true,
             },

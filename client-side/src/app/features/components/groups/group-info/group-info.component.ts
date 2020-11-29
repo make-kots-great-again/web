@@ -29,9 +29,11 @@ export class GroupInfoComponent implements OnInit {
   groupBarCode = '';
   groupProduct = false;
   groupName = '';
+  productNote = '';
   currentUser = '';
   viewPage = '';
   quantity = 1;
+  isCollapsed = false;
 
   suppressButtonMessage: string = 'Activer la Suppression';
 
@@ -63,7 +65,7 @@ export class GroupInfoComponent implements OnInit {
 
     this.groupMembers();
     this.showGroupShoppingList();
-    (this.isPersonnalGroup) ? this.viewPage = 'shoppingListBtn' :  this.viewPage = 'membersBtn';
+    (this.isPersonnalGroup) ? this.viewPage = 'shoppingListBtn' : this.viewPage = 'membersBtn';
   }
 
   groupMembers(): void {
@@ -100,7 +102,7 @@ export class GroupInfoComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
 
-          this.noGroupByProducts = data;
+          this.noGroupByProducts = data.forEach(x => x.showNote = false);
 
           this.templateShoppoingList = this.groupByProducts(data);
 
@@ -124,10 +126,13 @@ export class GroupInfoComponent implements OnInit {
 
   addProductToShoppingList(): void {
     const productInfo: Product = {
-      code: this.productModel.code,
+      code: Number(this.productModel.code),
       quantity: this.quantity,
-      groupProduct: this.groupProduct
+      groupProduct: this.groupProduct,
+      productNote: this.productNote
     };
+
+    (this.productNote.length === 0) ? delete productInfo.productNote : undefined;
 
     this.groupService.addProduct(productInfo, this.groupId)
       .pipe(takeUntil(this.destroyed$))
@@ -194,6 +199,11 @@ export class GroupInfoComponent implements OnInit {
       .filter(x => groupByProductCode[x].length > 1 && x == code.id)
       .map(x => groupByProductCode[x])
       .reduce((a, b) => a.concat(b), []);
+  }
+
+  showNote(codee: any) {
+   // const findItem : any = this.templateShoppoingList.find((x: any) => x.code = codee.id);
+   // findItem.showItem = true;
   }
 
   onDeleteProduct(index: string | number, code?: any): void {

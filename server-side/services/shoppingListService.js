@@ -40,6 +40,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
                         code: y.dataValues.product.dataValues.code,
                         product_name: y.dataValues.product.dataValues.product_name,
                         product_brand: y.dataValues.product.dataValues.brands,
+                        product_note: y.dataValues.productNote,
                         quantity: y.dataValues.quantity,
                         groupId: x.dataValues.groupId,
                         shoppingListId: y.dataValues.id,
@@ -100,7 +101,8 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
             id_group_user: findGroup.dataValues.id_group_user,
             code: product.getProductCode(),
             quantity: product.getProductQuantity(),
-            groupProduct: product.getgroupProduct()
+            groupProduct: product.getgroupProduct(),
+            productNote: product.getproductNote()
         });
     }
 
@@ -151,6 +153,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
                     code: y.dataValues.product.dataValues.code,
                     product_name: y.dataValues.product.dataValues.product_name,
                     quantity: y.dataValues.quantity,
+                    product_note: y.dataValues.productNote,
                     groupProduct: y.dataValues.groupProduct,
                     username: findUsername.dataValues.username
                 });

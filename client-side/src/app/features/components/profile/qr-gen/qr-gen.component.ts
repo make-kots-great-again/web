@@ -11,11 +11,21 @@ export class QrGenComponent implements OnInit {
 
   elementType = NgxQrcodeElementTypes.URL;
   correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
-  value = this.authenticationService.currentUserValue.token;
+  value: string;
 
   constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.value = this.getToken();
   }
 
+  getToken(): string {
+    let value;
+    try {
+      value = this.authenticationService.currentUserValue.token;
+    } catch (error) {
+      value = '';
+    }
+    return value;
+  }
 }
