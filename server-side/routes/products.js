@@ -15,7 +15,7 @@ router.get("/products/:productName",
     makeCallback(productController.getProducts));
 
 router.get("/product/:productId",
-    /*passport.authenticate("jwt", {session: false}), //TODO*/
+    passport.authenticate("jwt", {session: false}),
     makeCallback(productController.getOneProduct));
 
 export {router as productsRoutes};
