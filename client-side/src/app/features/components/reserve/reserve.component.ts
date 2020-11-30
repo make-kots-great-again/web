@@ -16,7 +16,7 @@ export class ReserveComponent implements OnInit {
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
-
+  gestionButton : boolean = true;
   reserveArray: Array<Reserve> = [];
 
   quantity = 1;
@@ -29,7 +29,10 @@ export class ReserveComponent implements OnInit {
   ngOnInit(): void {
     this.reserveInfo();
   }
-
+  FieldsChange(values: any) {
+    this.gestionButton = !this.gestionButton;
+  }
+  
   reserveInfo(): void {
     this.reserveService.getGroupReserveItems(this.groupId)
       .pipe(takeUntil(this.destroyed$))

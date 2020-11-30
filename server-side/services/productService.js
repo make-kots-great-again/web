@@ -1,6 +1,6 @@
 export default function productServiceFactory({productRepository}) {
     return Object.freeze({
-        listProducts, getOneProduct
+        listProducts, getOneProduct, getProductCode
     });
 
     async function listProducts({productName}) {
@@ -32,4 +32,13 @@ export default function productServiceFactory({productRepository}) {
         return prod
 
     }
+    async function getProductCode({code}) {
+
+        const findProductCode = await productRepository.findByCode({code});
+
+        if (!findProductCode) return {statusCode: 400, message: `No product was found with this code ${code}`};
+
+        return findProductCode.dataValues;
+    }
+
 }
