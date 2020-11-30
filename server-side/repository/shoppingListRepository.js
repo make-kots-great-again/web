@@ -16,7 +16,7 @@ export default function makeshoppingListRepository({ShoppingList, userGroup, Pro
                 {
                     model: Product,
                     as: 'product',
-                    attributes: ['code', 'product_name', 'brands']
+                    attributes: ['code', 'product_name', 'brands', 'half_peremption_date']
                 },
                 {
                     model: userGroup,
