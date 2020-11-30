@@ -21,7 +21,7 @@ const Product = dbConnection.define('product', {
         allowNull: true,
     },
     half_peremption_date: {
-        type: Sequelize.INT,
+        type: Sequelize.BIGINT,
         allowNull:true
     }
 });
