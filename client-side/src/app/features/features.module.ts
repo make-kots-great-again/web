@@ -21,7 +21,6 @@ import {ReserveComponent} from './components/reserve/reserve.component';
 const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'reserve', component: ReserveComponent},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'groups', component: GroupsComponent, canActivate: [AuthGuard]},
