@@ -1,4 +1,11 @@
+
 <div *ngIf="reserveArray.length !== 0" class="container mb-4">
+  <!--switchmode-->
+  <div class="custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input" id="customSwitches" (change)="FieldsChange($event)">
+    <label class="custom-control-label" for="customSwitches">mode Consultation</label>
+  </div>
+  <br>
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
@@ -58,6 +65,7 @@
                      <a>
                        <!-- update reserve icon button-->
                        <button
+                         [disabled]="gestionButton"
                          class="btn btn-primary btn-sm rounded"
                          data-toggle="modal" data-target="#updateGroup"
                          data-whatever="@mdo"
@@ -71,6 +79,7 @@
 
                       <!-- delete reserve icon button-->
                       <button
+                        [disabled]="gestionButton"
                         class="btn btn-danger btn-sm rounded"
                         data-toggle="modal" data-target="#deleteGroup"
                         data-whatever="@mdo"
