@@ -1,3 +1,5 @@
+import { serializeUser } from "passport";
+
 export default function makeProductRepository({Product, Op}) {
     return Object.freeze({
         save, findAll, findByCode
@@ -19,7 +21,7 @@ export default function makeProductRepository({Product, Op}) {
     }
 
     async function findByCode({code: code}) {
-        return Product.findByPk(code);
+        return Product.findByPk(Number(code));
 
     }
 

@@ -14,6 +14,9 @@ router.get("/reserve/items/:groupId",
     passport.authenticate("jwt", {session: false}),
     makeCallback(reserveController.getGroupReserveItems));
 
+router.post("/reserve/:groupIdBarcode",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(reserveController.postProductInReserve));
 
 export {router as reserveRoutes};
 

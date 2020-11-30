@@ -3,7 +3,10 @@ import env from "./environment";
 
 let dbConnection = "";
 
-if (env.NODE_ENV === 'test' || env.NODE_ENV === 'dev') {
+if (env.NODE_ENV === 'test2') {
+    dbConnection = new SequelizeMock();
+} else if (env.NODE_ENV === 'dev' || env.NODE_ENV === 'test') {
+    console.log(env.NODE_ENV);
     dbConnection = new Sequelize(
         env.POSTGRES_DB,
         env.POSTGRES_USER,
@@ -17,7 +20,8 @@ if (env.NODE_ENV === 'test' || env.NODE_ENV === 'dev') {
                 acquire: 30000,
                 idle: 10000
             },
-        });
+        }
+    );
 } else if (env.NODE_ENV === 'production') {
 
     dbConnection = new Sequelize(env.DATABASE_URL, {
@@ -28,7 +32,7 @@ if (env.NODE_ENV === 'test' || env.NODE_ENV === 'dev') {
                 rejectUnauthorized: false
             }
         }
-    })
+    });
 }
 
 export default dbConnection;

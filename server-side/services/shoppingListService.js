@@ -1,5 +1,5 @@
 import {makeShoppingList} from '../domain'
-import {groupService, userService, reserveService} from "./index";
+import {groupService, userService, reserveService, productService} from "./index";
 
 export default function shoppingListServiceFactory({shoppingListRepository, productRepository}) {
     return Object.freeze({
@@ -79,8 +79,8 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
         const findList = await getGroupShoppingList({groupId: groupId});
 
         const existingProduct = findList.find(x =>
-            x.code === productInfo.code && x.username === findUser.dataValues.username);
-
+            Number(x.code) === Number(productInfo.code) && x.username === findUser.dataValues.username);
+        
         if (existingProduct)
             return {
                 statusCode: 409,
@@ -89,13 +89,12 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
         const product = makeShoppingList({...productInfo});
 
-        const findProductCode = await productRepository.findByCode({code: product.getProductCode()});
+        const findProductCode = await productService.getProductCode({code: product.getProductCode()});
 
-        if (!findProductCode)
-            return {
-                statusCode: 400,
-                message: `No product was found with this code ${product.getProductCode()}`
-            };
+        if (findProductCode.message) return {
+            statusCode: findProductCode.statusCode,
+            message: findProductCode.message};
+
         return await shoppingListRepository.save({
             id_group_user: findGroup.dataValues.id_group_user,
             code: product.getProductCode(),
