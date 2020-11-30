@@ -1,6 +1,6 @@
 export default function productServiceFactory({productRepository}) {
     return Object.freeze({
-        listProducts, getProductCode
+        listProducts, getOneProduct, getProductCode
     });
 
     async function listProducts({productName}) {
@@ -17,6 +17,21 @@ export default function productServiceFactory({productRepository}) {
 
     }
 
+    async function getOneProduct({productId}) {
+
+        if (!productId) return {message: 'You must supply a product ID (bar-code).'};
+
+        if (typeof productId !== 'string')
+            return {message: 'A product ID must be a string.'};
+
+        const prod = await productRepository.findByCode({code: productId});
+
+        if (prod == null)
+            return {message: `No product found with ID : ${productId}`};
+
+        return prod
+
+    }
     async function getProductCode({code}) {
 
         const findProductCode = await productRepository.findByCode({code});
