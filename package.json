@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "engines": {
-    "node": "12.14.1"
+  "node": "12.14.1"
   },
   "description": "back end server with node.js",
   "main": "app.js",
@@ -16,7 +16,7 @@
     "start:martin": "nodemon -r dotenv/config --exec \"npm start\"",
     "test:unit": "mocha --require @babel/register 'server-side/tests/unit-tests/**/*.js' --timeout 10000 --exit",
     "test:unit:watch": "nodemon --exec \"npm run test:unit\"",
-    "test:file": "NODE_ENV=test mocha --require @babel/register", 
+    "test:file": "NODE_ENV=test mocha --require @babel/register",
     "cover:unit:nyc": "nyc --reporter=html --reporter=text-summary --report-dir=test-coverage/unit-tests npm run test:unit",
     "cover:unit:mocha": "mocha --require @babel/register 'server-side/tests/unit-tests/**/*.js' --timeout 10000 --exit --reporter mochawesome --reporter-options reportDir=test-reports/unit --reporter-options reportFilename=index",
     "db:migrate": "npx sequelize-cli db:migrate",
