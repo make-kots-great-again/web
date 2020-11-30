@@ -10,8 +10,8 @@ export default function makeJwtFactory({jwt}) {
             env.JWT_KEY, {expiresIn: "7d"});
     }
 
-    function generateGroupJwt({gName, gId} = {}) {
-        return "JWT " + jwt.sign({groupeName: gName, groupId: gId},
+    function generateGroupJwt({groupName, groupBarCode} = {}) {
+        return "JWT " + jwt.sign({groupName: groupName, groupBarCode: groupBarCode},
             env.JWT_KEY, {expiresIn: "14d"});
     }
 }
