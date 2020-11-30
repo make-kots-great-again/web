@@ -80,7 +80,7 @@ export default function reserveServiceFactory({reserveRepository, groupRepositor
                 });
             }
         } else {
-            return {message: 'No group was found'};
+            return {message: `No group was found with this id ${groupIdBarcode}`};
         }
     }
 }
