@@ -1,8 +1,8 @@
-export default function makeFakeGroup (name, descrition) {
+export default function makeFakeGroup (name, description) {
    
     const group = {
         groupName : name,
-        groupDescription : descrition 
+        groupDescription : description 
     };
 
     return {

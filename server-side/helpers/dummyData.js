@@ -10,6 +10,7 @@ const dummyGroups = [];
 const dummyPersonalGroups = [];
 const dummyUserGroups = [];
 const shoppingList = [];
+const reverse = [];
 
 const usernames = ['james', 'john', 'william', 'paul', 'thomas', 'kevin', 'gary', 'larry', 'dennis', 'roger'];
 const groups = ['football', 'tennis', 'basketball', 'volleyball', 'hockey', 'cricket', 'baseball', 'golf', 'rugby', 'boxing'];
@@ -55,6 +56,24 @@ Array(10).fill(0).forEach((x, i) => {
         role: 'personal'
     });
 
+    reverse.push({
+        id: uuidv4(),
+        code: products[i].code,
+        quantity: Math.floor(Math.random() * 5) + 1,
+        groupId: dummyGroups[i].groupId,
+        expiringIn: 5,
+        valid: (i % 2 === 0)
+    });
+
+    reverse.push({
+        id: uuidv4(),
+        code: products[19 - i].code,
+        quantity: Math.floor(Math.random() * 5) + 1,
+        groupId: dummyGroups[i].groupId,
+        expiringIn: 5,
+        valid: (i % 2 !== 0)
+    });
+
 });
 
 Array(20).fill(0).forEach((x, i) => {
@@ -63,6 +82,7 @@ Array(20).fill(0).forEach((x, i) => {
         id: uuidv4(),
         id_group_user: dummyUserGroups[i].id_group_user,
         code: products[i].code,
+        productNote: (i % 2 !== 0) ? 'This is a note for this product' : null,
         quantity: Math.floor(Math.random() * 5) + 1,
         groupProduct: (dummyUserGroups[i].role !== 'personal'
             && i === 0 || i === 4 || i === 10 || i === 14 || i === 18)
@@ -91,6 +111,7 @@ shoppingList.push({
     id: uuidv4(),
     id_group_user: dummyUserGroups[dummyUserGroups.length - 1].id_group_user,
     code: products[2].code,
+    productNote: null,
     quantity: Math.floor(Math.random() * 5) + 1,
     groupProduct: false
 });
@@ -98,7 +119,7 @@ shoppingList.push({
 dummyGroups.push(...dummyPersonalGroups);
 
 module.exports = {
-    dummyUsers, usernames, dummyGroups,
+    dummyUsers, usernames, dummyGroups, reverse,
     groups, dummyUserGroups, products, shoppingList
 }
 

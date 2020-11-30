@@ -19,7 +19,7 @@ export default function makeProductRepository({Product, Op}) {
     }
 
     async function findByCode({code: code}) {
-        return Product.findByPk(code);
+        return Product.findByPk(Number(code));
 
     }
 

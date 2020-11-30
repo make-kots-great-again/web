@@ -1,5 +1,5 @@
 import {makeShoppingList} from '../domain'
-import {groupService, userService} from "./index";
+import {groupService, userService, reserveService, productService} from "./index";
 
 export default function shoppingListServiceFactory({shoppingListRepository, productRepository}) {
     return Object.freeze({
@@ -40,6 +40,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
                         code: y.dataValues.product.dataValues.code,
                         product_name: y.dataValues.product.dataValues.product_name,
                         product_brand: y.dataValues.product.dataValues.brands,
+                        product_note: y.dataValues.productNote,
                         quantity: y.dataValues.quantity,
                         groupId: x.dataValues.groupId,
                         shoppingListId: y.dataValues.id,
@@ -78,8 +79,8 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
         const findList = await getGroupShoppingList({groupId: groupId});
 
         const existingProduct = findList.find(x =>
-            x.code === productInfo.code && x.username === findUser.dataValues.username);
-
+            Number(x.code) === Number(productInfo.code) && x.username === findUser.dataValues.username);
+        
         if (existingProduct)
             return {
                 statusCode: 409,
@@ -88,21 +89,27 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
         const product = makeShoppingList({...productInfo});
 
-        const findProductCode = await productRepository.findByCode({code: product.getProductCode()});
+        const findProductCode = await productService.getProductCode({code: product.getProductCode()});
 
-        if (!findProductCode)
-            return {
-                statusCode: 400,
-                message: `No product was found with this code ${product.getProductCode()}`
-            };
+        if (findProductCode.message) return {
+            statusCode: findProductCode.statusCode,
+            message: findProductCode.message};
+
+        return await shoppingListRepository.save({
+            id_group_user: findGroup.dataValues.id_group_user,
+            code: product.getProductCode(),
+            quantity: product.getProductQuantity(),
+            groupProduct: product.getgroupProduct(),
+            productNote: product.getproductNote()
+        });
     }
 
     async function removeProductFromShoppingList({itemId, userId}) {
 
+        if (!itemId) return {message: 'You must supply the item id.'};
+
         if (!(itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
             return {message: `${itemId} is not a valid UUID`};
-
-        if (!itemId) return {message: 'You must supply a listProduct id.'};
 
         const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
 
@@ -144,6 +151,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
                     code: y.dataValues.product.dataValues.code,
                     product_name: y.dataValues.product.dataValues.product_name,
                     quantity: y.dataValues.quantity,
+                    product_note: y.dataValues.productNote,
                     groupProduct: y.dataValues.groupProduct,
                     username: findUsername.dataValues.username
                 });

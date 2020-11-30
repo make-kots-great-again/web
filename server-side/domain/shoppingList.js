@@ -2,7 +2,8 @@ export default function buildMakeShoppingList(requiredParameter) {
     return ({
                 code = requiredParameter('A product code'),
                 quantity = requiredParameter('A product quantity'),
-                groupProduct = false
+                groupProduct = false,
+                productNote = null
             } = {}) => {
 
         if (typeof code !== 'number') throw new TypeError('A product code must be a number.');
@@ -19,7 +20,8 @@ export default function buildMakeShoppingList(requiredParameter) {
         return Object.freeze({
             getProductCode: () => code,
             getProductQuantity: () => quantity,
-            getgroupProduct: () => groupProduct
+            getgroupProduct: () => groupProduct,
+            getproductNote: () => productNote,
         });
     }
 }

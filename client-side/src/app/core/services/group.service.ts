@@ -18,12 +18,12 @@ export class GroupService {
 
   createGroup(groupData: IGroup): Observable<HttpResponse<IGroup>> {
     return this.http.post<IGroup>(`/server/api/group/create`, groupData, {observe: 'response'})
-      .pipe(map((data: any) => data.body.group));
+      .pipe(map((data: HttpResponse<any>) => data.body.group), shareReplay(1));
   }
 
   getMyGroups(): Observable<HttpResponse<IGroup>> {
     return this.http.get<IGroup>('/server/api/user/groups', {observe: 'response'})
-      .pipe(map((data: any) => data.body.userInfo[0].groups));
+      .pipe(map((data: HttpResponse<any>) => data.body.userInfo[0].groups), shareReplay(1));
   }
 
   getOneGroup(id: string): Observable<HttpResponse<IGroup>> {
@@ -67,7 +67,7 @@ export class GroupService {
       .pipe(map((data: any) => data.body.shoppingList));
   }
 
-  deleteProduct(productId: string): Observable<HttpResponse<any>>{
+  deleteProduct(productId: string): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`/server/api/shoppingList/removeProduct/${productId}`, {observe: 'response'})
       .pipe(map((data: any) => data.body.message));
   }

@@ -1,34 +1,29 @@
-//During the test the env variable is set to test
-import {makeUser} from "../../../domain";
-
-process.env.NODE_ENV = 'test';
-
 //import server to bring in everything together
-import server from "../../../../app";
+//import server from "../../../../app";
 
 //bring in dev-dependencies
 import {expect} from 'chai';
 import {describe, it} from 'mocha';
 
 import makeFakeUser from '../../fixtures/fakeUser'
+import {makeUser} from "../../../domain";
 import env from '../../../config/environment'
 import {userService} from '../../../services'
+import dbConnection from "../../../config/database";
+import User from '../../../models/users'
 
-//TODO test can login function
-
-describe('USER SERVICE', () => {
+describe('USER SERVICE', async () => {
 
     describe('#register-user', () => {
 
         it('inserts a user in the database', async () => {
 
             const {...fakeUser} = makeFakeUser();
-
             const inserted = await userService.addUser({...fakeUser});
             fakeUser.password = inserted.password;
             fakeUser.userId = inserted.userId;
             expect(inserted).to.deep.include(fakeUser);
-
+            
             await userService.removeUser({userId: inserted.userId});
         });
 
@@ -120,19 +115,6 @@ describe('USER SERVICE', () => {
             await userService.removeUser({userId: inserted.userId});
         });
 
-        it("must include an id", async () => {
-            const listedOneUser = await userService.listOneUser();
-            expect(listedOneUser.message).to.equal('You must supply an id.');
-
-        });
-
-        it("id must be valid", async () => {
-            const listedOneUser = await userService.listOneUser(
-                {id: "%,!123"});
-            expect(listedOneUser.message).to.equal('%,!123 is not a valid v4 UUID');
-
-        });
-
     });
 
     describe('#update-one-user', () => {
@@ -161,8 +143,7 @@ describe('USER SERVICE', () => {
             const updatedUser1 = await userService
                 .putUser({userId: user1.userId, ...updatedInfo});
 
-            expect(updatedUser1.message)
-                .to.equal('A user with the same username or email already exists !');
+            expect(updatedUser1.message).to.equal('A user with the same username already exists !');
 
             await userService.removeUser({userId: user1.userId});
             await userService.removeUser({userId: user2.userId});
@@ -172,6 +153,5 @@ describe('USER SERVICE', () => {
     describe('#remove-user', () => {
 
     });
-
 
 });
