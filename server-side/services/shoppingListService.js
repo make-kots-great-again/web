@@ -40,6 +40,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
                         code: y.dataValues.product.dataValues.code,
                         product_name: y.dataValues.product.dataValues.product_name,
                         product_brand: y.dataValues.product.dataValues.brands,
+                        //half_peremption_date: y.dataValues.product.dataValues.
                         product_note: y.dataValues.productNote,
                         quantity: y.dataValues.quantity,
                         groupId: x.dataValues.groupId,
