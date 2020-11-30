@@ -20,28 +20,24 @@ export class ReserveComponent implements OnInit {
 
   gestionButton : boolean = true;
   reserveArray: Array<Reserve> = [];
-  tempReserveArray: Array<Reserve> = [];
   bntStyle: string;
   quantity = 1;
   
+  //checkbox variable
+  masterSelected:boolean;
+
   isMasterSel:boolean;
 
-  
+  tempReserveArray = [];
+  checkedList:any;
   constructor(
     private reserveService: ReserveService,
   ) {
-    this.isMasterSel = false;
+    this.masterSelected = false;
   }
   
   ngOnInit(): void {
     this.reserveInfo();
-  }
-
-  eventCheckBox() {
-    let checkboxs = document.getElementsByTagName("input");
-    for(let i = 1; i < checkboxs.length ; i++) {
-      checkboxs[i].checked = !checkboxs[i].checked;
-    }
   }
   
   FieldsChange(values: any) {
@@ -52,21 +48,57 @@ export class ReserveComponent implements OnInit {
       this.bntStyle = 'visible';
     }
   }
-  
+
   reserveInfo(): void {
     this.reserveService.getGroupReserveItems(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
           this.reserveArray = data;
+          this.tempReserveArray = data;
+          this.tableManagement();
         },
         error => {
           console.error(error);
         });
   }
-
+  
   @HostListener('window:beforeunload')
   async ngOnDestroy(): Promise<any> {
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
+
+
+  /* METHOD for CHECKBOXES */
+  tableManagement():void{
+    for(let i of this.tempReserveArray){
+      i['isSelected']=false;
+    }
+  }
+
+  checkUncheckAll() {
+    for (let i of this.tempReserveArray) {
+      i.isSelected = this.masterSelected;
+    }
+    this.getCheckedList();
+  }
+  isAllSelected() {
+    this.masterSelected = this.tempReserveArray.every(function(item:any) {
+        return item.isSelected == true;
+      })
+    this.getCheckedList();
+  }
+
+  getCheckedList(){
+    this.checkedList = [];
+    for (let i of this.tempReserveArray) {
+      if(i.isSelected)
+      this.checkedList.push(i);
+    }
+  }
+  /* END METHOD for CHECKBOXES */
+
+
+
+
 }

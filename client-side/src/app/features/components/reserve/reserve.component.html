@@ -1,13 +1,11 @@
-
-
 <!--add list-->
 <div *ngIf="reserveArray.length !== 0" class="container mb-4 addFromList">
   <div class="custom-control custom-switch">
     <button type="button" class="btn btn-outline-primary" id="customSwitches" (click)="isCollapsed = !isCollapsed"
-    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"> Management</button>
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"> Management</button>
   </div>
   <br>
-  
+
   <div class="row" id="collapseExample" [ngbCollapse]="isCollapsed">
     <div class="col-12">
       <div class="table-responsive">
@@ -16,59 +14,52 @@
 
           <!--Table head-->
           <thead class="font-weight-bold thead-dark">
-          <tr>
-            <!-- group number -->
-            <th class="text-monospace font-italic"><input type="checkbox" ng-model="checkboxes" (click)="eventCheckBox"> Tout Selectionner</th>
-            <th class="text-monospace font-italic">Produit</th>
-            <th class="text-monospace font-italic">Marque</th>
-            <th class="text-monospace font-italic">Quantité</th>
-            <th class="text-monospace font-italic">Jours Restant</th>
-            <th class="text-monospace font-italic">Action</th>
-          </tr>
+            <tr>
+              <!-- group number -->
+              <th class="text-monospace font-italic"><input type="checkbox" [(ngModel)]="masterSelected" (change)="checkUncheckAll()"> Tout Selectionner</th>
+              <th class="text-monospace font-italic">Produit</th>
+              <th class="text-monospace font-italic">Marque</th>
+              <th class="text-monospace font-italic">Quantité</th>
+              <th class="text-monospace font-italic">Jours Restant</th>
+              <th class="text-monospace font-italic">Action</th>
+            </tr>
           </thead>
           <!--Table head-->
 
           <!-- Table body -->
-          <tbody *ngIf="reserveArray" id="demos">
-          <ng-container *ngFor="let reserve of reserveArray index as i">
+          <tbody *ngIf="tempReserveArray" id="demos">
+            <ng-container *ngFor="let reserve of tempReserveArray index as i">
 
-            <tr *ngIf="!reserve['valid']">
-              <td><input type="checkbox" ng-checked="checkboxes"></td>
-              <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
-              <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
-              <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
-              <th class="text-monospace font-italic" scope="row">{{reserve['expiringIn']}} </th>
-              <td class="text-monospace font-italic">
-
-            <span>
+              <tr *ngIf="!reserve['valid']">
+                <td><input type="checkbox" ng-checked="checkboxes" [(ngModel)]="reserve.isSelected" (change)="isAllSelected()"></td>
+                <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
+                <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
+                <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
+                <th class="text-monospace font-italic" scope="row">{{reserve['expiringIn']}} </th>
+                <td class="text-monospace font-italic">
+                  <span>
                     <!-- update reserve icons  -->
-                     <a>
-                       <!-- update reserve icon button-->
-                       <button
-                         class="btn btn-primary btn-sm rounded"
-                         data-toggle="modal" data-target="#updateGroup"
-                         data-whatever="@mdo"
-                         type="button" data-placement="top" title="Edit">
-                         <i class="fa fa-edit" aria-hidden="true"></i>
-                       </button>
-                     </a>
+                    <a>
+                      <!-- update reserve icon button-->
+                      <button class="btn btn-primary btn-sm rounded" data-toggle="modal" data-target="#updateGroup"
+                        data-whatever="@mdo" type="button" data-placement="top" title="Edit">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                      </button>
+                    </a>
 
-              <!-- delete reserve icon -->
+                    <!-- delete reserve icon -->
                     <a class="ml-3">
 
                       <!-- delete reserve icon button-->
-                      <button
-                        class="btn btn-danger btn-sm rounded"
-                        data-toggle="modal" data-target="#deleteGroup"
-                        data-whatever="@mdo"
-                        type="button" data-placement="top" title="Delete">
+                      <button class="btn btn-danger btn-sm rounded" data-toggle="modal" data-target="#deleteGroup"
+                        data-whatever="@mdo" type="button" data-placement="top" title="Delete">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>
                     </a>
-            </span>
-              </td>
-            </tr>
-          </ng-container>
+                  </span>
+                </td>
+              </tr>
+            </ng-container>
           </tbody>
           <!-- Table body -->
         </table>
@@ -89,59 +80,51 @@
 
           <!--Table head-->
           <thead class="font-weight-bold thead-dark">
-          <tr>
-            <!-- group number -->
-            <th class="text-monospace font-italic"></th>
-            <th class="text-monospace font-italic">Produit</th>
-            <th class="text-monospace font-italic">Marque</th>
-            <th class="text-monospace font-italic">Quantité</th>
-            <th class="text-monospace font-italic">Jours Restant</th>
-            <th class="text-monospace font-italic">Action</th>
-          </tr>
+            <tr>
+              <!-- group number -->
+              <th class="text-monospace font-italic">Produit</th>
+              <th class="text-monospace font-italic">Marque</th>
+              <th class="text-monospace font-italic">Quantité</th>
+              <th class="text-monospace font-italic">Jours Restant</th>
+              <th class="text-monospace font-italic">Action</th>
+            </tr>
           </thead>
           <!--Table head-->
 
           <!-- Table body -->
           <tbody *ngIf="reserveArray" id="demos">
-          <ng-container *ngFor="let reserve of reserveArray index as i">
+            <ng-container *ngFor="let reserve of reserveArray index as i">
 
-            <tr *ngIf="reserve['valid']">
-              <td><img src="../../../../assets/img/product.png" alt=""/></td>
-              <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
-              <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
-              <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
-              <th class="text-monospace font-italic" scope="row">{{reserve['expiringIn']}} </th>
-              <td class="text-monospace font-italic">
+              <tr *ngIf="reserve['valid']">
+                <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
+                <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
+                <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
+                <th class="text-monospace font-italic" scope="row">{{reserve['expiringIn']}} </th>
+                <td class="text-monospace font-italic">
 
-            <span>
+                  <span>
                     <!-- update reserve icons  -->
-                     <a>
-                       <!-- update reserve icon button-->
-                       <button
-                         class="btn btn-primary btn-sm rounded"
-                         data-toggle="modal" data-target="#updateGroup"
-                         data-whatever="@mdo"
-                         type="button" data-placement="top" title="Edit">
-                         <i class="fa fa-edit" aria-hidden="true"></i>
-                       </button>
-                     </a>
+                    <a>
+                      <!-- update reserve icon button-->
+                      <button class="btn btn-primary btn-sm rounded" data-toggle="modal" data-target="#updateGroup"
+                        data-whatever="@mdo" type="button" data-placement="top" title="Edit">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                      </button>
+                    </a>
 
-              <!-- delete reserve icon -->
+                    <!-- delete reserve icon -->
                     <a class="ml-3">
 
                       <!-- delete reserve icon button-->
-                      <button
-                        class="btn btn-danger btn-sm rounded"
-                        data-toggle="modal" data-target="#deleteGroup"
-                        data-whatever="@mdo"
-                        type="button" data-placement="top" title="Delete">
+                      <button class="btn btn-danger btn-sm rounded" data-toggle="modal" data-target="#deleteGroup"
+                        data-whatever="@mdo" type="button" data-placement="top" title="Delete">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>
                     </a>
-            </span>
-              </td>
-            </tr>
-          </ng-container>
+                  </span>
+                </td>
+              </tr>
+            </ng-container>
           </tbody>
           <!-- Table body -->
         </table>
