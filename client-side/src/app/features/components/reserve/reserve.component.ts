@@ -3,34 +3,54 @@ import {ReserveService} from "../../../core/services/reserve.service";
 import {ReplaySubject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {Reserve} from "../../../shared/models/reserve.model";
-
+import { trigger } from '@angular/animations';
 @Component({
   selector: 'app-reserve',
   templateUrl: './reserve.component.html',
   styleUrls: ['./reserve.component.css']
 })
+
 export class ReserveComponent implements OnInit {
 
-  @Input() groupId: string;
+  public isCollapsed = true;
 
+  @Input() groupId: string;
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   gestionButton : boolean = true;
   reserveArray: Array<Reserve> = [];
-
+  tempReserveArray: Array<Reserve> = [];
+  bntStyle: string;
   quantity = 1;
+  
+  isMasterSel:boolean;
 
+  
   constructor(
     private reserveService: ReserveService,
   ) {
+    this.isMasterSel = false;
   }
-
+  
   ngOnInit(): void {
     this.reserveInfo();
   }
+
+  eventCheckBox() {
+    let checkboxs = document.getElementsByTagName("input");
+    for(let i = 1; i < checkboxs.length ; i++) {
+      checkboxs[i].checked = !checkboxs[i].checked;
+    }
+  }
+  
   FieldsChange(values: any) {
-    this.gestionButton = !this.gestionButton;
+    if(values){
+      this.bntStyle = 'collapse';
+    }
+    else{
+      this.bntStyle = 'visible';
+    }
   }
   
   reserveInfo(): void {
