@@ -59,7 +59,7 @@
               <!-- group number -->
               <th class="text-monospace font-italic"><input type="checkbox" [(ngModel)]="masterSelected"
                   (change)="checkUncheckAll()"></th>
-              <th class="text-monospace font-italic">Produit P</th>
+              <th class="text-monospace font-italic">Produit</th>
               <th class="text-monospace font-italic">Marque</th>
               <th class="text-monospace font-italic">Quantité</th>
               <th class="text-monospace font-italic">Jours Restant</th>
@@ -125,10 +125,10 @@
           <thead class="font-weight-bold thead-dark">
             <tr>
               <!-- group number -->
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort();">Produit</th>
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="markAlphabeticalSort();">Marque</th>
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="quantityNumricalSort()">Quantité</th>
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="peremptionDayNumericalSort();">Jours Restant</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort(this.reserveArray);">Produit</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="markAlphabeticalSort(this.reserveArray);">Marque</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="quantityNumricalSort(this.reserveArray)">Quantité</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="peremptionDayNumericalSort(this.reserveArray);">Jours Restant</th>
               <th class="text-monospace font-italic">Action</th>
             </tr>
           </thead>

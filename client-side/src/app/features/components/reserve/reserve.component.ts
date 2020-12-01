@@ -140,7 +140,7 @@ export class ReserveComponent implements OnInit {
 
   /****************************  Sort Methods ***************************************/
 
-  productAlphabeticalSort(){
+  productAlphabeticalSort(arrayToSorted:any){
     
     this.isMarkSorted = false;
     this.isQuantitySorted = false;
@@ -150,7 +150,7 @@ export class ReserveComponent implements OnInit {
 
       this.isProductSorted = true;
     
-      this.reserveArray.sort((a,b) =>{
+      arrayToSorted.sort((a,b) =>{
         
         if(a.product_name < b.product_name){
         
@@ -165,11 +165,11 @@ export class ReserveComponent implements OnInit {
     }
     else{
     
-      this.reserveArray.reverse();
+      arrayToSorted.reverse();
     }
   }
 
-  markAlphabeticalSort(){
+  markAlphabeticalSort(arrayToSorted:any){
     
     this.isProductSorted = false;
     this.isQuantitySorted = false;
@@ -179,7 +179,7 @@ export class ReserveComponent implements OnInit {
     
       this.isMarkSorted = true;
 
-      this.reserveArray.sort((a,b) =>{
+      arrayToSorted.sort((a,b) =>{
         
         if(a.product_brand < b.product_brand){
         
@@ -194,11 +194,11 @@ export class ReserveComponent implements OnInit {
     }
     else{
     
-      this.reserveArray.reverse();
+      arrayToSorted.reverse();
     }
   }
 
-  quantityNumricalSort(){
+  quantityNumricalSort(arrayToSorted:any){
     
     this.isProductSorted = false;
     this.isMarkSorted = false;
@@ -208,7 +208,7 @@ export class ReserveComponent implements OnInit {
 
       this.isQuantitySorted = true;
       
-      this.reserveArray.sort((a,b) =>{
+      arrayToSorted.sort((a,b) =>{
         
         if(a.quantity < b.quantity){
          
@@ -223,11 +223,11 @@ export class ReserveComponent implements OnInit {
     }
     else{
       
-      this.reserveArray.reverse();
+      arrayToSorted.reverse();
     }
   }
 
-  peremptionDayNumericalSort(){
+  peremptionDayNumericalSort( arrayToSorted:any){
     
     this.isProductSorted = false;
     this.isMarkSorted = false;
@@ -237,7 +237,7 @@ export class ReserveComponent implements OnInit {
       
       this.isDaySorted = true;
 
-      this.reserveArray.sort((a,b) =>{
+      arrayToSorted.sort((a,b) =>{
         
         if(a.expiringIn < b.expiringIn){
          
@@ -252,10 +252,8 @@ export class ReserveComponent implements OnInit {
     }
     else{
       
-      this.reserveArray.reverse();
+      arrayToSorted.reverse();
     }
   }
-
-
 
 }
