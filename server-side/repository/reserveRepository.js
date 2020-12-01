@@ -1,6 +1,6 @@
 export default function makeReserveRepository({Reserve, Product, Group, Op}) {
     return Object.freeze({
-        save, findGroupReserveItems, findReserveItem, updateReserve
+        save, findGroupReserveItems, findReserveItem, updateReserve, removeItemFromReserve
     });
 
 
@@ -48,4 +48,7 @@ export default function makeReserveRepository({Reserve, Product, Group, Op}) {
             });
     }
 
+    async function removeItemFromReserve({id}) {
+        return Reserve.destroy({where: {id: id}});
+    }
 }
