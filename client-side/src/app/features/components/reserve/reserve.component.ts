@@ -78,6 +78,7 @@ export class ReserveComponent implements OnInit {
     this.createform(quantity,expiration);
     //console.log(expiration);
   }  
+  
   createform(quantity,expiration): void {
     let inputQty = "";
     let inputExp = "";

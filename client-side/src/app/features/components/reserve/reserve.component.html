@@ -12,13 +12,13 @@
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Quantité</label>
         <div class="col-10" id="date-management">
-          <input class="form-control" type="number" value="42" >
+          <input class="form-control" type="number" value="42">
         </div>
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Date d'expiration</label>
         <div class="col-10" id="expiration-management">
-          <input class="form-control" type="number" value="42" >
+          <input class="form-control" type="number" value="42">
         </div>
       </div>
     </form>
@@ -30,16 +30,24 @@
 
 </ng-template>
 
+<div class="custom-control custom-switch">
+  <button type="button" class="btn btn-outline-primary" id="customSwitches" (click)="isCollapsed = !isCollapsed"
+    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"> Changement de mode </button>
+</div>
+<br>
+<div *ngIf="isCollapsed" class="container mb-4">
+  <h6 class="text-monospace font-italic font-weight-bolder">
+    <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i> mode Consultation</h6>
+</div>
+<div *ngIf="!isCollapsed" class="container mb-4">
+  <h6 class="text-monospace font-italic font-weight-bolder">
+    <i class="fa fa-info-circle" aria-hidden="true" style="color: blue"></i> mode Management</h6>
+</div>
+<br>
 <!--add list-->
-<div *ngIf="reserveArray.length !== 0" class="container mb-4 addFromList ">
-
-  <div class="custom-control custom-switch">
-    <button type="button" class="btn btn-outline-primary" id="customSwitches" (click)="isCollapsed = !isCollapsed"
-      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">mode Management</button>
-  </div>
-  <br>
-
-  <div class="row" id="collapseExample" [ngbCollapse]="isCollapsed">
+<div *ngIf="reserveArray.length !== 0" class="container mb-4 addFromList " id="collapseExample"
+  [ngbCollapse]="isCollapsed">
+  <div class="row">
     <div class="col-12">
       <div class="table-responsive">
         <!--Table-->
@@ -77,7 +85,8 @@
                     <a>
                       <!-- update reserve icon button-->
                       <button class="btn btn-primary btn-sm rounded" data-toggle="modal" data-target="#updateGroup"
-                        data-whatever="@mdo" type="button" data-placement="top" title="Edit" (click)="open(content,reserve)">
+                        data-whatever="@mdo" type="button" data-placement="top" title="Edit"
+                        (click)="open(content,reserve)">
                         <i class="fa fa-edit" aria-hidden="true"></i>
                       </button>
                     </a>
@@ -105,7 +114,6 @@
 </div>
 
 <div *ngIf="reserveArray.length !== 0" class="container mb-4" id="collapseExample" [ngbCollapse]="!isCollapsed">
-
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
@@ -142,7 +150,8 @@
                     <a>
                       <!-- update reserve icon button-->
                       <button class="btn btn-primary btn-sm rounded" data-toggle="modal" data-target="#updateGroup"
-                        data-whatever="@mdo" type="button" data-placement="top" title="Edit" (click)="open(content,reserve)">
+                        data-whatever="@mdo" type="button" data-placement="top" title="Edit"
+                        (click)="open(content,reserve)">
                         <i class="fa fa-edit" aria-hidden="true"></i>
                       </button>
                     </a>
