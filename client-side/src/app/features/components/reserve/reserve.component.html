@@ -116,10 +116,10 @@
           <thead class="font-weight-bold thead-dark">
             <tr>
               <!-- group number -->
-              <th class="text-monospace font-italic">Produit</th>
-              <th class="text-monospace font-italic">Marque</th>
-              <th class="text-monospace font-italic">Quantité</th>
-              <th class="text-monospace font-italic">Jours Restant</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort();">Produit</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="markAlphabeticalSort();">Marque</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="quantityNumricalSort()">Quantité</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="peremptionDayNumericalSort();">Jours Restant</th>
               <th class="text-monospace font-italic">Action</th>
             </tr>
           </thead>

@@ -21,6 +21,6 @@ server
     .serveStaticFiles()
     .addRouting(routes)
     .errorHandler()
-    .listenOn(env.PORT ?? 8000);
+    .listenOn(env.PORT ?? 8001);
 
 export default server.run();

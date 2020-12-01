@@ -87,19 +87,6 @@ export class ReserveComponent implements OnInit {
     document.getElementById("expiration-management").innerHTML = inputExp;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   /* METHOD for CHECKBOXES */
   tableManagement():void{
     for(let i of this.tempReserveArray){
@@ -129,6 +116,23 @@ export class ReserveComponent implements OnInit {
   }
   /* END METHOD for CHECKBOXES */
 
+  /****************************  Sort Methods ***************************************/
+
+  productAlphabeticalSort(){
+    console.log("product sort");
+  }
+
+  markAlphabeticalSort(){
+    console.log("mark sort");
+  }
+
+  quantityNumricalSort(){
+    console.log("quantity sort");
+  }
+
+  peremptionDayNumericalSort(){
+    console.log("days sort");
+  }
 
 
 
