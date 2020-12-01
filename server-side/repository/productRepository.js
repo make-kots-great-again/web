@@ -1,5 +1,3 @@
-import { serializeUser } from "passport";
-
 export default function makeProductRepository({Product, Op}) {
     return Object.freeze({
         save, findAll, findByCode

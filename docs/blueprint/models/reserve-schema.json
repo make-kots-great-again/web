@@ -1,0 +1,40 @@
+{
+    "id": {
+        "type": "UUID",
+        "allowNull": false,
+        "primaryKey": true
+    },
+    "quantity": {
+        "type": "integer",
+        "allowNull": false,
+        "defaultValue": 1,
+        "validate": {
+            "min": 1,
+            "max": 20
+        }
+    },
+    "groupId": {
+        "type": "UUID",
+        "references": {
+            "model": "Group",
+            "key": "groupId"
+        }
+    },
+    "code": {
+        "type": "integer",
+        "references": {
+            "model": "Product",
+            "key": "code"
+        }
+    },
+    "expiringIn": {
+        "type": "integer",
+        "defaultValue": 5,
+        "allowNull": false
+    },
+    "valid": {
+        "type": "boolean",
+        "defaultValue": false,
+        "allowNull": false
+    }
+}

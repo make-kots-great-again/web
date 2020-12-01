@@ -2,7 +2,7 @@ import userControllerFactory from './userController';
 import groupControllerFactory from './groupController';
 import productControllerFactory from './productController';
 import shoppingListControllerFactory from './shoppingListController';
-import reserveControllerFactory from './reverseController';
+import reserveControllerFactory from './reserveController';
 
 const userController = userControllerFactory();
 const groupController = groupControllerFactory();
