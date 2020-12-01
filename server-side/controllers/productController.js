@@ -35,16 +35,18 @@ export default function productControllerFactory() {
         const {productId} = httpRequest.params;
 
         try {
-            const product = await productService.getOneProduct({productId});
-            
-            if (product.message)
-                return {statusCode: 404, body: {success: false, message: product.message}}
+            const product = await productService.getProductCode({code: productId});
+
+            if (product.message) return {
+                    statusCode: (product.statusCode) ? product.statusCode : 404,
+                    body: {success: false, message: product.message}
+                }
 
             return {
                 statusCode: 200,
                 body: {
                     success: true,
-                    product : product.dataValues
+                    productInfo: product
                 }
             }
         } catch (e) {

@@ -1,19 +1,25 @@
 {
-    "id_group_user": {
-        "type": "UUID",
-        "primaryKey": true
-    },
-    "userId": {
-        "type": "UUID",
-        "references": {"model": "User", "key": "userId"}
-    },
-    "groupId": {
-        "type": "UUID",
-        "references": {"model": "Group", "key": "groupId"}
-    },
-    "role": {
-        "type": "ENUM('admin', 'member', 'personal')",
-        "defaultValue": "admin",
-        "allowNull": false
+  "id_group_user": {
+    "type": "UUID",
+    "primaryKey": true
+  },
+  "userId": {
+    "type": "UUID",
+    "references": {
+      "model": "User",
+      "key": "userId"
     }
+  },
+  "groupId": {
+    "type": "UUID",
+    "references": {
+      "model": "Group",
+      "key": "groupId"
+    }
+  },
+  "role": {
+    "type": "ENUM('admin', 'member', 'personal')",
+    "defaultValue": "admin",
+    "allowNull": false
+  }
 }
