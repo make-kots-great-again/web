@@ -42,13 +42,15 @@ export class ReserveComponent implements OnInit {
     this.reserveInfo();
   }
   
-  FieldsChange(values: any) {
-    if(values){
-      this.bntStyle = 'collapse';
-    }
-    else{
-      this.bntStyle = 'visible';
-    }
+  
+
+  /****************************  API Methods ***************************************/
+
+  deleteItem(value){
+    let idItem = {'itemId': value};
+    this.reserveService.removeItemFromReserve(idItem)
+      .pipe(takeUntil(this.destroyed$));
+    console.log(idItem);
   }
 
   reserveInfo(): void {
@@ -69,7 +71,7 @@ export class ReserveComponent implements OnInit {
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
-  /* Modal pop up */
+  /**************************** POPUP ***************************************/
   open(content,object) {
     console.log(content);
     let expiration = object['expiringIn'];
@@ -78,7 +80,7 @@ export class ReserveComponent implements OnInit {
     this.createform(quantity,expiration);
     //console.log(expiration);
   }  
-  
+
   createform(quantity,expiration): void {
     let inputQty = "";
     let inputExp = "";
@@ -88,7 +90,15 @@ export class ReserveComponent implements OnInit {
     document.getElementById("expiration-management").innerHTML = inputExp;
   }
 
-  /* METHOD for CHECKBOXES */
+  FieldsChange(values: any) {
+    if(values){
+      this.bntStyle = 'collapse';
+    }
+    else{
+      this.bntStyle = 'visible';
+    }
+  }
+  /**************************** CHECKBOXES ***************************************/
   tableManagement():void{
     for(let i of this.tempReserveArray){
       i['isSelected']=false;
@@ -115,7 +125,7 @@ export class ReserveComponent implements OnInit {
       this.checkedList.push(i);
     }
   }
-  /* END METHOD for CHECKBOXES */
+
 
   /****************************  Sort Methods ***************************************/
 
