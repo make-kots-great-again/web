@@ -4,6 +4,7 @@ import {ReplaySubject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {Reserve} from "../../../shared/models/reserve.model";
 import { trigger } from '@angular/animations';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-reserve',
   templateUrl: './reserve.component.html',
@@ -25,13 +26,14 @@ export class ReserveComponent implements OnInit {
   
   //checkbox variable
   masterSelected:boolean;
-
-  isMasterSel:boolean;
-
-  tempReserveArray = [];
   checkedList:any;
+  tempReserveArray:any;
+  
+
+
   constructor(
     private reserveService: ReserveService,
+    private modalService: NgbModal
   ) {
     this.masterSelected = false;
   }
@@ -67,6 +69,35 @@ export class ReserveComponent implements OnInit {
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
+  /* Modal pop up */
+  open(content,object) {
+    console.log(content);
+    let expiration = object['expiringIn'];
+    let quantity = object['quantity'];
+    this.modalService.open(content,{ centered: true });
+    this.createform(quantity,expiration);
+    //console.log(expiration);
+  }  
+  createform(quantity,expiration): void {
+    let inputQty = "";
+    let inputExp = "";
+    inputQty = '<input class="form-control" type="number" value="'+ quantity +'">'
+    inputExp = '<input class="form-control" type="number" value="'+ expiration +'">'
+    document.getElementById("date-management").innerHTML = inputQty;
+    document.getElementById("expiration-management").innerHTML = inputExp;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   /* METHOD for CHECKBOXES */
