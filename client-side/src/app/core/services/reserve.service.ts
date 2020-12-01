@@ -15,4 +15,8 @@ export class ReserveService {
     return this.http.get<IReserve>(`/server/api/reserve/items/${groupId}`, {observe: 'response'})
       .pipe(map((data: HttpResponse<any>) => data.body.reserveItems), shareReplay(1));
   }
+  removeItemFromReserve(itemId: any): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`/server/api/reserve/item`,itemId)
+      .pipe(map((data: any) => data.body.success));
+  }
 }
