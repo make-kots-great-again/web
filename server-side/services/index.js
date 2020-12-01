@@ -4,12 +4,18 @@ import productServiceFactory from './productService'
 import shoppingListServiceFactory from './shoppingListService'
 import reserveServiceFactory from './reserveService'
 
-import {userRepository, groupRepository, productRepository, shoppingListRepository, reserveRepository} from '../repository'
+import {
+    userRepository,
+    groupRepository,
+    productRepository,
+    shoppingListRepository,
+    reserveRepository
+} from '../repository'
 
 const userService = userServiceFactory({userRepository});
 const groupService = groupServiceFactory({groupRepository, userRepository});
 const productService = productServiceFactory({productRepository});
-const reserveService = reserveServiceFactory({reserveRepository});
+const reserveService = reserveServiceFactory({reserveRepository, groupRepository, productRepository});
 const shoppingListService = shoppingListServiceFactory({shoppingListRepository, productRepository});
 
 const services = Object.freeze({userService, groupService, productService, shoppingListService, reserveService});

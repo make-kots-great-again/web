@@ -137,9 +137,9 @@ export default function groupServiceFactory({groupRepository, userRepository}) {
         if (groupInfo.message) return {message: groupInfo.message};
 
         const gName = groupInfo.dataValues.groupName;
-        const gId = groupInfo.dataValues.groupBarCode;
+        const gBarCode = groupInfo.dataValues.groupBarCode;
 
-        return jwtFactory.generateGroupJwt({gName, gId});
+        return jwtFactory.generateGroupJwt({groupName: gName, groupBarCode: gBarCode});
     }
 
     async function addMembersToGroup({groupId, username}) {

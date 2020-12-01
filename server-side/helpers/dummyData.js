@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
 const {products} = require('./dummyProducts');
+const helper = require('./dummyHelpers');
 
 const dummyUsers = [];
 const dummyGroups = [];
@@ -14,8 +15,12 @@ const reverse = [];
 const usernames = ['james', 'john', 'william', 'paul', 'thomas', 'kevin', 'gary', 'larry', 'dennis', 'roger'];
 const groups = ['football', 'tennis', 'basketball', 'volleyball', 'hockey', 'cricket', 'baseball', 'golf', 'rugby', 'boxing'];
 
+const langage = "french"
+
 
 Array(10).fill(0).forEach((x, i) => {
+
+    groupInfo = helper.generateGroupInfos(usernames[i], langage);
 
     dummyUsers.push({
         firstName: usernames[i].split('').reverse().join(''),
@@ -32,9 +37,9 @@ Array(10).fill(0).forEach((x, i) => {
     });
 
     dummyPersonalGroups.push({
-        groupId: uuidv4(), groupName: `personal list - ${usernames[i]}`,
+        groupId: uuidv4(), groupName: groupInfo.groupName,
         groupBarCode: crypto.randomBytes(6).toString('hex'),
-        groupDescription: `Personal group`
+        groupDescription: groupInfo.groupDescription
     });
 
     dummyUserGroups.push({
@@ -117,3 +122,4 @@ module.exports = {
     dummyUsers, usernames, dummyGroups, reverse,
     groups, dummyUserGroups, products, shoppingList
 }
+

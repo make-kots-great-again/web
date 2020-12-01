@@ -1,0 +1,32 @@
+{
+    "success": true,
+    "reserveItems": [
+        {
+            "id": "452b1847-af6b-4d8f-aa44-0a3bdd5dd8d3",
+            "code": "16513",
+            "product_name": "Organic Sunflower Oil",
+            "product_brand": "Napa Valley Naturals",
+            "quantity": 3,
+            "expiringIn": 5,
+            "valid": true
+        },
+        {
+            "id": "7019d6eb-0a2e-447f-a200-0c9a469c43ca",
+            "code": "18401",
+            "product_name": "Thai Curry Roasted Cashews",
+            "product_brand": "Sunridge",
+            "quantity": 4,
+            "expiringIn": 5,
+            "valid": false
+        },
+        {
+            "id": "eef07d62-88d9-4a09-a54d-5ef038f0e1aa",
+            "code": "18289",
+            "product_name": "Antioxidant Mix - Berries & Chocolate",
+            "product_brand": "Sunridge",
+            "quantity": 10,
+            "expiringIn": 4,
+            "valid": false
+        }
+    ]
+}

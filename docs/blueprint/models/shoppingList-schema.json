@@ -1,31 +1,37 @@
 {
-    "id": {
-        "type": "UUID",
-        "defaultValue": "UUIDV4",
-        "allowNull": false,
-        "primaryKey": true
-    },
-    "quantity": {
-        "type": "integer",
-        "allowNull": false,
-        "defaultValue": 1,
-        "validate": {
-            "min": 1,
-            "max": 20
-        }
-    },
-    "groupProduct": {
-        "type": "boolean",
-        "defaultValue": false,
-        "allowNull": false
-    },
-    "id_group_user": {
-        "type": "UUID",
-        "defaultValue": "UUIDV4",
-        "references": {"model": "userGroup", "key": "id_group_user"}
-    },
-    "code": {
-        "type": "integer",
-        "references": {"model": "Product", "key": "code"}
+  "id": {
+    "type": "UUID",
+    "defaultValue": "UUIDV4",
+    "allowNull": false,
+    "primaryKey": true
+  },
+  "quantity": {
+    "type": "integer",
+    "allowNull": false,
+    "defaultValue": 1,
+    "validate": {
+      "min": 1,
+      "max": 20
     }
+  },
+  "groupProduct": {
+    "type": "boolean",
+    "defaultValue": false,
+    "allowNull": false
+  },
+  "id_group_user": {
+    "type": "UUID",
+    "defaultValue": "UUIDV4",
+    "references": {
+      "model": "userGroup",
+      "key": "id_group_user"
+    }
+  },
+  "code": {
+    "type": "integer",
+    "references": {
+      "model": "Product",
+      "key": "code"
+    }
+  }
 }

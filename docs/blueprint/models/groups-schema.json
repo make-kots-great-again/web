@@ -1,22 +1,32 @@
 {
-    "groupId": {
-        "type": "UUID",
-        "allowNull": false,
-        "primaryKey": true
-    },
-    "groupBarCode": {
-        "type": "string",
-        "unique": true,
-        "allowNull": false,
-        "validate": {"len": [12, 14]}
-    },
-    "groupName": {
-        "type": "string",
-        "allowNull": false
-    },
-    "groupDescription": {
-        "type": "string",
-        "allowNull": false,
-        "validate": {"len": [4, 280]}
+  "groupId": {
+    "type": "UUID",
+    "allowNull": false,
+    "primaryKey": true
+  },
+  "groupBarCode": {
+    "type": "string",
+    "unique": true,
+    "allowNull": false,
+    "validate": {
+      "len": [
+        12,
+        14
+      ]
     }
+  },
+  "groupName": {
+    "type": "string",
+    "allowNull": false
+  },
+  "groupDescription": {
+    "type": "string",
+    "allowNull": false,
+    "validate": {
+      "len": [
+        4,
+        280
+      ]
+    }
+  }
 }

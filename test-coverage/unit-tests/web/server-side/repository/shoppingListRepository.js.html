@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">42.86% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/7</span>
+                <span class='fraction'>3/7</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">42.86% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/7</span>
+                <span class='fraction'>3/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">42.86% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/7</span>
+                <span class='fraction'>3/7</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -120,7 +120,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -142,7 +142,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -153,10 +153,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -164,7 +160,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export default function makeshoppingListRepository({ShoppingList, userGroup, Product}) {
@@ -180,7 +180,7 @@
 &nbsp;
     async function findGroupShoppingList({groupId}) {
         return ShoppingList.findAll({
-            attributes: ['quantity', 'id', 'groupProduct'],
+            attributes: ['quantity', 'id', 'groupProduct', 'productNote'],
             include: [
                 {
                     model: Product,
@@ -196,8 +196,8 @@
         });
     }
 &nbsp;
-    async function findItemOwner({itemId, userId}) {
-        return ShoppingList.findOne({
+    async function <span class="fstat-no" title="function not covered" >findItemOwner({</span>itemId, userId}) {
+<span class="cstat-no" title="statement not covered" >        return S</span>hoppingList.findOne({
             where: {id: itemId},
             attributes: ['quantity', 'id', 'groupProduct'],
             include: [
@@ -210,16 +210,16 @@
         });
     }
 &nbsp;
-    async function findById({shoppingListId: id}) {
-        return ShoppingList.findByPk(id);
+    async function <span class="fstat-no" title="function not covered" >findById({</span>shoppingListId: id}) {
+<span class="cstat-no" title="statement not covered" >        return S</span>hoppingList.findByPk(id);
     }
 &nbsp;
     async function <span class="fstat-no" title="function not covered" >updateQuantity({</span>itemId, ...shoppingInfo}) {
 <span class="cstat-no" title="statement not covered" >        return S</span>hoppingList.update({...shoppingInfo}, {where: {id: itemId}});
     }
 &nbsp;
-    async function removeProduct({id}) {
-        return ShoppingList.destroy({where: {id: id}});
+    async function <span class="fstat-no" title="function not covered" >removeProduct({</span>id}) {
+<span class="cstat-no" title="statement not covered" >        return S</span>hoppingList.destroy({where: {id: id}});
     }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -229,7 +229,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Nov 28 2020 06:23:16 GMT+0100 (Central European Standard Time)
+                at Tue Dec 01 2020 05:42:17 GMT+0100 (Central European Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

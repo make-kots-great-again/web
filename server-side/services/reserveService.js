@@ -1,9 +1,19 @@
+import {makeReserve} from '../domain'
+import {groupService, productService} from "./index";
+
 export default function reserveServiceFactory({reserveRepository}) {
     return Object.freeze({
-        listGroupReserveItems
+        listGroupReserveItems, addProductInReserve
     });
 
     async function listGroupReserveItems({groupId}) {
+
+        const groupInfo = await groupService.getGroup({groupId});
+
+        if (groupInfo.message) return {
+            statusCode: groupInfo.statusCode,
+            message: groupInfo.message
+        };
 
         const result = [];
 
@@ -23,4 +33,68 @@ export default function reserveServiceFactory({reserveRepository}) {
 
         return result;
     }
+
+    async function addProductInReserve({groupIdBarcode, ...reserveInfo}) {
+
+        let groupInfo = {}
+        const groupId = !!(groupIdBarcode.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i))
+        const groupBarCode = groupIdBarcode.length === 12;
+
+        if (groupId || groupBarCode) {
+
+            if (groupId) {
+
+                groupInfo = await groupService.getGroup({groupId: groupIdBarcode});
+                if (groupInfo.message) return {message: groupInfo.message};
+
+            } else if (groupBarCode) {
+                groupInfo = await groupService.getGroupByBarCode({groupBarCode: groupIdBarcode});
+                if (groupInfo.message) return {message: groupInfo.message};
+            }
+
+            const reserve = makeReserve({...reserveInfo});
+
+            const findItem = await reserveRepository.findReserveItem({
+                groupId: groupInfo.dataValues.groupId,
+                code: reserve.getProductCode(),
+            });
+
+            // const timeDiff = Math.abs(new Date().getTime() - new Date(findItem.dataValues.updatedAt).getTime());
+           // const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+           // console.log(diffDays)
+
+            if (!findItem) {
+
+                const findProductCode = await productService.getProductCode({code: reserve.getProductCode()});
+                if (findProductCode.message) return {message: findProductCode.message};
+
+                return await reserveRepository.save({
+                    groupId: groupInfo.dataValues.groupId,
+                    code: reserve.getProductCode(),
+                    quantity: reserve.getProductQuantity(),
+                    expiringIn: reserve.getExpiringIn(),
+                    valid: reserve.getvalid(),
+                });
+                ;
+
+            } else if (findItem) {
+
+                const findProductCode = await productService.getProductCode({code: reserve.getProductCode()});
+                if (findProductCode.message) return {message: findProductCode.message};
+
+                return reserveRepository.updateReserve({
+                    groupId: groupInfo.dataValues.groupId,
+                    code: reserve.getProductCode(),
+                    quantity: reserve.getProductQuantity(),
+                    expiringIn: reserve.getExpiringIn(),
+                    valid: reserve.getvalid(),
+                });
+            }
+        } else {
+            return {message: `No group was found with this id ${groupIdBarcode}`};
+        }
+    }
 }
+
+
