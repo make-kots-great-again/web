@@ -10,7 +10,7 @@
     "heroku-postbuild": "npm run install",
     "start": "babel-node app.js",
     "angular:build": "cd client-side && npm run build",
-    "db:setup": "npm run db:migrate && npm run db:seed",
+    "db:setup": "npm run db:drop && npm run db:create && npm run db:migrate && npm run db:seed",
     "start:dev": "npm run db:setup && nodemon -r dotenv/config --exec \"npm start\"",
     "dev": "nodemon -r dotenv/config --exec \"npm start\"",
     "start:martin": "nodemon -r dotenv/config --exec \"npm start\"",
