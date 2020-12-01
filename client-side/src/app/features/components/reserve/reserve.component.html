@@ -32,6 +32,7 @@
 
 <!--add list-->
 <div *ngIf="reserveArray.length !== 0" class="container mb-4 addFromList ">
+
   <div class="custom-control custom-switch">
     <button type="button" class="btn btn-outline-primary" id="customSwitches" (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">mode Management</button>
@@ -103,7 +104,7 @@
   </div>
 </div>
 
-<div *ngIf="reserveArray.length !== 0" class="container mb-4">
+<div *ngIf="reserveArray.length !== 0" class="container mb-4" id="collapseExample" [ngbCollapse]="!isCollapsed">
 
   <div class="row">
     <div class="col-12">
