@@ -19,22 +19,26 @@ router.post("/reserve/:groupIdBarcode",
     makeCallback(reserveController.postProductInReserve));
 
 /**
- * @api {delete} /shoppingList/removeProduct/:itemId Supprime un produit d'une liste de course.
- * @apiName ShoppingList Remove Product
- * @apiGroup ShoppingList
- *
- * @apiParam {itemId} id Product ID unique.
+ * @api {delete} /reserve/item Supprime un élément de la table reserve.
+ * @apiName Reserve Remove Item
+ * @apiGroup Reserve
+ * 
+ * @apiBody {
+ *               itemID: <item_to_suppress_id>          
+ *          }
  *
  * @apiSuccess {boolean} success le statut de la requête.
- * @apiSuccess {String} message le message de retour de la requête.
- * @apiSuccess {int} nombre d'ojets restant dans la liste de course.
+ * @apiSuccess {Object} reserveItems l'item deleter de la table reserve.
+ *                       {"id":<item_id>,"groupId":<group_id>,"code":<barcode>,"quantity":<item_quantity>,"expiringIn":<expiration_date>,
+ *                         "valid":<item_validity>,"updatedAt":<last_update_date>,"createdAt":<creation_date>}
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
- *      {
- *          "success": true,
- *          "message": "Product delete from the list !",
- *          "shoppingList": 0
+ *      {"success":true,
+ *       "reserveItems":{"id":"228b81de-e2fe-485d-9de9-bd7b3b1c94e9","groupId":"7e0313b1-0ae6-4a99-86be-f762ec2c7e1c",
+ *          "code":"18050","quantity":6,"expiringIn":5,"valid":true,"updatedAt":"2020-12-01T21:48:10.639Z",
+ *          "createdAt":"2020-12-01T21:48:10.639Z"
+ *        }
  *      }
  *
  * @apiError 400 erreur indéterminée venant du serveur lui-même.

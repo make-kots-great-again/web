@@ -29,7 +29,10 @@ export class ReserveComponent implements OnInit {
   checkedList:any;
   tempReserveArray:any;
   
-
+  isProductSorted = false;
+  isMarkSorted = false;
+  isQuantitySorted = false;
+  isDaySorted = false;
 
   constructor(
     private reserveService: ReserveService,
@@ -90,9 +93,27 @@ export class ReserveComponent implements OnInit {
 
   /* METHOD for CHECKBOXES */
   tableManagement():void{
+    let newTempArray = [];
+    let newReserveArray = [];
+
+    for(let i of this.tempReserveArray){
+      if(i['valid']){
+        newReserveArray.push(i);
+      }
+      else{
+        newTempArray.push(i);
+      }
+    }
+
+    this.tempReserveArray = newTempArray;
+    this.reserveArray = newReserveArray;
+
     for(let i of this.tempReserveArray){
       i['isSelected']=false;
-    }
+    }    
+
+    console.log(this.tempReserveArray);
+    console.log(this.reserveArray);
   }
 
   checkUncheckAll() {
@@ -120,19 +141,119 @@ export class ReserveComponent implements OnInit {
   /****************************  Sort Methods ***************************************/
 
   productAlphabeticalSort(){
-    console.log("product sort");
+    
+    this.isMarkSorted = false;
+    this.isQuantitySorted = false;
+    this.isDaySorted = false ;
+    
+    if(!this.isProductSorted){
+
+      this.isProductSorted = true;
+    
+      this.reserveArray.sort((a,b) =>{
+        
+        if(a.product_name < b.product_name){
+        
+          return -1;
+        }else if (a.product_name > b.product_name){
+        
+          return 1;
+        }
+        
+        return 0;
+      });  
+    }
+    else{
+    
+      this.reserveArray.reverse();
+    }
   }
 
   markAlphabeticalSort(){
-    console.log("mark sort");
+    
+    this.isProductSorted = false;
+    this.isQuantitySorted = false;
+    this.isDaySorted = false ;
+    
+    if(!this.isMarkSorted){
+    
+      this.isMarkSorted = true;
+
+      this.reserveArray.sort((a,b) =>{
+        
+        if(a.product_brand < b.product_brand){
+        
+          return -1;
+        }else if (a.product_brand > b.product_brand){
+        
+          return 1;
+        }
+        
+        return 0;
+      });  
+    }
+    else{
+    
+      this.reserveArray.reverse();
+    }
   }
 
   quantityNumricalSort(){
-    console.log("quantity sort");
+    
+    this.isProductSorted = false;
+    this.isMarkSorted = false;
+    this.isDaySorted = false ;
+
+    if(!this.isQuantitySorted){
+
+      this.isQuantitySorted = true;
+      
+      this.reserveArray.sort((a,b) =>{
+        
+        if(a.quantity < b.quantity){
+         
+          return -1;
+        }else if (a.quantity > b.quantity){
+        
+          return 1;
+        }
+        
+        return 0;
+      });
+    }
+    else{
+      
+      this.reserveArray.reverse();
+    }
   }
 
   peremptionDayNumericalSort(){
-    console.log("days sort");
+    
+    this.isProductSorted = false;
+    this.isMarkSorted = false;
+    this.isQuantitySorted = false ;
+
+    if(!this.isDaySorted){
+      
+      this.isDaySorted = true;
+
+      this.reserveArray.sort((a,b) =>{
+        
+        if(a.expiringIn < b.expiringIn){
+         
+          return -1;
+        }else if (a.expiringIn > b.expiringIn){
+        
+          return 1;
+        }
+        
+        return 0;
+      });
+    }
+    else{
+      
+      this.reserveArray.reverse();
+    }
   }
 
 
