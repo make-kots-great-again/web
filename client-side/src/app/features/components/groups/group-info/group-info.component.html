@@ -1,17 +1,15 @@
 <!-- group details modal -->
 <!-- Quick nagivaition title -->
-
-
 <div class="d-flex justify-content-center align-items-center">
   <div class="container m-5 p-5 border border-bottom">
-
-    <!-- Quick nagivaition title -->
+    <h1 class="d-flex justify-content-center">{{groupName}}</h1>
+    <!-- Quick nagivation title -->
     <div class="container">
       <div class="row justify-content-center">
-        <button class="btn-outline-secondary btn-sm collapsed
+        <button class="btn-secondary btn collapsed
             text-monospace font-italic font-weight-bolder" data-toggle="collapse"
                 href="#collapseExample" aria-expanded="false" id="quickNavigation"
-                aria-controls="collapseExample">Quick navigation
+                aria-controls="collapseExample">Navigation Rapide
         </button>
       </div>
     </div>
@@ -25,12 +23,7 @@
             <a class="navbar-brand">
               <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarNav" aria-controls="navbarNav"
-                    aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div id="navbarNav">
               <ul class="navbar-nav">
                 <li *ngIf="!isPersonnalGroup"
                     class="nav-item" [routerLinkActive]="['active']"
@@ -51,25 +44,15 @@
                      class="nav-link text-monospace font-italic font-weight-bolder" style="cursor: pointer">
                     Reserve</a>
                 </li>
-                <li class="nav-item" [routerLinkActive]="['active']"
-                    [routerLinkActiveOptions]="{ exact: true }">
-                  <a id="reserveMagBtn" (click)="changeView($event.target)"
-                     class="nav-link text-monospace font-italic font-weight-bolder" style="cursor: pointer">
-                    ReserveMag</a>
-                </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- END of quick nagivaition title -->
+    <!-- END of quick nagivation title -->
 
     <div class=" font-weight-bold">
-
-      <h1 class="d-flex justify-content-center">{{groupName}}</h1>
-
-      <p></p>
 
       <h3 class="text-monospace font-italic"><strong>Description du groupe</strong>
         <p></p>

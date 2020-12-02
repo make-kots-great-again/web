@@ -1,11 +1,133 @@
+<!-- popup -->
 
-<div *ngIf="reserveArray.length !== 0" class="container mb-4">
-  <!--switchmode-->
-  <div class="custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input" id="customSwitches" (change)="FieldsChange($event)">
-    <label class="custom-control-label" for="customSwitches">mode Consultation</label>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Modifier {{modifiedProduct.name}}</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-  <br>
+  <div class="modal-body" id="modalForm">
+    <form #modifyGroupForm="ngForm">
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Quantité</label>
+        <div class="col-10">
+          <input [(ngModel)]="newQuantity" class="form-control" type="number" min="0" max="20" name="newQuantity">
+        </div>
+      </div>
+      <div *ngIf="!isCollapsed" class="form-group">
+        <label for="recipient-name" class="col-form-label">Date d'expiration</label>
+        <div class="col-10" >
+          <input  [(ngModel)]="newExpriringDate" id="expiration-management" class="form-control" type="number" name="newExpiringDate">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('cancel')">Annuler</button>
+    <button type="submit" class="btn btn-primary" (click)="updateItem();">Modifier</button>, 
+  </div>
+
+</ng-template>
+<!--Bouton mode-->
+<div class="custom-control custom-switch">
+  <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"> Changement de mode </button>
+</div>
+<br>
+<div *ngIf="isCollapsed" class="container mb-4">
+  <h6 class="text-monospace font-italic font-weight-bolder">
+    <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i> mode Consultation</h6>
+</div>
+<div *ngIf="!isCollapsed" class="container mb-4">
+  <h6 class="text-monospace font-italic font-weight-bolder">
+    <i class="fa fa-info-circle" aria-hidden="true" style="color: blue"></i> mode Management</h6>
+</div>
+<br>
+<!--add list-->
+<div *ngIf="reserveArray.length !== 0" class="container mb-4 addFromList " id="collapseExample"
+  [ngbCollapse]="isCollapsed">
+
+  <div class="container mb-3">
+    <button type="button" class="btn btn-success btn-sm  ml-2" (click)="addAllItem()">Ajouter éléments selectionnés</button>
+    <button type="button" class="btn btn-danger btn-sm ml-2" (click)="deleteAllItem()">Supprimer éléments selectionné</button>
+  </div>
+
+
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <!--Table-->
+        <table *ngIf="reserveArray" class="table table-striped table-bordered">
+
+          <!--Table head-->
+          <thead class="font-weight-bold thead-dark">
+            <tr>
+              <!-- group number -->
+              <th class="text-monospace font-italic"><input type="checkbox" [(ngModel)]="masterSelected"
+                  (change)="checkUncheckAll()"></th>
+                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort(this.tempReserveArray, false);">Produit</th>
+                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="markAlphabeticalSort(this.tempReserveArray, false);">Marque</th>
+                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="quantityNumricalSort(this.tempReserveArray, false)">Quantité</th>
+                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="peremptionDayNumericalSort(this.tempReserveArray, false);">Jours Restant</th>
+              <th class="text-monospace font-italic">Action</th>
+            </tr>
+          </thead>
+          <!--Table head-->
+
+          <!-- Table body -->
+          <tbody *ngIf="tempReserveArray" id="demos">
+            <ng-container *ngFor="let reserve of tempReserveArray index as i">
+
+              <tr *ngIf="!reserve['valid']" class="bg-warning">
+                <td><input type="checkbox" ng-checked="checkboxes" [(ngModel)]="reserve.isSelected"
+                    (change)="isAllSelected()"></td>
+                <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
+                <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
+                <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
+                <th class="text-monospace font-italic" scope="row">
+                  <div *ngIf="reserve['expiringIn'] < 3" class="text-danger">
+                  {{reserve['expiringIn']}} 
+                  </div>
+                  <div *ngIf="reserve['expiringIn'] > 2">
+                    {{reserve['expiringIn']}} 
+                    </div>
+                </th>
+                <td class="text-monospace font-italic">
+                  <span>
+                    <!-- update reserve icons  -->
+                    <a>
+                      <!-- update reserve icon button-->
+                      <button class="btn btn-primary btn-sm rounded" data-toggle="modal" data-target="#updateGroup"
+                        data-whatever="@mdo" type="button" data-placement="top" title="Edit"
+                        (click)="open(content,i, this.tempReserveArray);">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                      </button>
+                    </a>
+
+                    <!-- delete reserve icon -->
+                    <a class="ml-3">
+
+                      <!-- delete reserve icon button-->
+                      <button class="btn btn-danger btn-sm rounded" data-toggle="modal" data-target="#deleteGroup"
+                        data-whatever="@mdo" type="button" data-placement="top" title="Delete" (click)="deleteItem(reserve['id'], i, this.tempReserveArray);">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                    </a>
+                  </span>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+          <!-- Table body -->
+        </table>
+        <!--Table-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="reserveArray.length !== 0" class="container mb-4" id="collapseExample" [ngbCollapse]="!isCollapsed">
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
@@ -15,82 +137,62 @@
 
           <!--Table head-->
           <thead class="font-weight-bold thead-dark">
-          <tr>
-            <!-- group number -->
-            <th class="text-monospace font-italic"></th>
-            <th class="text-monospace font-italic">Produit</th>
-            <th class="text-monospace font-italic">Marque</th>
-            <th class="text-monospace font-italic">Quantité</th>
-            <th class="text-monospace font-italic">Jours Restant</th>
-            <th class="text-monospace font-italic">Valid</th>
-            <th class="text-monospace font-italic">Action</th>
-          </tr>
+            <tr>
+              <!-- group number -->
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort(this.reserveArray, true);">Produit</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="markAlphabeticalSort(this.reserveArray, true);">Marque</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="quantityNumricalSort(this.reserveArray, true)">Quantité</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="peremptionDayNumericalSort(this.reserveArray, true);">Jours Restant</th>
+              <th class="text-monospace font-italic">Action</th>
+            </tr>
           </thead>
           <!--Table head-->
 
           <!-- Table body -->
           <tbody *ngIf="reserveArray" id="demos">
-          <ng-container *ngFor="let reserve of reserveArray index as i">
+            <ng-container *ngFor="let reserve of reserveArray index as i">
 
-            <tr>
-              <td><img src="../../../../assets/img/product.png" alt=""/></td>
-              <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
-              <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
-              <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
-              <th class="text-monospace font-italic" scope="row">{{reserve['expiringIn']}} </th>
-              <th *ngIf="reserve['valid']"
-                class="text-monospace font-italic" scope="row">
-                <button
-                  class="btn btn-success btn-sm rounded"
-                  data-toggle="modal" data-target="#updateGroup"
-                  data-whatever="@mdo"
-                  type="button" data-placement="top" title="Edit">
-                  <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                </button>
-              </th>
-              <th *ngIf="!reserve['valid']"
-                class="text-monospace font-italic" scope="row">
-                <button
-                  class="btn btn-danger btn-sm rounded"
-                  data-toggle="modal" data-target="#updateGroup"
-                  data-whatever="@mdo"
-                  type="button" data-placement="top" title="Edit">
-                  <i class="fa fa-times-circle" aria-hidden="true"></i>
-                </button>
-              </th>
-              <td class="text-monospace font-italic">
+              <tr *ngIf="reserve['valid']">
+                <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
+                <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
+                <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
+                
 
-            <span>
+                <th class="text-monospace font-italic bg-danger" *ngIf="reserve['expiringIn'] < 3"  scope="row">
+                    {{reserve['expiringIn']}} 
+                </th>
+                <th class="text-monospace font-italic bg-warning" *ngIf="reserve['expiringIn'] > 3 && reserve['expiringIn'] < 7"  scope="row">
+                  {{reserve['expiringIn']}} 
+              </th>
+              <th class="text-monospace font-italic" *ngIf="reserve['expiringIn'] > 6"  scope="row">
+                {{reserve['expiringIn']}} 
+            </th>
+                <td class="text-monospace font-italic">
+
+                  <span>
                     <!-- update reserve icons  -->
-                     <a>
-                       <!-- update reserve icon button-->
-                       <button
-                         [disabled]="gestionButton"
-                         class="btn btn-primary btn-sm rounded"
-                         data-toggle="modal" data-target="#updateGroup"
-                         data-whatever="@mdo"
-                         type="button" data-placement="top" title="Edit">
-                         <i class="fa fa-edit" aria-hidden="true"></i>
-                       </button>
-                     </a>
+                    <a>
+                      <!-- update reserve icon button-->
+                      <button class="btn btn-primary btn-sm rounded" data-toggle="modal" data-target="#updateGroup"
+                        data-whatever="@mdo" type="button" data-placement="top" title="Edit"
+                        (click)="open(content, i, this.reserveArray);">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                      </button>
+                    </a>
 
-              <!-- delete reserve icon -->
+                    <!-- delete reserve icon -->
                     <a class="ml-3">
 
                       <!-- delete reserve icon button-->
-                      <button
-                        [disabled]="gestionButton"
-                        class="btn btn-danger btn-sm rounded"
-                        data-toggle="modal" data-target="#deleteGroup"
-                        data-whatever="@mdo"
-                        type="button" data-placement="top" title="Delete">
+                      <button class="btn btn-danger btn-sm rounded" data-toggle="modal" data-target="#deleteGroup"
+                        data-whatever="@mdo" type="button" data-placement="top" title="Delete" (click)="deleteItem(reserve['id'], i, this.reserveArray);">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>
                     </a>
-            </span>
-              </td>
-            </tr>
-          </ng-container>
+                  </span>
+                </td>
+              </tr>
+            </ng-container>
           </tbody>
           <!-- Table body -->
         </table>
