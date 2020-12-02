@@ -29,3 +29,6 @@ export class QrGenComponent implements OnInit {
     return value;
   }
 }
+
+
+//COMMENT TO REMOVE

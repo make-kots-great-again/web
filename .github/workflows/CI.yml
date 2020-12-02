@@ -84,7 +84,6 @@ jobs:
       - name: Commit changes
         working-directory: ./
         run: |
-          mkdir prov
           git config --global user.name "MMichotte"
           git config --global user.email "martin.michotte@gmail.com"
           git add -A
