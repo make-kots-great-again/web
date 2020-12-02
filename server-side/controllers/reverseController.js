@@ -2,7 +2,7 @@ import {reserveService} from "../services";
 
 export default function reserveControllerFactory() {
     return Object.freeze({
-        getGroupReserveItems, postProductInReserve, removeItemFromReserve
+        getGroupReserveItems, postProductInReserve, patchValidityOfAnItem, removeItemFromReserve
     });
 
     async function getGroupReserveItems(httpRequest) {
@@ -51,6 +51,36 @@ export default function reserveControllerFactory() {
             return {statusCode: 400, body: {error: e.message}}
         }
 
+    }
+
+    async function patchValidityOfAnItem(httpRequest){
+        
+        const {...validityInfo} = httpRequest.body;
+
+        console.log(validityInfo);
+
+        try {
+            const validatedItem = await reserveService
+                .patchValidityOfAnItem(validityInfo);
+
+            if (validatedItem.message) {
+                return {
+                    statusCode: (validatedItem.statusCode) ? deleteItem.statusCode : 404,
+                    body: {success: false, message: validatedItem.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    message: 'validity of the Item was changed',
+                    validatedItem: validatedItem                }
+            }
+        } catch (e) {
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
+        }
     }
 
     async function removeItemFromReserve(httpRequest) {

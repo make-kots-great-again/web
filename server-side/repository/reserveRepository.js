@@ -1,6 +1,6 @@
 export default function makeReserveRepository({Reserve, Product, Group, Op}) {
     return Object.freeze({
-        save, findGroupReserveItems, findReserveItem, updateReserve, removeItemFromReserve
+        save, findGroupReserveItems, findReserveItem, updateReserve, patchValidityOfAnItem, removeItemFromReserve
     });
 
 
@@ -45,6 +45,15 @@ export default function makeReserveRepository({Reserve, Product, Group, Op}) {
                         {groupId: groupId}, {code: code}
                     ]
                 }
+            });
+    }
+
+    async function patchValidityOfAnItem(itemId, validity){
+
+        return Reserve.update(
+            {valid: validity},
+            {
+                where: {id: itemId}
             });
     }
 

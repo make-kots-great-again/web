@@ -18,9 +18,34 @@ router.post("/reserve/:groupIdBarcode",
     passport.authenticate("jwt", {session: false}),
     makeCallback(reserveController.postProductInReserve));
 
-/*router.patch("/reserve/validItem",
+/**
+ * @api {patch} /reserve/validItem change la validité d'un élément dans la table réserve.
+ * @apiName Reserve Update Validity Item
+ * @apiGroup Reserve
+ * 
+ * @apiBody {
+ *              "itemId": <product_id>,
+ *              "validity": <new_validity_value>
+ *           }
+ *
+ * @apiSuccess {Boolean} success le statut de la requête.
+ * @apiSuccess {String} message  message de retour de la requête.
+ * @apiSuccess {Array}  validatedItem liste dont l'index 0 donne le nombre d'items updated
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *      {
+ *          "success": true,
+ *          "message": "validity of the Item was changed",
+ *          "validatedItem": [ 1 ]
+ *      }
+ *
+ * @apiError 400 erreur indéterminée venant du serveur lui-même.
+ * @apiError 404 erreur due à une mauvaise utilisation du code.
+ */
+router.patch("/reserve/validItem",
     passport.authenticate("jwt", {session: false}),
-    makeCallback(reserveController.patchValidityOfAnItem));*/
+    makeCallback(reserveController.patchValidityOfAnItem));
 
 /**
  * @api {delete} /reserve/item Supprime un élément de la table reserve.
@@ -28,7 +53,7 @@ router.post("/reserve/:groupIdBarcode",
  * @apiGroup Reserve
  * 
  * @apiParam {itemId} id of an item in the table Reserve ID unique.
-
+ * 
  *
  * @apiSuccess {boolean} success le statut de la requête.
  * @apiSuccess {Object} reserveItems l'item deleter de la table reserve.
