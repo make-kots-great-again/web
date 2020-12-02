@@ -18,6 +18,10 @@ router.post("/reserve/:groupIdBarcode",
     passport.authenticate("jwt", {session: false}),
     makeCallback(reserveController.postProductInReserve));
 
+/*router.patch("/reserve/validItem",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(reserveController.patchValidityOfAnItem));*/
+
 /**
  * @api {delete} /reserve/item Supprime un élément de la table reserve.
  * @apiName Reserve Remove Item

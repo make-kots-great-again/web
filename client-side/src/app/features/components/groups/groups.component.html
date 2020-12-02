@@ -136,7 +136,7 @@
       <!-- create a group modal header -->
       <div class="modal-header">
         <h5 class="modal-title ont-weight-bold text-monospace
-            font-italic font-weight-bolder h4" id="exampleModalLabel">Create a group</h5>
+            font-italic font-weight-bolder h4" id="exampleModalLabel">Créer un groupe</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -151,7 +151,7 @@
           <!-- create a group modal form groupName input -->
           <div class="form-group">
             <label for="groupName" class="font-weight-bold text-monospace
-            font-italic font-weight-bolder">Group Name:</label>
+            font-italic font-weight-bolder">Nom du groupe:</label>
 
             <input #groupNameInput="ngModel"
                    [class.is-invalid]="groupNameInput.invalid && groupNameInput.touched"
@@ -175,7 +175,7 @@
           <div class="form-group">
             <label for="groupDescription" class="font-weight-bold
             text-monospace font-italic font-weight-bolder">
-              Group Description:</label>
+              Description du groupe:</label>
 
             <!-- groupDescription textarea -->
 
@@ -205,14 +205,14 @@
             <!-- form close button -->
             <button type="button"
                     class="btn btn-secondary text-monospace font-italic
-                    font-weight-bolder" data-dismiss="modal" id="modalClose">Close
+                    font-weight-bolder" data-dismiss="modal" id="modalClose">Fermer
             </button>
 
             <!-- form submit button -->
             <button (click)="oncreateGroupSubmit()" id="reviewSubmit" type="submit"
                     data-dismiss="modal" class="btn btn-primary text-monospace
                     font-italic font-weight-bolder"
-                    [disabled]="addGroupForm.form.invalid">submit
+                    [disabled]="addGroupForm.form.invalid">Valider
             </button>
           </div>
         </form>

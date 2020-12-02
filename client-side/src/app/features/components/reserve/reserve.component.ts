@@ -3,8 +3,7 @@ import {ReserveService} from "../../../core/services/reserve.service";
 import {ReplaySubject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {Reserve} from "../../../shared/models/reserve.model";
-import { trigger } from '@angular/animations';
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-reserve',
   templateUrl: './reserve.component.html',
@@ -39,11 +38,13 @@ export class ReserveComponent implements OnInit {
   isQuantitySortedTemp = false;
   isDaySortedTemp = false;
 
-  modifiedProduct:any ;
+  newQuantity=0;
+  newExpriringDate=0;
+  modifiedProduct:any={};
 
   constructor(
     private reserveService: ReserveService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
   ) {
     this.masterSelected = false;
   }
@@ -57,7 +58,26 @@ export class ReserveComponent implements OnInit {
   /****************************  API Methods ***************************************/
 
   updateItem(){
-    
+    if(this.isCollapsed){
+      if(this.newQuantity == 0){
+        //this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.reserveArray);
+      }
+      else{
+        this.reserveService.reserveItemUpdate(this.newQuantity, this.newExpriringDate);
+        this.reserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
+      }
+    }
+    else{
+      if(this.newQuantity == 0){
+        //this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.tempReserveArray);
+      }
+      else{
+        this.reserveService.tempReserveItemUpdate(this.newQuantity);
+        this.tempReserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
+        this.tempReserveArray[this.modifiedProduct.index].expiringIn = this.newExpriringDate;
+      }
+    }
+    this.modalService.dismissAll();
   }
 
   deleteItem(value, index, listToDelete){
@@ -90,11 +110,18 @@ export class ReserveComponent implements OnInit {
     this.destroyed$.complete();
   }
   /**************************** POPUP ***************************************/
-  open(content,object, index, currentArray) {
-    this.modifiedProduct = currentArray[index];
+  open(content,index, currentArray) {
+    this.newQuantity = currentArray[index].quantity;
+    this.newExpriringDate = currentArray[index].expiringIn;
+    this.modifiedProduct = {'name': currentArray[index].product_name, 
+                            'index': index,
+                            'id': currentArray[index].id
+                          };
     
     this.modalService.open(content,{ centered: true });
   }  
+
+
 
   FieldsChange(values: any) {
     if(values){
@@ -104,6 +131,8 @@ export class ReserveComponent implements OnInit {
       this.bntStyle = 'visible';
     }
   }
+
+
   /**************************** CHECKBOXES ***************************************/
   tableManagement():void{
     let newTempArray = [];
@@ -147,8 +176,9 @@ export class ReserveComponent implements OnInit {
     }
   }
 
+  /******************************** Helpers functions ****************************************/
 
-  /****************************  Sort Methods ***************************************/
+  /**********************************  Sort Methods ***************************************/
 
   productAlphabeticalSort(arrayToSorted:any, reserve:boolean){
     

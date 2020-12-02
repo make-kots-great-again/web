@@ -22,10 +22,11 @@ export class ReserveService {
   }
 
   tempReserveItemUpdate(quantity:number){
-
+    console.log(quantity);
   }
 
   reserveItemUpdate(quantity:number, expiringIn:number){
-
+    console.log(quantity);
+    console.log(expiringIn);
   }
 }

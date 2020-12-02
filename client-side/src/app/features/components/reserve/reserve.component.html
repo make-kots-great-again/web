@@ -2,30 +2,30 @@
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Modifier {{modifiedProduct.product_name}}</h4>
+    <h4 class="modal-title" id="modal-basic-title">Modifier {{modifiedProduct.name}}</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" id="modalForm">
-    <form>
+    <form #modifyGroupForm="ngForm">
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Quantité</label>
-        <div class="col-10" id="date-management">
-          <input class="form-control" type="number" value="{{modifiedProduct.quantity}}">
+        <div class="col-10">
+          <input  [(ngModel)]="newQuantity" id="date-management" class="form-control" type="number" name="newQuantity">
         </div>
       </div>
       <div *ngIf="!isCollapsed" class="form-group">
         <label for="recipient-name" class="col-form-label">Date d'expiration</label>
-        <div class="col-10" id="expiration-management">
-          <input class="form-control" type="number" value="{{modifiedProduct.expiringIn}}">
+        <div class="col-10" >
+          <input  [(ngModel)]="newExpriringDate" id="expiration-management" class="form-control" type="number" name="newExpiringDate">
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="c('cancel')">Annuler</button>
-    <button type="submit" class="btn btn-primary" (click)="updateItem();">Modifier</button>
+    <button type="submit" class="btn btn-primary" (click)="updateItem();">Modifier</button>, 
   </div>
 
 </ng-template>
@@ -86,7 +86,7 @@
                       <!-- update reserve icon button-->
                       <button class="btn btn-primary btn-sm rounded" data-toggle="modal" data-target="#updateGroup"
                         data-whatever="@mdo" type="button" data-placement="top" title="Edit"
-                        (click)="open(content,reserve, i, this.tempReserveArray);">
+                        (click)="open(content,i, this.tempReserveArray);">
                         <i class="fa fa-edit" aria-hidden="true"></i>
                       </button>
                     </a>
@@ -151,7 +151,7 @@
                       <!-- update reserve icon button-->
                       <button class="btn btn-primary btn-sm rounded" data-toggle="modal" data-target="#updateGroup"
                         data-whatever="@mdo" type="button" data-placement="top" title="Edit"
-                        (click)="open(content,reserve, i, this.reserveArray);">
+                        (click)="open(content, i, this.reserveArray);">
                         <i class="fa fa-edit" aria-hidden="true"></i>
                       </button>
                     </a>
