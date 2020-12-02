@@ -64,8 +64,6 @@ describe('SHOPPINGLIST SERVICE', () => {
 
             const addProduct = await shoppingListService.putProductInShoppingList({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
             
-            console.log(addProduct);
-
             expect(Number(addProduct.code)).to
                 .equal(fakeShoppingList.code);
 
