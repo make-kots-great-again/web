@@ -1,0 +1,98 @@
+name: Continuous Integration
+on: 
+  push:
+    branches:
+      - master
+
+env:
+  node-version: 14.15.1
+      
+jobs:
+  test-frontend:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Setup Node ${{ env.node-version }}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{ env.node-version }}
+        - name: npm install
+          working-directory: ./client-side
+          run: |
+            npm install
+        - name: run tests
+          working-directory: ./client-side
+          run: |
+            npm run test-headless
+  
+  test-backend:
+      runs-on: ubuntu-latest
+      services:
+        postgres:
+          image: postgres:12
+          env:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: kots_test
+          ports:
+            - 5432:5432
+          options: >-
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
+      steps:
+        - uses: actions/checkout@v2
+        - name: Setup Node ${{ env.node-version }}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{ env.node-version }}
+        - name: npm install
+          working-directory: ./
+          run: |
+            npm install
+        - name: run tests
+          working-directory: ./
+          run: |
+            npm run test:unit:with:db
+            npm run test:drop:db
+
+  build-to-Heroku:
+    runs-on: ubuntu-latest
+    needs: [test-frontend, test-backend]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Node ${{ env.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.node-version }}
+
+      - name: npm install
+        working-directory: ./
+        run: |
+          npm install
+          cd ./client-side && npm install
+
+      - name: build frontend
+        working-directory: ./client-side
+        run: |
+          npm run build
+          
+      - name: Commit changes
+        working-directory: ./
+        run: |
+          git config --global user.name "MMichotte"
+          git config --global user.email "martin.michotte@gmail.com"
+          git add .
+          git commit -m "passed tests & build"
+    
+      - uses: akhileshns/heroku-deploy@v3.3.6
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "kotsapp"
+          heroku_email: "shepalau007@gmail.com"
+        env:
+          HD_NODE_ENV: "production"
+          HD_JWT_KEY: "secret"
+          HD_NPM_CONFIG_PRODUCTION: "false"
+          
