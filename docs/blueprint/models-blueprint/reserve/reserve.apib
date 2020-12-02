@@ -1,0 +1,184 @@
+# Group Reserve
+This the reserve entity.
+
+## Get reserve items [/reserve/items/{groupId}]
+Get one group's reserve items.
+
+> :warning: A JWT needs to be sent in the request header to have access to product's entity routes.
+
++ Parameters
+
+    + groupId: `bc909fda-f609-4633-a274-f6d94b5df2df` (required, UUID) - The group id
+
+### Get reserve items [GET]
+Get all items found in group's reserve.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To have acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
+:::
+
+Example:
+
+```http
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+```
+
++ Request (application/json)
+
+  + Headers
+
+            Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
++ Response 200 (application/json)
+
+   + Body
+
+            <!-- include(get-all-reserve-items.json) -->
+
++ Response 400 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "febe82be476 is not a valid UUID"
+              }
+
++ Response 401 (application/json)
+
+    + Body
+
+              "Unauthorized"
+
++ Response 404 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "No group was found with this id : 84d0f97c-44e4-48ba-b26b-89e23bed9abc"
+              }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+
+
+## Add product to shoppingList [/reserve/{groupIdBarcode}]
+Add a product to a shopping list.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+To acces this route a JWT needs to be sent in **`the request header`** and if the token is invalid or
+has **`expired`**, a 401 HTTP status is sent back from the server.
+:::
+
++ Parameters
+
+    + groupIdBarcode: `bc909fda-f609-4633-a274-f6d94b5df2df` (required, UUID) - The group id
+
+### Add product in reserve [POST]
+Add a product to a shopping list.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+**groupIdBarcode** can the be `groupId` or the `groupBarCode`. 
+:::
+
+Example:
+
+```http
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+```
+
+> The request's body is required and can't be null.
+
+::: note
+#### <i class="fa fa-info-circle"></i> Info
+
+**expiringIn** is the number of days remaining before the product expires. Every new product added in the 
+reserve table it's valid column is **false** meaning the product has to be validated later the by the user.
+:::
+
++ Request with body (application/json)
+
+    + Headers
+
+            Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbjMwQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlNzgxZmQyZTUwNDY0MzUwY2FlYTBiMSIsImlhdCI6MTU4NTE4MjM1MiwiZXhwIjoxNTg1MTg1OTUyfQ.c9VX-i_v5D2Q8VqHIphJjpQ4R5d46UmR6uKeADsnoPg
+
+    + Body
+
+            {
+                "code": 18192,
+                "quantity": 2,
+                "expiringIn" : 4
+            }
+
++ Response 200 (application/json)
+
+   + Body
+
+            {
+                "success": true,
+                "message": "Product successfully added to the list !",
+                "reserveItem": [{
+                    "id": "856bc1b0-4616-41e4-ab6a-deb4b62968f7",
+                    "groupId": "bc909fda-f609-4633-a274-f6d94b5df2df",
+                    "code": 18192,
+                    "quantity": 2,
+                    "expiringIn": 4,
+                    "valid": false,
+                }]
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "No product was found with this code 111"
+              }
+
++ Response 401 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "Authentication failed"
+              }
+
+
++ Response 404 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "No group was found with this id : 95a93ec6-1f1e-41a8-93d2-bc3bdc380607"
+              }
+
++ Response 409 (application/json)
+
+    + Body
+
+              {
+                  "success": false,
+                  "message": "You have already added Organic Penne Pasta to this list !"
+              }
+
++ Response 500 (application/json)
+
+    + Body
+
+            {
+                "message": "Server error"
+            }
+

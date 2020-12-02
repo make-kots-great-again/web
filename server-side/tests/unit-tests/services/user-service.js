@@ -7,7 +7,6 @@ import {describe, it} from 'mocha';
 
 import makeFakeUser from '../../fixtures/fakeUser'
 import {makeUser} from "../../../domain";
-import env from '../../../config/environment'
 import {userService} from '../../../services'
 import dbConnection from "../../../config/database";
 import User from '../../../models/users'

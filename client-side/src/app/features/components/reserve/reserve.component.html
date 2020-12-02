@@ -12,7 +12,7 @@
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Quantité</label>
         <div class="col-10">
-          <input  [(ngModel)]="newQuantity" id="date-management" class="form-control" type="number" name="newQuantity">
+          <input [(ngModel)]="newQuantity" class="form-control" type="number" min="0" max="20" name="newQuantity">
         </div>
       </div>
       <div *ngIf="!isCollapsed" class="form-group">
@@ -29,9 +29,9 @@
   </div>
 
 </ng-template>
-
+<!--Bouton mode-->
 <div class="custom-control custom-switch">
-  <button type="button" class="btn btn-outline-primary" id="customSwitches" (click)="isCollapsed = !isCollapsed"
+  <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
     [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"> Changement de mode </button>
 </div>
 <br>
@@ -47,6 +47,13 @@
 <!--add list-->
 <div *ngIf="reserveArray.length !== 0" class="container mb-4 addFromList " id="collapseExample"
   [ngbCollapse]="isCollapsed">
+
+  <div class="container mb-3">
+    <button type="button" class="btn btn-success btn-sm  ml-2" (click)="addAllItem()">Ajouter éléments selectionnés</button>
+    <button type="button" class="btn btn-danger btn-sm ml-2" (click)="deleteAllItem()">Supprimer éléments selectionné</button>
+  </div>
+
+
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
@@ -78,7 +85,14 @@
                 <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
                 <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
                 <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
-                <th class="text-monospace font-italic" scope="row">{{reserve['expiringIn']}} </th>
+                <th class="text-monospace font-italic" scope="row">
+                  <div *ngIf="reserve['expiringIn'] < 3" class="text-danger">
+                  {{reserve['expiringIn']}} 
+                  </div>
+                  <div *ngIf="reserve['expiringIn'] > 2">
+                    {{reserve['expiringIn']}} 
+                    </div>
+                </th>
                 <td class="text-monospace font-italic">
                   <span>
                     <!-- update reserve icons  -->
@@ -142,7 +156,17 @@
                 <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
                 <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
                 <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
-                <th class="text-monospace font-italic" scope="row">{{reserve['expiringIn']}} </th>
+                
+
+                <th class="text-monospace font-italic bg-danger" *ngIf="reserve['expiringIn'] < 3"  scope="row">
+                    {{reserve['expiringIn']}} 
+                </th>
+                <th class="text-monospace font-italic bg-warning" *ngIf="reserve['expiringIn'] > 3 && reserve['expiringIn'] < 7"  scope="row">
+                  {{reserve['expiringIn']}} 
+              </th>
+              <th class="text-monospace font-italic" *ngIf="reserve['expiringIn'] > 6"  scope="row">
+                {{reserve['expiringIn']}} 
+            </th>
                 <td class="text-monospace font-italic">
 
                   <span>

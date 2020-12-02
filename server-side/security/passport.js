@@ -19,8 +19,8 @@ const authenticateUser = passport => {
         if(jwt_payload.userId){
             obj = await userRepository.findById({id: jwt_payload.userId});
         }
-        if(jwt_payload.groupId){
-            obj = await groupRepository.findGroupById({groupId: jwt_payload.groupId});
+        if(jwt_payload.groupBarCode){
+            obj = await groupRepository.findGroupByBarCode({groupBarCode: jwt_payload.groupBarCode});
         }
 
         if (!obj) return done(obj, false);

@@ -4,6 +4,7 @@ import {ReplaySubject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {Reserve} from "../../../shared/models/reserve.model";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-reserve',
   templateUrl: './reserve.component.html',
@@ -18,16 +19,16 @@ export class ReserveComponent implements OnInit {
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
-  gestionButton : boolean = true;
+  gestionButton: boolean = true;
   reserveArray: Array<Reserve> = [];
   bntStyle: string;
   quantity = 1;
-  
+
   //checkbox variable
-  masterSelected:boolean;
-  checkedList:any;
-  tempReserveArray:any;
-  
+  masterSelected: boolean;
+  checkedList: any;
+  tempReserveArray: any;
+
   isProductSorted = false;
   isMarkSorted = false;
   isQuantitySorted = false;
@@ -48,14 +49,11 @@ export class ReserveComponent implements OnInit {
   ) {
     this.masterSelected = false;
   }
-  
+
   ngOnInit(): void {
     this.reserveInfo();
   }
-  
-  
 
-  /****************************  API Methods ***************************************/
 
   updateItem(){
     if(this.isCollapsed){
@@ -80,35 +78,61 @@ export class ReserveComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  deleteItem(value, index, listToDelete){
-
+  /****************************  API Methods ***************************************/
+  
+  addItem(value, index, listToDelete) {
+    this.reserveService.addItemToReserve(value)
+      .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
+        listToDelete.splice(index, 1);
+      },
+        error => {
+          console.error(error);
+        });
+  }
+  deleteItem(value, index, listToDelete) {
     this.reserveService.removeItemFromReserve(value)
       .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
         listToDelete.splice(index, 1);
       },
-      error => {
-        console.error(error);
-      });
+        error => {
+          console.error(error);
+        });
   }
 
   reserveInfo(): void {
     this.reserveService.getGroupReserveItems(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
-          this.reserveArray = data;
-          this.tempReserveArray = data;
-          this.tableManagement();
-        },
+        this.reserveArray = data;
+        this.tempReserveArray = data;
+        this.tableManagement();
+      },
         error => {
           console.error(error);
         });
   }
-  
+
   @HostListener('window:beforeunload')
   async ngOnDestroy(): Promise<any> {
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
+  /**************************** ADD/DELETE ALL ***************************************/
+  addAllItem() {
+    for (let i of this.tempReserveArray) {
+      if (i["isSelected"]) {
+        this.deleteItem(i['id'], i, this.tempReserveArray);
+      }
+    }
+  }
+  deleteAllItem() {
+    for (let i of this.tempReserveArray) {
+      if (i["isSelected"]) {
+        this.addItem(i['id'], i, this.tempReserveArray);
+      }
+    }
+  }
+
   /**************************** POPUP ***************************************/
   open(content,index, currentArray) {
     this.newQuantity = currentArray[index].quantity;
@@ -124,25 +148,25 @@ export class ReserveComponent implements OnInit {
 
 
   FieldsChange(values: any) {
-    if(values){
+    if (values) {
       this.bntStyle = 'collapse';
     }
-    else{
+    else {
       this.bntStyle = 'visible';
     }
   }
 
 
   /**************************** CHECKBOXES ***************************************/
-  tableManagement():void{
+  tableManagement(): void {
     let newTempArray = [];
     let newReserveArray = [];
 
-    for(let i of this.tempReserveArray){
-      if(i['valid']){
+    for (let i of this.tempReserveArray) {
+      if (i['valid']) {
         newReserveArray.push(i);
       }
-      else{
+      else {
         newTempArray.push(i);
       }
     }
@@ -150,9 +174,9 @@ export class ReserveComponent implements OnInit {
     this.tempReserveArray = newTempArray;
     this.reserveArray = newReserveArray;
 
-    for(let i of this.tempReserveArray){
-      i['isSelected']=false;
-    }    
+    for (let i of this.tempReserveArray) {
+      i['isSelected'] = false;
+    }
   }
 
   checkUncheckAll() {
@@ -162,17 +186,17 @@ export class ReserveComponent implements OnInit {
     this.getCheckedList();
   }
   isAllSelected() {
-    this.masterSelected = this.tempReserveArray.every(function(item:any) {
-        return item.isSelected == true;
-      })
+    this.masterSelected = this.tempReserveArray.every(function (item: any) {
+      return item.isSelected == true;
+    })
     this.getCheckedList();
   }
 
-  getCheckedList(){
+  getCheckedList() {
     this.checkedList = [];
     for (let i of this.tempReserveArray) {
-      if(i.isSelected)
-      this.checkedList.push(i);
+      if (i.isSelected)
+        this.checkedList.push(i);
     }
   }
 
@@ -180,181 +204,181 @@ export class ReserveComponent implements OnInit {
 
   /**********************************  Sort Methods ***************************************/
 
-  productAlphabeticalSort(arrayToSorted:any, reserve:boolean){
-    
-    if(reserve){
-      
+  productAlphabeticalSort(arrayToSorted: any, reserve: boolean) {
+
+    if (reserve) {
+
       this.isMarkSorted = false;
       this.isQuantitySorted = false;
-      this.isDaySorted = false ;
+      this.isDaySorted = false;
     }
-    else{
-      
+    else {
+
       this.isMarkSortedTemp = false;
       this.isQuantitySortedTemp = false;
-      this.isDaySortedTemp = false ;
+      this.isDaySortedTemp = false;
     }
-    
-    
-    if((!this.isProductSorted && reserve) || (!this.isProductSortedTemp && !reserve)){
 
-      if(reserve){
-        
+
+    if ((!this.isProductSorted && reserve) || (!this.isProductSortedTemp && !reserve)) {
+
+      if (reserve) {
+
         this.isProductSorted = true;
       }
-      else{
-        
+      else {
+
         this.isProductSortedTemp = true;
       }
-    
-      arrayToSorted.sort((a,b) =>{
-        
-        if(a.product_name < b.product_name){
-        
+
+      arrayToSorted.sort((a, b) => {
+
+        if (a.product_name < b.product_name) {
+
           return -1;
-        }else if (a.product_name > b.product_name){
-        
+        } else if (a.product_name > b.product_name) {
+
           return 1;
         }
-        
+
         return 0;
-      });  
+      });
     }
-    else{
-    
+    else {
+
       arrayToSorted.reverse();
     }
   }
 
-  markAlphabeticalSort(arrayToSorted:any, reserve:boolean){
-    
-    if(reserve){
-      
+  markAlphabeticalSort(arrayToSorted: any, reserve: boolean) {
+
+    if (reserve) {
+
       this.isProductSorted = false;
       this.isQuantitySorted = false;
-      this.isDaySorted = false ;
+      this.isDaySorted = false;
     }
-    else{
-      
+    else {
+
       this.isProductSortedTemp = false;
       this.isQuantitySortedTemp = false;
-      this.isDaySortedTemp = false ;
+      this.isDaySortedTemp = false;
     }
-    
-    if((!this.isMarkSorted && reserve) || (!this.isMarkSortedTemp && !reserve)){
-      
-      if(reserve){
+
+    if ((!this.isMarkSorted && reserve) || (!this.isMarkSortedTemp && !reserve)) {
+
+      if (reserve) {
 
         this.isMarkSorted = true;
       }
-      else{
-        
+      else {
+
         this.isMarkSortedTemp = true;
       }
 
-      arrayToSorted.sort((a,b) =>{
-        
-        if(a.product_brand < b.product_brand){
-        
+      arrayToSorted.sort((a, b) => {
+
+        if (a.product_brand < b.product_brand) {
+
           return -1;
-        }else if (a.product_brand > b.product_brand){
-        
+        } else if (a.product_brand > b.product_brand) {
+
           return 1;
         }
-        
-        return 0;
-      });  
-    }
-    else{
-      arrayToSorted.reverse();
-    }
-  }
 
-  quantityNumricalSort(arrayToSorted:any, reserve : boolean){
-    
-    if(reserve){
-      
-      this.isProductSorted = false;
-      this.isMarkSorted = false;
-      this.isDaySorted = false ;
-    }
-    else{
-      
-      this.isProductSortedTemp = false;
-      this.isMarkSortedTemp = false;
-      this.isDaySortedTemp = false ;
-    }
-   
-
-    if((!this.isQuantitySorted && reserve) || (!this.isQuantitySortedTemp && !reserve)){
-
-      if(reserve){
-        this.isQuantitySorted = true;
-      }
-      else{
-        this.isQuantitySortedTemp = true;
-      }
-      
-      arrayToSorted.sort((a,b) =>{
-        
-        if(a.quantity < b.quantity){
-         
-          return -1;
-        }else if (a.quantity > b.quantity){
-        
-          return 1;
-        }
-        
         return 0;
       });
     }
-    else{
-      
+    else {
       arrayToSorted.reverse();
     }
   }
 
-  peremptionDayNumericalSort( arrayToSorted:any, reserve:boolean){
-    
-    if(reserve){
-      
+  quantityNumricalSort(arrayToSorted: any, reserve: boolean) {
+
+    if (reserve) {
+
       this.isProductSorted = false;
       this.isMarkSorted = false;
-      this.isQuantitySorted = false ;
+      this.isDaySorted = false;
     }
-    else{
-      
+    else {
+
       this.isProductSortedTemp = false;
       this.isMarkSortedTemp = false;
-      this.isQuantitySortedTemp = false ;
+      this.isDaySortedTemp = false;
     }
 
-    if((!this.isDaySorted && reserve) || (!this.isDaySortedTemp && !reserve)){
-      
-      if(reserve){
+
+    if ((!this.isQuantitySorted && reserve) || (!this.isQuantitySortedTemp && !reserve)) {
+
+      if (reserve) {
+        this.isQuantitySorted = true;
+      }
+      else {
+        this.isQuantitySortedTemp = true;
+      }
+
+      arrayToSorted.sort((a, b) => {
+
+        if (a.quantity < b.quantity) {
+
+          return -1;
+        } else if (a.quantity > b.quantity) {
+
+          return 1;
+        }
+
+        return 0;
+      });
+    }
+    else {
+
+      arrayToSorted.reverse();
+    }
+  }
+
+  peremptionDayNumericalSort(arrayToSorted: any, reserve: boolean) {
+
+    if (reserve) {
+
+      this.isProductSorted = false;
+      this.isMarkSorted = false;
+      this.isQuantitySorted = false;
+    }
+    else {
+
+      this.isProductSortedTemp = false;
+      this.isMarkSortedTemp = false;
+      this.isQuantitySortedTemp = false;
+    }
+
+    if ((!this.isDaySorted && reserve) || (!this.isDaySortedTemp && !reserve)) {
+
+      if (reserve) {
 
         this.isDaySorted = true;
       }
-      else{
-        
+      else {
+
         this.isDaySortedTemp = true;
       }
 
-      arrayToSorted.sort((a,b) =>{
-        
-        if(a.expiringIn < b.expiringIn){
-         
+      arrayToSorted.sort((a, b) => {
+
+        if (a.expiringIn < b.expiringIn) {
+
           return -1;
-        }else if (a.expiringIn > b.expiringIn){
-        
+        } else if (a.expiringIn > b.expiringIn) {
+
           return 1;
         }
-        
+
         return 0;
       });
     }
-    else{
-      
+    else {
+
       arrayToSorted.reverse();
     }
   }

@@ -4,6 +4,7 @@
 
 .invalidField {
     color: red !important;
+    /*color: yellow !important;*/
     border-color: red;
 }
 
