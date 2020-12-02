@@ -19,6 +19,10 @@ const Product = dbConnection.define('product', {
     ingredients: {
         type: Sequelize.STRING(500),
         allowNull: true,
+    },
+    half_peremption_date: {
+        type: Sequelize.BIGINT,
+        allowNull:true
     }
 });
 

@@ -4,7 +4,7 @@ module.exports = {
     up: (queryInterface, Sequelize) => {
         return queryInterface.createTable('products', {
             code: {
-                type: Sequelize.BIGINT                      ,
+                type: Sequelize.BIGINT,
                 allowNull: false,
                 primaryKey: true,
             },
@@ -19,6 +19,10 @@ module.exports = {
             ingredients: {
                 type: Sequelize.STRING(500),
                 allowNull: true
+            },
+            half_peremption_date: {
+                type: Sequelize.BIGINT,
+                allowNull:true,
             },
             createdAt: {
                 allowNull: false,

@@ -23,20 +23,28 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
             const shoppingList = await shoppingListRepository.findGroupShoppingList({groupId: x.dataValues.groupId});
 
-            if (shoppingList.length === 0) info.push({message: `No shopping list for this group : ${x.dataValues.groupId}`});
+            if (shoppingList.length === 0) {
+                const findGroupName = await groupService.getGroup({groupId: x.dataValues.groupId});
+                info.push(
+                {   groupId: x.dataValues.groupId,
+                    list: `list - ${findGroupName.dataValues.groupName}`
+                });
+            }
 
             for (const y of shoppingList) {
 
                 const findUsername = await userService.listOneUser(
                     {id: y.dataValues["owners"].dataValues.userId});
 
-                const findGroupName = await groupService.getGroup({groupId: x.dataValues.groupId});
-
+                const findGroupName = await groupService.getGroup(
+                    {groupId: x.dataValues.groupId});
+                    
                 info.push(
                     {
                         code: y.dataValues.product.dataValues.code,
                         product_name: y.dataValues.product.dataValues.product_name,
                         product_brand: y.dataValues.product.dataValues.brands,
+                        half_peremption_date: y.dataValues.product.dataValues.half_peremption_date,
                         product_note: y.dataValues.productNote,
                         quantity: y.dataValues.quantity,
                         groupId: x.dataValues.groupId,

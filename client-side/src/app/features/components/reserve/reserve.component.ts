@@ -1,8 +1,8 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {ReserveService} from "../../../core/services/reserve.service";
-import {ReplaySubject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
-import {Reserve} from "../../../shared/models/reserve.model";
+import {ReserveService} from '../../../core/services/reserve.service';
+import {ReplaySubject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {Reserve} from '../../../shared/models/reserve.model';
 
 @Component({
   selector: 'app-reserve',
