@@ -80,10 +80,13 @@ export class ReserveComponent implements OnInit {
 
   /****************************  API Methods ***************************************/
   
-  addItem(value, index, listToDelete) {
+  addItem(value, index, listToUpdate) {
     this.reserveService.addItemToReserve(value)
       .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
-        listToDelete.splice(index, 1);
+        index['valid']=true;
+        this.reserveArray.splice(index, 0,index);
+        listToUpdate.splice(index, 1);
+          console.log(index);
       },
         error => {
           console.error(error);
@@ -105,6 +108,7 @@ export class ReserveComponent implements OnInit {
       .subscribe((data: any) => {
         this.reserveArray = data;
         this.tempReserveArray = data;
+        console.log(data)
         this.tableManagement();
       },
         error => {
@@ -121,14 +125,18 @@ export class ReserveComponent implements OnInit {
   addAllItem() {
     for (let i of this.tempReserveArray) {
       if (i["isSelected"]) {
-        this.deleteItem(i['id'], i, this.tempReserveArray);
+        let data = {
+          "itemId": i['id'],
+          "validity": true
+        }
+        this.addItem(data, i, this.tempReserveArray);
       }
     }
   }
   deleteAllItem() {
     for (let i of this.tempReserveArray) {
       if (i["isSelected"]) {
-        this.addItem(i['id'], i, this.tempReserveArray);
+        this.deleteItem(i['id'], i, this.tempReserveArray);
       }
     }
   }
@@ -145,8 +153,6 @@ export class ReserveComponent implements OnInit {
     this.modalService.open(content,{ centered: true });
   }  
 
-
-
   FieldsChange(values: any) {
     if (values) {
       this.bntStyle = 'collapse';
@@ -161,7 +167,6 @@ export class ReserveComponent implements OnInit {
   tableManagement(): void {
     let newTempArray = [];
     let newReserveArray = [];
-
     for (let i of this.tempReserveArray) {
       if (i['valid']) {
         newReserveArray.push(i);

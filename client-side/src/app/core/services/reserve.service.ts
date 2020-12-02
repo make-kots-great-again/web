@@ -20,9 +20,9 @@ export class ReserveService {
     return this.http.delete<any>(`/server/api/reserve/item/${itemId}`,{observe: 'response'})
       .pipe(map((data: any) => data.body.success));
   }
-  addItemToReserve(itemId: any): Observable<HttpResponse<any>> {
-    
-    return this.http.patch<any>(`/server/api/reserve/item/${itemId}`,{observe: 'response'})
+  addItemToReserve(item: any): Observable<HttpResponse<any>> {
+
+    return this.http.patch<any>(`/server/api/reserve/validItem`, item ,{observe: 'response'})
       .pipe(map((data: any) => data.body.success));
   }
   tempReserveItemUpdate(quantity:number, itemId: string){
