@@ -49,11 +49,15 @@ export class ReserveComponent implements OnInit {
 
   /****************************  API Methods ***************************************/
 
-  deleteItem(value){
-    let idItem = {'itemId': value};
-    this.reserveService.removeItemFromReserve(idItem)
-      .pipe(takeUntil(this.destroyed$));
-    console.log(idItem);
+  deleteItem(value, index, listToDelete){
+
+    this.reserveService.removeItemFromReserve(value)
+      .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
+        listToDelete.splice(index, 1);
+      },
+      error => {
+        console.error(error);
+      });
   }
 
   reserveInfo(): void {

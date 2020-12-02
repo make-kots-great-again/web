@@ -55,13 +55,11 @@ export default function reserveControllerFactory() {
 
     async function removeItemFromReserve(httpRequest) {
 
-        const {...itemId} = httpRequest.body;
-
-        console.log(itemId.itemId);
+        const {itemId} = httpRequest.params;
 
         try {
             const deleteItem = await reserveService
-                .removeItemFromReserve(itemId.itemId);
+                .removeItemFromReserve(itemId);
 
             if (deleteItem.message) {
                 return {

@@ -23,9 +23,8 @@ router.post("/reserve/:groupIdBarcode",
  * @apiName Reserve Remove Item
  * @apiGroup Reserve
  * 
- * @apiBody {
- *               itemID: <item_to_suppress_id>          
- *          }
+ * @apiParam {itemId} id of an item in the table Reserve ID unique.
+
  *
  * @apiSuccess {boolean} success le statut de la requête.
  * @apiSuccess {Object} reserveItems l'item deleter de la table reserve.
@@ -44,7 +43,7 @@ router.post("/reserve/:groupIdBarcode",
  * @apiError 400 erreur indéterminée venant du serveur lui-même.
  * @apiError 404 erreur due à une mauvaise utilisation du code.
  */
-router.delete("/reserve/item",
+router.delete("/reserve/item/:itemId",
     passport.authenticate("jwt", {session: false}),
     makeCallback(reserveController.removeItemFromReserve));
 

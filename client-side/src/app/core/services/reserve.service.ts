@@ -16,7 +16,8 @@ export class ReserveService {
       .pipe(map((data: HttpResponse<any>) => data.body.reserveItems), shareReplay(1));
   }
   removeItemFromReserve(itemId: any): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`/server/api/reserve/item`,itemId)
+    
+    return this.http.delete<any>(`/server/api/reserve/item/${itemId}`,{observe: 'response'})
       .pipe(map((data: any) => data.body.success));
   }
 }
