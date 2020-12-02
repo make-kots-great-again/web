@@ -24,8 +24,11 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
             const shoppingList = await shoppingListRepository.findGroupShoppingList(
                 {groupId: x.dataValues.groupId});
 
-            if (shoppingList.length === 0) info.push(
-                {message: `No shopping list for this group : ${x.dataValues.groupId}`});
+            if (shoppingList.length === 0) {
+                const findGroupName = await groupService.getGroup({groupId: x.dataValues.groupId});
+                info.push(
+                {list: findGroupName.dataValues.groupName});
+            }
 
             for (const y of shoppingList) {
 
