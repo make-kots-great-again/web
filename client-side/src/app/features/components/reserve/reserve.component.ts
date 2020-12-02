@@ -34,6 +34,11 @@ export class ReserveComponent implements OnInit {
   isQuantitySorted = false;
   isDaySorted = false;
 
+  isProductSortedTemp = false;
+  isMarkSortedTemp = false;
+  isQuantitySortedTemp = false;
+  isDaySortedTemp = false;
+
   constructor(
     private reserveService: ReserveService,
     private modalService: NgbModal
@@ -154,15 +159,32 @@ export class ReserveComponent implements OnInit {
 
   /****************************  Sort Methods ***************************************/
 
-  productAlphabeticalSort(arrayToSorted:any){
+  productAlphabeticalSort(arrayToSorted:any, reserve:boolean){
     
-    this.isMarkSorted = false;
-    this.isQuantitySorted = false;
-    this.isDaySorted = false ;
+    if(reserve){
+      
+      this.isMarkSorted = false;
+      this.isQuantitySorted = false;
+      this.isDaySorted = false ;
+    }
+    else{
+      
+      this.isMarkSortedTemp = false;
+      this.isQuantitySortedTemp = false;
+      this.isDaySortedTemp = false ;
+    }
     
-    if(!this.isProductSorted){
+    
+    if((!this.isProductSorted && reserve) || (!this.isProductSortedTemp && !reserve)){
 
-      this.isProductSorted = true;
+      if(reserve){
+        
+        this.isProductSorted = true;
+      }
+      else{
+        
+        this.isProductSortedTemp = true;
+      }
     
       arrayToSorted.sort((a,b) =>{
         
@@ -183,15 +205,31 @@ export class ReserveComponent implements OnInit {
     }
   }
 
-  markAlphabeticalSort(arrayToSorted:any){
+  markAlphabeticalSort(arrayToSorted:any, reserve:boolean){
     
-    this.isProductSorted = false;
-    this.isQuantitySorted = false;
-    this.isDaySorted = false ;
+    if(reserve){
+      
+      this.isProductSorted = false;
+      this.isQuantitySorted = false;
+      this.isDaySorted = false ;
+    }
+    else{
+      
+      this.isProductSortedTemp = false;
+      this.isQuantitySortedTemp = false;
+      this.isDaySortedTemp = false ;
+    }
     
-    if(!this.isMarkSorted){
-    
-      this.isMarkSorted = true;
+    if((!this.isMarkSorted && reserve) || (!this.isMarkSortedTemp && !reserve)){
+      
+      if(reserve){
+
+        this.isMarkSorted = true;
+      }
+      else{
+        
+        this.isMarkSortedTemp = true;
+      }
 
       arrayToSorted.sort((a,b) =>{
         
@@ -207,20 +245,35 @@ export class ReserveComponent implements OnInit {
       });  
     }
     else{
-    
+      console.log("test")
       arrayToSorted.reverse();
     }
   }
 
-  quantityNumricalSort(arrayToSorted:any){
+  quantityNumricalSort(arrayToSorted:any, reserve : boolean){
     
-    this.isProductSorted = false;
-    this.isMarkSorted = false;
-    this.isDaySorted = false ;
+    if(reserve){
+      
+      this.isProductSorted = false;
+      this.isMarkSorted = false;
+      this.isDaySorted = false ;
+    }
+    else{
+      
+      this.isProductSortedTemp = false;
+      this.isMarkSortedTemp = false;
+      this.isDaySortedTemp = false ;
+    }
+   
 
-    if(!this.isQuantitySorted){
+    if((!this.isQuantitySorted && reserve) || (!this.isQuantitySortedTemp && !reserve)){
 
-      this.isQuantitySorted = true;
+      if(reserve){
+        this.isQuantitySorted = true;
+      }
+      else{
+        this.isQuantitySortedTemp = true;
+      }
       
       arrayToSorted.sort((a,b) =>{
         
@@ -241,15 +294,31 @@ export class ReserveComponent implements OnInit {
     }
   }
 
-  peremptionDayNumericalSort( arrayToSorted:any){
+  peremptionDayNumericalSort( arrayToSorted:any, reserve:boolean){
     
-    this.isProductSorted = false;
-    this.isMarkSorted = false;
-    this.isQuantitySorted = false ;
-
-    if(!this.isDaySorted){
+    if(reserve){
       
-      this.isDaySorted = true;
+      this.isProductSorted = false;
+      this.isMarkSorted = false;
+      this.isQuantitySorted = false ;
+    }
+    else{
+      
+      this.isProductSortedTemp = false;
+      this.isMarkSortedTemp = false;
+      this.isQuantitySortedTemp = false ;
+    }
+
+    if((!this.isDaySorted && reserve) || (!this.isDaySortedTemp && !reserve)){
+      
+      if(reserve){
+
+        this.isDaySorted = true;
+      }
+      else{
+        
+        this.isDaySortedTemp = true;
+      }
 
       arrayToSorted.sort((a,b) =>{
         

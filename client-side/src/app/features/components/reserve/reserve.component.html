@@ -59,10 +59,10 @@
               <!-- group number -->
               <th class="text-monospace font-italic"><input type="checkbox" [(ngModel)]="masterSelected"
                   (change)="checkUncheckAll()"></th>
-              <th class="text-monospace font-italic">Produit</th>
-              <th class="text-monospace font-italic">Marque</th>
-              <th class="text-monospace font-italic">Quantité</th>
-              <th class="text-monospace font-italic">Jours Restant</th>
+                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort(this.tempReserveArray, false);">Produit</th>
+                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="markAlphabeticalSort(this.tempReserveArray, false);">Marque</th>
+                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="quantityNumricalSort(this.tempReserveArray, false)">Quantité</th>
+                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="peremptionDayNumericalSort(this.tempReserveArray, false);">Jours Restant</th>
               <th class="text-monospace font-italic">Action</th>
             </tr>
           </thead>
@@ -125,10 +125,10 @@
           <thead class="font-weight-bold thead-dark">
             <tr>
               <!-- group number -->
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort(this.reserveArray);">Produit</th>
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="markAlphabeticalSort(this.reserveArray);">Marque</th>
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="quantityNumricalSort(this.reserveArray)">Quantité</th>
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="peremptionDayNumericalSort(this.reserveArray);">Jours Restant</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort(this.reserveArray, true);">Produit</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="markAlphabeticalSort(this.reserveArray, true);">Marque</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="quantityNumricalSort(this.reserveArray, true)">Quantité</th>
+              <th class="text-monospace font-italic" style="cursor: pointer" (click)="peremptionDayNumericalSort(this.reserveArray, true);">Jours Restant</th>
               <th class="text-monospace font-italic">Action</th>
             </tr>
           </thead>
