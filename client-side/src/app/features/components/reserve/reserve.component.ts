@@ -59,9 +59,16 @@ export class ReserveComponent implements OnInit {
   updateItem(){
     
   }
-
+  addItem(value, index, listToDelete){
+    this.reserveService.addItemToReserve(value)
+      .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
+        listToDelete.splice(index, 1);
+      },
+      error => {
+        console.error(error);
+      });
+  }
   deleteItem(value, index, listToDelete){
-
     this.reserveService.removeItemFromReserve(value)
       .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
         listToDelete.splice(index, 1);
@@ -89,6 +96,22 @@ export class ReserveComponent implements OnInit {
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
+  /**************************** ADD/DELETE ALL ***************************************/  
+  addAllItem(){
+    for(let i of this.tempReserveArray){
+      if(i["isSelected"]){
+        this.deleteItem(i['id'],i,this.tempReserveArray);
+      }  
+    }
+  }
+  deleteAllItem(){
+    for(let i of this.tempReserveArray){
+      if(i["isSelected"]){
+        this.addItem(i['id'],i,this.tempReserveArray);
+      }  
+    }
+  }
+
   /**************************** POPUP ***************************************/
   open(content,object, index, currentArray) {
     this.modifiedProduct = currentArray[index];

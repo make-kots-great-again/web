@@ -12,7 +12,7 @@
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Quantité</label>
         <div class="col-10" id="date-management">
-          <input class="form-control" type="number" value="{{modifiedProduct.quantity}}">
+          <input class="form-control" type="number" min="0" max="20" value="{{modifiedProduct.quantity}}">
         </div>
       </div>
       <div *ngIf="!isCollapsed" class="form-group">
@@ -29,9 +29,9 @@
   </div>
 
 </ng-template>
-
+<!--Bouton mode-->
 <div class="custom-control custom-switch">
-  <button type="button" class="btn btn-outline-primary" id="customSwitches" (click)="isCollapsed = !isCollapsed"
+  <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
     [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"> Changement de mode </button>
 </div>
 <br>
@@ -47,6 +47,13 @@
 <!--add list-->
 <div *ngIf="reserveArray.length !== 0" class="container mb-4 addFromList " id="collapseExample"
   [ngbCollapse]="isCollapsed">
+
+  <div class="container mb-3">
+    <button type="button" class="btn btn-success btn-sm  ml-2" (click)="addAllItem()">Ajouter éléments selectionnés</button>
+    <button type="button" class="btn btn-danger btn-sm ml-2" (click)="deleteAllItem()">Supprimer éléments selectionné</button>
+  </div>
+
+
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
