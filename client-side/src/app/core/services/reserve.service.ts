@@ -20,4 +20,12 @@ export class ReserveService {
     return this.http.delete<any>(`/server/api/reserve/item/${itemId}`,{observe: 'response'})
       .pipe(map((data: any) => data.body.success));
   }
+
+  tempReserveItemUpdate(quantity:number){
+
+  }
+
+  reserveItemUpdate(quantity:number, expiringIn:number){
+
+  }
 }

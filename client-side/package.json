@@ -29,6 +29,7 @@
     "bootstrap": "^4.5.2",
     "bootswatch": "^4.5.2",
     "boxicons": "^2.0.5",
+    "chrome-headless-launcher": "^0.1.5",
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
     "jsbarcode": "^3.11.0",

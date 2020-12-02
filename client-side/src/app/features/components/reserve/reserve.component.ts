@@ -39,6 +39,8 @@ export class ReserveComponent implements OnInit {
   isQuantitySortedTemp = false;
   isDaySortedTemp = false;
 
+  modifiedProduct:any ;
+
   constructor(
     private reserveService: ReserveService,
     private modalService: NgbModal
@@ -53,6 +55,10 @@ export class ReserveComponent implements OnInit {
   
 
   /****************************  API Methods ***************************************/
+
+  updateItem(){
+    
+  }
 
   deleteItem(value, index, listToDelete){
 
@@ -84,21 +90,11 @@ export class ReserveComponent implements OnInit {
     this.destroyed$.complete();
   }
   /**************************** POPUP ***************************************/
-  open(content,object) {
-    let expiration = object['expiringIn'];
-    let quantity = object['quantity'];
+  open(content,object, index, currentArray) {
+    this.modifiedProduct = currentArray[index];
+    
     this.modalService.open(content,{ centered: true });
-    this.createform(quantity,expiration);
   }  
-
-  createform(quantity,expiration): void {
-    let inputQty = "";
-    let inputExp = "";
-    inputQty = '<input class="form-control" type="number" value="'+ quantity +'">'
-    inputExp = '<input class="form-control" type="number" value="'+ expiration +'">'
-    document.getElementById("date-management").innerHTML = inputQty;
-    document.getElementById("expiration-management").innerHTML = inputExp;
-  }
 
   FieldsChange(values: any) {
     if(values){
