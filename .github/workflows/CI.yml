@@ -81,13 +81,13 @@ jobs:
         run: |
           npm run build
           
-      - name: Commit changes
-        working-directory: ./
-        run: |
-          git config --global user.name "MMichotte"
-          git config --global user.email "martin.michotte@gmail.com"
-          git add -A
-          git commit -m "passed tests & build"
+      #- name: Commit changes
+      #  working-directory: ./
+      #  run: |
+      #    git config --global user.name "MMichotte"
+      #    git config --global user.email "martin.michotte@gmail.com"
+      #    git add -A
+      #    git commit -m "passed tests & build"
     
       - uses: akhileshns/heroku-deploy@v3.3.6
         with:
