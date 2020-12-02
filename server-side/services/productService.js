@@ -7,17 +7,17 @@ export default function productServiceFactory({productRepository}) {
 
         if (!productName) return {message: 'You must supply a product name.'};
 
-        if (typeof productName !== 'string')
-            return {message: 'A product name must be a string.'};
+        if (typeof productName !== 'string') return {message: 'A product name must be a string.'};
 
-        if (productName.length === 0)
-            return {message: 'A product name must have a name.'};
+        if (productName.length === 0) return {message: 'A product name must have a name.'};
 
         return await productRepository.findAll({productName});
 
     }
 
     async function getProductCode({code}) {
+
+        if (isNaN(code)) return {message: `product id must be a number`};
 
         const findProductCode = await productRepository.findByCode({code});
 

@@ -1,12 +1,19 @@
 import {makeReserve} from '../domain'
 import {groupService, productService} from "./index";
 
-export default function reserveServiceFactory({reserveRepository, groupRepository, productRepository}) {
+export default function reserveServiceFactory({reserveRepository}) {
     return Object.freeze({
         listGroupReserveItems, addProductInReserve, removeItemFromReserve
     });
 
     async function listGroupReserveItems({groupId}) {
+
+        const groupInfo = await groupService.getGroup({groupId});
+
+        if (groupInfo.message) return {
+            statusCode: groupInfo.statusCode,
+            message: groupInfo.message
+        };
 
         const result = [];
 
@@ -52,23 +59,28 @@ export default function reserveServiceFactory({reserveRepository, groupRepositor
                 code: reserve.getProductCode(),
             });
 
+            // const timeDiff = Math.abs(new Date().getTime() - new Date(findItem.dataValues.updatedAt).getTime());
+           // const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+           // console.log(diffDays)
+
             if (!findItem) {
 
-                const findProductCode = await productService.getProductCode({code:  reserve.getProductCode()});
+                const findProductCode = await productService.getProductCode({code: reserve.getProductCode()});
                 if (findProductCode.message) return {message: findProductCode.message};
 
-                return reserveRepository.save({
+                return await reserveRepository.save({
                     groupId: groupInfo.dataValues.groupId,
                     code: reserve.getProductCode(),
                     quantity: reserve.getProductQuantity(),
                     expiringIn: reserve.getExpiringIn(),
                     valid: reserve.getvalid(),
                 });
-
+                ;
 
             } else if (findItem) {
 
-                const findProductCode = await productService.getProductCode({code:  reserve.getProductCode()});
+                const findProductCode = await productService.getProductCode({code: reserve.getProductCode()});
                 if (findProductCode.message) return {message: findProductCode.message};
 
                 return reserveRepository.updateReserve({

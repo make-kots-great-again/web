@@ -13,6 +13,13 @@ export default function reserveControllerFactory() {
 
             const reserve = await reserveService.listGroupReserveItems({groupId});
 
+            if (reserve.message) {
+                return {
+                    statusCode: (reserve.statusCode) ? reserve.statusCode : 404,
+                    body: {success: false, message: reserve.message}
+                }
+            }
+
             return {
                 statusCode: 200,
                 body: {
@@ -35,14 +42,20 @@ export default function reserveControllerFactory() {
 
         try {
 
-            const reserve = await reserveService
-                .addProductInReserve({groupIdBarcode, ...reserveInfo});
+            const reserve = await reserveService.addProductInReserve({groupIdBarcode, ...reserveInfo});
+
+            if (reserve.message) {
+                return {
+                    statusCode: (reserve.statusCode) ? reserve.statusCode : 404,
+                    body: {success: false, message: reserve.message}
+                }
+            }
 
             return {
                 statusCode: 200,
                 body: {
                     success: true,
-                    reserveItems: reserve
+                    reserveItem: [reserve]
                 }
             }
         } catch (e) {
