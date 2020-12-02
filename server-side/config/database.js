@@ -3,10 +3,26 @@ import env from "./environment";
 
 let dbConnection = "";
 
+console.log(env.NODE_ENV);
+
 if (env.NODE_ENV === 'test') {
-    dbConnection = new SequelizeMock();
-} else if (env.NODE_ENV === 'dev') {
-    console.log(env.NODE_ENV);
+    dbConnection = new Sequelize(
+        'kots_test',
+        'postgres',
+        'postgres',
+        {
+            host: 'localhost',
+            dialect: 'postgres',
+            logging: false,
+            pool: {
+                max: 5,
+                min: 0,
+                acquire: 30000,
+                idle: 10000
+            },
+        }
+    );
+} else if (env.NODE_ENV === 'dev') {    
     dbConnection = new Sequelize(
         env.POSTGRES_DB,
         env.POSTGRES_USER,
