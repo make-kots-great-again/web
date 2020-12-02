@@ -3,8 +3,8 @@
 }
 
 .invalidField {
-    /*color: red !important;*/
-    color: yellow !important;
+    color: red !important;
+    /*color: yellow !important;*/
     border-color: red;
 }
 

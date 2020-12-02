@@ -90,6 +90,7 @@ jobs:
           git commit -m "passed tests & build"
     
       - uses: akhileshns/heroku-deploy@v3.3.6
+        if: ${{ always() }}
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "kotsapp"
