@@ -24,8 +24,8 @@ router.post("/reserve/:groupIdBarcode",
  * @apiGroup Reserve
  * 
  * @apiBody {
- *              "itemId": <product_id>,
- *              "validity": <new_validity_value>
+ *              "itemId": <product_id>,             (String)
+ *              "validity": <new_validity_value>    (Number)
  *           }
  *
  * @apiSuccess {Boolean} success le statut de la requête.
@@ -47,10 +47,62 @@ router.patch("/reserve/validItem",
     passport.authenticate("jwt", {session: false}),
     makeCallback(reserveController.patchValidityOfAnItem));
 
+/**
+ * @api {patch} /reserve/updateItemQuantity change la quantité d'un élément dans la table réserve.
+ * @apiName Reserve Update Quantity Item
+ * @apiGroup Reserve
+ * 
+ * @apiBody {
+ *              "itemId": <product_id>,         (String)
+ *              "quantity": <new_item_quantity> (Number)
+ *           }
+ *
+ * @apiSuccess {Boolean} success le statut de la requête.
+ * @apiSuccess {String} message  message de retour de la requête.
+ * @apiSuccess {Array}  validatedItem liste dont l'index 0 donne le nombre d'items updated
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *      {
+ *          "success": true,
+ *          "message": "validity of the Item was changed",
+ *          "validatedItem": [ 1 ]
+ *      }
+ *
+ * @apiError 400 erreur indéterminée venant du serveur lui-même.
+ * @apiError 404 erreur due à une mauvaise utilisation du code.
+ */
 router.patch("/reserve/updateItemQuantity",
     passport.authenticate("jwt", {session: false}),
     makeCallback(reserveController.patchQuantityOfAnItem));
 
+/**
+ * @api {patch} /reserve/updateItemQuantityAndDay change la quantité et la date d'expiration 
+ *              d'un élément dans la table réserve.
+ * @apiName Reserve Update Quantity Day Item
+ * @apiGroup Reserve
+ * 
+ * @apiBody {
+ *              "itemId": <product_id>,                         (String)
+ *              "quantity": <new_item_quantity>,                (Number)
+ *              "expiringIn": <new_item_expiration_duration>    (Number)
+ *           }
+ *
+ * @apiSuccess {Boolean} success le statut de la requête.
+ * @apiSuccess {String} message  message de retour de la requête.
+ * @apiSuccess {Array}  validatedItem liste dont l'index 0 donne le nombre d'items updated
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *      {
+ *          "success": true,
+ *          "message": "validity of the Item was changed",
+ *          "validatedItem": [ 1 ]
+ *      }
+ *
+ * @apiError 400 erreur indéterminée venant du serveur lui-même.
+ * @apiError 404 erreur due à une mauvaise utilisation du code.
+ */
 router.patch("/reserve/updateItemQuantityAndDay",
     passport.authenticate("jwt", {session: false}),
     makeCallback(reserveController.patchQuantityAndDayOfAnItem));
