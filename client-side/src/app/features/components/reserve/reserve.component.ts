@@ -61,7 +61,7 @@ export class ReserveComponent implements OnInit {
         //this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.reserveArray);
       }
       else{
-        this.reserveService.reserveItemUpdate(this.newQuantity, this.newExpriringDate);
+        this.reserveService.reserveItemUpdate(this.newQuantity, this.newExpriringDate, this.modifiedProduct.id);
         this.reserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
       }
     }
@@ -70,7 +70,7 @@ export class ReserveComponent implements OnInit {
         //this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.tempReserveArray);
       }
       else{
-        this.reserveService.tempReserveItemUpdate(this.newQuantity);
+        this.reserveService.tempReserveItemUpdate(this.newQuantity, this.modifiedProduct.id);
         this.tempReserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
         this.tempReserveArray[this.modifiedProduct.index].expiringIn = this.newExpriringDate;
       }

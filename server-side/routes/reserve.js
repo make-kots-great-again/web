@@ -47,6 +47,14 @@ router.patch("/reserve/validItem",
     passport.authenticate("jwt", {session: false}),
     makeCallback(reserveController.patchValidityOfAnItem));
 
+router.patch("/reserve/updateItemQuantity",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(reserveController.patchQuantityOfAnItem));
+
+router.patch("/reserve/updateItemQuantityAndDay",
+    passport.authenticate("jwt", {session: false}),
+    makeCallback(reserveController.patchQuantityAndDayOfAnItem));
+
 /**
  * @api {delete} /reserve/item Supprime un élément de la table reserve.
  * @apiName Reserve Remove Item

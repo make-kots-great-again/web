@@ -25,11 +25,11 @@ export class ReserveService {
     return this.http.patch<any>(`/server/api/reserve/item/${itemId}`,{observe: 'response'})
       .pipe(map((data: any) => data.body.success));
   }
-  tempReserveItemUpdate(quantity:number){
+  tempReserveItemUpdate(quantity:number, itemId: string){
     console.log(quantity);
   }
 
-  reserveItemUpdate(quantity:number, expiringIn:number){
+  reserveItemUpdate(quantity:number, expiringIn:number, itemId: string){
     console.log(quantity);
     console.log(expiringIn);
   }

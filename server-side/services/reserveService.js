@@ -3,7 +3,7 @@ import {groupService, productService} from "./index";
 
 export default function reserveServiceFactory({reserveRepository}) {
     return Object.freeze({
-        listGroupReserveItems, addProductInReserve, patchValidityOfAnItem, removeItemFromReserve
+        listGroupReserveItems, addProductInReserve, patchValidityOfAnItem, patchQuantityOfAnItem, patchQuantityAndDayOfAnItem, removeItemFromReserve
     });
 
     async function listGroupReserveItems({groupId}) {
@@ -59,11 +59,6 @@ export default function reserveServiceFactory({reserveRepository}) {
                 code: reserve.getProductCode(),
             });
 
-            // const timeDiff = Math.abs(new Date().getTime() - new Date(findItem.dataValues.updatedAt).getTime());
-           // const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-           // console.log(diffDays)
-
             if (!findItem) {
 
                 const findProductCode = await productService.getProductCode({code: reserve.getProductCode()});
@@ -96,6 +91,8 @@ export default function reserveServiceFactory({reserveRepository}) {
         }
     }
 
+
+    //TODO : implémenter la vérification l'existance de l'item deleted
     async function patchValidityOfAnItem(validatedItem) {
 
         if (!validatedItem.itemId) return {message: 'You must supply the item id.'};
@@ -109,9 +106,41 @@ export default function reserveServiceFactory({reserveRepository}) {
             return {message: `No item with this id '${itemId}' was found in the shopping list !`};
         */
 
-
-        console.log(validatedItem.itemId);
         return await reserveRepository.patchValidityOfAnItem(validatedItem.itemId, validatedItem.validity);
+    }
+
+    //TODO : implémenter la vérification l'existance de l'item deleted
+    async function patchQuantityOfAnItem(updateInfos) {
+
+        if (!updateInfos.itemId) return {message: 'You must supply the item id.'};
+
+        if (!(updateInfos.itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${updateInfos.itemId} is not a valid UUID`};
+
+        /*const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
+
+        if (!findItem)
+            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
+        */
+
+        return await reserveRepository.patchQuantityOfAnItem(updateInfos.itemId, updateInfos.quantity);
+    }
+
+    //TODO : implémenter la vérification l'existance de l'item deleted
+    async function patchQuantityAndDayOfAnItem(updateInfos) {
+
+        if (!updateInfos.itemId) return {message: 'You must supply the item id.'};
+
+        if (!(updateInfos.itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
+            return {message: `${updateInfos.itemId} is not a valid UUID`};
+
+        /*const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
+
+        if (!findItem)
+            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
+        */
+
+        return await reserveRepository.patchQuantityAndDayOfAnItem(updateInfos.itemId, updateInfos.quantity, updateInfos.expiringIn);
     }
 
     async function removeItemFromReserve(itemId) {
