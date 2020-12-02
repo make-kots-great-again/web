@@ -61,8 +61,13 @@ export class ReserveComponent implements OnInit {
         //this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.reserveArray);
       }
       else{
-        this.reserveService.reserveItemUpdate(this.newQuantity, this.newExpriringDate, this.modifiedProduct.id);
-        this.reserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
+        this.reserveService.reserveItemUpdate(this.newQuantity, this.modifiedProduct.id)
+                          .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
+                            this.reserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
+              },
+              error => {
+                console.error(error);
+              });
       }
     }
     else{
@@ -70,9 +75,14 @@ export class ReserveComponent implements OnInit {
         //this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.tempReserveArray);
       }
       else{
-        this.reserveService.tempReserveItemUpdate(this.newQuantity, this.modifiedProduct.id);
-        this.tempReserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
-        this.tempReserveArray[this.modifiedProduct.index].expiringIn = this.newExpriringDate;
+        this.reserveService.tempReserveItemUpdate(this.newQuantity, this.newExpriringDate, this.modifiedProduct.id)
+                            .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
+                              this.tempReserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
+                              this.tempReserveArray[this.modifiedProduct.index].expiringIn = this.newExpriringDate;
+                            },
+                            error => {
+                              console.error(error);
+                            });
       }
     }
     this.modalService.dismissAll();
@@ -81,18 +91,20 @@ export class ReserveComponent implements OnInit {
   /****************************  API Methods ***************************************/
   
   addItem(value, index, listToUpdate) {
+    
     this.reserveService.addItemToReserve(value)
       .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
         index['valid']=true;
         this.reserveArray.splice(index, 0,index);
         listToUpdate.splice(index, 1);
-          console.log(index);
       },
         error => {
           console.error(error);
         });
   }
+
   deleteItem(value, index, listToDelete) {
+    
     this.reserveService.removeItemFromReserve(value)
       .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
         listToDelete.splice(index, 1);
@@ -103,12 +115,12 @@ export class ReserveComponent implements OnInit {
   }
 
   reserveInfo(): void {
+    
     this.reserveService.getGroupReserveItems(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
         this.reserveArray = data;
         this.tempReserveArray = data;
-        console.log(data)
         this.tableManagement();
       },
         error => {
@@ -123,6 +135,7 @@ export class ReserveComponent implements OnInit {
   }
   /**************************** ADD/DELETE ALL ***************************************/
   addAllItem() {
+    
     for (let i of this.tempReserveArray) {
       if (i["isSelected"]) {
         let data = {
@@ -134,6 +147,7 @@ export class ReserveComponent implements OnInit {
     }
   }
   deleteAllItem() {
+    
     for (let i of this.tempReserveArray) {
       if (i["isSelected"]) {
         this.deleteItem(i['id'], i, this.tempReserveArray);
@@ -143,6 +157,7 @@ export class ReserveComponent implements OnInit {
 
   /**************************** POPUP ***************************************/
   open(content,index, currentArray) {
+    
     this.newQuantity = currentArray[index].quantity;
     this.newExpriringDate = currentArray[index].expiringIn;
     this.modifiedProduct = {'name': currentArray[index].product_name, 
