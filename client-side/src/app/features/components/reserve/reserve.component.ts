@@ -85,12 +85,10 @@ export class ReserveComponent implements OnInit {
   }
   /**************************** POPUP ***************************************/
   open(content,object) {
-    console.log(content);
     let expiration = object['expiringIn'];
     let quantity = object['quantity'];
     this.modalService.open(content,{ centered: true });
     this.createform(quantity,expiration);
-    //console.log(expiration);
   }  
 
   createform(quantity,expiration): void {
@@ -130,9 +128,6 @@ export class ReserveComponent implements OnInit {
     for(let i of this.tempReserveArray){
       i['isSelected']=false;
     }    
-
-    console.log(this.tempReserveArray);
-    console.log(this.reserveArray);
   }
 
   checkUncheckAll() {
@@ -245,7 +240,6 @@ export class ReserveComponent implements OnInit {
       });  
     }
     else{
-      console.log("test")
       arrayToSorted.reverse();
     }
   }
