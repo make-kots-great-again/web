@@ -1,11 +1,9 @@
 //import server to bring in everything together
-import server from "../../../../app";
 
 //bring in dev-dependencies
 import {expect} from 'chai';
 import {describe, before, it, after} from 'mocha';
 
-import env from '../../../config/environment'
 import {groupService, shoppingListService, userService} from "../../../services"
 import makeFakeGroup from '../../fixtures/fakeGroup';
 import makeFakeUser from '../../fixtures/fakeUser'
@@ -68,7 +66,7 @@ describe('SHOPPINGLIST SERVICE', () => {
             
             console.log(addProduct);
 
-            expect(parseInt(addProduct.code)).to
+            expect(Number(addProduct.code)).to
                 .equal(fakeShoppingList.code);
 
             await shoppingListService.removeProductFromShoppingList({itemId: addProduct.id, userId: insertedUser.userId});
@@ -124,7 +122,6 @@ describe('SHOPPINGLIST SERVICE', () => {
 
             const addProduct = await shoppingListService.putProductInShoppingList({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
             const removeProduct = await shoppingListService.removeProductFromShoppingList({itemId: addProduct.id, userId: insertedUser.userId});
-            
             expect(removeProduct).to.equal(1);
 
         });
