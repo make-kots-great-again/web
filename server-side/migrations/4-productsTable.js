@@ -20,6 +20,10 @@ module.exports = {
                 type: Sequelize.STRING(500),
                 allowNull: true
             },
+            half_peremption_date: {
+                type: Sequelize.BIGINT,
+                allowNull:true,
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
