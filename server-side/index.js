@@ -24,7 +24,7 @@ export default function express_server(express) {
                     } else if (env.NODE_ENV === 'dev') {
                         consola.success(
                             {
-                                message: `Database connected successfully to ${env.POSTGRES_DB} database !`,
+                                message: `Database connected successfully to ${env.POSTGRES_DB} database`,
                                 badge: true
                             })
                     }

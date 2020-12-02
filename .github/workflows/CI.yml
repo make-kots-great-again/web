@@ -86,9 +86,7 @@ jobs:
         run: |
           git config --global user.name "MMichotte"
           git config --global user.email "martin.michotte@gmail.com"
-          git status
-          git add .
-          git status
+          git add -A
           git commit -m "passed tests & build"
     
       - uses: akhileshns/heroku-deploy@v3.3.6
