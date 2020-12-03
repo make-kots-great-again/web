@@ -57,9 +57,7 @@ jobs:
         - name: run tests (integration & unit tests)
           working-directory: ./
           run: |
-            npm run test:db:setup
-            npm run test
-            npm run test:db:drop
+            npm run test:all
 
   build-to-Heroku:
     runs-on: ubuntu-latest
