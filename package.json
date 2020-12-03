@@ -36,13 +36,7 @@
     "build": "npm run clean && babel server-side -d dist",
     "now-build": "npm run build",
     "clean": "rimraf dist",
-    "prod": "npm run clean && npm run build && cd dist && node app.js",
-    "test:unit:with:db": "NODE_ENV=test npm run test:setup && npm run test:unit && npm run test:drop:db ",
-    "test:setup": "NODE_ENV=test npm run test:drop:db && npm run test:create:db && npm run test:migrate:db && npm run test:seed:db",
-    "test:drop:db": "NODE_ENV=test npx sequelize-cli db:drop",
-    "test:create:db": "NODE_ENV=test npx sequelize-cli db:create",
-    "test:migrate:db": "NODE_ENV=test npx sequelize-cli db:migrate",
-    "test:seed:db": "NODE_ENV=test npx sequelize-cli db:seed:all"
+    "prod": "npm run clean && npm run build && cd dist && node app.js"
   },
   "repository": {
     "type": "git",
