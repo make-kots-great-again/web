@@ -96,7 +96,6 @@ export class ReserveComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
         index['valid']=true;
         this.reserveArray.splice(index, 0,index);
-        listToUpdate.splice(index, 1);
       },
         error => {
           console.error(error);

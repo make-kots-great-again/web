@@ -67,10 +67,10 @@
               <th class="text-monospace font-italic"><input type="checkbox" [(ngModel)]="masterSelected"
                   (change)="checkUncheckAll()"></th>
                   <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort(this.tempReserveArray, false);">Produit</th>
-                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="markAlphabeticalSort(this.tempReserveArray, false);">Marque</th>
+                  <th class="text-monospace font-italic brand" style="cursor: pointer" (click)="markAlphabeticalSort(this.tempReserveArray, false);">Marque</th>
                   <th class="text-monospace font-italic" style="cursor: pointer" (click)="quantityNumricalSort(this.tempReserveArray, false)">Quantité</th>
                   <th class="text-monospace font-italic" style="cursor: pointer" (click)="peremptionDayNumericalSort(this.tempReserveArray, false);">Jours Restant</th>
-              <th class="text-monospace font-italic">Action</th>
+              <th class="text-monospace font-italic action">Action</th>
             </tr>
           </thead>
           <!--Table head-->
@@ -82,18 +82,18 @@
               <tr *ngIf="!reserve['valid']" class="bg-warning">
                 <td><input type="checkbox" ng-checked="checkboxes" [(ngModel)]="reserve.isSelected"
                     (change)="isAllSelected()"></td>
-                <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
-                <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
-                <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
-                <th class="text-monospace font-italic" scope="row">
+                <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[30]}} </th>
+                <th class="text-monospace font-italic " scope="row">{{reserve['product_brand']}} </th>
+                <th class="text-monospace font-italic quantity" scope="row">{{reserve['quantity']}} </th>
+                <th class="text-monospace font-italic expiration" scope="row">
                   <div *ngIf="reserve['expiringIn'] < 3" class="text-danger">
-                  {{reserve['expiringIn']}} 
+                    {{reserve['expiringIn']}} 
                   </div>
                   <div *ngIf="reserve['expiringIn'] > 2">
                     {{reserve['expiringIn']}} 
                     </div>
                 </th>
-                <td class="text-monospace font-italic">
+                <th class="text-monospace font-italic action">
                   <span>
                     <!-- update reserve icons  -->
                     <a>
@@ -115,7 +115,7 @@
                       </button>
                     </a>
                   </span>
-                </td>
+                </th>
               </tr>
             </ng-container>
           </tbody>
@@ -127,7 +127,7 @@
   </div>
 </div>
 
-<div *ngIf="reserveArray.length !== 0" class="container mb-4" id="collapseExample" [ngbCollapse]="!isCollapsed">
+<div *ngIf="reserveArray.length !== 0" class="container mb-4" id="collapseExample" [ngbCollapse]="!isCollapsed" >
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
@@ -140,10 +140,10 @@
             <tr>
               <!-- group number -->
               <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort(this.reserveArray, true);">Produit</th>
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="markAlphabeticalSort(this.reserveArray, true);">Marque</th>
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="quantityNumricalSort(this.reserveArray, true)">Quantité</th>
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="peremptionDayNumericalSort(this.reserveArray, true);">Jours Restant</th>
-              <th class="text-monospace font-italic">Action</th>
+              <th class="text-monospace font-italic brand" style="cursor: pointer" (click)="markAlphabeticalSort(this.reserveArray, true);">Marque</th>
+              <th class="text-monospace font-italic quantity" style="cursor: pointer" (click)="quantityNumricalSort(this.reserveArray, true)">Quantité</th>
+              <th class="text-monospace font-italic expiration" style="cursor: pointer" (click)="peremptionDayNumericalSort(this.reserveArray, true);">Jours Restant</th>
+              <th class="text-monospace font-italic action">Action</th>
             </tr>
           </thead>
           <!--Table head-->
@@ -153,21 +153,21 @@
             <ng-container *ngFor="let reserve of reserveArray index as i">
 
               <tr *ngIf="reserve['valid']">
-                <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[9]}} </th>
-                <th class="text-monospace font-italic" scope="row">{{reserve['product_brand']}} </th>
-                <th class="text-monospace font-italic" scope="row">{{reserve['quantity']}} </th>
+                <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[30]}} </th>
+                <th class="text-monospace font-italic brand" scope="row">{{reserve['product_brand']}} </th>
+                <th class="text-monospace font-italic quantity" scope="row">{{reserve['quantity']}} </th>
                 
 
-                <th class="text-monospace font-italic bg-danger" *ngIf="reserve['expiringIn'] < 3"  scope="row">
+                <th class="text-monospace font-italic bg-danger expiration" *ngIf="reserve['expiringIn'] < 3"  scope="row">
                     {{reserve['expiringIn']}} 
                 </th>
-                <th class="text-monospace font-italic bg-warning" *ngIf="reserve['expiringIn'] > 3 && reserve['expiringIn'] < 7"  scope="row">
+                <th class="text-monospace font-italic bg-warning" *ngIf="reserve['expiringIn'] > 2 && reserve['expiringIn'] < 7"  scope="row">
                   {{reserve['expiringIn']}} 
               </th>
-              <th class="text-monospace font-italic" *ngIf="reserve['expiringIn'] > 6"  scope="row">
+              <th class="text-monospace font-italic expiration" *ngIf="reserve['expiringIn'] > 6"  scope="row">
                 {{reserve['expiringIn']}} 
             </th>
-                <td class="text-monospace font-italic">
+                <td class="text-monospace font-italic action">
 
                   <span>
                     <!-- update reserve icons  -->
