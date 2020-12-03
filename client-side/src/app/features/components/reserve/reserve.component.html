@@ -161,7 +161,7 @@
                 <th class="text-monospace font-italic bg-danger" *ngIf="reserve['expiringIn'] < 3"  scope="row">
                     {{reserve['expiringIn']}} 
                 </th>
-                <th class="text-monospace font-italic bg-warning" *ngIf="reserve['expiringIn'] > 3 && reserve['expiringIn'] < 7"  scope="row">
+                <th class="text-monospace font-italic bg-warning" *ngIf="reserve['expiringIn'] > 2 && reserve['expiringIn'] < 7"  scope="row">
                   {{reserve['expiringIn']}} 
               </th>
               <th class="text-monospace font-italic" *ngIf="reserve['expiringIn'] > 6"  scope="row">
