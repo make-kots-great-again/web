@@ -21,8 +21,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
         for (const x of groups) {
 
-            const shoppingList = await shoppingListRepository.findGroupShoppingList(
-                {groupId: x.dataValues.groupId});
+            const shoppingList = await shoppingListRepository.findGroupShoppingList({groupId: x.dataValues.groupId});
 
             if (shoppingList.length === 0) {
                 const findGroupName = await groupService.getGroup({groupId: x.dataValues.groupId});
@@ -53,8 +52,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
                         groupProduct: y.dataValues.groupProduct,
                         username: (y.dataValues.groupProduct) ? 'group' : findUsername.dataValues.username,
                         list: (y.dataValues["owners"].dataValues.role !== 'personal') ?
-                            `list - ${findGroupName.dataValues.groupName}` :
-                            findGroupName.dataValues.groupName
+                            `list - ${findGroupName.dataValues.groupName}` : findGroupName.dataValues.groupName
                     });
             }
         }
@@ -68,11 +66,10 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
     async function putProductInShoppingList({groupId, userId, ...productInfo}) {
 
-        if (!groupId) return {message: 'You must supply a group id.'};
+        const groupInfo = await groupService.getGroup({groupId});
 
-        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${groupId} is not a valid UUID`};
-
+        if (groupInfo.message) return {message: groupInfo.message};
+        
         const findGroup = await groupService.getIdGroupUser({
             groupId: groupId,
             userId: userId

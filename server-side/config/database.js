@@ -3,8 +3,6 @@ import env from "./environment";
 
 let dbConnection = "";
 
-console.log(env.NODE_ENV);
-
 if (env.NODE_ENV === 'test') {
     dbConnection = new Sequelize(
         'kots_test',

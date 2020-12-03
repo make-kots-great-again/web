@@ -29,7 +29,6 @@ const Reserve = dbConnection.define('reserve', {
         },
         expiringIn: {
             type: Sequelize.INTEGER,
-            defaultValue: 5,
             allowNull: false
         },
         valid: {

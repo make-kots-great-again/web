@@ -36,7 +36,6 @@ module.exports = {
             },
             expiringIn: {
                 type: Sequelize.INTEGER,
-                defaultValue: 5,
                 allowNull: false
             },
             createdAt: {

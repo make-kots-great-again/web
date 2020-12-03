@@ -13,12 +13,12 @@ module.exports = {
         }
     },
     test: {
-        username: 'postgres', 
-        password: 'postgres',
-        database: 'kots_test', 
-        host: 'localhost',
-        port: '5432', 
         dialect: 'postgres',
+        username: 'postgres',
+        password: 'postgres',
+        database: 'kots_test',
+        host: 'localhost',
+        port: 5432
     },
     production: {
         url: env.DATABASE_URL,

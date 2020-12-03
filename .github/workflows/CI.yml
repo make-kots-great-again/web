@@ -54,11 +54,10 @@ jobs:
           working-directory: ./
           run: |
             npm install
-        - name: run tests
+        - name: run tests (integration & unit tests)
           working-directory: ./
           run: |
-            npm run test:unit:with:db
-            npm run test:drop:db
+            npm run test:all
 
   build-to-Heroku:
     runs-on: ubuntu-latest
@@ -88,16 +87,15 @@ jobs:
           git config --global user.name "MMichotte"
           git config --global user.email "martin.michotte@gmail.com"
           git add -A
-          git commit -m "passed tests & build"
+          git commit -m "passed backend tests & successful build !"
     
       - uses: akhileshns/heroku-deploy@v3.3.6
         if: ${{ always() }}
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "kotsapp"
-          heroku_email: "shepalau007@gmail.com"
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
         env:
-          HD_NODE_ENV: "production"
-          HD_JWT_KEY: "secret"
-          HD_NPM_CONFIG_PRODUCTION: "false"
-          
+          NODE_ENV: "production"
+          JWT_KEY: ${{secrets.JWT_KEY}}
+          NPM_CONFIG_PRODUCTION: "false"

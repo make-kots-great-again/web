@@ -2,7 +2,7 @@ export default function buildMakeReserve(requiredParameter) {
     return ({
                 code = requiredParameter('A product code'),
                 quantity = requiredParameter('A product quantity'),
-                expiringIn = 5,
+                expiringIn = requiredParameter('An expiringIn'),
                 valid = false
             } = {}) => {
 
@@ -12,7 +12,7 @@ export default function buildMakeReserve(requiredParameter) {
 
         if (typeof quantity !== 'number') throw new TypeError("A product's quantity must be a number.");
 
-        if (quantity < 1 || quantity > 20) throw new RangeError("A product's quantity must be between 1 and 20.");
+        if (quantity < 1) throw new RangeError("A product's quantity must be > than 1");
 
         if (typeof valid !== 'boolean') throw new TypeError("valid must be a boolean.");
 
@@ -20,7 +20,7 @@ export default function buildMakeReserve(requiredParameter) {
             getProductCode: () => code,
             getProductQuantity: () => quantity,
             getExpiringIn: () => expiringIn,
-            getvalid: () => valid,
+            getvalid: () => valid
         });
     }
 }

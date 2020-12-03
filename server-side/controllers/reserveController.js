@@ -157,8 +157,7 @@ export default function reserveControllerFactory() {
         const {itemId} = httpRequest.params;
 
         try {
-            const deleteItem = await reserveService
-                .removeItemFromReserve(itemId);
+            const deleteItem = await reserveService.removeItemFromReserve(itemId);
 
             if (deleteItem.message) {
                 return {

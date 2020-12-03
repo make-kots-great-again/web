@@ -1,32 +1,39 @@
 const makeCallback = (controller) => {
-    return (req, res) => {
+    return async (req, res) => {
+
         const httpRequest = {
             body: req.body,
             query: req.query,
             params: req.params,
             ip: req.ip,
             id: req.id,
-            host : req.hostname,
-            user : req.user,
-            url : req.originalUrl,
+            host: req.hostname,
+            user: req.user,
+            url: req.originalUrl,
             method: req.method,
             path: req.path,
             headers: {
                 'Content-Type': req.get('Content-Type'),
-                Referer: req.get('referer'),
+                 Referer: req.get('referer'),
                 'User-Agent': req.get('User-Agent')
             }
         };
-        controller(httpRequest)
-            .then(httpResponse => {
-                res.type('json');
-                res.status(httpResponse.statusCode).json(httpResponse.body)
-            })
-            .catch(err => res.status(500).send(
-                {
-                    message: 'An unknown error occurred.',
-                    error: err
-                }))
+
+        try {
+
+            const httpResponse = await controller(httpRequest);
+
+            res
+                .type('json')
+                .status(httpResponse.statusCode)
+                .json(httpResponse.body);
+
+        } catch (error) {
+
+            res
+                .status(500)
+                .send({message: 'An unknown error occurred.', error: error});
+        }
     }
 };
 
