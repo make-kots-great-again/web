@@ -74,7 +74,7 @@ export default function reserveServiceFactory({reserveRepository}) {
                 if (allInValidSimilarItems.length != 0 ){
                     const newItemExpDate = new Date().setDate(today.getDate() + reserveInfo.expiringIn);
                     for (let item of allInValidSimilarItems) {
-                        let itemExpDate = new Date().setDate(item.dataValues.createdAt.getDate() + reserveInfo.expiringIn);
+                        let itemExpDate = new Date().setDate(item.dataValues.createdAt.getDate() + item.dataValues.expiringIn);
                         let dateDiff = Math.floor(Math.abs(newItemExpDate-itemExpDate)/86400000);
                         if (dateDiff == 0) {
                             //console.log(" + update"); //TODO - remove
@@ -116,7 +116,7 @@ export default function reserveServiceFactory({reserveRepository}) {
                     for (let item of allValidSimilarItems) {
                         let prevQuantToRemove = quantToRemove;
                         quantToRemove = quantToRemove - item.dataValues.quantity;
-                        console.log(quantToRemove);
+                        //console.log(quantToRemove);
                         if (quantToRemove >= 0) {
                             await reserveRepository.removeItemFromReserve({id: item.dataValues.id});
                         }
@@ -148,14 +148,39 @@ export default function reserveServiceFactory({reserveRepository}) {
         if (!(validatedItem.itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
             return {message: `${validatedItem.itemId} is not a valid UUID`};
 
-            
+        const thisItem = await reserveRepository.findReserveItemById(validatedItem.itemId)
+
         const allSimilarItems = await reserveRepository.findReserveItems({
-                groupId: validatedItem.groupId,
-                code: validatedItem.code,
+                groupId: thisItem.dataValues.groupId,
+                code: thisItem.dataValues.code,
             });
         let allValidSimilarItems = allSimilarItems.filter(item => {return item.dataValues.valid === true;});
 
+        if (allValidSimilarItems.length != 0 ){
+            const thisItemExpDate = new Date().setDate(thisItem.dataValues.createdAt.getDate() + thisItem.dataValues.expiringIn);
+            for (let item of allValidSimilarItems) {
+                let itemExpDate = new Date().setDate(item.dataValues.createdAt.getDate() + item.dataValues.expiringIn);
+                let dateDiff = Math.floor(Math.abs(thisItemExpDate-itemExpDate)/86400000);
+                if (dateDiff == 0) {
+                    const updatedItem = {
+                        code: Number(item.dataValues.code),
+                        quantity: item.dataValues.quantity + thisItem.dataValues.quantity,
+                        expiringIn: item.dataValues.expiringIn,
+                        valid: true
+                    }
+                    const reserveProduct = makeReserve({...updatedItem});
+                    await reserveRepository.removeItemFromReserve({id: thisItem.dataValues.id});
+                    return await reserveRepository.updateReserveItem({
+                        itemId: item.dataValues.id,
+                        quantity: reserveProduct.getProductQuantity(),
+                        expiringIn: reserveProduct.getExpiringIn(),
+                        valid: reserveProduct.getvalid(),
+                    });
+                }
+            }
+        }
         return await reserveRepository.patchValidityOfAnItem(validatedItem.itemId, validatedItem.validity);
+        
     }
 
 
