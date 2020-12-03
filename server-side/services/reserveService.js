@@ -69,9 +69,8 @@ export default function reserveServiceFactory({reserveRepository}) {
                     code: reserve.getProductCode(),
                     quantity: reserve.getProductQuantity(),
                     expiringIn: reserve.getExpiringIn(),
-                    valid: reserve.getvalid(),
+                    valid: reserve.getvalid()
                 });
-                ;
 
             } else if (findItem) {
 
@@ -155,7 +154,7 @@ export default function reserveServiceFactory({reserveRepository}) {
         if (!findItem)
             return {message: `No item with this id '${itemId}' was found in the shopping list !`};
         */
-        return await reserveRepository.removeItemFromReserve({id: itemId});
+        return reserveRepository.removeItemFromReserve({id: itemId});
     }
 }
 

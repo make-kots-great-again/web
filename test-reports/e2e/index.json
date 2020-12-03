@@ -1,0 +1,256 @@
+{
+  "stats": {
+    "suites": 3,
+    "tests": 4,
+    "passes": 1,
+    "pending": 3,
+    "failures": 0,
+    "start": "2020-12-03T17:30:43.996Z",
+    "end": "2020-12-03T17:30:54.978Z",
+    "duration": 10982,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 75,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "26e33dbe-c668-47f2-a807-e6503a21dfb5",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "c207e633-3693-4c99-ba1d-0e3f9bd0b8bc",
+          "title": "E2E TESTS FOR LOGIN PAGE",
+          "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\e2e\\login.js",
+          "file": "\\server-side\\tests\\e2e\\login.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook",
+              "fullTitle": "E2E TESTS FOR LOGIN PAGE \"before all\" hook",
+              "timedOut": false,
+              "duration": 746,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "browser = await puppeteer.launch({\n    headless: false,\n    defaultViewport: null,\n    slowMo: 35,\n    args: [\n        '--window-size=1920,1080',\n    ],\n});",
+              "err": {},
+              "uuid": "65784909-bfe5-4555-a814-b95223a838ac",
+              "parentUUID": "c207e633-3693-4c99-ba1d-0e3f9bd0b8bc",
+              "isHook": true,
+              "skipped": false
+            },
+            {
+              "title": "\"before each\" hook",
+              "fullTitle": "E2E TESTS FOR LOGIN PAGE \"before each\" hook",
+              "timedOut": false,
+              "duration": 5155,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "page = await browser.newPage();\nawait page.goto(\"http://localhost:4200/login\");",
+              "err": {},
+              "uuid": "ad1fcfe8-06c8-456f-828b-40576e7d8efc",
+              "parentUUID": "c207e633-3693-4c99-ba1d-0e3f9bd0b8bc",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook",
+              "fullTitle": "E2E TESTS FOR LOGIN PAGE \"after all\" hook",
+              "timedOut": false,
+              "duration": 461,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await browser.close();",
+              "err": {},
+              "uuid": "0755b961-f376-43f6-a83f-d33001d60f74",
+              "parentUUID": "c207e633-3693-4c99-ba1d-0e3f9bd0b8bc",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "b81a3368-b3a5-4757-9f90-f23ad62a569f",
+              "title": "/POST Login",
+              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\e2e\\login.js",
+              "file": "\\server-side\\tests\\e2e\\login.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "it should login a user",
+                  "fullTitle": "E2E TESTS FOR LOGIN PAGE /POST Login it should login a user",
+                  "timedOut": false,
+                  "duration": 4608,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "expect(await page.$eval('#formTitle', e => e.innerText)).to.eql(\"Se connecter à KotsApp\");\n            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);\n            const pseudo = await page.$('#pseudo'); \n            const password = await page.$('#password');\n            const submit = await page.$('#submitBtn');\n            await pseudo.click({ clickCount: 3 });\n            await pseudo.type('james@gmail.com');\n            await password.click({ clickCount: 3});\n            await password.type('toto');\n            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(false);\n            await submit.click();\n            await page.waitForNavigation();\n            expect(page.url()).eql('http://localhost:4200/groups');\n           await page.waitFor(2000);\n            //const logoutBtn = await page.$('#logoutBtn');\n            //await logoutBtn.click();\n           //const logoutBtnModel = await page.$('#logoutBtnModel');\n           //await logoutBtnModel.click();\n          // await page.waitFor(1000);\n           //expect(page.url()).eql('http://localhost:4200/login');\n            //logoutBtnModel",
+                  "err": {},
+                  "uuid": "7f00004e-1d22-4ad5-a177-97de8b067588",
+                  "parentUUID": "b81a3368-b3a5-4757-9f90-f23ad62a569f",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "it should NOT login a user with a wrong password",
+                  "fullTitle": "E2E TESTS FOR LOGIN PAGE /POST Login it should NOT login a user with a wrong password",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": null,
+                  "speed": null,
+                  "pass": false,
+                  "fail": false,
+                  "pending": true,
+                  "context": null,
+                  "code": "",
+                  "err": {},
+                  "uuid": "7b85ec5b-3e3c-4be0-bd0a-59d25695927f",
+                  "parentUUID": "b81a3368-b3a5-4757-9f90-f23ad62a569f",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "7f00004e-1d22-4ad5-a177-97de8b067588"
+              ],
+              "failures": [],
+              "pending": [
+                "7b85ec5b-3e3c-4be0-bd0a-59d25695927f"
+              ],
+              "skipped": [],
+              "duration": 4608,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 400000
+            },
+            {
+              "uuid": "325c3b81-76f1-4e0a-b092-411016aab17a",
+              "title": "/login errors",
+              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\e2e\\login.js",
+              "file": "\\server-side\\tests\\e2e\\login.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "it should display form validation on all fields",
+                  "fullTitle": "E2E TESTS FOR LOGIN PAGE /login errors it should display form validation on all fields",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": null,
+                  "speed": null,
+                  "pass": false,
+                  "fail": false,
+                  "pending": true,
+                  "context": null,
+                  "code": "",
+                  "err": {},
+                  "uuid": "b1baf591-6d81-448c-af2d-c73bafdd3a4d",
+                  "parentUUID": "325c3b81-76f1-4e0a-b092-411016aab17a",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "it should nagivate to the signup page",
+                  "fullTitle": "E2E TESTS FOR LOGIN PAGE /login errors it should nagivate to the signup page",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": null,
+                  "speed": null,
+                  "pass": false,
+                  "fail": false,
+                  "pending": true,
+                  "context": null,
+                  "code": "",
+                  "err": {},
+                  "uuid": "89d49842-c243-4a02-b0b8-b7b02eec71a5",
+                  "parentUUID": "325c3b81-76f1-4e0a-b092-411016aab17a",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [],
+              "failures": [],
+              "pending": [
+                "b1baf591-6d81-448c-af2d-c73bafdd3a4d",
+                "89d49842-c243-4a02-b0b8-b7b02eec71a5"
+              ],
+              "skipped": [],
+              "duration": 0,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 400000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 400000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 400000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.1.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "index",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.1.1"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "test-reports/e2e",
+        "reportFilename": "index"
+      },
+      "version": "5.1.0"
+    }
+  }
+}
