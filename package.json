@@ -14,7 +14,7 @@
     "start:dev": "npm run db:setup && nodemon -r dotenv/config --exec \"npm start\"",
     "dev": "nodemon -r dotenv/config --exec \"npm start\"",
     "test": "cross-env NODE_ENV=test npm run cover:integration:nyc && npm run cover:integration:mocha && npm run cover:unit:nyc && npm run cover:unit:mocha",
-    "test:db:setup": "cross-env NODE_ENV=test npm run db:drop && npm run db:create && npm run db:migrate && npm run db:seed",
+    "test:db:setup": "cross-env NODE_ENV=test npm run db:drop && cross-env NODE_ENV=test npm run db:create && cross-env NODE_ENV=test npm run db:migrate && cross-env NODE_ENV=test npm run db:seed",
     "test:integration": "cross-env NODE_ENV=test mocha --require @babel/register 'server-side/tests/integration-tests/*.js' --timeout 10000 --exit",
     "test:integration:watch": "cross-env NODE_ENV=test nodemon --exec \"npm run test:integration\"",
     "cover:integration:nyc": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text-summary --report-dir=test-coverage/integration-tests npm run test:integration",
