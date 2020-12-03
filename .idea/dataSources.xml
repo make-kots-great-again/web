@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="PostgreSQL - kots@localhost" uuid="55f0388c-80ba-4f90-b924-0261e5cae776">
+    <data-source source="LOCAL" name="PostgreSQL - kots@localhost-dev" uuid="55f0388c-80ba-4f90-b924-0261e5cae776">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
@@ -12,6 +12,12 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://ec2-54-247-89-181.eu-west-1.compute.amazonaws.com:5432/d58hu1gvgmljev</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="postgres@localhost-testing" uuid="f0481865-dd57-4bca-a567-339d4774e47a">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/kots_test</jdbc-url>
     </data-source>
   </component>
 </project>

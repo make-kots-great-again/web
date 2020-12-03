@@ -1,7 +1,5 @@
 const env = Object.freeze({...process.env});
 
-console.log(process.env.NODE_ENV)
-
 module.exports = {
     dev: {
         dialect: 'postgres',
@@ -20,10 +18,7 @@ module.exports = {
         password: 'postgres',
         database: 'kots_test',
         host: 'localhost',
-        port: 5432,
-        dialectOptions: {
-            bigNumberStrings: true
-        }
+        port: 5432
     },
     production: {
         url: env.DATABASE_URL,

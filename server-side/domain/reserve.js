@@ -2,7 +2,7 @@ export default function buildMakeReserve(requiredParameter) {
     return ({
                 code = requiredParameter('A product code'),
                 quantity = requiredParameter('A product quantity'),
-                expiringIn = 5,
+                expiringIn = requiredParameter('An expiringIn'),
                 valid = false
             } = {}) => {
 
@@ -20,7 +20,7 @@ export default function buildMakeReserve(requiredParameter) {
             getProductCode: () => code,
             getProductQuantity: () => quantity,
             getExpiringIn: () => expiringIn,
-            getvalid: () => valid,
+            getvalid: () => valid
         });
     }
 }

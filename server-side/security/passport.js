@@ -1,7 +1,7 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 import env from '../config/environment'
-import {groupRepository, userRepository} from '../repository';
+import {groupService, userService} from '../services';
 
 // to auth the user or group by JWT strategy
 const authenticateUser = passport => {
@@ -17,10 +17,10 @@ const authenticateUser = passport => {
         let obj = null;
 
         if(jwt_payload.userId){
-            obj = await userRepository.findById({id: jwt_payload.userId});
+            obj = await userService.listOneUser({id: jwt_payload.userId});
         }
         if(jwt_payload.groupBarCode){
-            obj = await groupRepository.findGroupByBarCode({groupBarCode: jwt_payload.groupBarCode});
+            obj = await groupService.getGroupByBarCode({groupBarCode: jwt_payload.groupBarCode});
         }
 
         if (!obj) return done(obj, false);

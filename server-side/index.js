@@ -27,7 +27,14 @@ export default function express_server(express) {
                                 message: `Database connected successfully to ${env.POSTGRES_DB} database`,
                                 badge: true
                             })
+                    } else if (env.NODE_ENV === 'test') {
+                        consola.success(
+                            {
+                                message: `Database connected successfully to kots_test database`,
+                                badge: true
+                            })
                     }
+
                 }
             )
             .catch(error => console.error(`Unable to connect to ${env.POSTGRES_DB} database:`, error));

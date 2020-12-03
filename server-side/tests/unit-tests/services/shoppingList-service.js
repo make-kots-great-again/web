@@ -64,8 +64,7 @@ describe('SHOPPINGLIST SERVICE', () => {
 
             const addProduct = await shoppingListService.putProductInShoppingList({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
             
-            expect(Number(addProduct.code)).to
-                .equal(fakeShoppingList.code);
+            expect(Number(addProduct.code)).to.equal(fakeShoppingList.code);
 
             await shoppingListService.removeProductFromShoppingList({itemId: addProduct.id, userId: insertedUser.userId});
            
@@ -84,10 +83,10 @@ describe('SHOPPINGLIST SERVICE', () => {
             
             const fakeShoppingList = makeFakeShoppingList(1111111111100, 4);
 
-            const addProduct = await shoppingListService.putProductInShoppingList({groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
+            const addProduct = await shoppingListService.putProductInShoppingList(
+                {groupId: insertedGroup.dataValues.groupId, userId: insertedUser.userId, ...fakeShoppingList});
 
-            expect(addProduct.message).to
-                .equal(`No product was found with this code ${fakeShoppingList.code}`);           
+            expect(addProduct.message).to.equal(`No product was found with this code ${fakeShoppingList.code}`);
         });
 
         it('cannot add twice a product for a single user', async () => {
@@ -132,8 +131,7 @@ describe('SHOPPINGLIST SERVICE', () => {
             await shoppingListService.removeProductFromShoppingList({itemId: addProduct.id, userId: insertedUser.userId});
             const newRemoveProduct = await shoppingListService.removeProductFromShoppingList({itemId: addProduct.id, userId: insertedUser.userId});
 
-            expect(newRemoveProduct.message).to
-                .equal(`No item with this id '${addProduct.id}' was found in the shopping list !`);
+            expect(newRemoveProduct.message).to.equal(`No item with this id '${addProduct.id}' was found in the shopping list !`);
         });
     });
 

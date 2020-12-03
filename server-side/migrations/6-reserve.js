@@ -1,5 +1,7 @@
 'use strict';
 
+import {Sequelize} from "sequelize";
+
 module.exports = {
     up: (queryInterface, Sequelize) => {
         return queryInterface.createTable('reserve', {
@@ -36,7 +38,6 @@ module.exports = {
             },
             expiringIn: {
                 type: Sequelize.INTEGER,
-                defaultValue: 5,
                 allowNull: false
             },
             createdAt: {

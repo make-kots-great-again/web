@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.86% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/14</span>
+                <span class='fraction'>6/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">37.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/12</span>
+                <span class='fraction'>6/16</span>
             </div>
         
             
@@ -85,7 +85,13 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -101,8 +107,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -116,9 +128,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 import env from '../config/environment'
-import {userRepository} from '../repository';
+import {groupService, userService} from '../services';
 &nbsp;
-// to auth the user by JWT strategy
+// to auth the user or group by JWT strategy
 const authenticateUser = <span class="fstat-no" title="function not covered" >passport </span>=&gt; {
 &nbsp;
     // At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
@@ -129,13 +141,19 @@ const authenticateUser = <span class="fstat-no" title="function not covered" >pa
 &nbsp;
     // The JWT payload is passed into the verify callback
 <span class="cstat-no" title="statement not covered" >    passport.</span>use(new JwtStrategy(opts, <span class="fstat-no" title="function not covered" >async (j</span>wt_payload, done) =&gt; {
+        let obj = <span class="cstat-no" title="statement not covered" >null;</span>
 &nbsp;
-        const user = <span class="cstat-no" title="statement not covered" >await userRepository.f</span>indById({id: jwt_payload.userId});
+<span class="cstat-no" title="statement not covered" >        if(jwt_payload.userId){</span>
+<span class="cstat-no" title="statement not covered" >            obj </span>= await userService.listOneUser({id: jwt_payload.userId});
+        }
+<span class="cstat-no" title="statement not covered" >        if(jwt_payload.groupBarCode){</span>
+<span class="cstat-no" title="statement not covered" >            obj </span>= await groupService.getGroupByBarCode({groupBarCode: jwt_payload.groupBarCode});
+        }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (!user) <span class="cstat-no" title="statement not covered" >return d</span></span>one(user, false);
+<span class="cstat-no" title="statement not covered" >        if (!obj) <span class="cstat-no" title="statement not covered" >return d</span></span>one(obj, false);
 &nbsp;
-        // here, the JWT is valid and the user is authenticated successfully
-<span class="cstat-no" title="statement not covered" >        if (user) <span class="cstat-no" title="statement not covered" >return d</span></span>one(null, user);
+        // here, the JWT is valid and the user or group is authenticated successfully
+<span class="cstat-no" title="statement not covered" >        if (obj) <span class="cstat-no" title="statement not covered" >return d</span></span>one(null, obj);
 <span class="cstat-no" title="statement not covered" >        return d</span>one(null, false);
     }));
 };
@@ -148,7 +166,7 @@ export default authenticateUser;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun Oct 04 2020 04:45:12 GMT+0200 (Central European Summer Time)
+                at Thu Dec 03 2020 04:05:10 GMT+0100 (Central European Standard Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

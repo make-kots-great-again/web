@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5.56% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/18</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>15/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.14% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -101,64 +101,64 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">23x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export default function buildMakeUser(isValidEmail, hashedPassword, requiredParameter) {
-    return <span class="fstat-no" title="function not covered" >({</span>
-                username = <span class="branch-0 cbranch-no" title="branch not covered" >requiredParameter('</span>A username'),
+    return ({
+                username = requiredParameter('A username'),
                 firstName = <span class="branch-0 cbranch-no" title="branch not covered" >requiredParameter('</span>A firstName'),
                 lastName = <span class="branch-0 cbranch-no" title="branch not covered" >requiredParameter('</span>A lastName'),
-                email = <span class="branch-0 cbranch-no" title="branch not covered" >requiredParameter('</span>An email'),
-                password = <span class="branch-0 cbranch-no" title="branch not covered" >requiredParameter('</span>A password')
+                email = requiredParameter('An email'),
+                password = requiredParameter('A password')
             } = <span class="branch-0 cbranch-no" title="branch not covered" >{}) =&gt; {</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (typeof username !== 'string') <span class="cstat-no" title="statement not covered" >throw n</span></span>ew TypeError('A username must be a string.');
+        if (typeof username !== 'string') throw new TypeError('A username must be a string.');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (username.length &lt; 4 || username.length &gt;= 32)</span>
-<span class="cstat-no" title="statement not covered" >            throw n</span>ew RangeError('A username length must be between 4 and 32.');
+        if (username.length &lt; 4 || username.length &gt;= 32)
+            throw new RangeError('A username length must be between 4 and 32.');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (typeof email !== 'string') <span class="cstat-no" title="statement not covered" >throw n</span></span>ew SyntaxError('An email must be of type string.');
+        if (typeof email !== 'string') throw new SyntaxError('An email must be of type string.');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (!EmailValidation()) <span class="cstat-no" title="statement not covered" >throw n</span></span>ew SyntaxError('Invalid email.');
+        if (!EmailValidation()) throw new SyntaxError('Invalid email.');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (typeof password !== 'string') <span class="cstat-no" title="statement not covered" >throw n</span></span>ew TypeError('The password must be of type string.');
+        if (typeof password !== 'string') throw new TypeError('The password must be of type string.');
 &nbsp;
         //  if (!makeHash().match(/^\$2[aby]?\$\d{1,2}\$[.\/A-Za-z0-9]{53}$/)) throw new Error('Password not hashed !');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return O</span>bject.freeze({
-            getUsername: <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >u</span>sername,</span>
-            getFirstName: <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >f</span>irstName,</span>
-            getLastName: <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >l</span>astName,</span>
-            getEmail: <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >e</span>mail,</span>
-            getPassword: <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >h</span>ashedPassword(p</span>assword),
+        return Object.freeze({
+            getUsername: () =&gt; username,
+            getFirstName: () =&gt; firstName,
+            getLastName: () =&gt; lastName,
+            getEmail: () =&gt; email,
+            getPassword: () =&gt; hashedPassword(password),
         });
 &nbsp;
-        function <span class="fstat-no" title="function not covered" >EmailValidation() {</span>
-<span class="cstat-no" title="statement not covered" >            return i</span>sValidEmail(email);
+        function EmailValidation() {
+            return isValidEmail(email);
         }
     }
 }
@@ -169,7 +169,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun Oct 04 2020 04:45:12 GMT+0200 (Central European Summer Time)
+                at Thu Dec 03 2020 04:05:10 GMT+0100 (Central European Standard Time)
             </div>
         </div>
         <script src="../prettify.js"></script>
