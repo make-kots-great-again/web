@@ -17,40 +17,43 @@
       </div>
       <div *ngIf="!isCollapsed" class="form-group">
         <label for="recipient-name" class="col-form-label">Date d'expiration</label>
-        <div class="col-10" >
-          <input  [(ngModel)]="newExpriringDate" id="expiration-management" class="form-control" type="number" name="newExpiringDate">
+        <div class="col-10">
+          <input [(ngModel)]="newExpriringDate" id="expiration-management" class="form-control" type="number"
+            name="newExpiringDate">
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="c('cancel')">Annuler</button>
-    <button type="submit" class="btn btn-primary" (click)="updateItem();">Modifier</button>, 
+    <button type="submit" class="btn btn-primary" (click)="updateItem();">Modifier</button>,
   </div>
 
 </ng-template>
 <!--Bouton mode-->
-<div class="custom-control custom-switch">
-  <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
-    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"> Changement de mode </button>
+<div class="custom-control custom-switch container mb-4">
+  <button type="button" class="btn btn-outline-primary" (click)="switchGestionMode();isCollapsed = !isCollapsed" 
+  [attr.aria-expanded]="!isCollapsed"
+  [ngClass]="{ 'btn-outline-danger': gestionButton,'btn-outline-primary': !gestionButton}" 
+  class="btn btn-sm text-center mx-sm-3text-monospace font-italic font-weight-bolder pull-rightmargin_bottom">
+    {{gestionButtonMessage}} 
+  </button>
 </div>
-<br>
-<div *ngIf="isCollapsed" class="container mb-4">
+
+<div class="container mb-4">
   <h6 class="text-monospace font-italic font-weight-bolder">
-    <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i> mode Consultation</h6>
-</div>
-<div *ngIf="!isCollapsed" class="container mb-4">
-  <h6 class="text-monospace font-italic font-weight-bolder">
-    <i class="fa fa-info-circle" aria-hidden="true" style="color: blue"></i> mode Management</h6>
+    <i class="fa fa-info-circle" aria-hidden="true" style="color: green"></i> {{gestionButtonLegende}} </h6>
 </div>
 <br>
 <!--add list-->
-<div *ngIf="reserveArray.length !== 0" class="container mb-4 addFromList " id="collapseExample"
+<div *ngIf="reserveArray.length !== 0" class="container mb-4 addFromList "
   [ngbCollapse]="isCollapsed">
 
   <div class="container mb-3">
-    <button type="button" class="btn btn-success btn-sm  ml-2" (click)="addAllItem()">Ajouter éléments selectionnés</button>
-    <button type="button" class="btn btn-danger btn-sm ml-2" (click)="deleteAllItem()">Supprimer éléments selectionné</button>
+    <button type="button" class="btn btn-success btn-sm  ml-2" (click)="addAllItem()">Ajouter éléments
+      selectionnés</button>
+    <button type="button" class="btn btn-danger btn-sm ml-2" (click)="deleteAllItem()">Supprimer éléments
+      selectionné</button>
   </div>
 
 
@@ -66,10 +69,14 @@
               <!-- group number -->
               <th class="text-monospace font-italic"><input type="checkbox" [(ngModel)]="masterSelected"
                   (change)="checkUncheckAll()"></th>
-                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort(this.tempReserveArray, false);">Produit</th>
-                  <th class="text-monospace font-italic brand" style="cursor: pointer" (click)="markAlphabeticalSort(this.tempReserveArray, false);">Marque</th>
-                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="quantityNumricalSort(this.tempReserveArray, false)">Quantité</th>
-                  <th class="text-monospace font-italic" style="cursor: pointer" (click)="peremptionDayNumericalSort(this.tempReserveArray, false);">Jours Restant</th>
+              <th class="text-monospace font-italic" style="cursor: pointer"
+                (click)="productAlphabeticalSort(this.tempReserveArray, false);">Produit</th>
+              <th class="text-monospace font-italic brand" style="cursor: pointer"
+                (click)="markAlphabeticalSort(this.tempReserveArray, false);">Marque</th>
+              <th class="text-monospace font-italic" style="cursor: pointer"
+                (click)="quantityNumricalSort(this.tempReserveArray, false)">Quantité</th>
+              <th class="text-monospace font-italic" style="cursor: pointer"
+                (click)="peremptionDayNumericalSort(this.tempReserveArray, false);">Jours Restant</th>
               <th class="text-monospace font-italic action">Action</th>
             </tr>
           </thead>
@@ -87,11 +94,11 @@
                 <th class="text-monospace font-italic quantity" scope="row">{{reserve['quantity']}} </th>
                 <th class="text-monospace font-italic expiration" scope="row">
                   <div *ngIf="reserve['expiringIn'] < 3" class="text-danger">
-                    {{reserve['expiringIn']}} 
+                    {{reserve['expiringIn']}}
                   </div>
                   <div *ngIf="reserve['expiringIn'] > 2">
-                    {{reserve['expiringIn']}} 
-                    </div>
+                    {{reserve['expiringIn']}}
+                  </div>
                 </th>
                 <th class="text-monospace font-italic action">
                   <span>
@@ -110,7 +117,8 @@
 
                       <!-- delete reserve icon button-->
                       <button class="btn btn-danger btn-sm rounded" data-toggle="modal" data-target="#deleteGroup"
-                        data-whatever="@mdo" type="button" data-placement="top" title="Delete" (click)="deleteItem(reserve['id'], i, this.tempReserveArray);">
+                        data-whatever="@mdo" type="button" data-placement="top" title="Delete"
+                        (click)="deleteItem(reserve['id'], i, this.tempReserveArray);">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>
                     </a>
@@ -127,7 +135,7 @@
   </div>
 </div>
 
-<div *ngIf="reserveArray.length !== 0" class="container mb-4" id="collapseExample" [ngbCollapse]="!isCollapsed" >
+<div *ngIf="reserveArray.length !== 0" class="container mb-4"  [ngbCollapse]="!isCollapsed">
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
@@ -139,10 +147,14 @@
           <thead class="font-weight-bold thead-dark">
             <tr>
               <!-- group number -->
-              <th class="text-monospace font-italic" style="cursor: pointer" (click)="productAlphabeticalSort(this.reserveArray, true);">Produit</th>
-              <th class="text-monospace font-italic brand" style="cursor: pointer" (click)="markAlphabeticalSort(this.reserveArray, true);">Marque</th>
-              <th class="text-monospace font-italic quantity" style="cursor: pointer" (click)="quantityNumricalSort(this.reserveArray, true)">Quantité</th>
-              <th class="text-monospace font-italic expiration" style="cursor: pointer" (click)="peremptionDayNumericalSort(this.reserveArray, true);">Jours Restant</th>
+              <th class="text-monospace font-italic" style="cursor: pointer"
+                (click)="productAlphabeticalSort(this.reserveArray, true);">Produit</th>
+              <th class="text-monospace font-italic brand" style="cursor: pointer"
+                (click)="markAlphabeticalSort(this.reserveArray, true);">Marque</th>
+              <th class="text-monospace font-italic quantity" style="cursor: pointer"
+                (click)="quantityNumricalSort(this.reserveArray, true)">Quantité</th>
+              <th class="text-monospace font-italic expiration" style="cursor: pointer"
+                (click)="peremptionDayNumericalSort(this.reserveArray, true);">Jours Restant</th>
               <th class="text-monospace font-italic action">Action</th>
             </tr>
           </thead>
@@ -153,20 +165,27 @@
             <ng-container *ngFor="let reserve of reserveArray index as i">
 
               <tr *ngIf="reserve['valid']">
-                <th class="text-monospace font-italic" scope="row">{{reserve['product_name'] | truncate:[30]}} </th>
+                <th class="text-monospace font-italic" scope="row">
+                  <a class="mr-2" style="color: #1a1a1a"
+                  placement="top" ngbTooltip="{{reserve['product_name'] }}">
+                  {{reserve['product_name'] | truncate:[30]}}
+                  </a>
+                </th>
                 <th class="text-monospace font-italic brand" scope="row">{{reserve['product_brand']}} </th>
                 <th class="text-monospace font-italic quantity" scope="row">{{reserve['quantity']}} </th>
-                
 
-                <th class="text-monospace font-italic bg-danger expiration" *ngIf="reserve['expiringIn'] < 3"  scope="row">
-                    {{reserve['expiringIn']}} 
+
+                <th class="text-monospace font-italic bg-danger expiration" *ngIf="reserve['expiringIn'] < 3"
+                  scope="row">
+                  {{reserve['expiringIn']}}
                 </th>
-                <th class="text-monospace font-italic bg-warning" *ngIf="reserve['expiringIn'] > 2 && reserve['expiringIn'] < 7"  scope="row">
-                  {{reserve['expiringIn']}} 
-              </th>
-              <th class="text-monospace font-italic expiration" *ngIf="reserve['expiringIn'] > 6"  scope="row">
-                {{reserve['expiringIn']}} 
-            </th>
+                <th class="text-monospace font-italic bg-warning"
+                  *ngIf="reserve['expiringIn'] > 2 && reserve['expiringIn'] < 7" scope="row">
+                  {{reserve['expiringIn']}}
+                </th>
+                <th class="text-monospace font-italic expiration" *ngIf="reserve['expiringIn'] > 6" scope="row">
+                  {{reserve['expiringIn']}}
+                </th>
                 <td class="text-monospace font-italic action">
 
                   <span>
@@ -185,7 +204,8 @@
 
                       <!-- delete reserve icon button-->
                       <button class="btn btn-danger btn-sm rounded" data-toggle="modal" data-target="#deleteGroup"
-                        data-whatever="@mdo" type="button" data-placement="top" title="Delete" (click)="deleteItem(reserve['id'], i, this.reserveArray);">
+                        data-whatever="@mdo" type="button" data-placement="top" title="Delete"
+                        (click)="deleteItem(reserve['id'], i, this.reserveArray);">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>
                     </a>

@@ -244,9 +244,11 @@ export class GroupInfoComponent implements OnInit {
     if (this.isSuppressMode) {
       this.suppressButtonMessage = 'Désactiver la suppression';
       this.isSuppressMode = false;
+      this.isCollapsed = false;
     } else {
       this.suppressButtonMessage = 'Activer la suppression';
       this.isSuppressMode = true;
+      this.isCollapsed = true;
     }
   }
 
