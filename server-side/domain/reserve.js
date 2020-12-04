@@ -12,7 +12,7 @@ export default function buildMakeReserve(requiredParameter) {
 
         if (typeof quantity !== 'number') throw new TypeError("A product's quantity must be a number.");
 
-        if (quantity < 1 || quantity > 20) throw new RangeError("A product's quantity must be between 1 and 20.");
+        if (quantity < 1) throw new RangeError("A product's quantity must be > than 1");
 
         if (typeof valid !== 'boolean') throw new TypeError("valid must be a boolean.");
 

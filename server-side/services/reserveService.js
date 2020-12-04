@@ -43,7 +43,6 @@ export default function reserveServiceFactory({reserveRepository}) {
         if (groupId || groupBarCode) {
 
             if (groupId) {
-
                 groupInfo = await groupService.getGroup({groupId: groupIdBarcode});
                 if (groupInfo.message) return {message: groupInfo.message};
 
@@ -52,38 +51,89 @@ export default function reserveServiceFactory({reserveRepository}) {
                 if (groupInfo.message) return {message: groupInfo.message};
             }
 
-            const reserve = makeReserve({...reserveInfo});
-
-            const findItem = await reserveRepository.findReserveItem({
+            const product = await productService.getProductCode({code: reserveInfo.code});
+            if (product.message) return {message: product.message};
+    
+            const allSimilarItems = await reserveRepository.findReserveItems({
                 groupId: groupInfo.dataValues.groupId,
-                code: reserve.getProductCode(),
+                code: reserveInfo.code,
+            });
+            let allValidSimilarItems = allSimilarItems.filter(item => {return item.dataValues.valid === true;});
+            let allInValidSimilarItems = allSimilarItems.filter(item => {return item.dataValues.valid === false});
+            allValidSimilarItems = allValidSimilarItems.sort( (a,b) => {
+                let aDate = new Date().setDate(a.dataValues.createdAt.getDate() + a.dataValues.expiringIn);
+                let bDate = new Date().setDate(b.dataValues.createdAt.getDate() + b.dataValues.expiringIn);
+                if (aDate > bDate) return 1;
+                else if (aDate < bDate) return -1;
+                return 0;
             });
 
-            if (!findItem) {
+            const today = new Date();
 
-                const findProductCode = await productService.getProductCode({code: reserve.getProductCode()});
-                if (findProductCode.message) return {message: findProductCode.message};
+            if (reserveInfo.quantity > 0) {
+                if (allInValidSimilarItems.length != 0 ){
+                    const newItemExpDate = new Date().setDate(today.getDate() + reserveInfo.expiringIn);
+                    for (let item of allInValidSimilarItems) {
+                        let itemExpDate = new Date().setDate(item.dataValues.createdAt.getDate() + item.dataValues.expiringIn);
+                        let dateDiff = Math.floor(Math.abs(newItemExpDate-itemExpDate)/86400000);
+                        if (dateDiff == 0) {
+                            //console.log(" + update"); //TODO - remove
+                            reserveInfo.quantity = item.dataValues.quantity + reserveInfo.quantity;
+                            const newReserveProduct = makeReserve({...reserveInfo});
+                            return await reserveRepository.updateReserveItem({
+                                itemId: item.dataValues.id,
+                                quantity: newReserveProduct.getProductQuantity(),
+                                expiringIn: newReserveProduct.getExpiringIn(),
+                                valid: false,
+                            });
+                        }
+                    }
+                    //console.log(" + new doublon"); //TODO - remove
+                    const newReserveProduct = makeReserve({...reserveInfo});
+                    return await reserveRepository.save({
+                        groupId: groupInfo.dataValues.groupId,
+                        code: newReserveProduct.getProductCode(),
+                        quantity: newReserveProduct.getProductQuantity(),
+                        expiringIn: newReserveProduct.getExpiringIn(),
+                        valid: false,
+                    }); 
 
-                return await reserveRepository.save({
-                    groupId: groupInfo.dataValues.groupId,
-                    code: reserve.getProductCode(),
-                    quantity: reserve.getProductQuantity(),
-                    expiringIn: reserve.getExpiringIn(),
-                    valid: reserve.getvalid()
-                });
-
-            } else if (findItem) {
-
-                const findProductCode = await productService.getProductCode({code: reserve.getProductCode()});
-                if (findProductCode.message) return {message: findProductCode.message};
-
-                return reserveRepository.updateReserve({
-                    groupId: groupInfo.dataValues.groupId,
-                    code: reserve.getProductCode(),
-                    quantity: reserve.getProductQuantity(),
-                    expiringIn: reserve.getExpiringIn(),
-                    valid: reserve.getvalid(),
-                });
+                }
+                else {
+                    //console.log(" + new unique"); //TODO - remove
+                    const newReserveProduct = makeReserve({...reserveInfo});
+                    return await reserveRepository.save({
+                        groupId: groupInfo.dataValues.groupId,
+                        code: newReserveProduct.getProductCode(),
+                        quantity: newReserveProduct.getProductQuantity(),
+                        expiringIn: newReserveProduct.getExpiringIn(),
+                        valid: false,
+                    }); 
+                }
+            } else {
+                if (allValidSimilarItems.length != 0 ){
+                    let quantToRemove = Math.abs(reserveInfo.quantity); // la qtty que je veux enlever
+                    for (let item of allValidSimilarItems) {
+                        let prevQuantToRemove = quantToRemove;
+                        quantToRemove = quantToRemove - item.dataValues.quantity;
+                        //console.log(quantToRemove);
+                        if (quantToRemove >= 0) {
+                            await reserveRepository.removeItemFromReserve({id: item.dataValues.id});
+                        }
+                        else{
+                            reserveInfo.quantity = item.dataValues.quantity - Math.abs(prevQuantToRemove);
+                            reserveInfo.expiringIn = item.dataValues.expiringIn;
+                            const newReserveProduct = makeReserve({...reserveInfo});
+                            return await reserveRepository.updateReserveItem({
+                                itemId: item.dataValues.id,
+                                quantity: newReserveProduct.getProductQuantity(),
+                                expiringIn: newReserveProduct.getExpiringIn(),
+                                valid: true,
+                            });
+                        }
+                    }
+                }
+                return {message: `No product was found!`};
             }
         } else {
             return {message: `No group was found with this id ${groupIdBarcode}`};
@@ -91,22 +141,48 @@ export default function reserveServiceFactory({reserveRepository}) {
     }
 
 
-    //TODO : implémenter la vérification l'existance de l'item deleted
-    async function patchValidityOfAnItem(validatedItem) {
+    async function patchValidityOfAnItem({...validatedItem}) {
 
         if (!validatedItem.itemId) return {message: 'You must supply the item id.'};
 
         if (!(validatedItem.itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
             return {message: `${validatedItem.itemId} is not a valid UUID`};
 
-        /*const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
+        const thisItem = await reserveRepository.findReserveItemById(validatedItem.itemId)
 
-        if (!findItem)
-            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
-        */
+        const allSimilarItems = await reserveRepository.findReserveItems({
+                groupId: thisItem.dataValues.groupId,
+                code: thisItem.dataValues.code,
+            });
+        let allValidSimilarItems = allSimilarItems.filter(item => {return item.dataValues.valid === true;});
 
+        if (allValidSimilarItems.length != 0 ){
+            const thisItemExpDate = new Date().setDate(thisItem.dataValues.createdAt.getDate() + thisItem.dataValues.expiringIn);
+            for (let item of allValidSimilarItems) {
+                let itemExpDate = new Date().setDate(item.dataValues.createdAt.getDate() + item.dataValues.expiringIn);
+                let dateDiff = Math.floor(Math.abs(thisItemExpDate-itemExpDate)/86400000);
+                if (dateDiff == 0) {
+                    const updatedItem = {
+                        code: Number(item.dataValues.code),
+                        quantity: item.dataValues.quantity + thisItem.dataValues.quantity,
+                        expiringIn: item.dataValues.expiringIn,
+                        valid: true
+                    }
+                    const reserveProduct = makeReserve({...updatedItem});
+                    await reserveRepository.removeItemFromReserve({id: thisItem.dataValues.id});
+                    return await reserveRepository.updateReserveItem({
+                        itemId: item.dataValues.id,
+                        quantity: reserveProduct.getProductQuantity(),
+                        expiringIn: reserveProduct.getExpiringIn(),
+                        valid: reserveProduct.getvalid(),
+                    });
+                }
+            }
+        }
         return await reserveRepository.patchValidityOfAnItem(validatedItem.itemId, validatedItem.validity);
+        
     }
+
 
     //TODO : implémenter la vérification l'existance de l'item deleted
     async function patchQuantityOfAnItem(updateInfos) {

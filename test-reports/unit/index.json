@@ -5,9 +5,9 @@
     "passes": 53,
     "pending": 0,
     "failures": 0,
-    "start": "2020-12-04T15:27:49.403Z",
-    "end": "2020-12-04T15:27:50.927Z",
-    "duration": 1524,
+    "start": "2020-12-04T15:39:59.199Z",
+    "end": "2020-12-04T15:40:00.802Z",
+    "duration": 1603,
     "testsRegistered": 53,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,7 +18,7 @@
   },
   "results": [
     {
-      "uuid": "3abad32f-7c56-4fb5-8c50-654d9a9b2096",
+      "uuid": "3ddc6bc8-794c-4ae6-bead-045c644dfa38",
       "title": "",
       "fullFile": "",
       "file": "",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "4e244492-2fb7-4d1b-9a2c-0a3e21525b43",
+          "uuid": "fa6b13be-1afc-4fc6-aa7f-c01a7131ba38",
           "title": "GROUP ENTITY",
           "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\group.js",
           "file": "\\server-side\\tests\\unit-tests\\entities\\group.js",
@@ -36,7 +36,7 @@
           "tests": [],
           "suites": [
             {
-              "uuid": "a77714b8-060c-4d71-ab04-888da818a243",
+              "uuid": "b649f5a5-4c82-4820-bffe-fc3ac4b70fc1",
               "title": "#group",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\group.js",
               "file": "\\server-side\\tests\\unit-tests\\entities\\group.js",
@@ -56,15 +56,15 @@
                   "context": null,
                   "code": "const randomGroup = Math.random().toString(36).substr(2, 9);\nconst group = (0, _fakeGroup.default)(randomGroup, randomGroup + randomGroup);\nconst buildGroup = (0, _domain.makeGroup)({ ...group\n});\n(0, _chai.expect)(buildGroup.getGroupName()).to.be.eql(group.groupName);\n(0, _chai.expect)(buildGroup.getGroupDescription()).to.be.eql(group.groupDescription);",
                   "err": {},
-                  "uuid": "2cdf8d66-3cae-4b15-be31-dc946e63b07e",
-                  "parentUUID": "a77714b8-060c-4d71-ab04-888da818a243",
+                  "uuid": "15fcb367-1327-4903-8422-65f21c6258eb",
+                  "parentUUID": "b649f5a5-4c82-4820-bffe-fc3ac4b70fc1",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "2cdf8d66-3cae-4b15-be31-dc946e63b07e"
+                "15fcb367-1327-4903-8422-65f21c6258eb"
               ],
               "failures": [],
               "pending": [],
@@ -75,7 +75,7 @@
               "_timeout": 10000
             },
             {
-              "uuid": "86dbc912-8566-475a-9cfb-29cffd58c4d1",
+              "uuid": "86e343b3-c1b7-4ac7-8d0b-018b845e82ad",
               "title": "#groupName",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\group.js",
               "file": "\\server-side\\tests\\unit-tests\\entities\\group.js",
@@ -95,8 +95,8 @@
                   "context": null,
                   "code": "const group = (0, _fakeGroup.default)(undefined, \"test\");\n(0, _chai.expect)(() => (0, _domain.makeGroup)({ ...group\n})).to.throw(_errors.RequiredParameterError, 'A groupName is a required.');",
                   "err": {},
-                  "uuid": "82145ffc-0cd1-495e-b04e-4d4dbc12345b",
-                  "parentUUID": "86dbc912-8566-475a-9cfb-29cffd58c4d1",
+                  "uuid": "02a7e250-0af4-4966-9167-7fa5df9b4d71",
+                  "parentUUID": "86e343b3-c1b7-4ac7-8d0b-018b845e82ad",
                   "isHook": false,
                   "skipped": false
                 },
@@ -113,8 +113,8 @@
                   "context": null,
                   "code": "const group = (0, _fakeGroup.default)(null, \"test\");\n(0, _chai.expect)(() => (0, _domain.makeGroup)({ ...group\n})).to.throw(TypeError, 'A groupName must be a string.');",
                   "err": {},
-                  "uuid": "b402ba1f-6178-46a7-9a05-4df3164def58",
-                  "parentUUID": "86dbc912-8566-475a-9cfb-29cffd58c4d1",
+                  "uuid": "45c11963-bb2a-4357-9aae-31cc88b2bd3c",
+                  "parentUUID": "86e343b3-c1b7-4ac7-8d0b-018b845e82ad",
                   "isHook": false,
                   "skipped": false
                 },
@@ -122,7 +122,7 @@
                   "title": "a groupName can't be a number",
                   "fullTitle": "GROUP ENTITY #groupName a groupName can't be a number",
                   "timedOut": false,
-                  "duration": 0,
+                  "duration": 1,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -131,28 +131,28 @@
                   "context": null,
                   "code": "const group = (0, _fakeGroup.default)(404, \"test\");\n(0, _chai.expect)(() => (0, _domain.makeGroup)({ ...group\n})).to.throw(TypeError, 'A groupName must be a string.');",
                   "err": {},
-                  "uuid": "7e101288-5fa2-4f7f-9240-00ae0c51a117",
-                  "parentUUID": "86dbc912-8566-475a-9cfb-29cffd58c4d1",
+                  "uuid": "8c0bcd39-03c3-4927-a1cc-41703bc8052f",
+                  "parentUUID": "86e343b3-c1b7-4ac7-8d0b-018b845e82ad",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "82145ffc-0cd1-495e-b04e-4d4dbc12345b",
-                "b402ba1f-6178-46a7-9a05-4df3164def58",
-                "7e101288-5fa2-4f7f-9240-00ae0c51a117"
+                "02a7e250-0af4-4966-9167-7fa5df9b4d71",
+                "45c11963-bb2a-4357-9aae-31cc88b2bd3c",
+                "8c0bcd39-03c3-4927-a1cc-41703bc8052f"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 2,
+              "duration": 3,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000
             },
             {
-              "uuid": "f2ff5a7b-115e-43b2-af38-a8be1aedae19",
+              "uuid": "89f029eb-6bbc-4d24-8483-4cbf113017e2",
               "title": "#groupDescription",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\group.js",
               "file": "\\server-side\\tests\\unit-tests\\entities\\group.js",
@@ -163,7 +163,7 @@
                   "title": "a group must have a groupDescription",
                   "fullTitle": "GROUP ENTITY #groupDescription a group must have a groupDescription",
                   "timedOut": false,
-                  "duration": 1,
+                  "duration": 0,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -172,8 +172,8 @@
                   "context": null,
                   "code": "const group = (0, _fakeGroup.default)(\"test\", undefined);\n(0, _chai.expect)(() => (0, _domain.makeGroup)({ ...group\n})).to.throw(_errors.RequiredParameterError, 'A group description is a required.');",
                   "err": {},
-                  "uuid": "6adecd58-8b52-4407-83c3-9c4eea27d0c3",
-                  "parentUUID": "f2ff5a7b-115e-43b2-af38-a8be1aedae19",
+                  "uuid": "fc5e2065-dc7a-44e5-8924-c0a41b407651",
+                  "parentUUID": "89f029eb-6bbc-4d24-8483-4cbf113017e2",
                   "isHook": false,
                   "skipped": false
                 },
@@ -190,8 +190,8 @@
                   "context": null,
                   "code": "const group = (0, _fakeGroup.default)(\"test\", null);\n(0, _chai.expect)(() => (0, _domain.makeGroup)({ ...group\n})).to.throw(TypeError, 'A group description must be a string.');",
                   "err": {},
-                  "uuid": "7e1169c9-7ba9-4db9-ab6e-f82ae92e8e4e",
-                  "parentUUID": "f2ff5a7b-115e-43b2-af38-a8be1aedae19",
+                  "uuid": "51cd573b-eee2-4172-ad03-72dfe7521ca9",
+                  "parentUUID": "89f029eb-6bbc-4d24-8483-4cbf113017e2",
                   "isHook": false,
                   "skipped": false
                 },
@@ -208,152 +208,17 @@
                   "context": null,
                   "code": "const group = (0, _fakeGroup.default)(\"test\", 404);\n(0, _chai.expect)(() => (0, _domain.makeGroup)({ ...group\n})).to.throw(TypeError, 'A group description must be a string.');",
                   "err": {},
-                  "uuid": "9277ec46-44f0-4fa2-b8d9-28c28f6ff35f",
-                  "parentUUID": "f2ff5a7b-115e-43b2-af38-a8be1aedae19",
+                  "uuid": "dc48d98d-5782-4655-9a6c-b5f53ed13d32",
+                  "parentUUID": "89f029eb-6bbc-4d24-8483-4cbf113017e2",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "6adecd58-8b52-4407-83c3-9c4eea27d0c3",
-                "7e1169c9-7ba9-4db9-ab6e-f82ae92e8e4e",
-                "9277ec46-44f0-4fa2-b8d9-28c28f6ff35f"
-              ],
-              "failures": [],
-              "pending": [],
-              "skipped": [],
-              "duration": 1,
-              "root": false,
-              "rootEmpty": false,
-              "_timeout": 10000
-            }
-          ],
-          "passes": [],
-          "failures": [],
-          "pending": [],
-          "skipped": [],
-          "duration": 0,
-          "root": false,
-          "rootEmpty": false,
-          "_timeout": 10000
-        },
-        {
-          "uuid": "0e94e259-329b-4a12-84f6-e24b4fa66f5b",
-          "title": "PRODUCT ENTITY",
-          "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\product.js",
-          "file": "\\server-side\\tests\\unit-tests\\entities\\product.js",
-          "beforeHooks": [],
-          "afterHooks": [],
-          "tests": [],
-          "suites": [
-            {
-              "uuid": "263b8d5f-7313-42b9-95bd-52a7bbbb4c3f",
-              "title": "#product",
-              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\product.js",
-              "file": "\\server-side\\tests\\unit-tests\\entities\\product.js",
-              "beforeHooks": [],
-              "afterHooks": [],
-              "tests": [
-                {
-                  "title": "it should make a product",
-                  "fullTitle": "PRODUCT ENTITY #product it should make a product",
-                  "timedOut": false,
-                  "duration": 1,
-                  "state": "passed",
-                  "speed": "fast",
-                  "pass": true,
-                  "fail": false,
-                  "pending": false,
-                  "context": null,
-                  "code": "const product = (0, _fakeProduct.default)(\"jasmin\");\nconst buildProduct = (0, _domain.makeProduct)({ ...product\n});\n(0, _chai.expect)(buildProduct.getProductName()).to.be.eql(product.productName);",
-                  "err": {},
-                  "uuid": "bf7e493d-80fd-4f3e-b66c-1fb053970e5c",
-                  "parentUUID": "263b8d5f-7313-42b9-95bd-52a7bbbb4c3f",
-                  "isHook": false,
-                  "skipped": false
-                }
-              ],
-              "suites": [],
-              "passes": [
-                "bf7e493d-80fd-4f3e-b66c-1fb053970e5c"
-              ],
-              "failures": [],
-              "pending": [],
-              "skipped": [],
-              "duration": 1,
-              "root": false,
-              "rootEmpty": false,
-              "_timeout": 10000
-            },
-            {
-              "uuid": "7b7f29ee-b747-4cb1-b0ad-e2e2e4fc2c82",
-              "title": "#productName",
-              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\product.js",
-              "file": "\\server-side\\tests\\unit-tests\\entities\\product.js",
-              "beforeHooks": [],
-              "afterHooks": [],
-              "tests": [
-                {
-                  "title": "a product must have a productName",
-                  "fullTitle": "PRODUCT ENTITY #productName a product must have a productName",
-                  "timedOut": false,
-                  "duration": 0,
-                  "state": "passed",
-                  "speed": "fast",
-                  "pass": true,
-                  "fail": false,
-                  "pending": false,
-                  "context": null,
-                  "code": "const product = (0, _fakeProduct.default)(undefined);\n(0, _chai.expect)(() => (0, _domain.makeProduct)({ ...product\n})).to.throw(_errors.RequiredParameterError, 'A productName is a required.');",
-                  "err": {},
-                  "uuid": "3093c1cf-bfc4-4755-bd83-914dbbda77f6",
-                  "parentUUID": "7b7f29ee-b747-4cb1-b0ad-e2e2e4fc2c82",
-                  "isHook": false,
-                  "skipped": false
-                },
-                {
-                  "title": "a productName can't be null",
-                  "fullTitle": "PRODUCT ENTITY #productName a productName can't be null",
-                  "timedOut": false,
-                  "duration": 0,
-                  "state": "passed",
-                  "speed": "fast",
-                  "pass": true,
-                  "fail": false,
-                  "pending": false,
-                  "context": null,
-                  "code": "const product = (0, _fakeProduct.default)(null);\n(0, _chai.expect)(() => (0, _domain.makeProduct)({ ...product\n})).to.throw(TypeError, 'A product name must be a string.');",
-                  "err": {},
-                  "uuid": "0f08fe87-97e0-4ab4-b40a-2fc8d81a565c",
-                  "parentUUID": "7b7f29ee-b747-4cb1-b0ad-e2e2e4fc2c82",
-                  "isHook": false,
-                  "skipped": false
-                },
-                {
-                  "title": "a productName can't be a number",
-                  "fullTitle": "PRODUCT ENTITY #productName a productName can't be a number",
-                  "timedOut": false,
-                  "duration": 0,
-                  "state": "passed",
-                  "speed": "fast",
-                  "pass": true,
-                  "fail": false,
-                  "pending": false,
-                  "context": null,
-                  "code": "const product = (0, _fakeProduct.default)(404);\n(0, _chai.expect)(() => (0, _domain.makeProduct)({ ...product\n})).to.throw(TypeError, 'A product name must be a string.');",
-                  "err": {},
-                  "uuid": "7a2bf23b-2781-4083-b090-92254198e206",
-                  "parentUUID": "7b7f29ee-b747-4cb1-b0ad-e2e2e4fc2c82",
-                  "isHook": false,
-                  "skipped": false
-                }
-              ],
-              "suites": [],
-              "passes": [
-                "3093c1cf-bfc4-4755-bd83-914dbbda77f6",
-                "0f08fe87-97e0-4ab4-b40a-2fc8d81a565c",
-                "7a2bf23b-2781-4083-b090-92254198e206"
+                "fc5e2065-dc7a-44e5-8924-c0a41b407651",
+                "51cd573b-eee2-4172-ad03-72dfe7521ca9",
+                "dc48d98d-5782-4655-9a6c-b5f53ed13d32"
               ],
               "failures": [],
               "pending": [],
@@ -374,7 +239,142 @@
           "_timeout": 10000
         },
         {
-          "uuid": "99a533b6-553d-4097-81c3-3e6f111b1659",
+          "uuid": "3c238de7-302e-4ba3-9722-319510551a8b",
+          "title": "PRODUCT ENTITY",
+          "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\product.js",
+          "file": "\\server-side\\tests\\unit-tests\\entities\\product.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "a05ba21b-0a98-498c-821d-64da112eb38e",
+              "title": "#product",
+              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\product.js",
+              "file": "\\server-side\\tests\\unit-tests\\entities\\product.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "it should make a product",
+                  "fullTitle": "PRODUCT ENTITY #product it should make a product",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const product = (0, _fakeProduct.default)(\"jasmin\");\nconst buildProduct = (0, _domain.makeProduct)({ ...product\n});\n(0, _chai.expect)(buildProduct.getProductName()).to.be.eql(product.productName);",
+                  "err": {},
+                  "uuid": "cff52f0c-cdba-4fda-a579-46a4f4de7316",
+                  "parentUUID": "a05ba21b-0a98-498c-821d-64da112eb38e",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "cff52f0c-cdba-4fda-a579-46a4f4de7316"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 0,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 10000
+            },
+            {
+              "uuid": "e0557748-e205-499e-977b-f8089cf2acf5",
+              "title": "#productName",
+              "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\product.js",
+              "file": "\\server-side\\tests\\unit-tests\\entities\\product.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "a product must have a productName",
+                  "fullTitle": "PRODUCT ENTITY #productName a product must have a productName",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const product = (0, _fakeProduct.default)(undefined);\n(0, _chai.expect)(() => (0, _domain.makeProduct)({ ...product\n})).to.throw(_errors.RequiredParameterError, 'A productName is a required.');",
+                  "err": {},
+                  "uuid": "54a272c0-8e1d-4d31-9ab2-b9fba65d6de9",
+                  "parentUUID": "e0557748-e205-499e-977b-f8089cf2acf5",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "a productName can't be null",
+                  "fullTitle": "PRODUCT ENTITY #productName a productName can't be null",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const product = (0, _fakeProduct.default)(null);\n(0, _chai.expect)(() => (0, _domain.makeProduct)({ ...product\n})).to.throw(TypeError, 'A product name must be a string.');",
+                  "err": {},
+                  "uuid": "0e3f2d10-c21d-4a75-9f3b-79c648e28052",
+                  "parentUUID": "e0557748-e205-499e-977b-f8089cf2acf5",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "a productName can't be a number",
+                  "fullTitle": "PRODUCT ENTITY #productName a productName can't be a number",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const product = (0, _fakeProduct.default)(404);\n(0, _chai.expect)(() => (0, _domain.makeProduct)({ ...product\n})).to.throw(TypeError, 'A product name must be a string.');",
+                  "err": {},
+                  "uuid": "dd0eca8d-fe2a-4805-b42b-026fcf315141",
+                  "parentUUID": "e0557748-e205-499e-977b-f8089cf2acf5",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "54a272c0-8e1d-4d31-9ab2-b9fba65d6de9",
+                "0e3f2d10-c21d-4a75-9f3b-79c648e28052",
+                "dd0eca8d-fe2a-4805-b42b-026fcf315141"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 2,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 10000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 10000
+        },
+        {
+          "uuid": "6a54c4f3-a35d-4690-aad5-5d9327796600",
           "title": "SHOPPINGLIST ENTITY",
           "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\shoppingList.js",
           "file": "\\server-side\\tests\\unit-tests\\entities\\shoppingList.js",
@@ -383,7 +383,7 @@
           "tests": [],
           "suites": [
             {
-              "uuid": "01306e80-2eda-4993-9e17-b12ce3bfbfd7",
+              "uuid": "e544187e-8d49-4f61-be30-c367db9f75d0",
               "title": "#shoppingList",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\shoppingList.js",
               "file": "\\server-side\\tests\\unit-tests\\entities\\shoppingList.js",
@@ -403,15 +403,15 @@
                   "context": null,
                   "code": "const shoppingList = (0, _fakeShoppingList.default)(11223344, 4);\nconst buildShoppingList = (0, _domain.makeShoppingList)({ ...shoppingList\n});\n(0, _chai.expect)(buildShoppingList.getProductCode()).to.be.eql(shoppingList.code);\n(0, _chai.expect)(buildShoppingList.getProductQuantity()).to.be.eql(shoppingList.quantity);",
                   "err": {},
-                  "uuid": "d1716a71-681d-41d6-9179-46c017b65cdd",
-                  "parentUUID": "01306e80-2eda-4993-9e17-b12ce3bfbfd7",
+                  "uuid": "44cd1485-1e12-43d3-b41b-3a77014d5539",
+                  "parentUUID": "e544187e-8d49-4f61-be30-c367db9f75d0",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "d1716a71-681d-41d6-9179-46c017b65cdd"
+                "44cd1485-1e12-43d3-b41b-3a77014d5539"
               ],
               "failures": [],
               "pending": [],
@@ -422,7 +422,7 @@
               "_timeout": 10000
             },
             {
-              "uuid": "4e7dd7c2-4e70-4806-9f9a-b04baf55a631",
+              "uuid": "5558d297-6a07-45bf-8112-1db1260d4cc9",
               "title": "#code",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\shoppingList.js",
               "file": "\\server-side\\tests\\unit-tests\\entities\\shoppingList.js",
@@ -442,8 +442,8 @@
                   "context": null,
                   "code": "const shoppingList = (0, _fakeShoppingList.default)(undefined, 4);\n(0, _chai.expect)(() => (0, _domain.makeShoppingList)({ ...shoppingList\n})).to.throw(_errors.RequiredParameterError, 'A product code is a required.');",
                   "err": {},
-                  "uuid": "4b130f10-eec4-4453-88cd-58a5d2bf7cbc",
-                  "parentUUID": "4e7dd7c2-4e70-4806-9f9a-b04baf55a631",
+                  "uuid": "8080404c-06ac-44b1-b2a2-55dcf029ddba",
+                  "parentUUID": "5558d297-6a07-45bf-8112-1db1260d4cc9",
                   "isHook": false,
                   "skipped": false
                 },
@@ -451,7 +451,7 @@
                   "title": "a code can't be null",
                   "fullTitle": "SHOPPINGLIST ENTITY #code a code can't be null",
                   "timedOut": false,
-                  "duration": 1,
+                  "duration": 0,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -460,8 +460,8 @@
                   "context": null,
                   "code": "const shoppingList = (0, _fakeShoppingList.default)(null, 4);\n(0, _chai.expect)(() => (0, _domain.makeShoppingList)({ ...shoppingList\n})).to.throw(TypeError, 'A product code must be a number.');",
                   "err": {},
-                  "uuid": "1dd190ea-1861-4a75-990f-bc00ece036e4",
-                  "parentUUID": "4e7dd7c2-4e70-4806-9f9a-b04baf55a631",
+                  "uuid": "c0591bf3-0f11-4270-8a32-90787dcd2674",
+                  "parentUUID": "5558d297-6a07-45bf-8112-1db1260d4cc9",
                   "isHook": false,
                   "skipped": false
                 },
@@ -478,28 +478,28 @@
                   "context": null,
                   "code": "const shoppingList = (0, _fakeShoppingList.default)(\"404\", 4);\n(0, _chai.expect)(() => (0, _domain.makeShoppingList)({ ...shoppingList\n})).to.throw(TypeError, 'A product code must be a number');",
                   "err": {},
-                  "uuid": "9ea47567-07eb-4e9a-bd2a-3d90cc3af2f5",
-                  "parentUUID": "4e7dd7c2-4e70-4806-9f9a-b04baf55a631",
+                  "uuid": "47705758-b98c-4a1f-945a-f33e667a01fe",
+                  "parentUUID": "5558d297-6a07-45bf-8112-1db1260d4cc9",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "4b130f10-eec4-4453-88cd-58a5d2bf7cbc",
-                "1dd190ea-1861-4a75-990f-bc00ece036e4",
-                "9ea47567-07eb-4e9a-bd2a-3d90cc3af2f5"
+                "8080404c-06ac-44b1-b2a2-55dcf029ddba",
+                "c0591bf3-0f11-4270-8a32-90787dcd2674",
+                "47705758-b98c-4a1f-945a-f33e667a01fe"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 1,
+              "duration": 0,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000
             },
             {
-              "uuid": "dc328985-21c1-4b7e-91c2-57d38937d0ef",
+              "uuid": "776ad9ea-b156-40a2-9ea8-29e48a14c951",
               "title": "#quantity",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\shoppingList.js",
               "file": "\\server-side\\tests\\unit-tests\\entities\\shoppingList.js",
@@ -519,8 +519,8 @@
                   "context": null,
                   "code": "const shoppingList = (0, _fakeShoppingList.default)(11223344, undefined);\n(0, _chai.expect)(() => (0, _domain.makeShoppingList)({ ...shoppingList\n})).to.throw(_errors.RequiredParameterError, 'A product quantity is a required.');",
                   "err": {},
-                  "uuid": "e499b8c4-12a7-41bc-b431-8ca66ee73914",
-                  "parentUUID": "dc328985-21c1-4b7e-91c2-57d38937d0ef",
+                  "uuid": "59db1841-bed9-46ac-a230-d95c8ef077d5",
+                  "parentUUID": "776ad9ea-b156-40a2-9ea8-29e48a14c951",
                   "isHook": false,
                   "skipped": false
                 },
@@ -528,7 +528,7 @@
                   "title": "a quantity can't be null",
                   "fullTitle": "SHOPPINGLIST ENTITY #quantity a quantity can't be null",
                   "timedOut": false,
-                  "duration": 1,
+                  "duration": 0,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -537,8 +537,8 @@
                   "context": null,
                   "code": "const shoppingList = (0, _fakeShoppingList.default)(11223344, null);\n(0, _chai.expect)(() => (0, _domain.makeShoppingList)({ ...shoppingList\n})).to.throw(TypeError, \"A product's quantity must be a number.\");",
                   "err": {},
-                  "uuid": "4eed467d-b49d-445b-a9e2-0d5dfedfb831",
-                  "parentUUID": "dc328985-21c1-4b7e-91c2-57d38937d0ef",
+                  "uuid": "f4dfdb3f-d9f2-47b1-ad7f-4c64d0b6e2c5",
+                  "parentUUID": "776ad9ea-b156-40a2-9ea8-29e48a14c951",
                   "isHook": false,
                   "skipped": false
                 },
@@ -555,8 +555,8 @@
                   "context": null,
                   "code": "const shoppingList = (0, _fakeShoppingList.default)(11223344, \"404\");\n(0, _chai.expect)(() => (0, _domain.makeShoppingList)({ ...shoppingList\n})).to.throw(TypeError, \"A product's quantity must be a number.\");",
                   "err": {},
-                  "uuid": "ec261fd0-434c-4a3a-9440-820f40c8c866",
-                  "parentUUID": "dc328985-21c1-4b7e-91c2-57d38937d0ef",
+                  "uuid": "7bf227c8-0be3-4db8-9344-4dcd219b8cba",
+                  "parentUUID": "776ad9ea-b156-40a2-9ea8-29e48a14c951",
                   "isHook": false,
                   "skipped": false
                 },
@@ -573,8 +573,8 @@
                   "context": null,
                   "code": "const shoppingList = (0, _fakeShoppingList.default)(11223344, 22);\n(0, _chai.expect)(() => (0, _domain.makeShoppingList)({ ...shoppingList\n})).to.throw(RangeError, \"A product's quantity must be between 1 and 20.\");",
                   "err": {},
-                  "uuid": "6e2da26d-abde-4036-8581-15ffc977cb9d",
-                  "parentUUID": "dc328985-21c1-4b7e-91c2-57d38937d0ef",
+                  "uuid": "c0f7280f-9bc0-4767-95ba-252cafea1553",
+                  "parentUUID": "776ad9ea-b156-40a2-9ea8-29e48a14c951",
                   "isHook": false,
                   "skipped": false
                 },
@@ -591,24 +591,24 @@
                   "context": null,
                   "code": "const shoppingList = (0, _fakeShoppingList.default)(11223344, 0);\n(0, _chai.expect)(() => (0, _domain.makeShoppingList)({ ...shoppingList\n})).to.throw(RangeError, \"A product's quantity must be between 1 and 20.\");",
                   "err": {},
-                  "uuid": "f52ad481-a56c-484c-9bec-3fb519ea70fb",
-                  "parentUUID": "dc328985-21c1-4b7e-91c2-57d38937d0ef",
+                  "uuid": "7e6447bc-1555-4ea6-bc26-f3a31033c0e2",
+                  "parentUUID": "776ad9ea-b156-40a2-9ea8-29e48a14c951",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "e499b8c4-12a7-41bc-b431-8ca66ee73914",
-                "4eed467d-b49d-445b-a9e2-0d5dfedfb831",
-                "ec261fd0-434c-4a3a-9440-820f40c8c866",
-                "6e2da26d-abde-4036-8581-15ffc977cb9d",
-                "f52ad481-a56c-484c-9bec-3fb519ea70fb"
+                "59db1841-bed9-46ac-a230-d95c8ef077d5",
+                "f4dfdb3f-d9f2-47b1-ad7f-4c64d0b6e2c5",
+                "7bf227c8-0be3-4db8-9344-4dcd219b8cba",
+                "c0f7280f-9bc0-4767-95ba-252cafea1553",
+                "7e6447bc-1555-4ea6-bc26-f3a31033c0e2"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 2,
+              "duration": 1,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000
@@ -624,7 +624,7 @@
           "_timeout": 10000
         },
         {
-          "uuid": "3cc2282e-1023-46ad-9be6-27dd7f1554c2",
+          "uuid": "362c3a1e-e824-49ec-a1b0-bc199d298221",
           "title": "USER ENTITY",
           "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\user.js",
           "file": "\\server-side\\tests\\unit-tests\\entities\\user.js",
@@ -633,7 +633,7 @@
           "tests": [],
           "suites": [
             {
-              "uuid": "c30c8620-a0e6-442c-9400-223c1841c037",
+              "uuid": "d2066e15-1456-47fb-9455-80d3c9377695",
               "title": "#user",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\user.js",
               "file": "\\server-side\\tests\\unit-tests\\entities\\user.js",
@@ -644,7 +644,7 @@
                   "title": "it should make a user",
                   "fullTitle": "USER ENTITY #user it should make a user",
                   "timedOut": false,
-                  "duration": 82,
+                  "duration": 79,
                   "state": "passed",
                   "speed": "slow",
                   "pass": true,
@@ -653,26 +653,26 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)();\nconst buildUser = (0, _domain.makeUser)({ ...user\n});\n(0, _chai.expect)(buildUser.getFirstName()).to.be.eql(user.firstName);\n(0, _chai.expect)(buildUser.getLastName()).to.be.eql(user.lastName);\n(0, _chai.expect)(buildUser.getUsername()).to.be.eql(user.username);\n(0, _chai.expect)(buildUser.getEmail()).to.be.eql(user.email);\n(0, _chai.expect)(buildUser.getPassword()).not.to.be.eql(user.password);",
                   "err": {},
-                  "uuid": "1701c3d9-f572-417e-8620-ac15fce650a9",
-                  "parentUUID": "c30c8620-a0e6-442c-9400-223c1841c037",
+                  "uuid": "30deb99e-d340-47a3-9ff0-fb7acaa2208c",
+                  "parentUUID": "d2066e15-1456-47fb-9455-80d3c9377695",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "1701c3d9-f572-417e-8620-ac15fce650a9"
+                "30deb99e-d340-47a3-9ff0-fb7acaa2208c"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 82,
+              "duration": 79,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000
             },
             {
-              "uuid": "7cd7bdaf-4b2d-4c46-bd0d-844ec3b7b3a9",
+              "uuid": "3c751857-fc4c-4db3-b3d5-7e7f7fe02e92",
               "title": "#username",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\user.js",
               "file": "\\server-side\\tests\\unit-tests\\entities\\user.js",
@@ -683,7 +683,7 @@
                   "title": "a user must have a username",
                   "fullTitle": "USER ENTITY #username a user must have a username",
                   "timedOut": false,
-                  "duration": 1,
+                  "duration": 0,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -692,8 +692,8 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  username: undefined\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(_errors.RequiredParameterError, 'A username is a required.');",
                   "err": {},
-                  "uuid": "8a6417c4-98df-49cb-9b7f-6b363834410f",
-                  "parentUUID": "7cd7bdaf-4b2d-4c46-bd0d-844ec3b7b3a9",
+                  "uuid": "002d3122-e0c6-4ce8-ab84-45c1ebae2336",
+                  "parentUUID": "3c751857-fc4c-4db3-b3d5-7e7f7fe02e92",
                   "isHook": false,
                   "skipped": false
                 },
@@ -710,8 +710,8 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  username: null\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(TypeError, 'A username must be a string.');",
                   "err": {},
-                  "uuid": "e2e8bd03-7d44-460b-84f3-ffac40669860",
-                  "parentUUID": "7cd7bdaf-4b2d-4c46-bd0d-844ec3b7b3a9",
+                  "uuid": "db4e66e6-b21e-47fa-a6e3-7fa8cca57692",
+                  "parentUUID": "3c751857-fc4c-4db3-b3d5-7e7f7fe02e92",
                   "isHook": false,
                   "skipped": false
                 },
@@ -728,8 +728,8 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  username: 123\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(TypeError, 'A username must be a string.');",
                   "err": {},
-                  "uuid": "0bf72be8-7c18-4410-9893-edb0bd084ccf",
-                  "parentUUID": "7cd7bdaf-4b2d-4c46-bd0d-844ec3b7b3a9",
+                  "uuid": "817bcff5-a73c-45e0-88e7-7971eabb1049",
+                  "parentUUID": "3c751857-fc4c-4db3-b3d5-7e7f7fe02e92",
                   "isHook": false,
                   "skipped": false
                 },
@@ -737,7 +737,7 @@
                   "title": "a username max length must be 32",
                   "fullTitle": "USER ENTITY #username a username max length must be 32",
                   "timedOut": false,
-                  "duration": 1,
+                  "duration": 0,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -746,8 +746,8 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  username: \"abc\".repeat(35)\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(RangeError, 'A username length must be between 4 and 32.');",
                   "err": {},
-                  "uuid": "a962944b-bbc1-4c96-aab5-cd3163ee64cf",
-                  "parentUUID": "7cd7bdaf-4b2d-4c46-bd0d-844ec3b7b3a9",
+                  "uuid": "b6808853-b3c8-481e-9ca4-3bef80c1f020",
+                  "parentUUID": "3c751857-fc4c-4db3-b3d5-7e7f7fe02e92",
                   "isHook": false,
                   "skipped": false
                 },
@@ -755,7 +755,7 @@
                   "title": "a username min length must be 4",
                   "fullTitle": "USER ENTITY #username a username min length must be 4",
                   "timedOut": false,
-                  "duration": 1,
+                  "duration": 0,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -764,30 +764,30 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  username: \"ab\"\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(RangeError, 'A username length must be between 4 and 32.');",
                   "err": {},
-                  "uuid": "1fc82bbf-9236-4dc1-aad0-a0e991a2ff1d",
-                  "parentUUID": "7cd7bdaf-4b2d-4c46-bd0d-844ec3b7b3a9",
+                  "uuid": "dc2e11b7-4be2-43ef-8751-1c37c9b154be",
+                  "parentUUID": "3c751857-fc4c-4db3-b3d5-7e7f7fe02e92",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "8a6417c4-98df-49cb-9b7f-6b363834410f",
-                "e2e8bd03-7d44-460b-84f3-ffac40669860",
-                "0bf72be8-7c18-4410-9893-edb0bd084ccf",
-                "a962944b-bbc1-4c96-aab5-cd3163ee64cf",
-                "1fc82bbf-9236-4dc1-aad0-a0e991a2ff1d"
+                "002d3122-e0c6-4ce8-ab84-45c1ebae2336",
+                "db4e66e6-b21e-47fa-a6e3-7fa8cca57692",
+                "817bcff5-a73c-45e0-88e7-7971eabb1049",
+                "b6808853-b3c8-481e-9ca4-3bef80c1f020",
+                "dc2e11b7-4be2-43ef-8751-1c37c9b154be"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 4,
+              "duration": 1,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000
             },
             {
-              "uuid": "b224a5d5-cff5-424b-b49c-a20432617fec",
+              "uuid": "a15cfa78-fe59-44fc-9f72-c58b162e83e0",
               "title": "#email",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\user.js",
               "file": "\\server-side\\tests\\unit-tests\\entities\\user.js",
@@ -798,7 +798,7 @@
                   "title": "a user must have an email",
                   "fullTitle": "USER ENTITY #email a user must have an email",
                   "timedOut": false,
-                  "duration": 1,
+                  "duration": 0,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -807,8 +807,8 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  email: undefined\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(_errors.RequiredParameterError, 'An email is a required.');",
                   "err": {},
-                  "uuid": "11ac9376-1951-4b71-baca-d8a4f5be7739",
-                  "parentUUID": "b224a5d5-cff5-424b-b49c-a20432617fec",
+                  "uuid": "9b4ac0a7-1245-4481-aa16-1aafa925e763",
+                  "parentUUID": "a15cfa78-fe59-44fc-9f72-c58b162e83e0",
                   "isHook": false,
                   "skipped": false
                 },
@@ -816,7 +816,7 @@
                   "title": "an email must be a valid email",
                   "fullTitle": "USER ENTITY #email an email must be a valid email",
                   "timedOut": false,
-                  "duration": 0,
+                  "duration": 1,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -825,8 +825,8 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  email: \"dangamil.com\"\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(SyntaxError, 'Invalid email.');",
                   "err": {},
-                  "uuid": "83e703ea-0374-4b46-a713-5b87dbf9006a",
-                  "parentUUID": "b224a5d5-cff5-424b-b49c-a20432617fec",
+                  "uuid": "c08b3c72-5bd5-4c1a-af83-1941c09b3b57",
+                  "parentUUID": "a15cfa78-fe59-44fc-9f72-c58b162e83e0",
                   "isHook": false,
                   "skipped": false
                 },
@@ -843,8 +843,8 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  email: null\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(SyntaxError, 'An email must be of type string.');",
                   "err": {},
-                  "uuid": "83c20993-bb9c-4f74-8dd1-dc2eb98a098f",
-                  "parentUUID": "b224a5d5-cff5-424b-b49c-a20432617fec",
+                  "uuid": "918520d7-380a-49c7-9124-589651d5fc43",
+                  "parentUUID": "a15cfa78-fe59-44fc-9f72-c58b162e83e0",
                   "isHook": false,
                   "skipped": false
                 },
@@ -861,18 +861,18 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  email: 123\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(SyntaxError, 'An email must be of type string.');",
                   "err": {},
-                  "uuid": "1731ef5b-877c-4170-94e1-b0e15a967dd3",
-                  "parentUUID": "b224a5d5-cff5-424b-b49c-a20432617fec",
+                  "uuid": "24e85f7c-f47a-4d2f-a73f-71cec466db10",
+                  "parentUUID": "a15cfa78-fe59-44fc-9f72-c58b162e83e0",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "11ac9376-1951-4b71-baca-d8a4f5be7739",
-                "83e703ea-0374-4b46-a713-5b87dbf9006a",
-                "83c20993-bb9c-4f74-8dd1-dc2eb98a098f",
-                "1731ef5b-877c-4170-94e1-b0e15a967dd3"
+                "9b4ac0a7-1245-4481-aa16-1aafa925e763",
+                "c08b3c72-5bd5-4c1a-af83-1941c09b3b57",
+                "918520d7-380a-49c7-9124-589651d5fc43",
+                "24e85f7c-f47a-4d2f-a73f-71cec466db10"
               ],
               "failures": [],
               "pending": [],
@@ -883,7 +883,7 @@
               "_timeout": 10000
             },
             {
-              "uuid": "78cf48f6-6b05-4f2f-be88-dcde2d1d3236",
+              "uuid": "99d72897-5d0d-40bd-84a9-c4657b903a2f",
               "title": "#password",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\entities\\user.js",
               "file": "\\server-side\\tests\\unit-tests\\entities\\user.js",
@@ -903,8 +903,8 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  password: undefined\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(_errors.RequiredParameterError, 'A password is a required.');",
                   "err": {},
-                  "uuid": "aef00e0c-6270-488c-864c-9c8fabf95203",
-                  "parentUUID": "78cf48f6-6b05-4f2f-be88-dcde2d1d3236",
+                  "uuid": "fbe2b712-fb1a-464c-a708-02b7543f3b5e",
+                  "parentUUID": "99d72897-5d0d-40bd-84a9-c4657b903a2f",
                   "isHook": false,
                   "skipped": false
                 },
@@ -912,7 +912,7 @@
                   "title": "can hash password",
                   "fullTitle": "USER ENTITY #password can hash password",
                   "timedOut": false,
-                  "duration": 79,
+                  "duration": 77,
                   "state": "passed",
                   "speed": "slow",
                   "pass": true,
@@ -921,8 +921,8 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)();\nconst password = (0, _domain.makeUser)({ ...user\n}).getPassword();\n(0, _chai.expect)(password.match(/^\\$2[aby]?\\$\\d{1,2}\\$[.\\/A-Za-z0-9]{53}$/)).to.not.be.null;",
                   "err": {},
-                  "uuid": "e2ffa2a3-a860-45aa-841d-cf8d9a309242",
-                  "parentUUID": "78cf48f6-6b05-4f2f-be88-dcde2d1d3236",
+                  "uuid": "8e2c752c-f28b-45a5-936d-52ddcfe6715b",
+                  "parentUUID": "99d72897-5d0d-40bd-84a9-c4657b903a2f",
                   "isHook": false,
                   "skipped": false
                 },
@@ -939,8 +939,8 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  password: null\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(TypeError, 'The password must be of type string.');",
                   "err": {},
-                  "uuid": "bb85c1eb-e259-45eb-aa78-16970c7a367b",
-                  "parentUUID": "78cf48f6-6b05-4f2f-be88-dcde2d1d3236",
+                  "uuid": "f86b69a4-7b3e-4b56-9a19-da8f3fe17037",
+                  "parentUUID": "99d72897-5d0d-40bd-84a9-c4657b903a2f",
                   "isHook": false,
                   "skipped": false
                 },
@@ -948,7 +948,7 @@
                   "title": "a password can't be a number",
                   "fullTitle": "USER ENTITY #password a password can't be a number",
                   "timedOut": false,
-                  "duration": 0,
+                  "duration": 1,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -957,23 +957,23 @@
                   "context": null,
                   "code": "const user = (0, _fakeUser.default)({\n  password: 123\n});\n(0, _chai.expect)(() => (0, _domain.makeUser)({ ...user\n})).to.throw(TypeError, 'The password must be of type string.');",
                   "err": {},
-                  "uuid": "fd087073-1e05-4d8d-a534-0e960473dfa7",
-                  "parentUUID": "78cf48f6-6b05-4f2f-be88-dcde2d1d3236",
+                  "uuid": "57b0793e-230e-4859-9999-242c57b99674",
+                  "parentUUID": "99d72897-5d0d-40bd-84a9-c4657b903a2f",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "aef00e0c-6270-488c-864c-9c8fabf95203",
-                "e2ffa2a3-a860-45aa-841d-cf8d9a309242",
-                "bb85c1eb-e259-45eb-aa78-16970c7a367b",
-                "fd087073-1e05-4d8d-a534-0e960473dfa7"
+                "fbe2b712-fb1a-464c-a708-02b7543f3b5e",
+                "8e2c752c-f28b-45a5-936d-52ddcfe6715b",
+                "f86b69a4-7b3e-4b56-9a19-da8f3fe17037",
+                "57b0793e-230e-4859-9999-242c57b99674"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 79,
+              "duration": 78,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000
@@ -989,7 +989,7 @@
           "_timeout": 10000
         },
         {
-          "uuid": "7bde1a38-c97b-45d8-b135-1e19b56e46bf",
+          "uuid": "8b7a7ffd-8988-414a-b6a0-bfadf6819881",
           "title": "SHOPPINGLIST SERVICE",
           "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\services\\shoppingList-service.js",
           "file": "\\server-side\\tests\\unit-tests\\services\\shoppingList-service.js",
@@ -998,7 +998,7 @@
               "title": "\"before all\" hook",
               "fullTitle": "SHOPPINGLIST SERVICE \"before all\" hook",
               "timedOut": false,
-              "duration": 343,
+              "duration": 435,
               "state": null,
               "speed": null,
               "pass": false,
@@ -1007,8 +1007,8 @@
               "context": null,
               "code": "const { ...fakeUser\n} = (0, _fakeUser.default)();\nconst { ...fakeGroup\n} = (0, _fakeGroup.default)(\"testoss\", \"testoss\");\ninsertedUser = await _services.userService.addUser({ ...fakeUser\n});\ninsertedGroup = await _services.groupService.addGroup({\n  username: insertedUser.username,\n  ...fakeGroup\n});\ninsertedUserGroup = await _services.groupService.addMembersToGroup({\n  groupId: insertedGroup.dataValues.groupId,\n  username: insertedUser.username\n});",
               "err": {},
-              "uuid": "980c2716-6929-4566-8661-6757d2cc8767",
-              "parentUUID": "7bde1a38-c97b-45d8-b135-1e19b56e46bf",
+              "uuid": "5cadfd14-7815-4806-a142-2fa85a2ded2e",
+              "parentUUID": "8b7a7ffd-8988-414a-b6a0-bfadf6819881",
               "isHook": true,
               "skipped": false
             }
@@ -1027,8 +1027,8 @@
               "context": null,
               "code": "await _services.groupService.deleteUserFromGroup({\n  groupId: insertedGroup.dataValues.groupId,\n  userId: insertedUser.userId\n});\nawait _services.groupService.deleteGroup({\n  groupId: insertedGroup.dataValues.groupId\n});\nawait _services.userService.removeUser({\n  userId: insertedUser.userId\n});",
               "err": {},
-              "uuid": "9fa69975-143d-463c-91b8-ea8e778a0691",
-              "parentUUID": "7bde1a38-c97b-45d8-b135-1e19b56e46bf",
+              "uuid": "9f9a3de5-94f8-41a1-b5b1-7b2f76714992",
+              "parentUUID": "8b7a7ffd-8988-414a-b6a0-bfadf6819881",
               "isHook": true,
               "skipped": false
             }
@@ -1036,7 +1036,7 @@
           "tests": [],
           "suites": [
             {
-              "uuid": "2dbaa886-7702-4ed5-8ed7-e2b4af50fa8b",
+              "uuid": "a08d2fac-3406-4a7c-9160-f0f121514ad9",
               "title": "#get-shopping-list",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\services\\shoppingList-service.js",
               "file": "\\server-side\\tests\\unit-tests\\services\\shoppingList-service.js",
@@ -1056,15 +1056,15 @@
                   "context": null,
                   "code": "",
                   "err": {},
-                  "uuid": "0b0be359-9eb9-4ad5-a086-78c09da3c67c",
-                  "parentUUID": "2dbaa886-7702-4ed5-8ed7-e2b4af50fa8b",
+                  "uuid": "501a09d3-cbce-4e3d-9d71-8fa9b2cc4c0b",
+                  "parentUUID": "a08d2fac-3406-4a7c-9160-f0f121514ad9",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "0b0be359-9eb9-4ad5-a086-78c09da3c67c"
+                "501a09d3-cbce-4e3d-9d71-8fa9b2cc4c0b"
               ],
               "failures": [],
               "pending": [],
@@ -1075,7 +1075,7 @@
               "_timeout": 10000
             },
             {
-              "uuid": "f86d2648-a3c3-49e9-b7bb-b22250d037f6",
+              "uuid": "19712fe3-ee73-4e78-b67d-0d3febbc70fd",
               "title": "#get-group-shopping-list",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\services\\shoppingList-service.js",
               "file": "\\server-side\\tests\\unit-tests\\services\\shoppingList-service.js",
@@ -1095,15 +1095,15 @@
                   "context": null,
                   "code": "",
                   "err": {},
-                  "uuid": "c9afa6de-c786-47e5-970d-c9459e1eda9d",
-                  "parentUUID": "f86d2648-a3c3-49e9-b7bb-b22250d037f6",
+                  "uuid": "506f5d76-48b9-4561-8cee-8bafdc7fdd4f",
+                  "parentUUID": "19712fe3-ee73-4e78-b67d-0d3febbc70fd",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "c9afa6de-c786-47e5-970d-c9459e1eda9d"
+                "506f5d76-48b9-4561-8cee-8bafdc7fdd4f"
               ],
               "failures": [],
               "pending": [],
@@ -1114,7 +1114,7 @@
               "_timeout": 10000
             },
             {
-              "uuid": "a72fe61c-d60a-459e-b912-dc7cdace8938",
+              "uuid": "b813eb80-4f17-4ed1-9f67-dfce5535e402",
               "title": "#add-product-to-shopping-list",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\services\\shoppingList-service.js",
               "file": "\\server-side\\tests\\unit-tests\\services\\shoppingList-service.js",
@@ -1134,8 +1134,8 @@
                   "context": null,
                   "code": "const addProduct = await _services.shoppingListService.putProductInShoppingList({});\n(0, _chai.expect)(addProduct.message).to.equal(\"You must supply a group id.\");",
                   "err": {},
-                  "uuid": "591b3b61-1968-4ce3-8cc7-9c4ab3dde03f",
-                  "parentUUID": "a72fe61c-d60a-459e-b912-dc7cdace8938",
+                  "uuid": "a7706a31-a3a3-4a09-9ae2-095823519422",
+                  "parentUUID": "b813eb80-4f17-4ed1-9f67-dfce5535e402",
                   "isHook": false,
                   "skipped": false
                 },
@@ -1143,7 +1143,7 @@
                   "title": "can add a new product",
                   "fullTitle": "SHOPPINGLIST SERVICE #add-product-to-shopping-list can add a new product",
                   "timedOut": false,
-                  "duration": 26,
+                  "duration": 25,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -1152,8 +1152,8 @@
                   "context": null,
                   "code": "const fakeShoppingList = (0, _fakeShoppingList.default)(CODE_BARRE, 4);\nconst addProduct = await _services.shoppingListService.putProductInShoppingList({\n  groupId: insertedGroup.dataValues.groupId,\n  userId: insertedUser.userId,\n  ...fakeShoppingList\n});\n(0, _chai.expect)(Number(addProduct.code)).to.equal(fakeShoppingList.code);\nawait _services.shoppingListService.removeProductFromShoppingList({\n  itemId: addProduct.id,\n  userId: insertedUser.userId\n});",
                   "err": {},
-                  "uuid": "59464858-97b1-4fc1-9e22-d2a6f360fed4",
-                  "parentUUID": "a72fe61c-d60a-459e-b912-dc7cdace8938",
+                  "uuid": "4a03d45e-2f5b-45f4-be79-ad3397c0cb13",
+                  "parentUUID": "b813eb80-4f17-4ed1-9f67-dfce5535e402",
                   "isHook": false,
                   "skipped": false
                 },
@@ -1161,7 +1161,7 @@
                   "title": "cannot add an inexisting product",
                   "fullTitle": "SHOPPINGLIST SERVICE #add-product-to-shopping-list cannot add an inexisting product",
                   "timedOut": false,
-                  "duration": 23,
+                  "duration": 12,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -1170,8 +1170,8 @@
                   "context": null,
                   "code": "const fakeShoppingList = (0, _fakeShoppingList.default)(1111111111100, 4);\nconst addProduct = await _services.shoppingListService.putProductInShoppingList({\n  groupId: insertedGroup.dataValues.groupId,\n  userId: insertedUser.userId,\n  ...fakeShoppingList\n});\n(0, _chai.expect)(addProduct.message).to.equal(`No product was found with this code ${fakeShoppingList.code}`);",
                   "err": {},
-                  "uuid": "9fdbfc6d-9411-4848-bfe6-f9a77fc3f125",
-                  "parentUUID": "a72fe61c-d60a-459e-b912-dc7cdace8938",
+                  "uuid": "bf4073a8-62b9-4a16-958c-231dca2dad4b",
+                  "parentUUID": "b813eb80-4f17-4ed1-9f67-dfce5535e402",
                   "isHook": false,
                   "skipped": false
                 },
@@ -1179,7 +1179,7 @@
                   "title": "cannot add twice a product for a single user",
                   "fullTitle": "SHOPPINGLIST SERVICE #add-product-to-shopping-list cannot add twice a product for a single user",
                   "timedOut": false,
-                  "duration": 31,
+                  "duration": 37,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -1188,29 +1188,29 @@
                   "context": null,
                   "code": "const fakeShoppingList = (0, _fakeShoppingList.default)(CODE_BARRE, 4);\nconst addProduct = await _services.shoppingListService.putProductInShoppingList({\n  groupId: insertedGroup.dataValues.groupId,\n  userId: insertedUser.userId,\n  ...fakeShoppingList\n});\nconst newAddProduct = await _services.shoppingListService.putProductInShoppingList({\n  groupId: insertedGroup.dataValues.groupId,\n  userId: insertedUser.userId,\n  ...fakeShoppingList\n});\n(0, _chai.expect)(newAddProduct.statusCode).to.equal(409);\nawait _services.shoppingListService.removeProductFromShoppingList({\n  itemId: addProduct.id,\n  userId: insertedUser.userId\n});",
                   "err": {},
-                  "uuid": "5ccd2eed-2662-444c-befb-a30d72f89c22",
-                  "parentUUID": "a72fe61c-d60a-459e-b912-dc7cdace8938",
+                  "uuid": "1c9439f0-611d-43cd-aeef-8d460326b574",
+                  "parentUUID": "b813eb80-4f17-4ed1-9f67-dfce5535e402",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "591b3b61-1968-4ce3-8cc7-9c4ab3dde03f",
-                "59464858-97b1-4fc1-9e22-d2a6f360fed4",
-                "9fdbfc6d-9411-4848-bfe6-f9a77fc3f125",
-                "5ccd2eed-2662-444c-befb-a30d72f89c22"
+                "a7706a31-a3a3-4a09-9ae2-095823519422",
+                "4a03d45e-2f5b-45f4-be79-ad3397c0cb13",
+                "bf4073a8-62b9-4a16-958c-231dca2dad4b",
+                "1c9439f0-611d-43cd-aeef-8d460326b574"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 81,
+              "duration": 75,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000
             },
             {
-              "uuid": "05a9d98e-c2ac-493b-bff3-19708b235adb",
+              "uuid": "5fd3de79-16ae-4ea6-8714-532941d3bbd7",
               "title": "#remove-product-to-shopping-list",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\services\\shoppingList-service.js",
               "file": "\\server-side\\tests\\unit-tests\\services\\shoppingList-service.js",
@@ -1230,8 +1230,8 @@
                   "context": null,
                   "code": "const removedProduct = await _services.shoppingListService.removeProductFromShoppingList({\n  itemId: undefined,\n  userId: ''\n});\n(0, _chai.expect)(removedProduct.message).to.equal('You must supply the item id.');",
                   "err": {},
-                  "uuid": "7e6222c2-23fb-4879-b96c-49562b4711fa",
-                  "parentUUID": "05a9d98e-c2ac-493b-bff3-19708b235adb",
+                  "uuid": "e7bd713d-8333-4ec6-8b61-cbf3bc04057b",
+                  "parentUUID": "5fd3de79-16ae-4ea6-8714-532941d3bbd7",
                   "isHook": false,
                   "skipped": false
                 },
@@ -1239,7 +1239,7 @@
                   "title": "can remove an existing product",
                   "fullTitle": "SHOPPINGLIST SERVICE #remove-product-to-shopping-list can remove an existing product",
                   "timedOut": false,
-                  "duration": 20,
+                  "duration": 19,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -1248,8 +1248,8 @@
                   "context": null,
                   "code": "const fakeShoppingList = (0, _fakeShoppingList.default)(CODE_BARRE, 4);\nconst addProduct = await _services.shoppingListService.putProductInShoppingList({\n  groupId: insertedGroup.dataValues.groupId,\n  userId: insertedUser.userId,\n  ...fakeShoppingList\n});\nconst removeProduct = await _services.shoppingListService.removeProductFromShoppingList({\n  itemId: addProduct.id,\n  userId: insertedUser.userId\n});\n(0, _chai.expect)(removeProduct).to.equal(1);",
                   "err": {},
-                  "uuid": "7b220fd3-51e3-49bf-9eeb-bef3428a597e",
-                  "parentUUID": "05a9d98e-c2ac-493b-bff3-19708b235adb",
+                  "uuid": "f9c07390-6442-4fb7-85a0-645b26ee23c8",
+                  "parentUUID": "5fd3de79-16ae-4ea6-8714-532941d3bbd7",
                   "isHook": false,
                   "skipped": false
                 },
@@ -1257,7 +1257,7 @@
                   "title": "cannot remove an inexisting product",
                   "fullTitle": "SHOPPINGLIST SERVICE #remove-product-to-shopping-list cannot remove an inexisting product",
                   "timedOut": false,
-                  "duration": 22,
+                  "duration": 21,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -1266,22 +1266,22 @@
                   "context": null,
                   "code": "const fakeShoppingList = (0, _fakeShoppingList.default)(CODE_BARRE, 4);\nconst addProduct = await _services.shoppingListService.putProductInShoppingList({\n  groupId: insertedGroup.dataValues.groupId,\n  userId: insertedUser.userId,\n  ...fakeShoppingList\n});\nawait _services.shoppingListService.removeProductFromShoppingList({\n  itemId: addProduct.id,\n  userId: insertedUser.userId\n});\nconst newRemoveProduct = await _services.shoppingListService.removeProductFromShoppingList({\n  itemId: addProduct.id,\n  userId: insertedUser.userId\n});\n(0, _chai.expect)(newRemoveProduct.message).to.equal(`No item with this id '${addProduct.id}' was found in the shopping list !`);",
                   "err": {},
-                  "uuid": "d091b3fa-2fdf-4f62-a5ca-ddd23c5646c7",
-                  "parentUUID": "05a9d98e-c2ac-493b-bff3-19708b235adb",
+                  "uuid": "09f85f29-ab18-462a-8566-a4e55171d02c",
+                  "parentUUID": "5fd3de79-16ae-4ea6-8714-532941d3bbd7",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "7e6222c2-23fb-4879-b96c-49562b4711fa",
-                "7b220fd3-51e3-49bf-9eeb-bef3428a597e",
-                "d091b3fa-2fdf-4f62-a5ca-ddd23c5646c7"
+                "e7bd713d-8333-4ec6-8b61-cbf3bc04057b",
+                "f9c07390-6442-4fb7-85a0-645b26ee23c8",
+                "09f85f29-ab18-462a-8566-a4e55171d02c"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 42,
+              "duration": 40,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000
@@ -1297,7 +1297,7 @@
           "_timeout": 10000
         },
         {
-          "uuid": "7dd56a1f-d0ba-4b6c-8203-ae64e3b981ac",
+          "uuid": "ec75d97b-288d-46ca-a64c-30b9500f4686",
           "title": "USER SERVICE",
           "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\services\\user-service.js",
           "file": "\\server-side\\tests\\unit-tests\\services\\user-service.js",
@@ -1306,7 +1306,7 @@
           "tests": [],
           "suites": [
             {
-              "uuid": "9edc5d47-f790-4b0a-bcd9-239e957a4b40",
+              "uuid": "65a5844c-bef5-41cf-93bf-a3b2cfc9fef6",
               "title": "#register-user",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\services\\user-service.js",
               "file": "\\server-side\\tests\\unit-tests\\services\\user-service.js",
@@ -1326,8 +1326,8 @@
                   "context": null,
                   "code": "const { ...fakeUser\n} = (0, _fakeUser.default)();\nconst inserted = await _services.userService.addUser({ ...fakeUser\n});\nfakeUser.password = inserted.password;\nfakeUser.userId = inserted.userId;\n(0, _chai.expect)(inserted).to.deep.include(fakeUser);\nawait _services.userService.removeUser({\n  userId: inserted.userId\n});",
                   "err": {},
-                  "uuid": "83409850-3395-4222-b394-48c5dfc04929",
-                  "parentUUID": "9edc5d47-f790-4b0a-bcd9-239e957a4b40",
+                  "uuid": "5c7ce897-6c5c-4a3a-a6f6-fcda843569e4",
+                  "parentUUID": "65a5844c-bef5-41cf-93bf-a3b2cfc9fef6",
                   "isHook": false,
                   "skipped": false
                 },
@@ -1335,7 +1335,7 @@
                   "title": "can't register a user if he/she already exists",
                   "fullTitle": "USER SERVICE #register-user can't register a user if he/she already exists",
                   "timedOut": false,
-                  "duration": 84,
+                  "duration": 82,
                   "state": "passed",
                   "speed": "slow",
                   "pass": true,
@@ -1344,27 +1344,27 @@
                   "context": null,
                   "code": "const { ...fakeUser\n} = (0, _fakeUser.default)();\nconst firstUser = await _services.userService.addUser({ ...fakeUser\n});\nconst secondtUser = await _services.userService.addUser({ ...fakeUser\n});\n(0, _chai.expect)(secondtUser.message).to.equal(\"A user with the same username or email already exists !\");\nawait _services.userService.removeUser({\n  userId: firstUser.userId\n});",
                   "err": {},
-                  "uuid": "50d08bc6-66a8-4ce6-b4b3-71d268368856",
-                  "parentUUID": "9edc5d47-f790-4b0a-bcd9-239e957a4b40",
+                  "uuid": "12cc5a27-ef1c-4020-a8ee-8cc4d5a44e9a",
+                  "parentUUID": "65a5844c-bef5-41cf-93bf-a3b2cfc9fef6",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "83409850-3395-4222-b394-48c5dfc04929",
-                "50d08bc6-66a8-4ce6-b4b3-71d268368856"
+                "5c7ce897-6c5c-4a3a-a6f6-fcda843569e4",
+                "12cc5a27-ef1c-4020-a8ee-8cc4d5a44e9a"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 173,
+              "duration": 171,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000
             },
             {
-              "uuid": "bc3b62f4-b320-42cc-ba18-d4bc05354487",
+              "uuid": "132b52a3-39cc-44c9-acc6-dc3f37b1a16d",
               "title": "#login-user",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\services\\user-service.js",
               "file": "\\server-side\\tests\\unit-tests\\services\\user-service.js",
@@ -1375,7 +1375,7 @@
                   "title": "can authenticate a user",
                   "fullTitle": "USER SERVICE #login-user can authenticate a user",
                   "timedOut": false,
-                  "duration": 168,
+                  "duration": 170,
                   "state": "passed",
                   "speed": "slow",
                   "pass": true,
@@ -1384,8 +1384,8 @@
                   "context": null,
                   "code": "const { ...fakeUser\n} = (0, _fakeUser.default)();\nconst createdUser = await _services.userService.addUser({ ...fakeUser\n});\nconst loggedInUser = await _services.userService.logInUser({\n  pseudo: fakeUser.username,\n  password: fakeUser.password\n});\n(0, _chai.expect)(loggedInUser).to.have.property('token');\n(0, _chai.expect)(loggedInUser.data.username).to.equal(fakeUser.username);\nawait _services.userService.removeUser({\n  userId: createdUser.userId\n});",
                   "err": {},
-                  "uuid": "fcf46515-4225-4cc9-911a-ea7924b44861",
-                  "parentUUID": "bc3b62f4-b320-42cc-ba18-d4bc05354487",
+                  "uuid": "c7b6de9d-9005-4251-9317-2adb56c324d0",
+                  "parentUUID": "132b52a3-39cc-44c9-acc6-dc3f37b1a16d",
                   "isHook": false,
                   "skipped": false
                 },
@@ -1402,8 +1402,8 @@
                   "context": null,
                   "code": "const loggedInUser = await _services.userService.logInUser({\n  pseudo: undefined,\n  password: \"123\"\n});\n(0, _chai.expect)(loggedInUser.message).to.equal(\"You must supply a pseudo.\");",
                   "err": {},
-                  "uuid": "c6c1e7c4-79d5-4d04-8687-602d871f6c07",
-                  "parentUUID": "bc3b62f4-b320-42cc-ba18-d4bc05354487",
+                  "uuid": "c06ba65d-7223-48a5-a0b5-08425e0598e0",
+                  "parentUUID": "132b52a3-39cc-44c9-acc6-dc3f37b1a16d",
                   "isHook": false,
                   "skipped": false
                 },
@@ -1411,7 +1411,7 @@
                   "title": "must include an password",
                   "fullTitle": "USER SERVICE #login-user must include an password",
                   "timedOut": false,
-                  "duration": 0,
+                  "duration": 1,
                   "state": "passed",
                   "speed": "fast",
                   "pass": true,
@@ -1420,8 +1420,8 @@
                   "context": null,
                   "code": "const loggedInUser = await _services.userService.logInUser({\n  pseudo: \"12345\",\n  password: undefined\n});\n(0, _chai.expect)(loggedInUser.message).to.equal(\"You must supply a password.\");",
                   "err": {},
-                  "uuid": "5075d471-190c-477a-8d37-3785efec02e4",
-                  "parentUUID": "bc3b62f4-b320-42cc-ba18-d4bc05354487",
+                  "uuid": "c9e3e934-f6b6-48e4-b9ba-d105fca8c23b",
+                  "parentUUID": "132b52a3-39cc-44c9-acc6-dc3f37b1a16d",
                   "isHook": false,
                   "skipped": false
                 },
@@ -1438,8 +1438,8 @@
                   "context": null,
                   "code": "const loggedInUser = await _services.userService.logInUser({\n  pseudo: '*******',\n  password: '*******'\n});\n(0, _chai.expect)(loggedInUser.message).to.equal(\"Authentication failed !\");",
                   "err": {},
-                  "uuid": "32876c9a-07c3-4e24-8a9c-a9a7a5f597a5",
-                  "parentUUID": "bc3b62f4-b320-42cc-ba18-d4bc05354487",
+                  "uuid": "f8b4a5bb-deda-4557-b960-86d8ff6c7ebb",
+                  "parentUUID": "132b52a3-39cc-44c9-acc6-dc3f37b1a16d",
                   "isHook": false,
                   "skipped": false
                 },
@@ -1447,7 +1447,7 @@
                   "title": "can't authenticate a user with a wrong password user",
                   "fullTitle": "USER SERVICE #login-user can't authenticate a user with a wrong password user",
                   "timedOut": false,
-                  "duration": 165,
+                  "duration": 156,
                   "state": "passed",
                   "speed": "slow",
                   "pass": true,
@@ -1456,30 +1456,30 @@
                   "context": null,
                   "code": "const { ...fakeUser\n} = (0, _fakeUser.default)();\nconst createdUser = await _services.userService.addUser({ ...fakeUser\n});\nconst loggedInUser = await _services.userService.logInUser({\n  pseudo: fakeUser.username,\n  password: '*******'\n});\n(0, _chai.expect)(loggedInUser.message).to.equal(\"Authentication failed !\");\nawait _services.userService.removeUser({\n  userId: createdUser.userId\n});",
                   "err": {},
-                  "uuid": "3748ccf6-5fb5-4919-b8fc-a3fe9330bf03",
-                  "parentUUID": "bc3b62f4-b320-42cc-ba18-d4bc05354487",
+                  "uuid": "ee096a80-8e13-4e72-9f09-66d8b4899bfb",
+                  "parentUUID": "132b52a3-39cc-44c9-acc6-dc3f37b1a16d",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "fcf46515-4225-4cc9-911a-ea7924b44861",
-                "c6c1e7c4-79d5-4d04-8687-602d871f6c07",
-                "5075d471-190c-477a-8d37-3785efec02e4",
-                "32876c9a-07c3-4e24-8a9c-a9a7a5f597a5",
-                "3748ccf6-5fb5-4919-b8fc-a3fe9330bf03"
+                "c7b6de9d-9005-4251-9317-2adb56c324d0",
+                "c06ba65d-7223-48a5-a0b5-08425e0598e0",
+                "c9e3e934-f6b6-48e4-b9ba-d105fca8c23b",
+                "f8b4a5bb-deda-4557-b960-86d8ff6c7ebb",
+                "ee096a80-8e13-4e72-9f09-66d8b4899bfb"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 334,
+              "duration": 328,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000
             },
             {
-              "uuid": "4aec4419-9904-4fc1-8252-3169da6df0f0",
+              "uuid": "3360a2fc-79b4-4baa-83da-8eb970f0e0f2",
               "title": "#list-one-user",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\services\\user-service.js",
               "file": "\\server-side\\tests\\unit-tests\\services\\user-service.js",
@@ -1490,7 +1490,7 @@
                   "title": "find user by id",
                   "fullTitle": "USER SERVICE #list-one-user find user by id",
                   "timedOut": false,
-                  "duration": 87,
+                  "duration": 85,
                   "state": "passed",
                   "speed": "slow",
                   "pass": true,
@@ -1499,26 +1499,26 @@
                   "context": null,
                   "code": "const { ...fakeUser\n} = (0, _fakeUser.default)();\nconst inserted = await _services.userService.addUser({ ...fakeUser\n});\nfakeUser.userId = inserted.userId;\nconst listedOneUser = await _services.userService.listOneUser({\n  id: fakeUser.userId\n});\n(0, _chai.expect)(listedOneUser.dataValues.username).to.equal(fakeUser.username);\n(0, _chai.expect)(listedOneUser.dataValues.firstName).to.equal(fakeUser.firstName);\n(0, _chai.expect)(listedOneUser.dataValues.lastName).to.equal(fakeUser.lastName);\n(0, _chai.expect)(listedOneUser.dataValues.email).to.equal(fakeUser.email);\nawait _services.userService.removeUser({\n  userId: inserted.userId\n});",
                   "err": {},
-                  "uuid": "05fd1ed9-cf2a-4f80-a87b-3f2356b47bc0",
-                  "parentUUID": "4aec4419-9904-4fc1-8252-3169da6df0f0",
+                  "uuid": "bcfa16f0-8581-41a9-a5ec-c57cfc5d6257",
+                  "parentUUID": "3360a2fc-79b4-4baa-83da-8eb970f0e0f2",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "05fd1ed9-cf2a-4f80-a87b-3f2356b47bc0"
+                "bcfa16f0-8581-41a9-a5ec-c57cfc5d6257"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 87,
+              "duration": 85,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000
             },
             {
-              "uuid": "0e551193-2964-41c5-9703-332fe04b5b5a",
+              "uuid": "903056c3-0608-4511-9b82-18e2bad599b9",
               "title": "#update-one-user",
               "fullFile": "C:\\Users\\morga\\Documents\\web\\server-side\\tests\\unit-tests\\services\\user-service.js",
               "file": "\\server-side\\tests\\unit-tests\\services\\user-service.js",
@@ -1529,7 +1529,7 @@
                   "title": "update one user with userId",
                   "fullTitle": "USER SERVICE #update-one-user update one user with userId",
                   "timedOut": false,
-                  "duration": 94,
+                  "duration": 93,
                   "state": "passed",
                   "speed": "slow",
                   "pass": true,
@@ -1538,8 +1538,8 @@
                   "context": null,
                   "code": "const inserted = await _services.userService.addUser({ ...(0, _fakeUser.default)()\n});\nconst updatedInfo = (0, _fakeUser.default)({\n  username: 'test'\n});\nconst updatedUser = await _services.userService.putUser({\n  userId: inserted.userId,\n  ...updatedInfo\n});\n(0, _chai.expect)(updatedUser[1].dataValues.username).to.equal(updatedInfo.username);\nawait _services.userService.removeUser({\n  userId: inserted.userId\n});",
                   "err": {},
-                  "uuid": "0538c6f0-5e60-4bb5-86c9-e473233c155a",
-                  "parentUUID": "0e551193-2964-41c5-9703-332fe04b5b5a",
+                  "uuid": "7ebc8db2-3348-40b6-8909-c6f2e47b1031",
+                  "parentUUID": "903056c3-0608-4511-9b82-18e2bad599b9",
                   "isHook": false,
                   "skipped": false
                 },
@@ -1547,7 +1547,7 @@
                   "title": "can not update a user with an existing username or email",
                   "fullTitle": "USER SERVICE #update-one-user can not update a user with an existing username or email",
                   "timedOut": false,
-                  "duration": 168,
+                  "duration": 183,
                   "state": "passed",
                   "speed": "slow",
                   "pass": true,
@@ -1556,21 +1556,21 @@
                   "context": null,
                   "code": "const user1 = await _services.userService.addUser({ ...(0, _fakeUser.default)()\n});\nconst user2 = await _services.userService.addUser({ ...(0, _fakeUser.default)()\n});\nconst updatedInfo = (0, _fakeUser.default)({\n  username: user2.username\n});\nconst updatedUser1 = await _services.userService.putUser({\n  userId: user1.userId,\n  ...updatedInfo\n});\n(0, _chai.expect)(updatedUser1.message).to.equal('A user with the same username already exists !');\nawait _services.userService.removeUser({\n  userId: user1.userId\n});\nawait _services.userService.removeUser({\n  userId: user2.userId\n});",
                   "err": {},
-                  "uuid": "3b2d47f3-5cc1-4d75-9faa-e8a3350f6a8b",
-                  "parentUUID": "0e551193-2964-41c5-9703-332fe04b5b5a",
+                  "uuid": "4971905d-b4c6-4fee-840e-b16e7bee55c5",
+                  "parentUUID": "903056c3-0608-4511-9b82-18e2bad599b9",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "0538c6f0-5e60-4bb5-86c9-e473233c155a",
-                "3b2d47f3-5cc1-4d75-9faa-e8a3350f6a8b"
+                "7ebc8db2-3348-40b6-8909-c6f2e47b1031",
+                "4971905d-b4c6-4fee-840e-b16e7bee55c5"
               ],
               "failures": [],
               "pending": [],
               "skipped": [],
-              "duration": 262,
+              "duration": 276,
               "root": false,
               "rootEmpty": false,
               "_timeout": 10000

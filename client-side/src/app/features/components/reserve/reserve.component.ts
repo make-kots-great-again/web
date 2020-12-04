@@ -19,11 +19,14 @@ export class ReserveComponent implements OnInit {
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
-  gestionButton: boolean = true;
+  
   reserveArray: Array<Reserve> = [];
   bntStyle: string;
   quantity = 1;
 
+  gestionButton: boolean = true;
+  gestionButtonMessage: string = 'mode Management';
+  gestionButtonLegende: string = "le mode Management permet de gérer les produits qui sont en attente de validation";
   //checkbox variable
   masterSelected: boolean;
   checkedList: any;
@@ -88,6 +91,17 @@ export class ReserveComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
+  switchGestionMode(): void {
+    if (this.gestionButton) {
+      this.gestionButtonMessage = 'mode Gestion';
+      this.gestionButtonLegende = "Le mode Gestion permet de gérer les produits de la réserve";
+      this.gestionButton = false;
+    } else {
+      this.gestionButtonMessage = 'mode Management';
+      this.gestionButtonLegende = "Le mode Management permet de gérer les produits qui sont en attente de validation";
+      this.gestionButton = true;
+    }
+  }
   /****************************  API Methods ***************************************/
   
   addItem(value, index, listToUpdate) {
