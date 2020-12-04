@@ -51,7 +51,7 @@ export default function shoppingListControllerFactory() {
                 statusCode: 200,
                 body: {
                     success: true,
-                    message: 'Product successfully added to the list !',
+                    message: 'Ce produit a bien été ajouté à la liste !',
                     shoppingList: shoppingList
                 }
             }
@@ -83,7 +83,7 @@ export default function shoppingListControllerFactory() {
                 statusCode: 200,
                 body: {
                     success: true,
-                    message: 'Product delete from the list !',
+                    message: 'Vous avez bien supprimé ce produit',
                     shoppingList: shoppingList
                 }
             }
@@ -142,7 +142,7 @@ export default function shoppingListControllerFactory() {
                 statusCode: 200,
                 body: {
                     success: true,
-                    message: "Item's quantity was successfully updated !"
+                    message: "La quantité a bien été mise à jour"
                 }
             }
         } catch (e) {

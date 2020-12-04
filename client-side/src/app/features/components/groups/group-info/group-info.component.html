@@ -192,7 +192,7 @@
                 <b>{{productModel}}</b> n'a été trouvé !
               </div>
             </div>
-            <div *ngIf="verifyProduct() && !isPersonnalGroup"
+            <div *ngIf="!isPersonnalGroup"
                  class="custom-control custom-checkbox">
               <input
                 type="checkbox" class="custom-control-input" id="customCheck1"
@@ -207,6 +207,7 @@
                      class="btn btn-outline-success text-center
                   text-monospace font-italic font-weight-bolder"
                      [(ngModel)]="quantity" name="quantity"
+                     [disabled]="!verifyProduct()"
                      type="number" id="quantityInput" min="1" max="20"
                      placeholder="1">
             </label>

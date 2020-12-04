@@ -83,50 +83,10 @@
 
       <!-- Logout -->
       <li *ngIf="authService.currentUserValue" class="nav-item">
-        <a id="logoutBtn" class="nav-link"
-           data-toggle="modal" data-target="#LogoutModel"
-        style="cursor: pointer">
-          <i class="fa fa-sign-out"></i>Déconnexion</a>
+        <a (click)="onLogOutClick()" id="logoutBtnModel" class="nav-link" style="cursor: pointer">
+          <i class="fa fa-sign-out"></i>Déconnexion
+        </a>
       </li>
     </ul>
   </div>
 </nav>
-
-<!-- confirm logout modal  -->
-<div class="modal fade" id="LogoutModel" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-
-      <!-- confirm logout modal header -->
-      <div class="modal-header">
-        <h5 class="modal-title text-monospace font-italic font-weight-bolder"
-            id="exampleModalLongTitle">Se déconnecter de KotsApp</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <!-- confirm logout modal body -->
-      <div class="modal-body">
-        <h5 class="modal-title text-monospace font-italic" style="text-align: center">
-          <strong>Voulez-vous vraiment</strong></h5>
-        <br>
-        <p class="text-monospace font-italic" style="text-align: center">
-          Vous déconnecter de ce compte KotsApp ?</p>
-      </div>
-
-      <!-- confirm logout modal footer -->
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary text-monospace
-        font-italic font-weight-bolder" data-dismiss="modal">Annuler
-        </button>
-        <button (click)="onLogOutClick()" type="button" id="logoutBtnModel"
-                data-dismiss="modal" class="btn btn-danger text-monospace
-                font-italic font-weight-bolder">Déconnexion
-        </button>
-      </div>
-    </div>
-  </div>
-</div>

@@ -1,14 +1,13 @@
-
 <div class="row connexion ">
   <div class="container register-form col-lg-7 col-md-8 col-sm-8 rounded">
 
     <div class="form rounded col-12">
-     <div *ngIf="alert">
-       <div *ngIf="alert === 401" class="alert alert-dismissible alert-danger">
-         <button type="button" class="close" data-dismiss="alert">&times;</button>
-         <strong>Authentication failed !</strong>
-       </div>
-     </div>
+      <div *ngIf="alert">
+        <div *ngIf="alert === 401" class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong id="errorMessage">Authentication failed !</strong>
+        </div>
+      </div>
       <div class="note bg-dark">
         <h3 id="formTitle" class="font-weight-bolder mb-3" style="padding-top: 10px"> Se connecter à KotsApp</h3>
         <p class="font-weight-bold " style="font-size: 0.9rem">
@@ -25,9 +24,9 @@
                  [class.is-valid]="!(pseudoInput.invalid && pseudoInput.untouched)"
                  class="form-control" type="text" id="pseudo"
                  [(ngModel)]="pseudo" name="pseudo"
-                 placeholder="Pseudonyme"  required autofocus>
-                 <label for="pseudo">pseudonyme ou adresse mail</label>
-          <small id="emailError" class="text-danger" [class.d-none]="pseudoInput.valid ||
+                 placeholder="Pseudonyme" required autofocus>
+          <label for="pseudo">pseudonyme ou adresse mail</label>
+          <small id="pseudoError" class="text-danger" [class.d-none]="pseudoInput.valid ||
             pseudoInput.untouched">Ce champ est obligatoire</small>
         </div>
         <br>
@@ -39,8 +38,8 @@
                  [class.is-valid]="!(passwordInput.invalid && passwordInput.untouched)"
                  class="form-control" type="password" id="password"
                  [(ngModel)]="password" name="password"
-                 placeholder="Mot de passe"  required autofocus>
-                 <label for="password">mot de passe</label>
+                 placeholder="Mot de passe" required autofocus>
+          <label for="password">mot de passe</label>
           <small id="passwordError" class="text-danger" [class.d-none]="passwordInput.valid ||
             passwordInput.untouched">Un mot de passe est requis</small>
         </div>
@@ -55,8 +54,8 @@
             </button>
           </div>
           <div class="ml-auto">
-            <small class="">
-              <a class="nav-link font-italic" id="signUpLink"
+            <small>
+              <a id="signUpLink" class="nav-link font-italic"
                  style="text-decoration: underline; color: #343A40"
                  [routerLink]="['/register']">Pas de compte ? inscrivez-vous</a>
             </small>
@@ -65,4 +64,4 @@
       </form>
     </div>
   </div>
-  </div>
+</div>

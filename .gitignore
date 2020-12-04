@@ -1,3 +1,8 @@
+
+# Test coverage and test reports
+./test-coverage
+./test-reports
+
 # Logs
 logs
 *.log

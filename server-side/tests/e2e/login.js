@@ -29,21 +29,20 @@ describe('E2E TESTS FOR LOGIN PAGE', async () => {
 
     describe('/POST Login', async () => {
 
-       it('it should login a user', async () => {
-
+        it('it should login a user', async () => {
 
             expect(await page.$eval('#formTitle', e => e.innerText)).to.eql("Se connecter à KotsApp");
 
             expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
 
-            const pseudo = await page.$('#pseudo'); 
+            const pseudo = await page.$('#pseudo');
             const password = await page.$('#password');
             const submit = await page.$('#submitBtn');
 
-            await pseudo.click({ clickCount: 3 });
+            await pseudo.click({clickCount: 3});
             await pseudo.type('james@gmail.com');
 
-            await password.click({ clickCount: 3});
+            await password.click({clickCount: 3});
             await password.type('toto');
 
             expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(false);
@@ -53,80 +52,66 @@ describe('E2E TESTS FOR LOGIN PAGE', async () => {
 
             expect(page.url()).eql('http://localhost:4200/groups');
 
-           await page.waitFor(2000);
+            await page.waitFor(1000);
 
-            //const logoutBtn = await page.$('#logoutBtn');
-            //await logoutBtn.click();
+            const logoutBtnModel = await page.$('#logoutBtnModel');
+            await logoutBtnModel.click();
 
-           //const logoutBtnModel = await page.$('#logoutBtnModel');
-           //await logoutBtnModel.click();
+            await page.waitForNavigation();
 
-          // await page.waitFor(1000);
+            expect(page.url()).eql('http://localhost:4200/login');
 
-           //expect(page.url()).eql('http://localhost:4200/login');
-
-
-            //logoutBtnModel
         });
 
-       xit('it should NOT login a user with a wrong password', async () => {
+        it('it should NOT login a user with incorrect credentials', async () => {
 
             const pseudo = await page.$('#pseudo');
             const password = await page.$('#password');
             const submit = await page.$('#submitBtn');
 
-            await pseudo.click({ clickCount: 3 });
-            await pseudo.type('dan30@gmail.com');
+            await pseudo.click({clickCount: 3});
+            await pseudo.type('********');
 
-            await password.click({ clickCount: 3});
+            await password.click({clickCount: 3});
             await password.type('*****');
 
             await submit.click();
             await page.waitFor(1000);
 
-            expect((await page.$eval('#flashMessages', e => e.innerHTML))
-                .includes('alert')).eql(true);
+            expect(await page.$eval('#errorMessage', e => e.innerText)).eql('Authentication failed !');
 
             expect(page.url()).eql('http://localhost:4200/login');
         });
 
     });
 
-    describe.skip('/login errors', async () => {
+    describe('/login form errors', async () => {
 
         it('it should display form validation on all fields', async () => {
 
             const pseudo = await page.$('#pseudo');
             const password = await page.$('#password');
 
-            await pseudo.click({ clickCount: 3 });
+            await pseudo.click({clickCount: 3});
             await pseudo.type('');
 
-            await password.click({ clickCount: 3});
+            await password.click({clickCount: 3});
             await password.type('');
 
-            await pseudo.click({ clickCount: 3 });
+            await pseudo.click({clickCount: 3});
             await page.waitFor(1000);
 
-            expect((await page.$eval('#pseudo', el => el.className))
-                .includes('is-invalid')).eql(true);
+            expect((await page.$eval('#pseudo', e => e.className)).includes('is-invalid')).eql(true);
 
-            expect((await page.$eval('#password', el => el.className))
-                .includes('is-invalid')).eql(true);
+            expect(await page.$eval('#pseudoError', e => e.innerText)).eql('Ce champ est obligatoire');
+
+            expect((await page.$eval('#password', e => e.className)).includes('is-invalid')).eql(true);
+
+            expect(await page.$eval('#passwordError', e => e.innerText)).eql('Un mot de passe est requis');
 
             expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
 
             expect(page.url()).eql('http://localhost:4200/login');
-        });
-
-        it('it should nagivate to the signup page', async () => {
-
-            const singUp = await page.$('#signUpLink');
-
-            await singUp.click();
-            await page.waitForNavigation();
-
-            expect(page.url()).eql('http://localhost:4200/register');
         });
 
     });

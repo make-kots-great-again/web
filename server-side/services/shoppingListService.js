@@ -1,7 +1,7 @@
 import {makeShoppingList} from '../domain'
-import {groupService, userService, reserveService, productService} from "./index";
+import {groupService, userService, productService} from "./index";
 
-export default function shoppingListServiceFactory({shoppingListRepository, productRepository}) {
+export default function shoppingListServiceFactory({shoppingListRepository}) {
     return Object.freeze({
         listMyShoppingLists, putProductInShoppingList, removeProductFromShoppingList,
         getGroupShoppingList, editItemQuantity
@@ -24,21 +24,23 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
             const shoppingList = await shoppingListRepository.findGroupShoppingList({groupId: x.dataValues.groupId});
 
             if (shoppingList.length === 0) {
+
                 const findGroupName = await groupService.getGroup({groupId: x.dataValues.groupId});
+
                 info.push(
-                {   groupId: x.dataValues.groupId,
-                    list: `list - ${findGroupName.dataValues.groupName}`
-                });
+                    {
+                        groupId: x.dataValues.groupId,
+                        list: `list - ${findGroupName.dataValues.groupName}`,
+                        listType: (x.dataValues["roleInThisGroup"].dataValues.role === 'personal') ? 'PERSONAL' : 'GROUP',
+                    });
             }
 
             for (const y of shoppingList) {
 
-                const findUsername = await userService.listOneUser(
-                    {id: y.dataValues["owners"].dataValues.userId});
+                const findUsername = await userService.listOneUser({id: y.dataValues["owners"].dataValues.userId});
 
-                const findGroupName = await groupService.getGroup(
-                    {groupId: x.dataValues.groupId});
-                    
+                const findGroupName = await groupService.getGroup({groupId: x.dataValues.groupId});
+
                 info.push(
                     {
                         code: y.dataValues.product.dataValues.code,
@@ -49,6 +51,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
                         quantity: y.dataValues.quantity,
                         groupId: x.dataValues.groupId,
                         shoppingListId: y.dataValues.id,
+                        listType: (y.dataValues["owners"].dataValues.role !== 'personal') ? 'GROUP' : 'PERSONAL',
                         groupProduct: y.dataValues.groupProduct,
                         username: (y.dataValues.groupProduct) ? 'group' : findUsername.dataValues.username,
                         list: (y.dataValues["owners"].dataValues.role !== 'personal') ?
@@ -69,7 +72,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
         const groupInfo = await groupService.getGroup({groupId});
 
         if (groupInfo.message) return {message: groupInfo.message};
-        
+
         const findGroup = await groupService.getIdGroupUser({
             groupId: groupId,
             userId: userId
@@ -81,22 +84,38 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
         const findList = await getGroupShoppingList({groupId: groupId});
 
+        const product = makeShoppingList({...productInfo});
+
+
+        if (product.getgroupProduct()) {
+
+            const existingGroupProduct = findList.find(x =>
+                Number(x.code) === Number(productInfo.code) && x.groupProduct);
+
+            if (existingGroupProduct)
+                return {
+                    statusCode: 409,
+                    message: `${existingGroupProduct.product_name} est déjà dans liste !`
+                };
+        }
+
         const existingProduct = findList.find(x =>
-            Number(x.code) === Number(productInfo.code) && x.username === findUser.dataValues.username);
-        
+            Number(x.code) === Number(productInfo.code) &&
+            x.username === findUser.dataValues.username &&
+            x.groupProduct === product.getgroupProduct());
+
         if (existingProduct)
             return {
                 statusCode: 409,
-                message: `You have already added ${existingProduct.product_name} to this list !`
+                message: `Vous avez déjà ${existingProduct.product_name}`
             };
-
-        const product = makeShoppingList({...productInfo});
 
         const findProductCode = await productService.getProductCode({code: product.getProductCode()});
 
         if (findProductCode.message) return {
             statusCode: findProductCode.statusCode,
-            message: findProductCode.message};
+            message: findProductCode.message
+        };
 
         return await shoppingListRepository.save({
             id_group_user: findGroup.dataValues.id_group_user,
@@ -123,7 +142,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
         if (!findItemUser) return {
             statusCode: 403,
-            message: `Unfortunately you don't own this item.`
+            message: `Ce produit ne vous appartient pas`
         };
 
         return await shoppingListRepository.removeProduct({id: itemId});
@@ -163,7 +182,6 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
         return result;
     }
 
-
     async function editItemQuantity({itemId, userId, quantity}) {
 
         if (!itemId) return {message: 'You must supply a listProduct id.'};
@@ -180,7 +198,7 @@ export default function shoppingListServiceFactory({shoppingListRepository, prod
 
         if (!findItemUser) return {
             statusCode: 403,
-            message: `Unfortunately you don't own this item.`
+            message: `Ce produit ne vous appartient pas`
         };
 
         if (typeof quantity !== 'number') return {message: "A product's quantity must be a number."};
