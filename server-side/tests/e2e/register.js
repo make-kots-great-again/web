@@ -6,6 +6,8 @@ describe('E2E TESTS FOR SINGUP PAGE', async () => {
     let browser;
     let page;
 
+    const user = Math.random().toString(36).substr(2, 9);
+
     before(async () => {
         browser = await puppeteer.launch({
             headless: false,
@@ -28,34 +30,45 @@ describe('E2E TESTS FOR SINGUP PAGE', async () => {
 
         it('it should singup a user', async () => {
 
-            expect(await page.$eval('#formTitle', e => e.innerText))
-                .to.eql("Create an Account");
+            expect(await page.$eval('#formTitle', e => e.innerText)).to.eql("Créer un compte");
 
             expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
 
             const username = await page.$('#username');
+            const lastName = await page.$('#lastNameInput');
+            const fistName = await page.$('#fistNameInput');
             const email = await page.$('#inputEmail');
             const password = await page.$('#inputPassword');
             const confirmPassword = await page.$('#PasswordConfirm');
             const submit = await page.$('#submitBtn');
 
-            const user = Math.random().toString(36).substr(2, 4);
+            await lastName.click({clickCount: 3});
+            await lastName.type(user.split('').reverse().join(''));
 
-            await username.click({ clickCount: 3 });
+            await fistName.click({clickCount: 3});
+            await fistName.type(user.split('').sort(() => Math.random() - 0.5).join(''));
+
+            await username.click({clickCount: 3});
             await username.type(user);
 
-            await email.click({ clickCount: 3 });
+            await email.click({clickCount: 3});
             await email.type(`${user}@gmail.com`);
 
-            await password.click({ clickCount: 3});
+            await password.click({clickCount: 3});
             await password.type('toto');
 
-            await confirmPassword.click({ clickCount: 3});
+            await confirmPassword.click({clickCount: 3});
             await confirmPassword.type('toto');
 
             expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(false);
 
             await submit.click();
+
+            await page.waitFor(1000);
+
+            expect(await page.$eval('#successMessage', e => e.innerText))
+                .eql('User has been created successfully !');
+
             await page.waitForNavigation();
 
             expect(page.url()).eql('http://localhost:4200/login');
@@ -70,15 +83,14 @@ describe('E2E TESTS FOR SINGUP PAGE', async () => {
         it("it should display an error if the username's length is below 4", async () => {
 
             const username = await page.$('#username');
-            const email = await page.$('#inputEmail');
 
-            await username.click({ clickCount: 3 });
+            await username.click({clickCount: 3});
             await username.type('u');
-            await email.click({ clickCount: 3 });
+
             await page.waitFor(1000);
 
-            expect((await page.$eval('#usernameError1', el => el.innerHTML))
-                .includes('minimum')).eql(true);
+            expect(await page.$eval('#usernameError1', el => el.innerText))
+                .eql("u la longueur minimale est 4");
 
             expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
 
@@ -88,12 +100,14 @@ describe('E2E TESTS FOR SINGUP PAGE', async () => {
 
             const email = await page.$('#inputEmail');
 
-            await email.click({ clickCount: 3 });
-            await email.type('dan30gmail.com');
+            await email.click({clickCount: 3});
+            await email.type('laura-gmail.com');
             await page.waitFor(1000);
 
-            expect((await page.$eval('#emailInvalid', el => el.innerHTML))
-                .includes('is not a valid email')).eql(true);
+            expect(await page.$eval('#emailInvalid', el => el.innerText))
+                .eql("laura-gmail.com n'est pas un email valide");
+
+           // expect((await page.$eval('#emailInvalid', e => e.className)).includes('is-invalid')).eql(true);
 
             expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
 
@@ -104,16 +118,16 @@ describe('E2E TESTS FOR SINGUP PAGE', async () => {
             const password = await page.$('#inputPassword');
             const confirmPassword = await page.$('#PasswordConfirm');
 
-            await password.click({ clickCount: 3 });
-            await password.type('toto');
+            await password.click({clickCount: 3});
+            await password.type('qR7AAJGnZ4CorNWKBfsmYQ');
 
-            await confirmPassword.click({ clickCount: 3 });
-            await confirmPassword.type('totos');
+            await confirmPassword.click({clickCount: 3});
+            await confirmPassword.type('toto');
 
             await page.waitFor(1000);
 
             expect(await page.$eval('#passwordMatchError', el => el.innerHTML))
-                .eql('Passwords do not match');
+                .eql('Les mots de passe ne correspondent pas');
 
             expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
 
@@ -124,35 +138,43 @@ describe('E2E TESTS FOR SINGUP PAGE', async () => {
             expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
 
             const username = await page.$('#username');
+            const lastName = await page.$('#lastNameInput');
+            const fistName = await page.$('#fistNameInput');
             const email = await page.$('#inputEmail');
             const password = await page.$('#inputPassword');
             const confirmPassword = await page.$('#PasswordConfirm');
 
-            await username.click({ clickCount: 3 });
+            await lastName.click({clickCount: 3});
+            await lastName.type('');
+
+            await fistName.click({clickCount: 3});
+            await fistName.type('');
+
+            await username.click({clickCount: 3});
             await username.type('');
 
-            await email.click({ clickCount: 3 });
+            await email.click({clickCount: 3});
             await email.type('');
 
-            await password.click({ clickCount: 3});
+            await password.click({clickCount: 3});
             await password.type('');
 
-            await confirmPassword.click({ clickCount: 3});
+            await confirmPassword.click({clickCount: 3});
             await confirmPassword.type('');
 
-            await username.click({ clickCount: 3});
+            await username.click({clickCount: 3});
 
             expect(await page.$eval('#usernameError2', el => el.innerHTML))
-                .eql('A username is required');
+                .eql('Un pseudonyme est requis');
 
             expect(await page.$eval('#emailRequired', el => el.innerHTML))
-                .eql('An Email is required');
+                .eql('Une adresse email est requise');
 
             expect(await page.$eval('#passwordRequired', el => el.innerHTML))
-                .eql('A password is required');
+                .eql('Un mot de passe est requis');
 
             expect(await page.$eval('#confirmPasswordError', el => el.innerHTML))
-                .eql('Please confirm your password');
+                .eql('Veuillez confirmer votre mot de passe');
 
             expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
 
@@ -161,30 +183,40 @@ describe('E2E TESTS FOR SINGUP PAGE', async () => {
         it('it should display an error if the username or email alreay exists', async () => {
 
             const username = await page.$('#username');
+            const lastName = await page.$('#lastNameInput');
+            const fistName = await page.$('#fistNameInput');
             const email = await page.$('#inputEmail');
             const password = await page.$('#inputPassword');
             const confirmPassword = await page.$('#PasswordConfirm');
             const submit = await page.$('#submitBtn');
 
-            await username.click({ clickCount: 3 });
-            await username.type('dan30');
+            await lastName.click({clickCount: 3});
+            await lastName.type(user.split('').reverse().join(''));
 
-            await email.click({ clickCount: 3 });
-            await email.type('dan30@gmail.com');
+            await fistName.click({clickCount: 3});
+            await fistName.type(user.split('').sort(() => Math.random() - 0.5).join(''));
 
-            await password.click({ clickCount: 3});
-            await password.type('****');
+            await username.click({clickCount: 3});
+            await username.type(user);
 
-            await confirmPassword.click({ clickCount: 3});
-            await confirmPassword.type('****');
+            await email.click({clickCount: 3});
+            await email.type(`${user}@gmail.com`);
+
+            await password.click({clickCount: 3});
+            await password.type('toto');
+
+            await confirmPassword.click({clickCount: 3});
+            await confirmPassword.type('toto');
 
             expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(false);
 
             await submit.click();
+
             await page.waitFor(1000);
 
-            expect((await page.$eval('#flashMessages', e => e.innerHTML))
-                .includes('alert')).eql(true);
+            expect(await page.$eval('#errorMessage', e => e.innerText)).eql('Authentication failed !');
+
+            await page.waitFor(1000);
 
             expect(page.url()).eql('http://localhost:4200/register');
         });
