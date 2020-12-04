@@ -55,8 +55,11 @@
     <button type="button" class="btn btn-danger btn-sm ml-2" (click)="deleteAllItem()">Supprimer éléments
       selectionné</button>
   </div>
-
-
+  <div class="container mb-4">
+    <h6 class="text-monospace font-italic font-weight-bolder">
+      <i class="fa fa fa-square" aria-hidden="true" style="color: red"></i> 3 jours ou moins avant expiration
+    </h6>
+  </div>
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
@@ -136,6 +139,16 @@
 </div>
 
 <div *ngIf="reserveArray.length !== 0" class="container mb-4"  [ngbCollapse]="!isCollapsed">
+  <div class="container mb-4">
+    <h6 class="text-monospace font-italic font-weight-bolder">
+      <i class="fa fa fa-square" aria-hidden="true" style="color: red"></i> 3 jours ou moins avant expiration
+    </h6>
+  </div>
+  <div class="container mb-4">
+    <h6 class="text-monospace font-italic font-weight-bolder">
+      <i class="fa fa fa-square" aria-hidden="true" style="color: yellow"></i> 4 entre 7 jours avant expiration</h6>
+  </div>
+
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
