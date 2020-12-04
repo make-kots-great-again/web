@@ -1,5 +1,5 @@
-./test-coverage
-./test-reports
+test-coverage/
+test-reports/
 # Logs
 logs
 *.log
