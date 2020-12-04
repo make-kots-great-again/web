@@ -20,7 +20,7 @@ const langage = "french"
 
 Array(10).fill(0).forEach((x, i) => {
 
-    groupInfo = helper.generateGroupInfos(usernames[i], langage);
+   const groupInfo = helper.generateGroupInfos(usernames[i], langage);
 
     dummyUsers.push({
         firstName: usernames[i].split('').reverse().join(''),

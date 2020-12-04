@@ -30,7 +30,8 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
                 info.push(
                     {
                         groupId: x.dataValues.groupId,
-                        list: `list - ${findGroupName.dataValues.groupName}`,
+                        list: (x.dataValues["roleInThisGroup"].dataValues.role !== 'personal') ?
+                            `Liste ${findGroupName.dataValues.groupName}` : findGroupName.dataValues.groupName,
                         listType: (x.dataValues["roleInThisGroup"].dataValues.role === 'personal') ? 'PERSONAL' : 'GROUP',
                     });
             }
