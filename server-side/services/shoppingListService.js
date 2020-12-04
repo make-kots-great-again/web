@@ -55,7 +55,7 @@ export default function shoppingListServiceFactory({shoppingListRepository}) {
                         groupProduct: y.dataValues.groupProduct,
                         username: (y.dataValues.groupProduct) ? 'group' : findUsername.dataValues.username,
                         list: (y.dataValues["owners"].dataValues.role !== 'personal') ?
-                            `list - ${findGroupName.dataValues.groupName}` : findGroupName.dataValues.groupName
+                            `Liste ${findGroupName.dataValues.groupName}` : findGroupName.dataValues.groupName
                     });
             }
         }
