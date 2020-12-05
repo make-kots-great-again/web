@@ -35,7 +35,7 @@ export class GroupInfoComponent implements OnInit {
   quantity = 1;
   isCollapsed = false;
 
-  suppressButtonMessage: string = 'Activer la Suppression';
+  suppressButtonMessage = 'Activer la Suppression';
 
   isPersonnalGroup: boolean;
   isSuppressMode = true;
@@ -104,7 +104,7 @@ export class GroupInfoComponent implements OnInit {
 
           this.noGroupByProducts = data.forEach(x => x.showNote = false);
 
-          //this.templateShoppoingList = this.groupByProducts(data);
+          // this.templateShoppoingList = this.groupByProducts(data);
           this.templateShoppoingList = data;
 
           this.templateShoppoingList
@@ -122,7 +122,7 @@ export class GroupInfoComponent implements OnInit {
   }
 
   groupProductButton(event: EventTarget): void {
-    this.groupProduct = event['checked'];
+    this.groupProduct = event.checked;
   }
 
   addProductToShoppingList(): void {
@@ -152,7 +152,7 @@ export class GroupInfoComponent implements OnInit {
 
     const groupByProductCode = data
       .reduce((result, item) => ({
-        ...result, [item['code']]: [...(result[item['code']] || []), item]
+        ...result, [item.code]: [...(result[item.code] || []), item]
       }), {});
 
     const result = [];
@@ -162,7 +162,7 @@ export class GroupInfoComponent implements OnInit {
       .map(x => groupByProductCode[x])
       .reduce((a, b) => a.concat(b), [])
       .reduce((result, item) => ({
-        ...result, [item['code']]: [...(result[item['code']] || []), item]
+        ...result, [item.code]: [...(result[item.code] || []), item]
       }), {});
 
     const quantities = Object.keys(productCodes).map(x => productCodes[x].map(y => y.quantity));
@@ -176,7 +176,7 @@ export class GroupInfoComponent implements OnInit {
         username: usernames[i].join(' - '),
         quantity: quantities[i].reduce((a, b) => a + b, 0),
         flag: true,
-      })
+      });
     });
 
     const originalResult = Object.keys(groupByProductCode)
@@ -194,7 +194,7 @@ export class GroupInfoComponent implements OnInit {
 
     const groupByProductCode = this.noGroupByProducts
       .reduce((result, item) => ({
-        ...result, [item['code']]: [...(result[item['code']] || []), item]
+        ...result, [item.code]: [...(result[item.code] || []), item]
       }), {});
 
     this.templateShoppoingList = Object.keys(groupByProductCode)
@@ -290,7 +290,7 @@ export class GroupInfoComponent implements OnInit {
       distinctUntilChanged(),
       tap(() => this.searchingUsernames = true),
       switchMap((username: string) => {
-        if (username === '') return of([]);
+        if (username === '') { return of([]); }
         return this.userService.searchUsername(username).pipe(
           tap((data: Array<groupMember>) => (data.length === 0) ?
             this.usernameSearchFailed = true : this.usernameSearchFailed = false),
@@ -307,7 +307,7 @@ export class GroupInfoComponent implements OnInit {
       distinctUntilChanged(),
       tap(() => this.searching = true),
       switchMap((productName: string) => {
-        if (productName === '') return of([]);
+        if (productName === '') { return of([]); }
         return this.groupService.searchProducts(productName).pipe(
           tap((data: Array<Product>) => (data.length === 0) ?
             this.searchFailed = true : this.searchFailed = false),

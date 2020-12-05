@@ -1,8 +1,8 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {ReserveService} from "../../../core/services/reserve.service";
-import {ReplaySubject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
-import {Reserve} from "../../../shared/models/reserve.model";
+import {ReserveService} from '../../../core/services/reserve.service';
+import {ReplaySubject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {Reserve} from '../../../shared/models/reserve.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -19,15 +19,15 @@ export class ReserveComponent implements OnInit {
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
-  
+
   reserveArray: Array<Reserve> = [];
   bntStyle: string;
   quantity = 1;
 
-  gestionButton: boolean = true;
-  gestionButtonMessage: string = 'mode Management';
-  gestionButtonLegende: string = "le mode Management permet de gérer les produits qui sont en attente de validation";
-  //checkbox variable
+  gestionButton = true;
+  gestionButtonMessage = 'mode Management';
+  gestionButtonLegende = 'le mode Management permet de gérer les produits qui sont en attente de validation';
+  // checkbox variable
   masterSelected: boolean;
   checkedList: any;
   tempReserveArray: any;
@@ -42,9 +42,9 @@ export class ReserveComponent implements OnInit {
   isQuantitySortedTemp = false;
   isDaySortedTemp = false;
 
-  newQuantity=0;
-  newExpriringDate=0;
-  modifiedProduct:any={};
+  newQuantity = 0;
+  newExpriringDate = 0;
+  modifiedProduct: any = {};
 
   constructor(
     private reserveService: ReserveService,
@@ -59,9 +59,9 @@ export class ReserveComponent implements OnInit {
 
 
   updateItem(){
-    if(this.isCollapsed){
-      if(this.newQuantity == 0){
-        //this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.reserveArray);
+    if (this.isCollapsed){
+      if (this.newQuantity == 0){
+        // this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.reserveArray);
       }
       else{
         this.reserveService.reserveItemUpdate(this.newQuantity, this.modifiedProduct.id)
@@ -74,8 +74,8 @@ export class ReserveComponent implements OnInit {
       }
     }
     else{
-      if(this.newQuantity == 0){
-        //this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.tempReserveArray);
+      if (this.newQuantity == 0){
+        // this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.tempReserveArray);
       }
       else{
         this.reserveService.tempReserveItemUpdate(this.newQuantity, this.newExpriringDate, this.modifiedProduct.id)
@@ -94,23 +94,23 @@ export class ReserveComponent implements OnInit {
   switchGestionMode(): void {
     if (this.gestionButton) {
       this.gestionButtonMessage = 'mode Gestion';
-      this.gestionButtonLegende = "Le mode Gestion permet de gérer les produits de la réserve";
+      this.gestionButtonLegende = 'Le mode Gestion permet de gérer les produits de la réserve';
       this.gestionButton = false;
     } else {
       this.gestionButtonMessage = 'mode Management';
-      this.gestionButtonLegende = "Le mode Management permet de gérer les produits qui sont en attente de validation";
+      this.gestionButtonLegende = 'Le mode Management permet de gérer les produits qui sont en attente de validation';
       this.gestionButton = true;
     }
   }
   /****************************  API Methods ***************************************/
-  
+
   addItem(value, index, listToUpdate) {
-    
+
     this.reserveService.addItemToReserve(value)
       .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
-        index['valid']=true;
-        this.reserveArray.splice(index, 0,index);
-        //listToUpdate.splice(index, 1);
+        index.valid = true;
+        this.reserveArray.splice(index, 0, index);
+        // listToUpdate.splice(index, 1);
       },
         error => {
           console.error(error);
@@ -118,7 +118,7 @@ export class ReserveComponent implements OnInit {
   }
 
   deleteItem(value, index, listToDelete) {
-    
+
     this.reserveService.removeItemFromReserve(value)
       .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
         listToDelete.splice(index, 1);
@@ -129,7 +129,7 @@ export class ReserveComponent implements OnInit {
   }
 
   reserveInfo(): void {
-    
+
     this.reserveService.getGroupReserveItems(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
@@ -150,38 +150,38 @@ export class ReserveComponent implements OnInit {
   }
   /**************************** ADD/DELETE ALL ***************************************/
   addAllItem() {
-    
-    for (let i of this.tempReserveArray) {
-      if (i["isSelected"]) {
-        let data = {
-          "itemId": i['id'],
-          "validity": true
-        }
+
+    for (const i of this.tempReserveArray) {
+      if (i.isSelected) {
+        const data = {
+          itemId: i.id,
+          validity: true
+        };
         this.addItem(data, i, this.tempReserveArray);
       }
     }
   }
   deleteAllItem() {
-    
-    for (let i of this.tempReserveArray) {
-      if (i["isSelected"]) {
-        this.deleteItem(i['id'], i, this.tempReserveArray);
+
+    for (const i of this.tempReserveArray) {
+      if (i.isSelected) {
+        this.deleteItem(i.id, i, this.tempReserveArray);
       }
     }
   }
 
   /**************************** POPUP ***************************************/
-  open(content,index, currentArray) {
-    
+  open(content, index, currentArray) {
+
     this.newQuantity = currentArray[index].quantity;
     this.newExpriringDate = currentArray[index].expiringIn;
-    this.modifiedProduct = {'name': currentArray[index].product_name, 
-                            'index': index,
-                            'id': currentArray[index].id
+    this.modifiedProduct = {name: currentArray[index].product_name,
+                            index,
+                            id: currentArray[index].id
                           };
-    
-    this.modalService.open(content,{ centered: true });
-  }  
+
+    this.modalService.open(content, { centered: true });
+  }
 
   FieldsChange(values: any) {
     if (values) {
@@ -195,10 +195,10 @@ export class ReserveComponent implements OnInit {
 
   /**************************** CHECKBOXES ***************************************/
   tableManagement(): void {
-    let newTempArray = [];
-    let newReserveArray = [];
-    for (let i of this.tempReserveArray) {
-      if (i['valid']) {
+    const newTempArray = [];
+    const newReserveArray = [];
+    for (const i of this.tempReserveArray) {
+      if (i.valid) {
         newReserveArray.push(i);
       }
       else {
@@ -209,29 +209,30 @@ export class ReserveComponent implements OnInit {
     this.tempReserveArray = newTempArray;
     this.reserveArray = newReserveArray;
 
-    for (let i of this.tempReserveArray) {
-      i['isSelected'] = false;
+    for (const i of this.tempReserveArray) {
+      i.isSelected = false;
     }
   }
 
   checkUncheckAll() {
-    for (let i of this.tempReserveArray) {
+    for (const i of this.tempReserveArray) {
       i.isSelected = this.masterSelected;
     }
     this.getCheckedList();
   }
   isAllSelected() {
-    this.masterSelected = this.tempReserveArray.every(function (item: any) {
+    this.masterSelected = this.tempReserveArray.every(function(item: any) {
       return item.isSelected == true;
-    })
+    });
     this.getCheckedList();
   }
 
   getCheckedList() {
     this.checkedList = [];
-    for (let i of this.tempReserveArray) {
-      if (i.isSelected)
+    for (const i of this.tempReserveArray) {
+      if (i.isSelected) {
         this.checkedList.push(i);
+      }
     }
   }
 
