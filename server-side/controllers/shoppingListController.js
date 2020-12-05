@@ -1,144 +1,156 @@
-import controllers from '.'
-import { shoppingListService } from '../services'
+import controllers from ".";
+import {shoppingListService} from "../services";
 
-export default function shoppingListControllerFactory () {
-  return Object.freeze({
-    getShoppingList,
-    addProductToShoppingList,
-    removeProductToShoppingList,
-    getGroupShoppingList,
-    updateItemQuantity
-  })
+export default function shoppingListControllerFactory() {
+    return Object.freeze({
+        getShoppingList, addProductToShoppingList, removeProductToShoppingList,
+        getGroupShoppingList, updateItemQuantity
+    });
 
-  async function getShoppingList (httpRequest) {
-    const { userId } = httpRequest.user
+    async function getShoppingList(httpRequest) {
 
-    try {
-      const shoppingList = await shoppingListService.listMyShoppingLists({ userId })
+        const {userId} = httpRequest.user;
 
-      return {
-        statusCode: 200,
-        body: {
-          success: true,
-          shoppingList: shoppingList
+        try {
+            const shoppingList = await shoppingListService.listMyShoppingLists({userId});
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    shoppingList: shoppingList
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
         }
-      }
-    } catch (e) {
-      console.log(e)
-      return { statusCode: 400, body: { error: e.message } }
+
     }
-  }
 
-  async function addProductToShoppingList (httpRequest) {
-    const { userId } = httpRequest.user
-    const { groupId } = httpRequest.params
-    const { ...productInfo } = httpRequest.body
+    async function addProductToShoppingList(httpRequest) {
 
-    try {
-      const shoppingList = await shoppingListService
-        .putProductInShoppingList({ groupId, userId, ...productInfo })
+        const {userId} = httpRequest.user;
+        const {groupId} = httpRequest.params;
+        const {...productInfo} = httpRequest.body;
 
-      if (shoppingList.message) {
-        return {
-          statusCode: (shoppingList.statusCode) ? shoppingList.statusCode : 404,
-          body: { success: false, message: shoppingList.message }
+        try {
+            const shoppingList = await shoppingListService
+                .putProductInShoppingList({groupId, userId, ...productInfo});
+
+
+            if (shoppingList.message) {
+                return {
+                    statusCode: (shoppingList.statusCode) ? shoppingList.statusCode : 404,
+                    body: {success: false, message: shoppingList.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    message: 'Ce produit a bien été ajouté à la liste !',
+                    shoppingList: shoppingList
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
         }
-      }
 
-      return {
-        statusCode: 200,
-        body: {
-          success: true,
-          message: 'Product successfully added to the list !',
-          shoppingList: shoppingList
-        }
-      }
-    } catch (e) {
-      console.log(e)
-      return { statusCode: 400, body: { error: e.message } }
     }
-  }
 
-  async function removeProductToShoppingList (httpRequest) {
-    const { itemId } = httpRequest.params
-    const { userId } = httpRequest.user
+    async function removeProductToShoppingList(httpRequest) {
 
-    try {
-      const shoppingList = await shoppingListService
-        .removeProductFromShoppingList({ itemId, userId })
+        const {itemId} = httpRequest.params;
+        const {userId} = httpRequest.user;
 
-      if (shoppingList.message) {
-        return {
-          statusCode: (shoppingList.statusCode) ? shoppingList.statusCode : 404,
-          body: { success: false, message: shoppingList.message }
+        try {
+            const shoppingList = await shoppingListService
+                .removeProductFromShoppingList({itemId, userId});
+
+            if (shoppingList.message) {
+                return {
+                    statusCode: (shoppingList.statusCode) ? shoppingList.statusCode : 404,
+                    body: {success: false, message: shoppingList.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    message: 'Vous avez bien supprimé ce produit',
+                    shoppingList: shoppingList
+                }
+            }
+        } catch (e) {
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
         }
-      }
 
-      return {
-        statusCode: 200,
-        body: {
-          success: true,
-          message: 'Product delete from the list !',
-          shoppingList: shoppingList
-        }
-      }
-    } catch (e) {
-      console.log(e)
-      return { statusCode: 400, body: { error: e.message } }
     }
-  }
 
-  async function getGroupShoppingList (httpRequest) {
-    const { groupId } = httpRequest.params
+    async function getGroupShoppingList(httpRequest) {
 
-    try {
-      const shoppingList = await shoppingListService.getGroupShoppingList({ groupId })
+        const {groupId} = httpRequest.params;
 
-      if (shoppingList.message) {
-        return {
-          statusCode: 400,
-          body: { success: false, message: shoppingList.message }
+        try {
+            const shoppingList = await shoppingListService.getGroupShoppingList({groupId});
+
+            if (shoppingList.message) {
+                return {
+                    statusCode: 400,
+                    body: {success: false, message: shoppingList.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    shoppingList: shoppingList
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
         }
-      }
-
-      return {
-        statusCode: 200,
-        body: {
-          success: true,
-          shoppingList: shoppingList
-        }
-      }
-    } catch (e) {
-      console.log(e)
-      return { statusCode: 400, body: { error: e.message } }
     }
-  }
 
-  async function updateItemQuantity (httpRequest) {
-    const { itemId } = httpRequest.params
-    const { userId } = httpRequest.user
-    const { quantity } = httpRequest.body
+    async function updateItemQuantity(httpRequest) {
 
-    try {
-      const updatedShoppingList = await shoppingListService.editItemQuantity({ itemId, userId, quantity })
+        const {itemId} = httpRequest.params;
+        const {userId} = httpRequest.user;
+        const {quantity} = httpRequest.body;
 
-      if (updatedShoppingList.message) {
-        return {
-          statusCode: (updatedShoppingList.statusCode) ? updatedShoppingList.statusCode : 404,
-          body: { success: false, message: updatedShoppingList.message }
+        try {
+            const updatedShoppingList = await shoppingListService.editItemQuantity({itemId, userId, quantity});
+
+            if (updatedShoppingList.message) {
+                return {
+                    statusCode: (updatedShoppingList.statusCode) ? updatedShoppingList.statusCode : 404,
+                    body: {success: false, message: updatedShoppingList.message}
+                }
+            }
+
+            return {
+                statusCode: 200,
+                body: {
+                    success: true,
+                    message: "La quantité a bien été mise à jour"
+                }
+            }
+        } catch (e) {
+
+            console.log(e);
+            return {statusCode: 400, body: {error: e.message}}
         }
-      }
 
-      return {
-        statusCode: 200,
-        body: {
-          success: true,
-          message: 'Item\'s quantity was successfully updated !'
-        }
-      }
-    } catch (e) {
-      console.log(e)
-      return { statusCode: 400, body: { error: e.message } }
+
     }
-  }
 };

@@ -104,7 +104,8 @@ export class GroupInfoComponent implements OnInit {
 
           this.noGroupByProducts = data.forEach(x => x.showNote = false);
 
-          this.templateShoppoingList = this.groupByProducts(data);
+          //this.templateShoppoingList = this.groupByProducts(data);
+          this.templateShoppoingList = data;
 
           this.templateShoppoingList
             .sort((a, b) => (a.product_name > b.product_name) ? 1 :
@@ -140,6 +141,7 @@ export class GroupInfoComponent implements OnInit {
           this.showGroupShoppingList();
           this.productModel = '';
           this.quantity = 1;
+          (this.groupProduct) ? this.groupProduct = false : undefined;
         },
         error => {
           console.error(error);
@@ -202,8 +204,8 @@ export class GroupInfoComponent implements OnInit {
   }
 
   showNote(codee: any) {
-   // const findItem : any = this.templateShoppoingList.find((x: any) => x.code = codee.id);
-   // findItem.showItem = true;
+    // const findItem : any = this.templateShoppoingList.find((x: any) => x.code = codee.id);
+    // findItem.showItem = true;
   }
 
   onDeleteProduct(index: string | number, code?: any): void {
@@ -244,25 +246,32 @@ export class GroupInfoComponent implements OnInit {
     if (this.isSuppressMode) {
       this.suppressButtonMessage = 'Désactiver la suppression';
       this.isSuppressMode = false;
+      this.isCollapsed = false;
     } else {
       this.suppressButtonMessage = 'Activer la suppression';
       this.isSuppressMode = true;
+      this.isCollapsed = true;
     }
   }
 
   verifyProduct(): boolean {
 
     let existingProduct: object = {};
+    let existingGroupProduct: any = null;
+
     if (typeof this.productModel === 'object') {
 
-      //  const existingProduct1 = this.templateShoppoingList.find((x: Product) => x.code === this.productModel.code && x.product_name);
+      if (this.groupProduct) {
+        existingGroupProduct = this.templateShoppoingList
+          .find((x: Product) => x.code === this.productModel.code && x.groupProduct);
+      }
 
       existingProduct = this.templateShoppoingList
-        .find((x: Product) => (x.code === this.productModel.code
-          && x.username === this.currentUser) ||
-          (x.code === this.productModel.code && x.groupProduct));
+        .find((x: Product) => x.code === this.productModel.code &&
+          x.username === this.currentUser && this.groupProduct === x.groupProduct);
     }
-    return (typeof this.productModel === 'object') && !existingProduct;
+
+    return (typeof this.productModel === 'object') && !existingProduct && !existingGroupProduct;
   }
 
   verifyMember(): boolean {

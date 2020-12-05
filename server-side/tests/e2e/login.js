@@ -1,122 +1,119 @@
-const puppeteer = require('puppeteer')
-const { expect } = require('chai')
+const puppeteer = require('puppeteer');
+const {expect} = require('chai');
 
 describe('E2E TESTS FOR LOGIN PAGE', async () => {
-  // slowMo: 20,
-  let browser
-  let page
 
-  before(async () => {
-    browser = await puppeteer.launch({
-      headless: false,
-      defaultViewport: null,
-      slowMo: 35,
-      args: [
-        '--window-size=1920,1080'
-      ]
-    })
-  })
+    //slowMo: 20,
+    let browser;
+    let page;
 
-  beforeEach(async () => {
-    page = await browser.newPage()
-    await page.goto('http://localhost:4200/login')
-  })
+    before(async () => {
+        browser = await puppeteer.launch({
+            headless: false,
+            defaultViewport: null,
+            slowMo: 35,
+            args: [
+                '--window-size=1920,1080',
+            ],
+        });
+    });
 
-  after(async () => {
-    await browser.close()
-  })
+    beforeEach(async () => {
+        page = await browser.newPage();
+        await page.goto("http://localhost:4200/login");
+    });
 
-  describe('/POST Login', async () => {
-    it('it should login a user', async () => {
-      expect(await page.$eval('#formTitle', e => e.innerText)).to.eql('Se connecter à KotsApp')
+    after(async () => {
+        await browser.close();
+    });
 
-      expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true)
+    describe('/POST Login', async () => {
 
-      const pseudo = await page.$('#pseudo')
-      const password = await page.$('#password')
-      const submit = await page.$('#submitBtn')
+        it('it should login a user', async () => {
 
-      await pseudo.click({ clickCount: 3 })
-      await pseudo.type('james@gmail.com')
+            expect(await page.$eval('#formTitle', e => e.innerText)).to.eql("Se connecter à KotsApp");
 
-      await password.click({ clickCount: 3 })
-      await password.type('toto')
+            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
 
-      expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(false)
+            const pseudo = await page.$('#pseudo');
+            const password = await page.$('#password');
+            const submit = await page.$('#submitBtn');
 
-      await submit.click()
-      await page.waitForNavigation()
+            await pseudo.click({clickCount: 3});
+            await pseudo.type('james@gmail.com');
 
-      expect(page.url()).eql('http://localhost:4200/groups')
+            await password.click({clickCount: 3});
+            await password.type('toto');
 
-      await page.waitFor(2000)
+            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(false);
 
-      // const logoutBtn = await page.$('#logoutBtn');
-      // await logoutBtn.click();
+            await submit.click();
+            await page.waitForNavigation();
 
-      // const logoutBtnModel = await page.$('#logoutBtnModel');
-      // await logoutBtnModel.click();
+            expect(page.url()).eql('http://localhost:4200/groups');
 
-      // await page.waitFor(1000);
+            await page.waitFor(1000);
 
-      // expect(page.url()).eql('http://localhost:4200/login');
+            const logoutBtnModel = await page.$('#logoutBtnModel');
+            await logoutBtnModel.click();
 
-      // logoutBtnModel
-    })
+            await page.waitForNavigation();
 
-    xit('it should NOT login a user with a wrong password', async () => {
-      const pseudo = await page.$('#pseudo')
-      const password = await page.$('#password')
-      const submit = await page.$('#submitBtn')
+            expect(page.url()).eql('http://localhost:4200/login');
 
-      await pseudo.click({ clickCount: 3 })
-      await pseudo.type('dan30@gmail.com')
+        });
 
-      await password.click({ clickCount: 3 })
-      await password.type('*****')
+        it('it should NOT login a user with incorrect credentials', async () => {
 
-      await submit.click()
-      await page.waitFor(1000)
+            const pseudo = await page.$('#pseudo');
+            const password = await page.$('#password');
+            const submit = await page.$('#submitBtn');
 
-      expect((await page.$eval('#flashMessages', e => e.innerHTML))
-        .includes('alert')).eql(true)
+            await pseudo.click({clickCount: 3});
+            await pseudo.type('********');
 
-      expect(page.url()).eql('http://localhost:4200/login')
-    })
-  })
+            await password.click({clickCount: 3});
+            await password.type('*****');
 
-  describe.skip('/login errors', async () => {
-    it('it should display form validation on all fields', async () => {
-      const pseudo = await page.$('#pseudo')
-      const password = await page.$('#password')
+            await submit.click();
+            await page.waitFor(1000);
 
-      await pseudo.click({ clickCount: 3 })
-      await pseudo.type('')
+            expect(await page.$eval('#errorMessage', e => e.innerText)).eql('Authentication failed !');
 
-      await password.click({ clickCount: 3 })
-      await password.type('')
+            expect(page.url()).eql('http://localhost:4200/login');
+        });
 
-      await pseudo.click({ clickCount: 3 })
-      await page.waitFor(1000)
+    });
 
-      expect((await page.$eval('#pseudo', el => el.className))
-        .includes('is-invalid')).eql(true)
+    describe('/login form errors', async () => {
 
-      expect((await page.$eval('#password', el => el.className))
-        .includes('is-invalid')).eql(true)
+        it('it should display form validation on all fields', async () => {
 
-      expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true)
+            const pseudo = await page.$('#pseudo');
+            const password = await page.$('#password');
 
-      expect(page.url()).eql('http://localhost:4200/login')
-    })
+            await pseudo.click({clickCount: 3});
+            await pseudo.type('');
 
-    it('it should nagivate to the signup page', async () => {
-      const singUp = await page.$('#signUpLink')
+            await password.click({clickCount: 3});
+            await password.type('');
 
-      await singUp.click()
-      await page.waitForNavigation()
+            await pseudo.click({clickCount: 3});
+            await page.waitFor(1000);
 
-      expect(page.url()).eql('http://localhost:4200/register')
-    })
-  })
-})
+            expect((await page.$eval('#pseudo', e => e.className)).includes('is-invalid')).eql(true);
+
+            expect(await page.$eval('#pseudoError', e => e.innerText)).eql('Ce champ est obligatoire');
+
+            expect((await page.$eval('#password', e => e.className)).includes('is-invalid')).eql(true);
+
+            expect(await page.$eval('#passwordError', e => e.innerText)).eql('Un mot de passe est requis');
+
+            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
+
+            expect(page.url()).eql('http://localhost:4200/login');
+        });
+
+    });
+
+});
