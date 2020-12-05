@@ -1,0 +1,61 @@
+name: Linting
+on: [push]
+
+env:
+  node-version: 14.15.1
+
+jobs:
+  lint-frontend:
+    if: "!contains(github.event.head_commit.message, 'Automated publish')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    defaults:
+      run:
+        working-directory: ./client-side
+    steps:
+      - uses: actions/checkout@v2
+      - name: npm install
+        run: |
+          npm install
+      - name: Lint
+        run: |
+          set +e
+          npm run lint
+          set -e
+      - name: Get the current branch name
+        shell: bash
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: myref
+      - name: push linted code to ${{ steps.myref.outputs.branch }}
+        uses: mikeal/publish-to-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
+          BRANCH_NAME: ${{ steps.myref.outputs.branch }}
+          
+  
+  lint-backend:
+    if: "!contains(github.event.head_commit.message, 'Automated publish')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+      - uses: actions/checkout@v2
+      - name: npm install
+        run: |
+          npm install
+      - name: Lint
+        run: |
+          set +e
+          npm run lint
+          set -e
+      - name: Get the current branch name
+        shell: bash
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: myref
+      - name: push linted code to ${{ steps.myref.outputs.branch }}
+        uses: mikeal/publish-to-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
+          BRANCH_NAME: ${{ steps.myref.outputs.branch }}

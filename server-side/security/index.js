@@ -6,7 +6,7 @@ import makePasswordFactory from './password'
 import authenticateUser from './passport'
 import makeJwtFactory from './jwt'
 
-const passwordFactory = makePasswordFactory({bcrypt});
-const jwtFactory = makeJwtFactory({jwt});
+const passwordFactory = makePasswordFactory({ bcrypt })
+const jwtFactory = makeJwtFactory({ jwt })
 
-export {passwordFactory, authenticateUser, jwtFactory}
+export { passwordFactory, authenticateUser, jwtFactory }

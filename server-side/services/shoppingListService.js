@@ -1,192 +1,191 @@
-import {makeShoppingList} from '../domain'
-import {groupService, userService, reserveService, productService} from "./index";
+import { makeShoppingList } from '../domain'
+import { groupService, userService, reserveService, productService } from './index'
 
-export default function shoppingListServiceFactory({shoppingListRepository, productRepository}) {
-    return Object.freeze({
-        listMyShoppingLists, putProductInShoppingList, removeProductFromShoppingList,
-        getGroupShoppingList, editItemQuantity
-    });
+export default function shoppingListServiceFactory ({ shoppingListRepository, productRepository }) {
+  return Object.freeze({
+    listMyShoppingLists,
+    putProductInShoppingList,
+    removeProductFromShoppingList,
+    getGroupShoppingList,
+    editItemQuantity
+  })
 
-    async function listMyShoppingLists({userId}) {
+  async function listMyShoppingLists ({ userId }) {
+    if (!userId) return { message: 'You must supply a user id.' }
 
-        if (!userId) return {message: 'You must supply a user id.'};
+    const findUserGroups = await groupService.listMyGroups({ userId })
 
-        const findUserGroups = await groupService.listMyGroups({userId});
+    if (findUserGroups.length === 0) return []
 
-        if (findUserGroups.length === 0) return [];
+    const { groups } = findUserGroups[0].dataValues
 
-        const {groups} = findUserGroups[0].dataValues;
+    const info = []
 
-        const info = [];
+    for (const x of groups) {
+      const shoppingList = await shoppingListRepository.findGroupShoppingList({ groupId: x.dataValues.groupId })
 
-        for (const x of groups) {
+      if (shoppingList.length === 0) {
+        const findGroupName = await groupService.getGroup({ groupId: x.dataValues.groupId })
+        info.push(
+          {
+            groupId: x.dataValues.groupId,
+            list: `list - ${findGroupName.dataValues.groupName}`
+          })
+      }
 
-            const shoppingList = await shoppingListRepository.findGroupShoppingList({groupId: x.dataValues.groupId});
+      for (const y of shoppingList) {
+        const findUsername = await userService.listOneUser(
+          { id: y.dataValues.owners.dataValues.userId })
 
-            if (shoppingList.length === 0) {
-                const findGroupName = await groupService.getGroup({groupId: x.dataValues.groupId});
-                info.push(
-                {   groupId: x.dataValues.groupId,
-                    list: `list - ${findGroupName.dataValues.groupName}`
-                });
-            }
+        const findGroupName = await groupService.getGroup(
+          { groupId: x.dataValues.groupId })
 
-            for (const y of shoppingList) {
-
-                const findUsername = await userService.listOneUser(
-                    {id: y.dataValues["owners"].dataValues.userId});
-
-                const findGroupName = await groupService.getGroup(
-                    {groupId: x.dataValues.groupId});
-                    
-                info.push(
-                    {
-                        code: y.dataValues.product.dataValues.code,
-                        product_name: y.dataValues.product.dataValues.product_name,
-                        product_brand: y.dataValues.product.dataValues.brands,
-                        half_peremption_date: y.dataValues.product.dataValues.half_peremption_date,
-                        product_note: y.dataValues.productNote,
-                        quantity: y.dataValues.quantity,
-                        groupId: x.dataValues.groupId,
-                        shoppingListId: y.dataValues.id,
-                        groupProduct: y.dataValues.groupProduct,
-                        username: (y.dataValues.groupProduct) ? 'group' : findUsername.dataValues.username,
-                        list: (y.dataValues["owners"].dataValues.role !== 'personal') ?
-                            `list - ${findGroupName.dataValues.groupName}` : findGroupName.dataValues.groupName
-                    });
-            }
-        }
-
-        return info
-            .filter(x => !!x.list)
-            .reduce((result, item) => ({
-                ...result, [item['list']]: [...(result[item['list']] || []), item]
-            }), {});
+        info.push(
+          {
+            code: y.dataValues.product.dataValues.code,
+            product_name: y.dataValues.product.dataValues.product_name,
+            product_brand: y.dataValues.product.dataValues.brands,
+            half_peremption_date: y.dataValues.product.dataValues.half_peremption_date,
+            product_note: y.dataValues.productNote,
+            quantity: y.dataValues.quantity,
+            groupId: x.dataValues.groupId,
+            shoppingListId: y.dataValues.id,
+            groupProduct: y.dataValues.groupProduct,
+            username: (y.dataValues.groupProduct) ? 'group' : findUsername.dataValues.username,
+            list: (y.dataValues.owners.dataValues.role !== 'personal')
+              ? `list - ${findGroupName.dataValues.groupName}` : findGroupName.dataValues.groupName
+          })
+      }
     }
 
-    async function putProductInShoppingList({groupId, userId, ...productInfo}) {
+    return info
+      .filter(x => !!x.list)
+      .reduce((result, item) => ({
+        ...result, [item.list]: [...(result[item.list] || []), item]
+      }), {})
+  }
 
-        const groupInfo = await groupService.getGroup({groupId});
+  async function putProductInShoppingList ({ groupId, userId, ...productInfo }) {
+    const groupInfo = await groupService.getGroup({ groupId })
 
-        if (groupInfo.message) return {message: groupInfo.message};
-        
-        const findGroup = await groupService.getIdGroupUser({
-            groupId: groupId,
-            userId: userId
-        });
+    if (groupInfo.message) return { message: groupInfo.message }
 
-        if (findGroup.message) return {message: findGroup.message};
+    const findGroup = await groupService.getIdGroupUser({
+      groupId: groupId,
+      userId: userId
+    })
 
-        const findUser = await userService.listOneUser({id: userId});
+    if (findGroup.message) return { message: findGroup.message }
 
-        const findList = await getGroupShoppingList({groupId: groupId});
+    const findUser = await userService.listOneUser({ id: userId })
 
-        const existingProduct = findList.find(x =>
-            Number(x.code) === Number(productInfo.code) && x.username === findUser.dataValues.username);
-        
-        if (existingProduct)
-            return {
-                statusCode: 409,
-                message: `You have already added ${existingProduct.product_name} to this list !`
-            };
+    const findList = await getGroupShoppingList({ groupId: groupId })
 
-        const product = makeShoppingList({...productInfo});
+    const existingProduct = findList.find(x =>
+      Number(x.code) === Number(productInfo.code) && x.username === findUser.dataValues.username)
 
-        const findProductCode = await productService.getProductCode({code: product.getProductCode()});
-
-        if (findProductCode.message) return {
-            statusCode: findProductCode.statusCode,
-            message: findProductCode.message};
-
-        return await shoppingListRepository.save({
-            id_group_user: findGroup.dataValues.id_group_user,
-            code: product.getProductCode(),
-            quantity: product.getProductQuantity(),
-            groupProduct: product.getgroupProduct(),
-            productNote: product.getproductNote()
-        });
+    if (existingProduct) {
+      return {
+        statusCode: 409,
+        message: `You have already added ${existingProduct.product_name} to this list !`
+      }
     }
 
-    async function removeProductFromShoppingList({itemId, userId}) {
+    const product = makeShoppingList({ ...productInfo })
 
-        if (!itemId) return {message: 'You must supply the item id.'};
+    const findProductCode = await productService.getProductCode({ code: product.getProductCode() })
 
-        if (!(itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${itemId} is not a valid UUID`};
-
-        const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
-
-        if (!findItem)
-            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
-
-        const findItemUser = await shoppingListRepository.findItemOwner({itemId, userId});
-
-        if (!findItemUser) return {
-            statusCode: 403,
-            message: `Unfortunately you don't own this item.`
-        };
-
-        return await shoppingListRepository.removeProduct({id: itemId});
+    if (findProductCode.message) {
+      return {
+        statusCode: findProductCode.statusCode,
+        message: findProductCode.message
+      }
     }
 
-    async function getGroupShoppingList({groupId}) {
+    return await shoppingListRepository.save({
+      id_group_user: findGroup.dataValues.id_group_user,
+      code: product.getProductCode(),
+      quantity: product.getProductQuantity(),
+      groupProduct: product.getgroupProduct(),
+      productNote: product.getproductNote()
+    })
+  }
 
-        if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {message: `${groupId} is not a valid UUID`};
+  async function removeProductFromShoppingList ({ itemId, userId }) {
+    if (!itemId) return { message: 'You must supply the item id.' }
 
-        const groupInfo = await groupService.getGroup({groupId});
+    if (!(itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i))) { return { message: `${itemId} is not a valid UUID` } }
 
-        if (groupInfo.message) return {message: groupInfo.message};
+    const findItem = await shoppingListRepository.findById({ shoppingListId: itemId })
 
-        const result = [];
+    if (!findItem) { return { message: `No item with this id '${itemId}' was found in the shopping list !` } }
 
-        const shoppingList = await shoppingListRepository
-            .findGroupShoppingList({groupId: groupId});
+    const findItemUser = await shoppingListRepository.findItemOwner({ itemId, userId })
 
-        for (const y of shoppingList) {
-
-            const findUsername = await userService.listOneUser(
-                {id: y.dataValues["owners"].dataValues.userId})
-
-            result.push(
-                {
-                    id: y.dataValues.id,
-                    code: y.dataValues.product.dataValues.code,
-                    product_name: y.dataValues.product.dataValues.product_name,
-                    quantity: y.dataValues.quantity,
-                    product_note: y.dataValues.productNote,
-                    groupProduct: y.dataValues.groupProduct,
-                    username: findUsername.dataValues.username
-                });
-        }
-
-        return result;
+    if (!findItemUser) {
+      return {
+        statusCode: 403,
+        message: 'Unfortunately you don\'t own this item.'
+      }
     }
 
+    return await shoppingListRepository.removeProduct({ id: itemId })
+  }
 
-    async function editItemQuantity({itemId, userId, quantity}) {
+  async function getGroupShoppingList ({ groupId }) {
+    if (!(groupId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i))) { return { message: `${groupId} is not a valid UUID` } }
 
-        if (!itemId) return {message: 'You must supply a listProduct id.'};
-        if (!quantity) return {message: 'You must supply a quantity.'};
+    const groupInfo = await groupService.getGroup({ groupId })
 
-        if (!(itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)))
-            return {statusCode: 400, message: `${itemId} is not a valid UUID`};
+    if (groupInfo.message) return { message: groupInfo.message }
 
-        const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
+    const result = []
 
-        if (!findItem) return {message: `No item with this id '${itemId}' was found in the shopping list !`};
+    const shoppingList = await shoppingListRepository
+      .findGroupShoppingList({ groupId: groupId })
 
-        const findItemUser = await shoppingListRepository.findItemOwner({itemId, userId});
+    for (const y of shoppingList) {
+      const findUsername = await userService.listOneUser(
+        { id: y.dataValues.owners.dataValues.userId })
 
-        if (!findItemUser) return {
-            statusCode: 403,
-            message: `Unfortunately you don't own this item.`
-        };
-
-        if (typeof quantity !== 'number') return {message: "A product's quantity must be a number."};
-
-        if (quantity < 1 || quantity > 20) return {message: "A product's quantity must be between 1 and 20."};
-
-        return await shoppingListRepository.updateQuantity({itemId, quantity});
+      result.push(
+        {
+          id: y.dataValues.id,
+          code: y.dataValues.product.dataValues.code,
+          product_name: y.dataValues.product.dataValues.product_name,
+          quantity: y.dataValues.quantity,
+          product_note: y.dataValues.productNote,
+          groupProduct: y.dataValues.groupProduct,
+          username: findUsername.dataValues.username
+        })
     }
+
+    return result
+  }
+
+  async function editItemQuantity ({ itemId, userId, quantity }) {
+    if (!itemId) return { message: 'You must supply a listProduct id.' }
+    if (!quantity) return { message: 'You must supply a quantity.' }
+
+    if (!(itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i))) { return { statusCode: 400, message: `${itemId} is not a valid UUID` } }
+
+    const findItem = await shoppingListRepository.findById({ shoppingListId: itemId })
+
+    if (!findItem) return { message: `No item with this id '${itemId}' was found in the shopping list !` }
+
+    const findItemUser = await shoppingListRepository.findItemOwner({ itemId, userId })
+
+    if (!findItemUser) {
+      return {
+        statusCode: 403,
+        message: 'Unfortunately you don\'t own this item.'
+      }
+    }
+
+    if (typeof quantity !== 'number') return { message: 'A product\'s quantity must be a number.' }
+
+    if (quantity < 1 || quantity > 20) return { message: 'A product\'s quantity must be between 1 and 20.' }
+
+    return await shoppingListRepository.updateQuantity({ itemId, quantity })
+  }
 }

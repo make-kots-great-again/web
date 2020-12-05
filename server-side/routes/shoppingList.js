@@ -1,30 +1,30 @@
-import express from 'express';
-const router = express.Router();
+import express from 'express'
 import passport from 'passport'
 
 import makeCallback from '../helpers/express-callback'
-import {shoppingListController}  from '../controllers'
+import { shoppingListController } from '../controllers'
+const router = express.Router()
 
 /**
  * Session is set to false because we are using JWTs, and don't need a session!
  * If you do not set this to false, the passport framework will try to implement a session.
  */
 
-router.get("/shoppingList",
-    passport.authenticate("jwt", {session: false}),
-    makeCallback(shoppingListController.getShoppingList));
+router.get('/shoppingList',
+  passport.authenticate('jwt', { session: false }),
+  makeCallback(shoppingListController.getShoppingList))
 
-router.get("/shoppingList/:groupId",
-    passport.authenticate("jwt", {session: false}),
-    makeCallback(shoppingListController.getGroupShoppingList));
+router.get('/shoppingList/:groupId',
+  passport.authenticate('jwt', { session: false }),
+  makeCallback(shoppingListController.getGroupShoppingList))
 
-router.post("/shoppingList/addProduct/:groupId",
-    passport.authenticate("jwt", {session: false}),
-    makeCallback(shoppingListController.addProductToShoppingList)); //updateItemQuantity
+router.post('/shoppingList/addProduct/:groupId',
+  passport.authenticate('jwt', { session: false }),
+  makeCallback(shoppingListController.addProductToShoppingList)) // updateItemQuantity
 
-router.patch("/shoppingList/updateQuantity/:itemId",
-    passport.authenticate("jwt", {session: false}),
-    makeCallback(shoppingListController.updateItemQuantity)); //updateItemQuantity
+router.patch('/shoppingList/updateQuantity/:itemId',
+  passport.authenticate('jwt', { session: false }),
+  makeCallback(shoppingListController.updateItemQuantity)) // updateItemQuantity
 
 /**
  * @api {delete} /shoppingList/removeProduct/:itemId Supprime un produit d'une liste de course.
@@ -48,11 +48,8 @@ router.patch("/shoppingList/updateQuantity/:itemId",
  * @apiError 400 erreur indéterminée venant du serveur lui-même.
  * @apiError 404 erreur due à une mauvaise utilisation du code.
  */
-router.delete("/shoppingList/removeProduct/:itemId",
-    passport.authenticate("jwt", {session: false}),
-    makeCallback(shoppingListController.removeProductToShoppingList));
+router.delete('/shoppingList/removeProduct/:itemId',
+  passport.authenticate('jwt', { session: false }),
+  makeCallback(shoppingListController.removeProductToShoppingList))
 
-export {router as shoppingListRoutes};
-
-
-
+export { router as shoppingListRoutes }
