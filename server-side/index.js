@@ -72,8 +72,9 @@ export default function express_server (express) {
       }
     }))
 
-    this.app.use(helmet.permittedCrossDomainPolicies())
-    this.app.use(helmet.referrerPolicy({ policy: 'strict-origin-when-cross-origin' }))
+    this.app.use(helmet.permittedCrossDomainPolicies());
+    this.app.use(helmet.contentSecurityPolicy());
+    this.app.use(helmet.referrerPolicy({ policy: 'strict-origin-when-cross-origin' }));
     return this
   }
 
