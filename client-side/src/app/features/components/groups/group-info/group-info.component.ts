@@ -121,7 +121,7 @@ export class GroupInfoComponent implements OnInit {
         });
   }
 
-  groupProductButton(event: EventTarget): void {
+  groupProductButton(event: any): void {
     this.groupProduct = event.checked;
   }
 

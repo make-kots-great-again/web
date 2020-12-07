@@ -7,8 +7,7 @@ import helmet from 'helmet'
 import env from './server-side/config/environment'
 import express_server from './server-side/index'
 
-const addRequestId = require('express-request-id')()
-const permissionsPolicy = require('permissions-policy')
+const addRequestId = require('express-request-id')();
 
 const server = new express_server(express)
 
@@ -17,7 +16,6 @@ server
   .addMiddleware(cors())
   .addMiddleware(bodyParser.json())
   .addMiddleware(addRequestId)
-  .addMiddleware(permissionsPolicy)
   .helmetSecurity(helmet)
   .passportConfig(passport)
   .serveStaticFiles()
