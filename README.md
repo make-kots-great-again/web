@@ -38,3 +38,27 @@ your browser.
 change the server port cause 8000 is already in use. 
 
 * For more info check the API documetaion [here](https://make-kots-great-again.github.io/web/ "api doc")
+
+# Integration Test Code Coverage 
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d57ad6ea-fd95-4728-a864-ec373c5b1118/deploy-status)](https://app.netlify.com/sites/integration-test-coverage/deploys)
+
+The code coverage available [here](https://integration-test-coverage.netlify.app/ "integration test coverage")
+
+# Integration Test Report 
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/67ec06de-a19f-43c0-a44f-e71392c59580/deploy-status)](https://app.netlify.com/sites/integration-tests-report/deploys)
+
+Integration tests report available [here](https://integration-tests-report.netlify.app/ "integration tests report")
+
+# Unit Test Code Coverage 
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/cb32bd04-e3ab-40a7-8e47-b4fd346c550a/deploy-status)](https://app.netlify.com/sites/unit-test-coverage/deploys)
+
+The code coverage available [here](https://unit-test-coverage.netlify.app/ "unit tests code coverage")
+
+# Unit Test Report
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/25980231-d3da-470c-bbe4-5079efbef86b/deploy-status)](https://app.netlify.com/sites/unit-tests-report/deploys)
+
+Unit tests report available [here](https://unit-tests-report.netlify.app/ "unit tests report")
