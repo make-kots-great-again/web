@@ -237,6 +237,6 @@ const mailTemplate = '<!DOCTYPE html>\n' +
     '\n' +
     '\n' +
     '</body>\n' +
-    '</html>\n';
+    '</html>\n'
 
-export default mailTemplate;
+export default mailTemplate

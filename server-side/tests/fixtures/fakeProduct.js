@@ -1,10 +1,9 @@
 export default function makeFakeProduct (name) {
-   
-    const product = {
-        productName: name, 
-    };
+  const product = {
+    productName: name
+  }
 
-    return {
-        ...product
-    }
+  return {
+    ...product
+  }
 }

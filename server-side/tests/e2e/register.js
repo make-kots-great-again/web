@@ -1,225 +1,210 @@
-const puppeteer = require('puppeteer');
-const {expect} = require('chai');
+const puppeteer = require('puppeteer')
+const { expect } = require('chai')
 
 describe('E2E TESTS FOR SINGUP PAGE', async () => {
+  let browser
+  let page
 
-    let browser;
-    let page;
+  const user = Math.random().toString(36).substr(2, 9)
 
-    const user = Math.random().toString(36).substr(2, 9);
+  before(async () => {
+    browser = await puppeteer.launch({
+      headless: false,
+      defaultViewport: null,
+      slowMo: 35,
+      args: ['--window-size=1920,1080']
+    })
+  })
 
-    before(async () => {
-        browser = await puppeteer.launch({
-            headless: false,
-            defaultViewport: null,
-            slowMo: 35,
-            args: ['--window-size=1920,1080'],
-        });
-    });
+  beforeEach(async () => {
+    page = await browser.newPage()
+    await page.goto('http://localhost:4200/register')
+  })
 
-    beforeEach(async () => {
-        page = await browser.newPage();
-        await page.goto("http://localhost:4200/register");
-    });
+  after(async () => {
+    await browser.close()
+  })
 
-    after(async () => {
-        await browser.close();
-    });
+  describe('/POST Register', () => {
+    it('it should singup a user', async () => {
+      expect(await page.$eval('#formTitle', e => e.innerText)).to.eql('Créer un compte')
 
-    describe('/POST Register', () => {
+      expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true)
 
-        it('it should singup a user', async () => {
+      const username = await page.$('#username')
+      const lastName = await page.$('#lastNameInput')
+      const fistName = await page.$('#fistNameInput')
+      const email = await page.$('#inputEmail')
+      const password = await page.$('#inputPassword')
+      const confirmPassword = await page.$('#PasswordConfirm')
+      const submit = await page.$('#submitBtn')
 
-            expect(await page.$eval('#formTitle', e => e.innerText)).to.eql("Créer un compte");
+      await lastName.click({ clickCount: 3 })
+      await lastName.type(user.split('').reverse().join(''))
 
-            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
+      await fistName.click({ clickCount: 3 })
+      await fistName.type(user.split('').sort(() => Math.random() - 0.5).join(''))
 
-            const username = await page.$('#username');
-            const lastName = await page.$('#lastNameInput');
-            const fistName = await page.$('#fistNameInput');
-            const email = await page.$('#inputEmail');
-            const password = await page.$('#inputPassword');
-            const confirmPassword = await page.$('#PasswordConfirm');
-            const submit = await page.$('#submitBtn');
+      await username.click({ clickCount: 3 })
+      await username.type(user)
 
-            await lastName.click({clickCount: 3});
-            await lastName.type(user.split('').reverse().join(''));
+      await email.click({ clickCount: 3 })
+      await email.type(`${user}@gmail.com`)
 
-            await fistName.click({clickCount: 3});
-            await fistName.type(user.split('').sort(() => Math.random() - 0.5).join(''));
+      await password.click({ clickCount: 3 })
+      await password.type('toto')
 
-            await username.click({clickCount: 3});
-            await username.type(user);
+      await confirmPassword.click({ clickCount: 3 })
+      await confirmPassword.type('toto')
 
-            await email.click({clickCount: 3});
-            await email.type(`${user}@gmail.com`);
+      expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(false)
 
-            await password.click({clickCount: 3});
-            await password.type('toto');
+      await submit.click()
 
-            await confirmPassword.click({clickCount: 3});
-            await confirmPassword.type('toto');
+      await page.waitFor(1000)
 
-            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(false);
+      expect(await page.$eval('#successMessage', e => e.innerText))
+        .eql('User has been created successfully !')
 
-            await submit.click();
+      await page.waitForNavigation()
 
-            await page.waitFor(1000);
+      expect(page.url()).eql('http://localhost:4200/login')
 
-            expect(await page.$eval('#successMessage', e => e.innerText))
-                .eql('User has been created successfully !');
+      await page.waitFor(1000)
+    })
+  })
 
-            await page.waitForNavigation();
+  describe('/register errors', () => {
+    it('it should display an error if the username\'s length is below 4', async () => {
+      const username = await page.$('#username')
 
-            expect(page.url()).eql('http://localhost:4200/login');
+      await username.click({ clickCount: 3 })
+      await username.type('u')
 
-            await page.waitFor(1000);
-        });
+      await page.waitFor(1000)
 
-    });
+      expect(await page.$eval('#usernameError1', el => el.innerText))
+        .eql('u la longueur minimale est 4')
 
-    describe('/register errors', () => {
+      expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true)
+    })
 
-        it("it should display an error if the username's length is below 4", async () => {
+    it('it should display an error if the email is invalid', async () => {
+      const email = await page.$('#inputEmail')
 
-            const username = await page.$('#username');
+      await email.click({ clickCount: 3 })
+      await email.type('laura-gmail.com')
+      await page.waitFor(1000)
 
-            await username.click({clickCount: 3});
-            await username.type('u');
+      expect(await page.$eval('#emailInvalid', el => el.innerText))
+        .eql('laura-gmail.com n\'est pas un email valide')
 
-            await page.waitFor(1000);
+      // expect((await page.$eval('#emailInvalid', e => e.className)).includes('is-invalid')).eql(true);
 
-            expect(await page.$eval('#usernameError1', el => el.innerText))
-                .eql("u la longueur minimale est 4");
+      expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true)
+    })
 
-            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
+    it('it should display an error if the passwords don\'t match', async () => {
+      const password = await page.$('#inputPassword')
+      const confirmPassword = await page.$('#PasswordConfirm')
 
-        });
+      await password.click({ clickCount: 3 })
+      await password.type('qR7AAJGnZ4CorNWKBfsmYQ')
 
-        it("it should display an error if the email is invalid", async () => {
+      await confirmPassword.click({ clickCount: 3 })
+      await confirmPassword.type('toto')
 
-            const email = await page.$('#inputEmail');
+      await page.waitFor(1000)
 
-            await email.click({clickCount: 3});
-            await email.type('laura-gmail.com');
-            await page.waitFor(1000);
+      expect(await page.$eval('#passwordMatchError', el => el.innerHTML))
+        .eql('Les mots de passe ne correspondent pas')
 
-            expect(await page.$eval('#emailInvalid', el => el.innerText))
-                .eql("laura-gmail.com n'est pas un email valide");
+      expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true)
+    })
 
-           // expect((await page.$eval('#emailInvalid', e => e.className)).includes('is-invalid')).eql(true);
+    it('it should display an error on any form field in an invalid state', async () => {
+      expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true)
 
-            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
+      const username = await page.$('#username')
+      const lastName = await page.$('#lastNameInput')
+      const fistName = await page.$('#fistNameInput')
+      const email = await page.$('#inputEmail')
+      const password = await page.$('#inputPassword')
+      const confirmPassword = await page.$('#PasswordConfirm')
 
-        });
+      await lastName.click({ clickCount: 3 })
+      await lastName.type('')
 
-        it("it should display an error if the passwords don't match", async () => {
+      await fistName.click({ clickCount: 3 })
+      await fistName.type('')
 
-            const password = await page.$('#inputPassword');
-            const confirmPassword = await page.$('#PasswordConfirm');
+      await username.click({ clickCount: 3 })
+      await username.type('')
 
-            await password.click({clickCount: 3});
-            await password.type('qR7AAJGnZ4CorNWKBfsmYQ');
+      await email.click({ clickCount: 3 })
+      await email.type('')
 
-            await confirmPassword.click({clickCount: 3});
-            await confirmPassword.type('toto');
+      await password.click({ clickCount: 3 })
+      await password.type('')
 
-            await page.waitFor(1000);
+      await confirmPassword.click({ clickCount: 3 })
+      await confirmPassword.type('')
 
-            expect(await page.$eval('#passwordMatchError', el => el.innerHTML))
-                .eql('Les mots de passe ne correspondent pas');
+      await username.click({ clickCount: 3 })
 
-            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
+      expect(await page.$eval('#usernameError2', el => el.innerHTML))
+        .eql('Un pseudonyme est requis')
 
-        });
+      expect(await page.$eval('#emailRequired', el => el.innerHTML))
+        .eql('Une adresse email est requise')
 
-        it("it should display an error on any form field in an invalid state", async () => {
+      expect(await page.$eval('#passwordRequired', el => el.innerHTML))
+        .eql('Un mot de passe est requis')
 
-            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
+      expect(await page.$eval('#confirmPasswordError', el => el.innerHTML))
+        .eql('Veuillez confirmer votre mot de passe')
 
-            const username = await page.$('#username');
-            const lastName = await page.$('#lastNameInput');
-            const fistName = await page.$('#fistNameInput');
-            const email = await page.$('#inputEmail');
-            const password = await page.$('#inputPassword');
-            const confirmPassword = await page.$('#PasswordConfirm');
+      expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true)
+    })
 
-            await lastName.click({clickCount: 3});
-            await lastName.type('');
+    it('it should display an error if the username or email alreay exists', async () => {
+      const username = await page.$('#username')
+      const lastName = await page.$('#lastNameInput')
+      const fistName = await page.$('#fistNameInput')
+      const email = await page.$('#inputEmail')
+      const password = await page.$('#inputPassword')
+      const confirmPassword = await page.$('#PasswordConfirm')
+      const submit = await page.$('#submitBtn')
 
-            await fistName.click({clickCount: 3});
-            await fistName.type('');
+      await lastName.click({ clickCount: 3 })
+      await lastName.type(user.split('').reverse().join(''))
 
-            await username.click({clickCount: 3});
-            await username.type('');
+      await fistName.click({ clickCount: 3 })
+      await fistName.type(user.split('').sort(() => Math.random() - 0.5).join(''))
 
-            await email.click({clickCount: 3});
-            await email.type('');
+      await username.click({ clickCount: 3 })
+      await username.type(user)
 
-            await password.click({clickCount: 3});
-            await password.type('');
+      await email.click({ clickCount: 3 })
+      await email.type(`${user}@gmail.com`)
 
-            await confirmPassword.click({clickCount: 3});
-            await confirmPassword.type('');
+      await password.click({ clickCount: 3 })
+      await password.type('toto')
 
-            await username.click({clickCount: 3});
+      await confirmPassword.click({ clickCount: 3 })
+      await confirmPassword.type('toto')
 
-            expect(await page.$eval('#usernameError2', el => el.innerHTML))
-                .eql('Un pseudonyme est requis');
+      expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(false)
 
-            expect(await page.$eval('#emailRequired', el => el.innerHTML))
-                .eql('Une adresse email est requise');
+      await submit.click()
 
-            expect(await page.$eval('#passwordRequired', el => el.innerHTML))
-                .eql('Un mot de passe est requis');
+      await page.waitFor(1000)
 
-            expect(await page.$eval('#confirmPasswordError', el => el.innerHTML))
-                .eql('Veuillez confirmer votre mot de passe');
+      expect(await page.$eval('#errorMessage', e => e.innerText)).eql('Authentication failed !')
 
-            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(true);
+      await page.waitFor(1000)
 
-        });
-
-        it('it should display an error if the username or email alreay exists', async () => {
-
-            const username = await page.$('#username');
-            const lastName = await page.$('#lastNameInput');
-            const fistName = await page.$('#fistNameInput');
-            const email = await page.$('#inputEmail');
-            const password = await page.$('#inputPassword');
-            const confirmPassword = await page.$('#PasswordConfirm');
-            const submit = await page.$('#submitBtn');
-
-            await lastName.click({clickCount: 3});
-            await lastName.type(user.split('').reverse().join(''));
-
-            await fistName.click({clickCount: 3});
-            await fistName.type(user.split('').sort(() => Math.random() - 0.5).join(''));
-
-            await username.click({clickCount: 3});
-            await username.type(user);
-
-            await email.click({clickCount: 3});
-            await email.type(`${user}@gmail.com`);
-
-            await password.click({clickCount: 3});
-            await password.type('toto');
-
-            await confirmPassword.click({clickCount: 3});
-            await confirmPassword.type('toto');
-
-            expect(await page.$eval('#submitBtn', btn => btn.disabled)).eql(false);
-
-            await submit.click();
-
-            await page.waitFor(1000);
-
-            expect(await page.$eval('#errorMessage', e => e.innerText)).eql('Authentication failed !');
-
-            await page.waitFor(1000);
-
-            expect(page.url()).eql('http://localhost:4200/register');
-        });
-    });
-
-});
+      expect(page.url()).eql('http://localhost:4200/register')
+    })
+  })
+})

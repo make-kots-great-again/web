@@ -7,10 +7,10 @@ import {Component, OnInit, Input} from '@angular/core';
 })
 export class ChartsComponent implements OnInit {
   @Input()
-  type: string = 'bar';
+  type = 'bar';
 
   @Input()
-  title: string = 'title';
+  title = 'title';
 
   data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],

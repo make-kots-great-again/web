@@ -1,29 +1,29 @@
-import {Sequelize} from 'sequelize';
-import dbConnection from "../config/database";
+import { Sequelize } from 'sequelize'
+import dbConnection from '../config/database'
 
 const Product = dbConnection.define('product', {
 
-    code: {
-        type: Sequelize.BIGINT                      ,
-        allowNull: false,
-        primaryKey: true,
-    },
-    product_name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    brands: {
-        type: Sequelize.STRING,
-        allowNull: true,
-    },
-    ingredients: {
-        type: Sequelize.STRING(500),
-        allowNull: true,
-    },
-    half_peremption_date: {
-        type: Sequelize.BIGINT,
-        allowNull:true
-    }
-});
+  code: {
+    type: Sequelize.BIGINT,
+    allowNull: false,
+    primaryKey: true
+  },
+  product_name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  brands: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  ingredients: {
+    type: Sequelize.STRING(500),
+    allowNull: true
+  },
+  half_peremption_date: {
+    type: Sequelize.BIGINT,
+    allowNull: true
+  }
+})
 
-export default Product;
+export default Product

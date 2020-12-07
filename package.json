@@ -37,7 +37,8 @@
     "build": "npm run clean && babel server-side -d dist",
     "now-build": "npm run build",
     "clean": "rimraf dist",
-    "prod": "npm run clean && npm run build && cd dist && node app.js"
+    "prod": "npm run clean && npm run build && cd dist && node app.js",
+    "lint": "./node_modules/.bin/eslint --fix \"**/*.js\" -o ./lintErrors.log --no-color"
   },
   "repository": {
     "type": "git",
@@ -90,12 +91,37 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.4",
     "@babel/register": "^7.10.4",
+    "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.8",
     "@types/mocha": "^8.0.0",
     "@types/mongoose": "^5.7.3",
-    "@types/bcrypt": "^3.0.0",
     "@types/sequelize": "^4.28.9",
+    "eslint": "^7.15.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
     "istanbul": "^0.4.5",
     "nyc": "^15.0.1"
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "env": {
+      "es2021": true,
+      "browser": true
+    },
+    "ignorePatterns": [
+      "**/dist/**/*.js",
+      "./client-side/**/*.js",
+      "./.nyc_output/**/*.js",
+      "./.idea/**/*.js",
+      "./docs/**/*.js"
+    ],
+    "rules": {
+      "quotes": [
+        "error",
+        "single"
+      ]
+    }
   }
 }
