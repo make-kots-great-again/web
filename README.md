@@ -62,3 +62,15 @@ The code coverage available [here](https://unit-test-coverage.netlify.app/ "unit
 [![Netlify Status](https://api.netlify.com/api/v1/badges/25980231-d3da-470c-bbe4-5079efbef86b/deploy-status)](https://app.netlify.com/sites/unit-tests-report/deploys)
 
 Unit tests report available [here](https://unit-tests-report.netlify.app/ "unit tests report")
+
+# End to End Tests
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5678df6f-cbba-4ad4-b24f-658f617704ad/deploy-status)](https://app.netlify.com/sites/e2e-tests/deploys)
+
+E2E tests report available [here](https://e2e-tests.netlify.app/ "e2e tests")
+
+# Lighthouse Report
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/aabf3813-34ac-41ac-9281-e0755ea5e502/deploy-status)](https://app.netlify.com/sites/lighthouse-metrics/deploys)
+
+Lighthouse report available [here](https://lighthouse-metrics.netlify.app/ "lighthouse report")
