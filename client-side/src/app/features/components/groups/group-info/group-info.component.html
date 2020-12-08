@@ -91,9 +91,9 @@
                     </div>
                   </div>
                   <div class="ml-3">
-                    <button (click)="addUserToGroup()" [disabled]="!verifyMember()" name="addMember" type="submit"
-                      class="btn btn-outline-success text-center
-                              text-monospace font-italic font-weight-bolder">
+                    <button (click)="addUserToGroup()" [disabled]="!verifyMember()"
+                            name="addMember" type="submit" id="addMemberSubmitBtn"
+                            class="btn btn-outline-success text-center text-monospace font-italic font-weight-bolder">
                       Ajouter un membre
                     </button>
                   </div>
@@ -193,7 +193,8 @@
                      type="number" id="quantityInput" min="1" max="20"
                      placeholder="1">
             </label>
-            <button (click)="addProductToShoppingList()" name="addProduct" type="submit" [disabled]="!verifyProduct()"
+            <button (click)="addProductToShoppingList()" name="addProduct"
+                    type="submit" [disabled]="!verifyProduct()" id="addProductBtn"
               class="btn btn-outline-success text-center mx-sm-3
               text-monospace font-italic font-weight-bolder">Ajouter un produit
             </button>

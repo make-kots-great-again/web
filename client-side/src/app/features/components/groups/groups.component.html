@@ -14,7 +14,7 @@
   <br>
 
   <div class="container text-center ml-lg-auto ">
-    <button name="createGroup" type="submit"
+    <button name="createGroup" type="submit" id="createGroupBtn"
             class="btn btn-outline-success
                   text-center text-monospace font-italic font-weight-bolder"
             data-toggle="modal" data-target="#createGroup"
@@ -85,7 +85,7 @@
                        <button (click)="updateGroupClicked(groupId, groupName)"
                                class="btn btn-primary btn-sm rounded"
                                data-toggle="modal" data-target="#updateGroup"
-                               data-whatever="@mdo"
+                               data-whatever="@mdo" name="updateGroupBtn"
                                type="button" data-placement="top" title="Edit">
                        <i class="fa fa-edit" aria-hidden="true">
                        </i></button>
@@ -98,7 +98,7 @@
                       <button (click)="deleteGroupClicked(groupId, groupName)"
                               class="btn btn-danger btn-sm rounded"
                               data-toggle="modal" data-target="#deleteGroup"
-                              data-whatever="@mdo"
+                              data-whatever="@mdo" name="deleteGroupBtn"
                               type="button" data-placement="top" title="Delete">
                       <i class="fa fa-trash" aria-hidden="true"></i></button>
                     </a>
@@ -209,7 +209,7 @@
             </button>
 
             <!-- form submit button -->
-            <button (click)="oncreateGroupSubmit()" id="reviewSubmit" type="submit"
+            <button (click)="oncreateGroupSubmit()" id="createGroupSubmit" type="submit"
                     data-dismiss="modal" class="btn btn-primary text-monospace
                     font-italic font-weight-bolder"
                     [disabled]="addGroupForm.form.invalid">Valider
@@ -310,7 +310,7 @@
         </button>
 
         <!--  leave group submit button -->
-        <button (click)="ondeleteGroup()" type="button"
+        <button (click)="ondeleteGroup()" type="button" id="deleteGroupSubmitBtn"
                 data-dismiss="modal" class="btn btn-danger text-monospace
                 font-italic font-weight-bolder">Supprimer le groupe
         </button>
@@ -397,7 +397,7 @@
                     type="submit" data-dismiss="modal"
                     class="btn btn-primary text-monospace
                     font-italic font-weight-bolder"
-                    [disabled]="updatedGroupForm.form.invalid">submit
+                    [disabled]="updatedGroupForm.form.invalid">Valider
             </button>
           </div>
         </form>
