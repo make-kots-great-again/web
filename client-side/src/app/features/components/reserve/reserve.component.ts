@@ -61,10 +61,10 @@ export class ReserveComponent implements OnInit {
   updateItem(){
     if (this.isCollapsed){
       if (this.newQuantity == 0){
-        // this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.reserveArray);
+        this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.reserveArray);
       }
       else{
-        this.reserveService.reserveItemUpdate(this.newQuantity, this.modifiedProduct.id)
+        this.reserveService.reserveItemUpdate(this.newQuantity, this.modifiedProduct.id, this.modifiedProduct.code, this.groupId)
                           .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
                             this.reserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
               },
@@ -75,10 +75,10 @@ export class ReserveComponent implements OnInit {
     }
     else{
       if (this.newQuantity == 0){
-        // this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.tempReserveArray);
+        this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.tempReserveArray);
       }
       else{
-        this.reserveService.tempReserveItemUpdate(this.newQuantity, this.newExpriringDate, this.modifiedProduct.id)
+        this.reserveService.tempReserveItemUpdate(this.newQuantity, this.newExpriringDate, this.modifiedProduct.id, this.modifiedProduct.code, this.groupId)
                             .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
                               this.tempReserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
                               this.tempReserveArray[this.modifiedProduct.index].expiringIn = this.newExpriringDate;
@@ -177,7 +177,8 @@ export class ReserveComponent implements OnInit {
     this.newExpriringDate = currentArray[index].expiringIn;
     this.modifiedProduct = {name: currentArray[index].product_name,
                             index,
-                            id: currentArray[index].id
+                            id: currentArray[index].id,
+                            code: currentArray[index].id,
                           };
 
     this.modalService.open(content, { centered: true });
