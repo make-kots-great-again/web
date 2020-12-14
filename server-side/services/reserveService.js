@@ -220,22 +220,21 @@ export default function reserveServiceFactory ({ reserveRepository }) {
        const dateDiff = Math.floor(Math.abs(newItemExpDate - itemExpDate) / 86400000)
      
         if (dateDiff == 0) {
-        
+          
           updateInfos.quantity = item.dataValues.quantity + updateInfos.quantity
           const newReserveProduct = makeReserve({ ...updateInfos});
-          return await {item: reserveRepository.updateReserveItem({
-                          itemId: item.dataValues.id,
-                          quantity: newReserveProduct.getProductQuantity(),
-                          expiringIn: newReserveProduct.getExpiringIn(),
-                          valid: false
-                          }),
-                        toDeleted: true
-          } 
+          return  { item : await reserveRepository.patchQuantityAndDayOfAnItem(
+                                                                      item.dataValues.id, 
+                                                                      updateInfos.quantity, 
+                                                                      item.dataValues.expiringIn
+                                                                    ),
+                    toDeleted: true
+                  };
         }
       }
     }
 
-    return await reserveRepository.patchQuantityAndDayOfAnItem(updateInfos.itemId, updateInfos.quantity, updateInfos.expiringIn)
+    return await reserveRepository.patchQuantityAndDayOfAnItem(updateInfos.itemId, updateInfos.quantity, updateInfos.expiringIn);
   }
 
   async function removeItemFromReserve (itemId) {

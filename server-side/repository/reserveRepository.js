@@ -109,7 +109,8 @@ export default function makeReserveRepository ({ Reserve, Product, Group, Op }) 
     return Reserve.update(
       { quantity: quantity, expiringIn: expiringIn },
       {
-        where: { id: itemId }
+        where: { id: itemId }, 
+        returning:true
       })
   }
 

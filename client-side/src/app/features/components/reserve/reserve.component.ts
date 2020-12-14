@@ -64,7 +64,7 @@ export class ReserveComponent implements OnInit {
         this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.reserveArray);
       }
       else{
-        this.reserveService.reserveItemUpdate(this.newQuantity, this.modifiedProduct.id, this.modifiedProduct.code, this.groupId)
+        this.reserveService.reserveItemUpdate(this.newQuantity, this.modifiedProduct.id)
                           .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
                             this.reserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
               },
@@ -78,10 +78,25 @@ export class ReserveComponent implements OnInit {
         this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.tempReserveArray);
       }
       else{
-        this.reserveService.tempReserveItemUpdate(this.newQuantity, this.newExpriringDate, this.modifiedProduct.id, this.modifiedProduct.code, this.groupId)
+        this.reserveService.tempReserveItemUpdate(this.newQuantity, this.newExpriringDate, this.modifiedProduct.id, parseInt(this.modifiedProduct.code))
                             .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
-                              this.tempReserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
-                              this.tempReserveArray[this.modifiedProduct.index].expiringIn = this.newExpriringDate;
+
+                              console.log(data);
+
+                              let i = 0;
+                              while(i < this.tempReserveArray.length){
+                                
+                                if(this.tempReserveArray[i].id == data.changedItem.id){
+                                  this.tempReserveArray[i].quantity = data.changedItem.quantity;
+                                  this.tempReserveArray[i].expiringIn = data.changedItem.expiringIn;    
+                                  break;
+                                }
+                                i++;
+                              }
+                              
+                              if(data.deletedOldItem){
+                                this.tempReserveArray.splice(this.modifiedProduct.index, 1);
+                              }
                             },
                             error => {
                               console.error(error);
@@ -178,7 +193,7 @@ export class ReserveComponent implements OnInit {
     this.modifiedProduct = {name: currentArray[index].product_name,
                             index,
                             id: currentArray[index].id,
-                            code: currentArray[index].id,
+                            code: currentArray[index].code,
                           };
 
     this.modalService.open(content, { centered: true });

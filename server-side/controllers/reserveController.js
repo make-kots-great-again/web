@@ -61,8 +61,6 @@ export default function reserveControllerFactory () {
   async function patchValidityOfAnItem (httpRequest) {
     const { ...validityInfo } = httpRequest.body
 
-    console.log(validityInfo)
-
     try {
       const validatedItem = await reserveService
         .patchValidityOfAnItem(validityInfo)
@@ -122,7 +120,7 @@ export default function reserveControllerFactory () {
     try {
       const changedItem = await reserveService
         .patchQuantityAndDayOfAnItem(quantityDayInfo)
-
+        
       if (changedItem.message) {
         return {
           statusCode: (changedItem.statusCode) ? changedItem.statusCode : 404,
@@ -139,13 +137,13 @@ export default function reserveControllerFactory () {
             body: { success: false, message: deletedOldItem.message }
           }
         }
-        
+
         return {
           statusCode: 200,
           body: {
             success: true,
-            message: 'quantity and expiration duration of the Item was updated',
-            changedItem: changedItem.item,
+            message: 'quantity and expiration duration of the Item was updated and old was removed',
+            changedItem: changedItem.item[1][0],
             deletedOldItem:  deletedOldItem
           }
         } 
@@ -156,7 +154,7 @@ export default function reserveControllerFactory () {
         body: {
           success: true,
           message: 'quantity and expiration duration of the Item was updated',
-          changedItem: changedItem,
+          changedItem: changedItem[1][0],
         }
       }
     } catch (e) {
