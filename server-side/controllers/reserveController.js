@@ -120,16 +120,15 @@ export default function reserveControllerFactory () {
     try {
       const changedItem = await reserveService
         .patchQuantityAndDayOfAnItem(quantityDayInfo)
-        
+
       if (changedItem.message) {
         return {
           statusCode: (changedItem.statusCode) ? changedItem.statusCode : 404,
           body: { success: false, message: changedItem.message }
         }
       }
-      if (changedItem.toDeleted){
-        
-        const deletedOldItem = await reserveService.removeItemFromReserve(quantityDayInfo.itemId);
+      if (changedItem.toDeleted) {
+        const deletedOldItem = await reserveService.removeItemFromReserve(quantityDayInfo.itemId)
 
         if (deletedOldItem.message) {
           return {
@@ -144,9 +143,9 @@ export default function reserveControllerFactory () {
             success: true,
             message: 'quantity and expiration duration of the Item was updated and old was removed',
             changedItem: changedItem.item[1][0],
-            deletedOldItem:  deletedOldItem
+            deletedOldItem: deletedOldItem
           }
-        } 
+        }
       }
 
       return {
@@ -154,7 +153,7 @@ export default function reserveControllerFactory () {
         body: {
           success: true,
           message: 'quantity and expiration duration of the Item was updated',
-          changedItem: changedItem[1][0],
+          changedItem: changedItem[1][0]
         }
       }
     } catch (e) {
