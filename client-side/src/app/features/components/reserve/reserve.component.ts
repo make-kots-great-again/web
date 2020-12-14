@@ -84,17 +84,17 @@ export class ReserveComponent implements OnInit {
                               console.log(data);
 
                               let i = 0;
-                              while(i < this.tempReserveArray.length){
-                                
-                                if(this.tempReserveArray[i].id == data.changedItem.id){
+                              while (i < this.tempReserveArray.length){
+
+                                if (this.tempReserveArray[i].id == data.changedItem.id){
                                   this.tempReserveArray[i].quantity = data.changedItem.quantity;
-                                  this.tempReserveArray[i].expiringIn = data.changedItem.expiringIn;    
+                                  this.tempReserveArray[i].expiringIn = data.changedItem.expiringIn;
                                   break;
                                 }
                                 i++;
                               }
-                              
-                              if(data.deletedOldItem){
+
+                              if (data.deletedOldItem){
                                 this.tempReserveArray.splice(this.modifiedProduct.index, 1);
                               }
                             },
