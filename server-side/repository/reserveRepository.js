@@ -1,10 +1,20 @@
-import { reserveRepository } from "."
+import { reserveRepository } from '.'
 
 export default function makeReserveRepository ({ Reserve, Product, Group, Op }) {
   return Object.freeze({
-    save, findGroupReserveItems, findReserveItems, findGroupOfAnItem, findCodeLikeReserveItems, findCreationDateById, 
-    updateReserve, patchValidityOfAnItem, patchQuantityOfAnItem, patchQuantityAndDayOfAnItem, removeItemFromReserve, 
-    updateReserveItem, findReserveItemById
+    save,
+    findGroupReserveItems,
+    findReserveItems,
+    findGroupOfAnItem,
+    findCodeLikeReserveItems,
+    findCreationDateById,
+    updateReserve,
+    patchValidityOfAnItem,
+    patchQuantityOfAnItem,
+    patchQuantityAndDayOfAnItem,
+    removeItemFromReserve,
+    updateReserveItem,
+    findReserveItemById
   })
 
   async function save ({ ...reserveInfo }) {
@@ -39,11 +49,11 @@ export default function makeReserveRepository ({ Reserve, Product, Group, Op }) 
     })
   }
 
-  async function findCodeLikeReserveItems ({ groupId, code}, itemId) {
+  async function findCodeLikeReserveItems ({ groupId, code }, itemId) {
     return Reserve.findAll({
       where: {
         [Op.and]: [
-          { groupId: groupId }, { code: code }, {id : {[Op.ne]: itemId}}
+          { groupId: groupId }, { code: code }, { id: { [Op.ne]: itemId } }
         ]
       }
     })
@@ -55,18 +65,18 @@ export default function makeReserveRepository ({ Reserve, Product, Group, Op }) 
     })
   }
 
-  async function findGroupOfAnItem(itemId){
+  async function findGroupOfAnItem (itemId) {
     return Reserve.findOne({
-      where: { id: itemId}, 
+      where: { id: itemId },
       attributes: ['groupId']
-    });
+    })
   }
 
-  async function findCreationDateById(itemId){
+  async function findCreationDateById (itemId) {
     return Reserve.findOne({
-      where: { id: itemId}, 
+      where: { id: itemId },
       attributes: ['createdAt']
-    });
+    })
   }
 
   async function updateReserve ({ groupId, code, ...reserveInfo }) {
@@ -109,8 +119,8 @@ export default function makeReserveRepository ({ Reserve, Product, Group, Op }) 
     return Reserve.update(
       { quantity: quantity, expiringIn: expiringIn },
       {
-        where: { id: itemId }, 
-        returning:true
+        where: { id: itemId },
+        returning: true
       })
   }
 
