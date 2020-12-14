@@ -70,7 +70,6 @@ export default function reserveServiceFactory ({ reserveRepository }) {
 
       if (reserveInfo.quantity > 0) {
         if (allInValidSimilarItems.length != 0) {
-          //TODO : possible erreur dans la ligne du dessous #Martin
           const newItemExpDate = new Date().setDate(today.getDate() + reserveInfo.expiringIn)
           for (const item of allInValidSimilarItems) {
             const itemExpDate = new Date().setDate(item.dataValues.createdAt.getDate() + item.dataValues.expiringIn)
@@ -177,48 +176,43 @@ export default function reserveServiceFactory ({ reserveRepository }) {
     return await reserveRepository.patchValidityOfAnItem(validatedItem.itemId, validatedItem.validity)
   }
 
-  // TODO : implémenter la vérification l'existance de l'item deleted
+
   async function patchQuantityOfAnItem (updateInfos) {
     if (!updateInfos.itemId) return { message: 'You must supply the item id.' }
 
     if (!(updateInfos.itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i))) { return { message: `${updateInfos.itemId} is not a valid UUID` } }
 
-    /* const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
-
-        if (!findItem)
-            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
-        */
+    const groupId = await reserveRepository.findGroupOfAnItem(updateInfos.itemId);
+    if (!groupId)
+        return {message: `No item with this id '${updateInfos.itemId}' was found in the reserve list !`};
 
     return await reserveRepository.patchQuantityOfAnItem(updateInfos.itemId, updateInfos.quantity)
   }
 
 
-  // TODO : écaircir le code
-  async function patchQuantityAndDayOfAnItem (updateInfos) {
-    if (!updateInfos.itemId) return { message: 'You must supply the item id.' }
 
+  async function patchQuantityAndDayOfAnItem (updateInfos) {
+    
+    
+    if (!updateInfos.itemId) return { message: 'You must supply the item id.' }
     if (!(updateInfos.itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i))) { return { message: `${updateInfos.itemId} is not a valid UUID` } }
 
-    /* const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
-
-        if (!findItem)
-            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
-    */
 
     const groupId = await reserveRepository.findGroupOfAnItem(updateInfos.itemId);
+    if (!groupId)
+        return {message: `No item with this id '${updateInfos.itemId}' was found in the reserve list !`};
 
     const allSimilarItems = await reserveRepository.findCodeLikeReserveItems({
     groupId: groupId.groupId,
     code: updateInfos.code
     }, updateInfos.itemId);
 
-    console.log(allSimilarItems);
-
     const allInValidSimilarItems = allSimilarItems.filter(item => { return item.dataValues.valid === false });
 
     if (allInValidSimilarItems.length != 0) {
-      console.log("patch and delete")
-      const newItemExpDate = new Date().setDate(new Date().getDate() + updateInfos.expiringIn)
+      
+      const creationDate= await reserveRepository.findCreationDateById(updateInfos.itemId);
+      const newItemExpDate = new Date().setDate(creationDate.dataValues.createdAt.getDate() + updateInfos.expiringIn);
      
       for (const item of allInValidSimilarItems) {
       
@@ -227,9 +221,8 @@ export default function reserveServiceFactory ({ reserveRepository }) {
      
         if (dateDiff == 0) {
         
-         updateInfos.quantity = item.dataValues.quantity + updateInfos.quantity
+          updateInfos.quantity = item.dataValues.quantity + updateInfos.quantity
           const newReserveProduct = makeReserve({ ...updateInfos});
-          console.log("test1")
           return await {item: reserveRepository.updateReserveItem({
                           itemId: item.dataValues.id,
                           quantity: newReserveProduct.getProductQuantity(),
@@ -250,11 +243,10 @@ export default function reserveServiceFactory ({ reserveRepository }) {
 
     if (!(itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i))) { return { message: `${itemId} is not a valid UUID` }; }
 
-    /* const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
-
-        if (!findItem)
-            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
-    */
-    return reserveRepository.removeItemFromReserve({ id: itemId });
+    const groupId = await reserveRepository.findGroupOfAnItem(itemId);
+    if (!groupId)
+        return {message: `No item with this id '${itemId}' was found in the reserve list !`};
+    
+        return reserveRepository.removeItemFromReserve({ id: itemId });
   }
 }

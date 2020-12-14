@@ -5,7 +5,7 @@ let dbConnection = ''
 
 if (env.NODE_ENV === 'test') {
   dbConnection = new Sequelize(
-    'kots',
+    'kots_test',
     'postgres',
     'postgres',
     {

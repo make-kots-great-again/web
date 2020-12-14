@@ -2,7 +2,9 @@ import { reserveRepository } from "."
 
 export default function makeReserveRepository ({ Reserve, Product, Group, Op }) {
   return Object.freeze({
-    save, findGroupReserveItems, findReserveItems, findGroupOfAnItem, findCodeLikeReserveItems, updateReserve, patchValidityOfAnItem, patchQuantityOfAnItem, patchQuantityAndDayOfAnItem, removeItemFromReserve, updateReserveItem, findReserveItemById
+    save, findGroupReserveItems, findReserveItems, findGroupOfAnItem, findCodeLikeReserveItems, findCreationDateById, 
+    updateReserve, patchValidityOfAnItem, patchQuantityOfAnItem, patchQuantityAndDayOfAnItem, removeItemFromReserve, 
+    updateReserveItem, findReserveItemById
   })
 
   async function save ({ ...reserveInfo }) {
@@ -57,6 +59,13 @@ export default function makeReserveRepository ({ Reserve, Product, Group, Op }) 
     return Reserve.findOne({
       where: { id: itemId}, 
       attributes: ['groupId']
+    });
+  }
+
+  async function findCreationDateById(itemId){
+    return Reserve.findOne({
+      where: { id: itemId}, 
+      attributes: ['createdAt']
     });
   }
 
