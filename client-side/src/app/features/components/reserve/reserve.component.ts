@@ -78,7 +78,7 @@ export class ReserveComponent implements OnInit {
         this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.tempReserveArray);
       }
       else{
-        this.reserveService.tempReserveItemUpdate(this.newQuantity, 
+        this.reserveService.tempReserveItemUpdate(this.newQuantity,
                                                   this.getExpiringTimeWithNewExpiringTime(this.newExpriringDate, new Date(this.modifiedProduct.createdAt)),
                                                   this.modifiedProduct.id, parseInt(this.modifiedProduct.code))
                             .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
@@ -165,9 +165,9 @@ export class ReserveComponent implements OnInit {
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
-  
+
   /**************************** ADD/DELETE ALL ***************************************/
-  
+
   addAllItem() {
 
     for (const i of this.tempReserveArray) {
@@ -190,7 +190,7 @@ export class ReserveComponent implements OnInit {
   }
 
   /**************************** POPUP ***************************************/
-  
+
   open(content, index, currentArray) {
 
     this.newQuantity = currentArray[index].quantity;
@@ -216,7 +216,7 @@ export class ReserveComponent implements OnInit {
 
 
   /**************************** CHECKBOXES ***************************************/
-  
+
   tableManagement(): void {
     const newTempArray = [];
     const newReserveArray = [];
@@ -262,19 +262,19 @@ export class ReserveComponent implements OnInit {
   /********************************************************************************************
   *                                  Helpers functions                                        *
   ********************************************************************************************/
-  
-  /********************************  Calculates Methods **************************************/
-  
-  addTrueExpirationTime(itemsData:any[], today:Date){
 
-    for(let item of itemsData){
-      let itemDate = new Date(item.createdAt);
-      item.newExpiringIn = Math.floor( (itemDate.getTime() - today.getTime())/86400000 ) + item.expiringIn; 
+  /********************************  Calculates Methods **************************************/
+
+  addTrueExpirationTime(itemsData: any[], today: Date){
+
+    for (const item of itemsData){
+      const itemDate = new Date(item.createdAt);
+      item.newExpiringIn = Math.floor( (itemDate.getTime() - today.getTime()) / 86400000 ) + item.expiringIn;
     }
   }
 
   getExpiringTimeWithNewExpiringTime(newExpiringTime: number, itemDate: Date){
-    return newExpiringTime - Math.floor( (itemDate.getTime() - new Date().getTime())/86400000 ); 
+    return newExpiringTime - Math.floor( (itemDate.getTime() - new Date().getTime()) / 86400000 );
   }
 
   /************************************  Sort Methods *****************************************/
