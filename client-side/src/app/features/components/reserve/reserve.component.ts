@@ -61,7 +61,7 @@ export class ReserveComponent implements OnInit {
   updateItem(){
     if (this.isCollapsed){
       if (this.newQuantity == 0){
-        // this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.reserveArray);
+        this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.reserveArray);
       }
       else{
         this.reserveService.reserveItemUpdate(this.newQuantity, this.modifiedProduct.id)
@@ -75,13 +75,29 @@ export class ReserveComponent implements OnInit {
     }
     else{
       if (this.newQuantity == 0){
-        // this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.tempReserveArray);
+        this.deleteItem(this.modifiedProduct.id, this.modifiedProduct.index, this.tempReserveArray);
       }
       else{
-        this.reserveService.tempReserveItemUpdate(this.newQuantity, this.newExpriringDate, this.modifiedProduct.id)
+        this.reserveService.tempReserveItemUpdate(this.newQuantity,
+                                                  this.getExpiringTimeWithNewExpiringTime(this.newExpriringDate, new Date(this.modifiedProduct.createdAt)),
+                                                  this.modifiedProduct.id, parseInt(this.modifiedProduct.code))
                             .pipe(takeUntil(this.destroyed$)).subscribe((data: any) => {
-                              this.tempReserveArray[this.modifiedProduct.index].quantity = this.newQuantity;
-                              this.tempReserveArray[this.modifiedProduct.index].expiringIn = this.newExpriringDate;
+
+                              let i = 0;
+                              while (i < this.tempReserveArray.length){
+
+                                if (this.tempReserveArray[i].id == data.changedItem.id){
+                                  this.tempReserveArray[i].quantity = data.changedItem.quantity;
+                                  this.tempReserveArray[i].expiringIn = data.changedItem.expiringIn;
+                                  this.tempReserveArray[i].newExpiringIn = this.newExpriringDate;
+                                  break;
+                                }
+                                i++;
+                              }
+
+                              if (data.deletedOldItem){
+                                this.tempReserveArray.splice(this.modifiedProduct.index, 1);
+                              }
                             },
                             error => {
                               console.error(error);
@@ -102,6 +118,7 @@ export class ReserveComponent implements OnInit {
       this.gestionButton = true;
     }
   }
+
   /****************************  API Methods ***************************************/
 
   addItem(value, index, listToUpdate) {
@@ -133,9 +150,9 @@ export class ReserveComponent implements OnInit {
     this.reserveService.getGroupReserveItems(this.groupId)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((data: any) => {
+        this.addTrueExpirationTime(data, new Date());
         this.reserveArray = data;
         this.tempReserveArray = data;
-        console.log(data);
         this.tableManagement();
       },
         error => {
@@ -148,7 +165,9 @@ export class ReserveComponent implements OnInit {
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
+
   /**************************** ADD/DELETE ALL ***************************************/
+
   addAllItem() {
 
     for (const i of this.tempReserveArray) {
@@ -171,13 +190,16 @@ export class ReserveComponent implements OnInit {
   }
 
   /**************************** POPUP ***************************************/
+
   open(content, index, currentArray) {
 
     this.newQuantity = currentArray[index].quantity;
-    this.newExpriringDate = currentArray[index].expiringIn;
+    this.newExpriringDate = currentArray[index].newExpiringIn;
     this.modifiedProduct = {name: currentArray[index].product_name,
                             index,
-                            id: currentArray[index].id
+                            id: currentArray[index].id,
+                            code: currentArray[index].code,
+                            createdAt: currentArray[index].createdAt
                           };
 
     this.modalService.open(content, { centered: true });
@@ -194,6 +216,7 @@ export class ReserveComponent implements OnInit {
 
 
   /**************************** CHECKBOXES ***************************************/
+
   tableManagement(): void {
     const newTempArray = [];
     const newReserveArray = [];
@@ -236,9 +259,25 @@ export class ReserveComponent implements OnInit {
     }
   }
 
-  /******************************** Helpers functions ****************************************/
+  /********************************************************************************************
+  *                                  Helpers functions                                        *
+  ********************************************************************************************/
 
-  /**********************************  Sort Methods ***************************************/
+  /********************************  Calculates Methods **************************************/
+
+  addTrueExpirationTime(itemsData: any[], today: Date){
+
+    for (const item of itemsData){
+      const itemDate = new Date(item.createdAt);
+      item.newExpiringIn = Math.floor( (itemDate.getTime() - today.getTime()) / 86400000 ) + item.expiringIn;
+    }
+  }
+
+  getExpiringTimeWithNewExpiringTime(newExpiringTime: number, itemDate: Date){
+    return newExpiringTime - Math.floor( (itemDate.getTime() - new Date().getTime()) / 86400000 );
+  }
+
+  /************************************  Sort Methods *****************************************/
 
   productAlphabeticalSort(arrayToSorted: any, reserve: boolean) {
 
@@ -402,10 +441,10 @@ export class ReserveComponent implements OnInit {
 
       arrayToSorted.sort((a, b) => {
 
-        if (a.expiringIn < b.expiringIn) {
+        if (a.newExpiringIn < b.newExpiringIn) {
 
           return -1;
-        } else if (a.expiringIn > b.expiringIn) {
+        } else if (a.newExpiringIn > b.newExpiringIn) {
 
           return 1;
         }

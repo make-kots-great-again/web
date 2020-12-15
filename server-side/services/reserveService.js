@@ -28,7 +28,8 @@ export default function reserveServiceFactory ({ reserveRepository }) {
         product_brand: x.dataValues.productInfo.dataValues.brands,
         quantity: x.dataValues.quantity,
         expiringIn: x.dataValues.expiringIn,
-        valid: x.dataValues.valid
+        valid: x.dataValues.valid,
+        createdAt: x.dataValues.createdAt
       })
     })
 
@@ -174,32 +175,53 @@ export default function reserveServiceFactory ({ reserveRepository }) {
     return await reserveRepository.patchValidityOfAnItem(validatedItem.itemId, validatedItem.validity)
   }
 
-  // TODO : implémenter la vérification l'existance de l'item deleted
   async function patchQuantityOfAnItem (updateInfos) {
     if (!updateInfos.itemId) return { message: 'You must supply the item id.' }
 
     if (!(updateInfos.itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i))) { return { message: `${updateInfos.itemId} is not a valid UUID` } }
 
-    /* const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
-
-        if (!findItem)
-            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
-        */
+    const groupId = await reserveRepository.findGroupOfAnItem(updateInfos.itemId)
+    if (!groupId) { return { message: `No item with this id '${updateInfos.itemId}' was found in the reserve list !` } }
 
     return await reserveRepository.patchQuantityOfAnItem(updateInfos.itemId, updateInfos.quantity)
   }
 
-  // TODO : implémenter la vérification l'existance de l'item deleted
   async function patchQuantityAndDayOfAnItem (updateInfos) {
     if (!updateInfos.itemId) return { message: 'You must supply the item id.' }
-
     if (!(updateInfos.itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i))) { return { message: `${updateInfos.itemId} is not a valid UUID` } }
 
-    /* const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
+    const groupId = await reserveRepository.findGroupOfAnItem(updateInfos.itemId)
+    if (!groupId) { return { message: `No item with this id '${updateInfos.itemId}' was found in the reserve list !` } }
 
-        if (!findItem)
-            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
-        */
+    const allSimilarItems = await reserveRepository.findCodeLikeReserveItems({
+      groupId: groupId.groupId,
+      code: updateInfos.code
+    }, updateInfos.itemId)
+
+    const allInValidSimilarItems = allSimilarItems.filter(item => { return item.dataValues.valid === false })
+
+    if (allInValidSimilarItems.length != 0) {
+      const creationDate = await reserveRepository.findCreationDateById(updateInfos.itemId)
+      const newItemExpDate = new Date().setDate(creationDate.dataValues.createdAt.getDate() + updateInfos.expiringIn)
+
+      for (const item of allInValidSimilarItems) {
+        const itemExpDate = new Date().setDate(item.dataValues.createdAt.getDate() + item.dataValues.expiringIn)
+        const dateDiff = Math.floor(Math.abs(newItemExpDate - itemExpDate) / 86400000)
+
+        if (dateDiff == 0) {
+          updateInfos.quantity = item.dataValues.quantity + updateInfos.quantity
+          const newReserveProduct = makeReserve({ ...updateInfos })
+          return {
+            item: await reserveRepository.patchQuantityAndDayOfAnItem(
+              item.dataValues.id,
+              updateInfos.quantity,
+              item.dataValues.expiringIn
+            ),
+            toDeleted: true
+          }
+        }
+      }
+    }
 
     return await reserveRepository.patchQuantityAndDayOfAnItem(updateInfos.itemId, updateInfos.quantity, updateInfos.expiringIn)
   }
@@ -209,11 +231,9 @@ export default function reserveServiceFactory ({ reserveRepository }) {
 
     if (!(itemId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i))) { return { message: `${itemId} is not a valid UUID` } }
 
-    /* const findItem = await shoppingListRepository.findById({shoppingListId: itemId});
+    const groupId = await reserveRepository.findGroupOfAnItem(itemId)
+    if (!groupId) { return { message: `No item with this id '${itemId}' was found in the reserve list !` } }
 
-        if (!findItem)
-            return {message: `No item with this id '${itemId}' was found in the shopping list !`};
-        */
     return reserveRepository.removeItemFromReserve({ id: itemId })
   }
 }

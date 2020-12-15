@@ -95,11 +95,11 @@
                 <th class="text-monospace font-italic " scope="row">{{reserve['product_brand']}} </th>
                 <th class="text-monospace font-italic quantity" scope="row">{{reserve['quantity']}} </th>
                 <th class="text-monospace font-italic expiration" scope="row">
-                  <div *ngIf="reserve['expiringIn'] < 3" class="text-danger">
-                    {{reserve['expiringIn']}}
+                  <div *ngIf="reserve['newExpiringIn'] < 3" class="text-danger">
+                    {{reserve['newExpiringIn']}}
                   </div>
-                  <div *ngIf="reserve['expiringIn'] > 2">
-                    {{reserve['expiringIn']}}
+                  <div *ngIf="reserve['newExpiringIn'] > 2">
+                    {{reserve['newExpiringIn']}}
                   </div>
                 </th>
                 <th class="text-monospace font-italic action">
@@ -187,16 +187,16 @@
                 <th class="text-monospace font-italic quantity" scope="row">{{reserve['quantity']}} </th>
 
 
-                <th class="text-monospace font-italic bg-danger expiration" *ngIf="reserve['expiringIn'] < 3"
+                <th class="text-monospace font-italic bg-danger expiration" *ngIf="reserve['newExpiringIn'] < 3"
                   scope="row">
-                  {{reserve['expiringIn']}}
+                  {{reserve['newExpiringIn']}}
                 </th>
                 <th class="text-monospace font-italic bg-warning"
-                  *ngIf="reserve['expiringIn'] > 2 && reserve['expiringIn'] < 7" scope="row">
-                  {{reserve['expiringIn']}}
+                  *ngIf="reserve['newExpiringIn'] > 2 && reserve['newExpiringIn'] < 7" scope="row">
+                  {{reserve['newExpiringIn']}}
                 </th>
-                <th class="text-monospace font-italic expiration" *ngIf="reserve['expiringIn'] > 6" scope="row">
-                  {{reserve['expiringIn']}}
+                <th class="text-monospace font-italic expiration" *ngIf="reserve['newExpiringIn'] > 6" scope="row">
+                  {{reserve['newExpiringIn']}}
                 </th>
                 <td class="text-monospace font-italic action">
 
