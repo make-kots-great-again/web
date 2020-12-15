@@ -267,16 +267,19 @@
                         </td>
 
                         <td *ngIf="product['groupProduct']" class="text-monospace font-italic font-weight-bolder"
-                          style="color: blue">groupe
+                          style="color: blue">groupe <br>
+                          <small style="color: black" class="text-monospace font-italic">
+                            ajouté par {{product['username']}}</small>
                         </td>
                         <td *ngIf="!product['groupProduct']" class="text-monospace font-italic">{{product['username']}}
                         </td>
 
                         <td class="text-monospace font-italic">{{product['quantity']}}</td>
                         <td class="text-monospace font-italic">
-                          <button [disabled]="!(product['username'] === currentUser) || isSuppressMode"
+                          <button [disabled]="!(product['username'] === currentUser || product['groupProduct']) || isSuppressMode"
                             class="btn btn-sm btn-danger justify-content-center" (click)="onDeleteProduct(i)">
-                            <i class="fa fa-trash"></i></button>
+                            <i class="fa fa-trash"></i>
+                          </button>
                         </td>
                       </tr>
                     </ng-container>
