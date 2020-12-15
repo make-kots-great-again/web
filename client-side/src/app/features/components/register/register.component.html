@@ -4,11 +4,11 @@
   <div class="form rounded col-12">
     <div *ngIf="alert === 201" class="alert alert-dismissible alert-success">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong id="successMessage">L'utilisateur a bien été créé !</strong>
+      <strong id="successMessage">Votre compte a bien été créé !</strong>
     </div>
     <div *ngIf="alert === 409 || alert === 401" class="alert alert-dismissible alert-danger">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong id="errorMessage">Création échouée !</strong>
+      <strong id="errorMessage">Création de compte échouée !</strong>
     </div>
     <div class="note bg-dark">
       <h2 id="formTitle" class="font-weight-bolder mb-3">Créer un compte</h2>
