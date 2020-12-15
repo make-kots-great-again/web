@@ -28,7 +28,8 @@ export default function reserveServiceFactory ({ reserveRepository }) {
         product_brand: x.dataValues.productInfo.dataValues.brands,
         quantity: x.dataValues.quantity,
         expiringIn: x.dataValues.expiringIn,
-        valid: x.dataValues.valid
+        valid: x.dataValues.valid,
+        createdAt: x.dataValues.createdAt
       })
     })
 

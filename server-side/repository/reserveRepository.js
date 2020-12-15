@@ -23,7 +23,7 @@ export default function makeReserveRepository ({ Reserve, Product, Group, Op }) 
 
   async function findGroupReserveItems ({ groupId }) {
     return Reserve.findAll({
-      attributes: ['id', 'quantity', 'valid', 'expiringIn'],
+      attributes: ['id', 'quantity', 'valid', 'expiringIn', 'createdAt'],
       include: [
         {
           model: Product,
