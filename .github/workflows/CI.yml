@@ -84,6 +84,8 @@ jobs:
         working-directory: ./
         run: |
           rm .env.dev
+          git config --global user.name "danny00747"
+          git config --global user.email "shepalau007@gmail.com"
           git add -A
           git commit -m "passed backend tests & successful build !"
     
