@@ -96,7 +96,6 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           appdir: "server-side"
-          dontuseforce: true
         env:
           NODE_ENV: "production"
           JWT_KEY: ${{secrets.JWT_KEY}}
